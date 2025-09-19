@@ -1,0 +1,14 @@
+node_modules/
+*.log
+.env*
+.DS_Store
+dist/
+build/
+coverage/
+.next/
+.turbo/
+.cache/
+*.tsbuildinfo
+.vercel/
+.expo/
+.react-native/
