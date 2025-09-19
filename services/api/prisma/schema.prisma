@@ -1,0 +1,741 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// Enums
+enum UserRole {
+  CUSTOMER
+  VENDOR
+  ADMIN
+}
+
+enum SubscriptionStatus {
+  TRIAL
+  ACTIVE
+  INACTIVE
+  CANCELLED
+}
+
+enum PlanType {
+  BASIC
+  STANDARD
+  PREMIUM
+}
+
+enum OfferStatus {
+  ACTIVE
+  INACTIVE
+  EXPIRED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  READY
+  DELIVERED
+  CANCELLED
+}
+
+enum StoryType {
+  IMAGE
+  VIDEO
+}
+
+enum OfferType {
+  DISCOUNT
+  BOGO
+  FLASH_DEAL
+  COMBO
+  FREE_DELIVERY
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+
+enum SenderType {
+  CUSTOMER
+  VENDOR
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  AUDIO
+  DOCUMENT
+}
+
+enum ActivityType {
+  OFFER_VIEW
+  OFFER_CLAIM
+  PRODUCT_VIEW
+  VENDOR_VISIT
+  SEARCH
+  CATEGORY_BROWSE
+  CHECK_IN
+  PURCHASE
+  REVIEW
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  SUCCESS
+  FAILED
+  CANCELLED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum PaymentType {
+  REGISTRATION_FEE
+  SUBSCRIPTION
+  ORDER_PAYMENT
+  REFUND
+  ADDON
+}
+
+enum AddonType {
+  WHATSAPP_EMAIL_BLAST
+  CUSTOM_SOCIAL_ADS
+  STATUS_BAR_ADDITIONAL
+  FESTIVAL_CAMPAIGN
+  VIDEO_SHOOT_SUPPORT
+}
+
+enum AddonStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+// Models
+model User {
+  id           String   @id @default(cuid())
+  clerkId      String?  @unique // Clerk user ID
+  email        String   @unique
+  passwordHash String? // Made optional for Clerk users
+  phone        String?  @unique
+  role         UserRole @default(CUSTOMER)
+  isVerified   Boolean  @default(false)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  vendor     Vendor?
+  customer   Customer?
+  storyViews StoryView[]
+  messages   Message[]
+
+  @@map("users")
+}
+
+model Vendor {
+  id                   String             @id @default(cuid())
+  userId               String             @unique
+  companyName          String
+  gstNumber            String?
+  address              String
+  latitude             Float?
+  longitude            Float?
+  subscriptionStatus   SubscriptionStatus @default(TRIAL)
+  trialEndsAt          DateTime?
+  isApproved           Boolean            @default(false)
+  registrationFeePaid  Boolean            @default(false)
+  averageRating        Float?             @default(0)
+  totalRatings         Int                @default(0)
+  isActive             Boolean            @default(true)
+  businessHours        Json?              // Store business hours as JSON
+  categories           String[]           // Array of categories they serve
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  // Relations
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products      Product[]
+  offers        Offer[]
+  subscriptions Subscription[]
+  favorites     Favorite[]
+  orders        Order[]
+  stories       Story[]
+  conversations Conversation[]
+  customerActivities CustomerActivity[]
+  loyaltyPoints LoyaltyPoint[]
+  reviews       Review[]
+  payments      Payment[]
+  invoices      Invoice[]
+  registrationFee RegistrationFee?
+  addons        Addon[]
+  referrerPrograms ReferralProgram[] @relation("ReferrerPrograms")
+  referredPrograms ReferralProgram[] @relation("ReferredPrograms")
+
+  @@map("vendors")
+}
+
+model Customer {
+  id         String  @id @default(cuid())
+  userId     String  @unique
+  firstName  String
+  lastName   String
+  latitude   Float?
+  longitude  Float?
+  address    String?
+  isActive   Boolean @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  favorites          Favorite[]
+  wishlist           Wishlist[]
+  orders             Order[]
+  conversations      Conversation[]
+  preferences        CustomerPreference?
+  activities         CustomerActivity[]
+  loyaltyPoints      LoyaltyPoint[]
+  reviews            Review[]
+  customerCoupons    CustomerCoupon[]
+  payments           Payment[]
+  invoices           Invoice[]
+
+  @@map("customers")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  vendorId    String
+  name        String
+  description String?
+  category    String
+  images      String[] // Array of image URLs
+  basePrice   Float?   // Base price if not offer-specific
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  vendor   Vendor     @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  offers   Offer[]
+  wishlist Wishlist[]
+  orders   Order[]
+  customerActivities CustomerActivity[]
+
+  @@map("products")
+}
+
+model Offer {
+  id                    String        @id @default(cuid())
+  vendorId              String
+  productId             String?       // Optional - can be general offers
+  title                 String
+  description           String
+  offerType             OfferType     @default(DISCOUNT)
+  discountType          DiscountType  @default(PERCENTAGE)
+  originalPrice         Float
+  discountedPrice       Float
+  discountPercentage    Float?
+  buyQuantity           Int?          // For BOGO offers
+  getQuantity           Int?          // For BOGO offers
+  isFlashDeal           Boolean       @default(false)
+  flashDealEndsAt       DateTime?
+  maxCustomersPerDay    Int?          // Daily customer limit
+  maxCustomersTotal     Int?          // Total customer limit for offer lifetime
+  currentCustomerCount  Int           @default(0)
+  validFrom             DateTime
+  validUntil            DateTime
+  isActive              Boolean       @default(true)
+  status                OfferStatus   @default(ACTIVE)
+  tags                  String[]      // For search and categorization
+  termsAndConditions    String?
+  images                String[]      // Array of offer images
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  // Relations
+  vendor  Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orders  Order[]
+  customerActivities CustomerActivity[]
+
+  @@map("offers")
+}
+
+model Subscription {
+  id                     String             @id @default(cuid())
+  vendorId               String
+  planType               PlanType
+  razorpaySubscriptionId String?
+  status                 SubscriptionStatus
+  startDate              DateTime
+  endDate                DateTime?
+  amount                 Float
+  currency               String             @default("INR")
+  billingCycle           String             @default("monthly") // monthly, yearly
+  isActive               Boolean            @default(true)
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+
+  // Relations
+  vendor Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  payments Payment[]
+
+  @@map("subscriptions")
+}
+
+model Favorite {
+  id         String   @id @default(cuid())
+  customerId String
+  vendorId   String
+  createdAt  DateTime @default(now())
+
+  // Relations
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  vendor   Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+
+  @@unique([customerId, vendorId])
+  @@map("favorites")
+}
+
+model Wishlist {
+  id         String   @id @default(cuid())
+  customerId String
+  productId  String
+  createdAt  DateTime @default(now())
+
+  // Relations
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  product  Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([customerId, productId])
+  @@map("wishlist")
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  customerId     String
+  vendorId       String
+  productId      String?
+  offerId        String?
+  orderNumber    String      @unique
+  totalAmount    Float
+  discountAmount Float?      @default(0)
+  finalAmount    Float
+  status         OrderStatus @default(PENDING)
+  orderDate      DateTime    @default(now())
+  deliveryDate   DateTime?
+  notes          String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  // Relations
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  vendor   Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  product  Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  offer    Offer?   @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  reviews  Review[]
+  customerCoupons CustomerCoupon[]
+  payments Payment[]
+
+  @@map("orders")
+}
+
+model Analytics {
+  id                String   @id @default(cuid())
+  vendorId          String?
+  customerId        String?
+  eventType         String   // 'offer_view', 'offer_claim', 'product_view', etc.
+  eventData         Json?    // Additional event-specific data
+  ipAddress         String?
+  userAgent         String?
+  timestamp         DateTime @default(now())
+
+  @@map("analytics")
+}
+
+model Notification {
+  id         String   @id @default(cuid())
+  userId     String
+  title      String
+  message    String
+  type       String   // 'offer', 'subscription', 'order', 'general'
+  isRead     Boolean  @default(false)
+  data       Json?    // Additional notification data
+  createdAt  DateTime @default(now())
+
+  @@map("notifications")
+}
+
+model Story {
+  id           String    @id @default(cuid())
+  vendorId     String
+  type         StoryType
+  mediaUrl     String
+  thumbnailUrl String?
+  caption      String?
+  duration     Int       @default(5) // duration in seconds
+  isActive     Boolean   @default(true)
+  viewCount    Int       @default(0)
+  expiresAt    DateTime  // 24 hours from creation
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Relations
+  vendor Vendor      @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  views  StoryView[]
+
+  @@map("stories")
+}
+
+model StoryView {
+  id       String   @id @default(cuid())
+  storyId  String
+  userId   String
+  viewedAt DateTime @default(now())
+
+  // Relations
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([storyId, userId])
+  @@map("story_views")
+}
+
+model Conversation {
+  id           String    @id @default(cuid())
+  customerId   String
+  vendorId     String
+  lastMessage  String?
+  lastMessageAt DateTime?
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Relations
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  vendor   Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@unique([customerId, vendorId])
+  @@map("conversations")
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  senderId       String
+  senderType     SenderType   // CUSTOMER or VENDOR
+  content        String
+  messageType    MessageType  @default(TEXT)
+  mediaUrl       String?
+  isRead         Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+
+  // Relations
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+model CustomerPreference {
+  id                String   @id @default(cuid())
+  customerId        String   @unique
+  preferredCategories String[] // Array of preferred categories
+  maxDistance       Float    @default(10) // Maximum delivery distance in km
+  priceRangeMin     Float?
+  priceRangeMax     Float?
+  notificationSettings Json? // Push, email, SMS preferences
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@map("customer_preferences")
+}
+
+model CustomerActivity {
+  id         String            @id @default(cuid())
+  customerId String
+  vendorId   String?
+  offerId    String?
+  productId  String?
+  activityType ActivityType
+  metadata   Json?             // Additional activity data
+  createdAt  DateTime          @default(now())
+
+  // Relations
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  vendor   Vendor?  @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  offer    Offer?   @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  product  Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("customer_activities")
+}
+
+model LoyaltyPoint {
+  id         String       @id @default(cuid())
+  customerId String
+  vendorId   String?
+  points     Int
+  reason     String       // 'check_in', 'purchase', 'referral', etc.
+  expiresAt  DateTime?
+  isUsed     Boolean      @default(false)
+  createdAt  DateTime     @default(now())
+
+  // Relations
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  vendor   Vendor?  @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+
+  @@map("loyalty_points")
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  customerId String
+  vendorId   String
+  orderId    String?
+  rating     Int      // 1-5 stars
+  comment    String?
+  images     String[] // Review images
+  isVerified Boolean  @default(false) // Verified purchase
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  vendor   Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  order    Order?   @relation(fields: [orderId], references: [id], onDelete: SetNull)
+
+  @@map("reviews")
+}
+
+model Coupon {
+  id                String     @id @default(cuid())
+  code              String     @unique
+  title             String
+  description       String?
+  discountType      DiscountType
+  discountValue     Float
+  minOrderAmount    Float?
+  maxDiscountAmount Float?
+  usageLimit        Int?
+  usedCount         Int        @default(0)
+  isActive          Boolean    @default(true)
+  validFrom         DateTime
+  validUntil        DateTime
+  applicableCategories String[] // Categories this coupon applies to
+  createdAt         DateTime   @default(now())
+
+  // Relations
+  customerCoupons CustomerCoupon[]
+
+  @@map("coupons")
+}
+
+model CustomerCoupon {
+  id         String   @id @default(cuid())
+  customerId String
+  couponId   String
+  isUsed     Boolean  @default(false)
+  usedAt     DateTime?
+  orderId    String?
+  createdAt  DateTime @default(now())
+
+  // Relations
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  coupon   Coupon   @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  order    Order?   @relation(fields: [orderId], references: [id], onDelete: SetNull)
+
+  @@unique([customerId, couponId])
+  @@map("customer_coupons")
+}
+
+model Payment {
+  id                String        @id @default(cuid())
+  vendorId          String?
+  customerId        String?
+  orderId           String?
+  subscriptionId    String?
+  addonId           String?
+  razorpayPaymentId String?       @unique
+  razorpayOrderId   String?
+  paymentType       PaymentType
+  status            PaymentStatus @default(PENDING)
+  amount            Float
+  currency          String        @default("INR")
+  tax               Float?        @default(0)
+  totalAmount       Float
+  description       String?
+  failureReason     String?
+  refundAmount      Float?        @default(0)
+  metadata          Json?         // Additional payment data
+  paidAt            DateTime?
+  failedAt          DateTime?
+  refundedAt        DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  // Relations
+  vendor       Vendor?         @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  customer     Customer?       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  order        Order?          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  subscription Subscription?   @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  invoice      Invoice?
+  registrationFee RegistrationFee?
+  addon        Addon?          @relation(fields: [addonId], references: [id], onDelete: SetNull)
+
+  @@map("payments")
+}
+
+model Invoice {
+  id             String        @id @default(cuid())
+  paymentId      String        @unique
+  vendorId       String?
+  customerId     String?
+  invoiceNumber  String        @unique
+  status         InvoiceStatus @default(DRAFT)
+  issueDate      DateTime      @default(now())
+  dueDate        DateTime?
+  paidDate       DateTime?
+  subtotal       Float
+  taxAmount      Float         @default(0)
+  totalAmount    Float
+  currency       String        @default("INR")
+  description    String?
+  items          Json          // Array of invoice items
+  billingAddress Json?         // Billing address details
+  metadata       Json?         // Additional invoice data
+  pdfUrl         String?       // Generated PDF URL
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  // Relations
+  payment  Payment   @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  vendor   Vendor?   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  customer Customer? @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@map("invoices")
+}
+
+model SubscriptionPlan {
+  id          String   @id @default(cuid())
+  planType    PlanType @unique
+  name        String
+  description String?
+  price       Float
+  currency    String   @default("INR")
+  duration    Int      // Duration in days
+  features    Json     // Array of features
+  maxProducts Int?     // Maximum products allowed
+  maxOffers   Int?     // Maximum offers allowed
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("subscription_plans")
+}
+
+model PaymentWebhook {
+  id                String   @id @default(cuid())
+  razorpaySignature String
+  eventType         String
+  paymentId         String?
+  orderId           String?
+  subscriptionId    String?
+  status            String?
+  amount            Float?
+  currency          String?
+  payload           Json     // Full webhook payload
+  processed         Boolean  @default(false)
+  processedAt       DateTime?
+  errorMessage      String?
+  createdAt         DateTime @default(now())
+
+  @@map("payment_webhooks")
+}
+
+model RegistrationFee {
+  id        String        @id @default(cuid())
+  vendorId  String        @unique
+  paymentId String?       @unique
+  amount    Float         @default(299)
+  tax       Float         @default(53.82) // 18% GST
+  total     Float         @default(352.82)
+  status    PaymentStatus @default(PENDING)
+  paidAt    DateTime?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  // Relations
+  vendor  Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  payment Payment? @relation(fields: [paymentId], references: [id], onDelete: SetNull)
+
+  @@map("registration_fees")
+}
+
+model Addon {
+  id          String      @id @default(cuid())
+  vendorId    String
+  addonType   AddonType
+  name        String
+  description String?
+  price       Float
+  currency    String      @default("INR")
+  validFrom   DateTime    @default(now())
+  validUntil  DateTime
+  status      AddonStatus @default(ACTIVE)
+  usageCount  Int         @default(0)
+  maxUsage    Int?        // Maximum usage limit (e.g., 1 for Custom Social Ads)
+  isActive    Boolean     @default(true)
+  metadata    Json?       // Additional addon-specific data
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relations
+  vendor   Vendor    @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  payments Payment[]
+
+  @@map("addons")
+}
+
+model ReferralProgram {
+  id                    String   @id @default(cuid())
+  referrerVendorId      String   // Vendor who refers
+  referredVendorId      String?  // Vendor who was referred (null if not yet registered)
+  referredEmail         String?  // Email of referred user
+  referralCode          String   @unique
+  commissionRate        Float    @default(10.0) // 10% commission
+  isRewardClaimed       Boolean  @default(false)
+  rewardAmount          Float?
+  referredVendorJoined  Boolean  @default(false)
+  commissionPaidAt      DateTime?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  // Relations
+  referrerVendor Vendor  @relation("ReferrerPrograms", fields: [referrerVendorId], references: [id], onDelete: Cascade)
+  referredVendor Vendor? @relation("ReferredPrograms", fields: [referredVendorId], references: [id], onDelete: SetNull)
+
+  @@map("referral_programs")
+}

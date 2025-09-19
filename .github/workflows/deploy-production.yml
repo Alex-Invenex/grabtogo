@@ -1,0 +1,379 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18'
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # Testing Stage
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_USER: test
+          POSTGRES_DB: grabtogo_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: |
+          cd services/api
+          npx prisma generate
+
+      - name: Run database migrations
+        run: |
+          cd services/api
+          npx prisma db push --force-reset
+        env:
+          DATABASE_URL: postgresql://test:test@localhost:5432/grabtogo_test
+
+      - name: Run unit tests
+        run: npm run test
+        env:
+          NODE_ENV: test
+          DATABASE_URL: postgresql://test:test@localhost:5432/grabtogo_test
+          REDIS_URL: redis://localhost:6379
+          JWT_SECRET: test-secret
+          CLERK_SECRET_KEY: test-clerk-secret
+
+      - name: Run integration tests
+        run: |
+          cd services/api
+          npm run test:e2e
+        env:
+          NODE_ENV: test
+          DATABASE_URL: postgresql://test:test@localhost:5432/grabtogo_test
+          REDIS_URL: redis://localhost:6379
+
+      - name: Generate test coverage
+        run: |
+          cd services/api
+          npm run test:coverage
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        with:
+          file: services/api/coverage/lcov.info
+          flags: api-tests
+
+  # Security Scan
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run security audit
+        run: npm audit --audit-level high
+
+      - name: Run Snyk security scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+
+  # Build and Push Images
+  build:
+    name: Build and Push Docker Images
+    runs-on: ubuntu-latest
+    needs: [test, security]
+    outputs:
+      api-image: ${{ steps.meta-api.outputs.tags }}
+      web-image: ${{ steps.meta-web.outputs.tags }}
+      admin-image: ${{ steps.meta-admin.outputs.tags }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Build API
+      - name: Extract API metadata
+        id: meta-api
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-api
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push API image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./services/api
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta-api.outputs.tags }}
+          labels: ${{ steps.meta-api.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Build Web App
+      - name: Extract Web metadata
+        id: meta-web
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-web
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push Web image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./apps/web
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta-web.outputs.tags }}
+          labels: ${{ steps.meta-web.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Build Admin App
+      - name: Extract Admin metadata
+        id: meta-admin
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-admin
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push Admin image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./apps/admin
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta-admin.outputs.tags }}
+          labels: ${{ steps.meta-admin.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # Deploy to Production
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: build
+    environment: production
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.PRODUCTION_SSH_PRIVATE_KEY }}
+
+      - name: Add server to known hosts
+        run: |
+          ssh-keyscan -H ${{ secrets.PRODUCTION_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to production server
+        run: |
+          ssh ${{ secrets.PRODUCTION_USER }}@${{ secrets.PRODUCTION_HOST }} '
+            cd /opt/grabtogo &&
+
+            # Pull latest code
+            git pull origin main &&
+
+            # Update environment variables
+            echo "${{ secrets.PRODUCTION_ENV }}" > .env.production &&
+
+            # Stop current services
+            docker-compose -f docker-compose.production.yml down --remove-orphans &&
+
+            # Pull latest images
+            docker-compose -f docker-compose.production.yml pull &&
+
+            # Start services with new images
+            docker-compose -f docker-compose.production.yml up -d &&
+
+            # Run database migrations
+            docker-compose -f docker-compose.production.yml exec -T api npm run db:migrate &&
+
+            # Wait for services to be healthy
+            sleep 30 &&
+
+            # Verify deployment
+            docker-compose -f docker-compose.production.yml ps &&
+            curl -f http://localhost:3001/health || exit 1 &&
+            curl -f http://localhost:3000/api/health || exit 1
+          '
+
+      - name: Clean up old Docker images
+        run: |
+          ssh ${{ secrets.PRODUCTION_USER }}@${{ secrets.PRODUCTION_HOST }} '
+            docker image prune -f &&
+            docker system prune -f --volumes
+          '
+
+  # Post-deployment verification
+  verify:
+    name: Post-deployment Verification
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Wait for deployment to stabilize
+        run: sleep 60
+
+      - name: Health check API
+        run: |
+          curl -f https://api.grabtogo.in/health || exit 1
+
+      - name: Health check Web App
+        run: |
+          curl -f https://grabtogo.in/api/health || exit 1
+
+      - name: Health check Admin
+        run: |
+          curl -f https://admin.grabtogo.in/api/health || exit 1
+
+      - name: Run smoke tests
+        run: |
+          # Basic API functionality test
+          response=$(curl -s https://api.grabtogo.in/api/vendors | jq -r '.success')
+          if [ "$response" != "true" ]; then
+            echo "Vendors API failed"
+            exit 1
+          fi
+
+          # Basic web app test
+          status=$(curl -s -o /dev/null -w "%{http_code}" https://grabtogo.in)
+          if [ "$status" != "200" ]; then
+            echo "Web app failed with status: $status"
+            exit 1
+          fi
+
+  # Notify deployment status
+  notify:
+    name: Notify Deployment Status
+    runs-on: ubuntu-latest
+    needs: [deploy, verify]
+    if: always()
+
+    steps:
+      - name: Notify success
+        if: ${{ needs.deploy.result == 'success' && needs.verify.result == 'success' }}
+        uses: 8398a7/action-slack@v3
+        with:
+          status: success
+          text: |
+            🚀 Production deployment successful!
+
+            Commit: ${{ github.sha }}
+            Author: ${{ github.actor }}
+            Message: ${{ github.event.head_commit.message }}
+
+            🌐 Web: https://grabtogo.in
+            🔧 Admin: https://admin.grabtogo.in
+            📡 API: https://api.grabtogo.in
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Notify failure
+        if: ${{ needs.deploy.result == 'failure' || needs.verify.result == 'failure' }}
+        uses: 8398a7/action-slack@v3
+        with:
+          status: failure
+          text: |
+            ❌ Production deployment failed!
+
+            Commit: ${{ github.sha }}
+            Author: ${{ github.actor }}
+
+            Please check the deployment logs.
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  # Rollback capability
+  rollback:
+    name: Rollback Deployment
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.rollback == 'true'
+    environment: production
+
+    steps:
+      - name: Rollback to previous version
+        run: |
+          ssh ${{ secrets.PRODUCTION_USER }}@${{ secrets.PRODUCTION_HOST }} '
+            cd /opt/grabtogo &&
+
+            # Get previous successful deployment
+            git log --oneline -10 &&
+
+            # Rollback to previous commit (manual selection required)
+            # This would typically be automated with proper versioning
+            echo "Manual rollback required - check previous deployments"
+          '

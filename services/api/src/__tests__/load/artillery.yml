@@ -1,0 +1,116 @@
+config:
+  target: 'http://localhost:3001'
+  phases:
+    # Warm up phase
+    - duration: 60
+      arrivalRate: 5
+      name: "Warm up"
+
+    # Ramp up phase
+    - duration: 120
+      arrivalRate: 5
+      rampTo: 50
+      name: "Ramp up load"
+
+    # Sustained load phase
+    - duration: 300
+      arrivalRate: 50
+      name: "Sustained load"
+
+    # Peak load phase
+    - duration: 120
+      arrivalRate: 50
+      rampTo: 100
+      name: "Peak load"
+
+    # Cool down phase
+    - duration: 60
+      arrivalRate: 100
+      rampTo: 5
+      name: "Cool down"
+
+  defaults:
+    headers:
+      Content-Type: 'application/json'
+
+  processor: './load-test-helpers.js'
+
+scenarios:
+  - name: "Authentication Flow"
+    weight: 20
+    flow:
+      - post:
+          url: "/api/auth/register"
+          json:
+            email: "test{{ $randomString() }}@example.com"
+            clerkId: "clerk_{{ $randomString() }}"
+            role: "CUSTOMER"
+          capture:
+            - json: "$.user.id"
+              as: "userId"
+            - json: "$.token"
+              as: "authToken"
+
+      - get:
+          url: "/api/auth/me"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+
+  - name: "Browse Vendors and Products"
+    weight: 40
+    flow:
+      - get:
+          url: "/api/vendors"
+          capture:
+            - json: "$.vendors[0].id"
+              as: "vendorId"
+
+      - get:
+          url: "/api/products"
+          qs:
+            vendorId: "{{ vendorId }}"
+          capture:
+            - json: "$.products[0].id"
+              as: "productId"
+
+      - get:
+          url: "/api/products/{{ productId }}"
+
+  - name: "Order Creation Flow"
+    weight: 30
+    flow:
+      - function: "generateAuthToken"
+
+      - post:
+          url: "/api/payments/create-order"
+          headers:
+            Authorization: "Bearer {{ authToken }}"
+          json:
+            vendorId: "vendor123"
+            items:
+              - productId: "product123"
+                quantity: "{{ $randomInt(1, 5) }}"
+                price: "{{ $randomInt(100, 1000) }}"
+            totalAmount: "{{ $randomInt(500, 5000) }}"
+          capture:
+            - json: "$.order.id"
+              as: "orderId"
+            - json: "$.razorpayOrder.id"
+              as: "razorpayOrderId"
+
+  - name: "Search and Filter"
+    weight: 10
+    flow:
+      - get:
+          url: "/api/products/search"
+          qs:
+            q: "{{ $randomString() }}"
+            category: "Food"
+            minPrice: "100"
+            maxPrice: "1000"
+
+      - get:
+          url: "/api/vendors/search"
+          qs:
+            location: "Mumbai"
+            businessType: "Restaurant"
