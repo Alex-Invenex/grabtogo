@@ -11,17 +11,46 @@
       "persistent": true
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "outputs": []
     },
     "type-check": {
-      "dependsOn": ["^type-check"]
+      "dependsOn": ["^type-check"],
+      "outputs": []
     },
     "test": {
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
     },
     "clean": {
-      "cache": false
+      "cache": false,
+      "outputs": []
+    },
+    "db:generate": {
+      "cache": false,
+      "outputs": []
+    },
+    "db:push": {
+      "cache": false,
+      "outputs": []
+    },
+    "db:migrate": {
+      "cache": false,
+      "outputs": []
+    }
+  },
+  "tasks": {
+    "packages#build": {
+      "dependsOn": [],
+      "outputs": ["dist/**"]
+    },
+    "apps#build": {
+      "dependsOn": ["packages#build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "services#build": {
+      "dependsOn": ["packages#build"],
+      "outputs": ["dist/**"]
     }
   }
 }

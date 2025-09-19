@@ -5,8 +5,11 @@
   "scripts": {
     "dev": "next dev --turbopack --port 3002",
     "build": "next build --turbopack",
-    "start": "next start",
-    "lint": "eslint"
+    "start": "next start --port 3002",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf .next .turbo"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
