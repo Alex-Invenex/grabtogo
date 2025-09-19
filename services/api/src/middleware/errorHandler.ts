@@ -16,12 +16,17 @@ export const errorHandler = (
   });
 
   if (error instanceof CustomError) {
-    res.status(error.statusCode).json({
+    const response: ApiResponse = {
       success: false,
       message: error.message,
-      error: error.message,
-      errors: error.errors
-    });
+      error: error.message
+    };
+
+    if (error.errors) {
+      response.errors = error.errors;
+    }
+
+    res.status(error.statusCode).json(response);
     return;
   }
 

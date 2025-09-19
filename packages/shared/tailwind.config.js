@@ -1,12 +1,11 @@
-import type { Config } from "tailwindcss";
+const { Config } = require("tailwindcss");
 
-const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "../../packages/ui/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+/**
+ * Shared Tailwind CSS configuration for GrabtoGo
+ * This configuration contains the common theme and utilities
+ * that are used across all apps in the monorepo.
+ */
+const config = {
   theme: {
     extend: {
       colors: {
@@ -115,7 +114,6 @@ const config: Config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'modal-overlay': 'modalOverlay 0.2s ease-out',
         'modal-content': 'modalContent 0.2s ease-out',
-        'chart-bar': 'chartBar 1s ease-in-out',
       },
       keyframes: {
         fadeIn: {
@@ -162,10 +160,6 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'translate(-50%, -50%) scale(0.95)' },
           '100%': { opacity: '1', transform: 'translate(-50%, -50%) scale(1)' },
         },
-        chartBar: {
-          '0%': { transform: 'scaleY(0)', transformOrigin: 'bottom' },
-          '100%': { transform: 'scaleY(1)', transformOrigin: 'bottom' },
-        },
       },
       boxShadow: {
         'soft': '0 2px 15px rgba(249, 115, 22, 0.08)',
@@ -174,7 +168,6 @@ const config: Config = {
         'inner-soft': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
         'glow': '0 0 20px rgba(249, 115, 22, 0.3)',
         'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-        'dashboard': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -182,7 +175,6 @@ const config: Config = {
         "gradient-primary": "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
         "gradient-secondary": "linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%)",
         "gradient-mesh": "radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%), radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%), radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%), radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%), radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%)",
-        "gradient-dashboard": "linear-gradient(45deg, #667eea 0%, #764ba2 100%)",
       },
       backdropBlur: {
         xs: '2px',
@@ -243,4 +235,4 @@ const config: Config = {
   plugins: [],
 };
 
-export default config;
+module.exports = config;

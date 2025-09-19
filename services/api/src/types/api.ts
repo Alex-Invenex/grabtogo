@@ -21,9 +21,9 @@ export interface ApiError {
 
 export class CustomError extends Error {
   statusCode: number;
-  errors?: Record<string, string[]>;
+  errors?: Record<string, string[]> | undefined;
 
-  constructor(message: string, statusCode: number = 500, errors?: Record<string, string[]>) {
+  constructor(message: string, statusCode: number = 500, errors?: Record<string, string[]> | undefined) {
     super(message);
     this.statusCode = statusCode;
     this.errors = errors;
