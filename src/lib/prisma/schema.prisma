@@ -1,0 +1,638 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../src/lib/prisma"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis]
+}
+
+enum UserRole {
+  CUSTOMER
+  VENDOR
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime?
+  name          String?
+  image         String?
+  password      String?
+  phone         String?
+  role          UserRole  @default(CUSTOMER)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Auth
+  accounts Account[]
+  sessions Session[]
+
+  // Customer relations
+  addresses     Address[]
+  orders        Order[]
+  reviews       Review[]
+  cartItems     CartItem[]
+  favorites     Favorite[]
+  searchHistory SearchHistory[]
+  reviewVotes   ReviewHelpfulVote[]
+  notifications Notification[]
+  storyViews    StoryView[]
+
+  // Chat relations
+  createdChats     Chat[]            @relation("ChatCreator")
+  chatParticipants ChatParticipant[]
+  sentMessages     ChatMessage[]     @relation("SentMessages")
+  receivedMessages ChatMessage[]     @relation("ReceivedMessages")
+
+  // Vendor relations
+  vendorProfile      VendorProfile?
+  products           Product[]
+  vendorSubscription VendorSubscription? @relation("VendorSubscription")
+  vendorStories      VendorStory[]       @relation("VendorStories")
+  vendorAnalytics    VendorAnalytics[]   @relation("VendorAnalytics")
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model VendorProfile {
+  id          String  @id @default(cuid())
+  userId      String  @unique
+  storeName   String
+  storeSlug   String  @unique
+  description String?
+  logoUrl     String?
+  bannerUrl   String?
+  isVerified  Boolean @default(false)
+  isActive    Boolean @default(true)
+
+  // Business details
+  businessLicense String?
+  taxId           String?
+
+  // Location
+  address        String?
+  city           String?
+  state          String?
+  zipCode        String?
+  country        String                                 @default("India")
+  latitude       Float?
+  longitude      Float?
+  deliveryRadius Float?                                 @default(10) // in kilometers
+  location       Unsupported("geography(POINT, 4326)")?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("vendor_profiles")
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  imageUrl    String?
+  parentId    String?
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryHierarchy")
+  products Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id                String   @id @default(cuid())
+  name              String
+  slug              String   @unique
+  description       String?
+  shortDesc         String?
+  sku               String   @unique
+  price             Decimal  @db.Decimal(10, 2)
+  comparePrice      Decimal? @db.Decimal(10, 2)
+  costPrice         Decimal? @db.Decimal(10, 2)
+  trackQuantity     Boolean  @default(true)
+  quantity          Int      @default(0)
+  lowStockThreshold Int      @default(10)
+  weight            Float?
+  dimensions        String? // JSON string for length, width, height
+
+  // Search & Discovery
+  tags         String[]
+  brand        String?
+  searchVector Unsupported("tsvector")?
+
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+
+  // Status
+  isActive    Boolean   @default(true)
+  isFeatured  Boolean   @default(false)
+  publishedAt DateTime?
+
+  // Analytics
+  viewCount  Int @default(0)
+  orderCount Int @default(0)
+
+  // Relations
+  vendorId   String
+  categoryId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  vendor     User             @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  category   Category         @relation(fields: [categoryId], references: [id])
+  images     ProductImage[]
+  variants   ProductVariant[]
+  reviews    Review[]
+  orderItems OrderItem[]
+  cartItems  CartItem[]
+  favorites  Favorite[]
+
+  @@map("products")
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  productId String
+  url       String
+  altText   String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_images")
+}
+
+model ProductVariant {
+  id         String   @id @default(cuid())
+  productId  String
+  name       String
+  sku        String   @unique
+  price      Decimal  @db.Decimal(10, 2)
+  quantity   Int      @default(0)
+  attributes Json? // JSON for variant attributes like size, color, etc.
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_variants")
+}
+
+model Address {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String   @default("shipping") // shipping, billing
+  firstName String
+  lastName  String
+  company   String?
+  address1  String
+  address2  String?
+  city      String
+  state     String
+  zipCode   String
+  country   String   @default("India")
+  phone     String?
+  isDefault Boolean  @default(false)
+  latitude  Float?
+  longitude Float?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ordersShipping Order[] @relation("ShippingAddress")
+  ordersBilling  Order[] @relation("BillingAddress")
+
+  @@map("addresses")
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  variantId String?
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId, variantId])
+  @@map("cart_items")
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@map("favorites")
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  orderNumber String      @unique
+  userId      String
+  status      OrderStatus @default(PENDING)
+
+  // Amounts
+  subtotal       Decimal @db.Decimal(10, 2)
+  taxAmount      Decimal @default(0) @db.Decimal(10, 2)
+  shippingAmount Decimal @default(0) @db.Decimal(10, 2)
+  discountAmount Decimal @default(0) @db.Decimal(10, 2)
+  totalAmount    Decimal @db.Decimal(10, 2)
+
+  // Addresses
+  shippingAddressId String
+  billingAddressId  String
+
+  // Tracking
+  trackingNumber    String?
+  estimatedDelivery DateTime?
+  deliveredAt       DateTime?
+
+  // Notes
+  notes String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user            User        @relation(fields: [userId], references: [id])
+  shippingAddress Address     @relation("ShippingAddress", fields: [shippingAddressId], references: [id])
+  billingAddress  Address     @relation("BillingAddress", fields: [billingAddressId], references: [id])
+  items           OrderItem[]
+  payments        Payment[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  orderId    String
+  productId  String
+  variantId  String?
+  quantity   Int
+  price      Decimal  @db.Decimal(10, 2)
+  totalPrice Decimal  @db.Decimal(10, 2)
+  createdAt  DateTime @default(now())
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+
+model Payment {
+  id                String        @id @default(cuid())
+  orderId           String
+  razorpayOrderId   String?       @unique
+  razorpayPaymentId String?       @unique
+  amount            Decimal       @db.Decimal(10, 2)
+  currency          String        @default("INR")
+  status            PaymentStatus @default(PENDING)
+  method            String? // card, upi, netbanking, etc.
+  gateway           String        @default("razorpay")
+  gatewayResponse   Json?
+  failureReason     String?
+  refundedAmount    Decimal?      @db.Decimal(10, 2)
+  refundedAt        DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+model Review {
+  id           String   @id @default(cuid())
+  userId       String
+  productId    String
+  rating       Int // 1-5
+  title        String?
+  comment      String?
+  isVerified   Boolean  @default(false)
+  helpfulCount Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product      Product             @relation(fields: [productId], references: [id], onDelete: Cascade)
+  images       ReviewImage[]
+  helpfulVotes ReviewHelpfulVote[]
+
+  @@unique([userId, productId])
+  @@map("reviews")
+}
+
+model ReviewImage {
+  id        String   @id @default(cuid())
+  reviewId  String
+  url       String
+  altText   String?
+  createdAt DateTime @default(now())
+
+  review Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@map("review_images")
+}
+
+model ReviewHelpfulVote {
+  id        String   @id @default(cuid())
+  reviewId  String
+  userId    String
+  isHelpful Boolean
+  createdAt DateTime @default(now())
+
+  review Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([reviewId, userId])
+  @@map("review_helpful_votes")
+}
+
+model SearchHistory {
+  id        String   @id @default(cuid())
+  userId    String?
+  query     String
+  results   Int      @default(0)
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("search_history")
+}
+
+model TrendingSearch {
+  id           String   @id @default(cuid())
+  query        String   @unique
+  searchCount  Int      @default(1)
+  lastSearched DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("trending_searches")
+}
+
+model Chat {
+  id        String   @id @default(cuid())
+  type      String   @default("private") // private, group, support
+  title     String?
+  createdBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  creator      User              @relation("ChatCreator", fields: [createdBy], references: [id], onDelete: Cascade)
+  participants ChatParticipant[]
+  messages     ChatMessage[]
+
+  @@map("chats")
+}
+
+model ChatParticipant {
+  id       String   @id @default(cuid())
+  chatId   String
+  userId   String
+  role     String   @default("member") // member, admin
+  joinedAt DateTime @default(now())
+
+  chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([chatId, userId])
+  @@map("chat_participants")
+}
+
+model ChatMessage {
+  id         String    @id @default(cuid())
+  chatId     String
+  senderId   String
+  receiverId String
+  content    String
+  type       String    @default("text") // text, image, file
+  status     String    @default("sent") // sent, delivered, read
+  readAt     DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  chat     Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  sender   User @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@map("chat_messages")
+}
+
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  type      String // order, message, review, vendor, system
+  title     String
+  message   String
+  data      String? // JSON string for additional data
+  isRead    Boolean   @default(false)
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+model VendorSubscription {
+  id        String   @id @default(cuid())
+  vendorId  String   @unique
+  planType  String // basic, premium, enterprise
+  status    String   @default("active") // active, cancelled, expired
+  startDate DateTime @default(now())
+  endDate   DateTime
+  autoRenew Boolean  @default(true)
+
+  // Plan limits
+  maxProducts     Int     @default(10)
+  maxOrders       Int     @default(100)
+  storageLimit    Int     @default(1000) // in MB
+  analyticsAccess Boolean @default(false)
+  prioritySupport Boolean @default(false)
+
+  // Billing
+  amount       Decimal @db.Decimal(10, 2)
+  currency     String  @default("INR")
+  billingCycle String  @default("monthly") // monthly, yearly
+
+  // Payment tracking
+  razorpayPlanId         String?
+  razorpaySubscriptionId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  vendor   User                  @relation("VendorSubscription", fields: [vendorId], references: [id], onDelete: Cascade)
+  payments SubscriptionPayment[]
+
+  @@map("vendor_subscriptions")
+}
+
+model SubscriptionPayment {
+  id                 String   @id @default(cuid())
+  subscriptionId     String
+  amount             Decimal  @db.Decimal(10, 2)
+  currency           String   @default("INR")
+  status             String   @default("pending") // pending, completed, failed
+  razorpayPaymentId  String?
+  razorpayOrderId    String?
+  billingPeriodStart DateTime
+  billingPeriodEnd   DateTime
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  subscription VendorSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@map("subscription_payments")
+}
+
+model VendorStory {
+  id         String   @id @default(cuid())
+  vendorId   String
+  type       String   @default("image") // image, video
+  mediaUrl   String
+  caption    String?
+  productIds String[] // Tagged products
+  isActive   Boolean  @default(true)
+  expiresAt  DateTime // 24 hours from creation
+  viewCount  Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  vendor User        @relation("VendorStories", fields: [vendorId], references: [id], onDelete: Cascade)
+  views  StoryView[]
+
+  @@map("vendor_stories")
+}
+
+model StoryView {
+  id       String   @id @default(cuid())
+  storyId  String
+  userId   String
+  viewedAt DateTime @default(now())
+
+  story VendorStory @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  user  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([storyId, userId])
+  @@map("story_views")
+}
+
+model VendorAnalytics {
+  id       String   @id @default(cuid())
+  vendorId String
+  date     DateTime @db.Date
+
+  // Sales metrics
+  totalOrders       Int     @default(0)
+  totalRevenue      Decimal @default(0) @db.Decimal(10, 2)
+  averageOrderValue Decimal @default(0) @db.Decimal(10, 2)
+
+  // Product metrics
+  productViews   Int   @default(0)
+  productClicks  Int   @default(0)
+  conversionRate Float @default(0)
+
+  // Customer metrics
+  newCustomers       Int @default(0)
+  returningCustomers Int @default(0)
+
+  // Story metrics
+  storyViews      Int @default(0)
+  storyEngagement Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  vendor User @relation("VendorAnalytics", fields: [vendorId], references: [id], onDelete: Cascade)
+
+  @@unique([vendorId, date])
+  @@map("vendor_analytics")
+}

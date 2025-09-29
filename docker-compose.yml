@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: grabtogo-postgres
+    environment:
+      POSTGRES_DB: grabtogo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - grabtogo-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: grabtogo-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - grabtogo-network
+
+  app:
+    build: .
+    container_name: grabtogo-app
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/grabtogo"
+      REDIS_HOST: "redis"
+      REDIS_PORT: "6379"
+      NEXTAUTH_URL: "http://localhost:3000"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - grabtogo-network
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  grabtogo-network:
+    driver: bridge
