@@ -3,38 +3,65 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { signIn, getSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { Eye, EyeOff, Loader2 } from 'lucide-react'
+import { Eye, EyeOff, Loader2, CheckCircle, Mail } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { useToast } from '@/hooks/use-toast'
+import { signInSchema } from '@/lib/password'
 
-const loginSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-})
-
-type LoginFormValues = z.infer<typeof loginSchema>
+type LoginFormValues = z.infer<typeof signInSchema>
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { toast } = useToast()
 
+  const message = searchParams.get('message')
+
   const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   })
+
+  React.useEffect(() => {
+    if (message) {
+      switch (message) {
+        case 'EmailVerified':
+          toast({
+            title: 'Email Verified!',
+            description: 'Your email has been verified successfully. You can now sign in.',
+          })
+          break
+        case 'AlreadyVerified':
+          toast({
+            title: 'Already Verified',
+            description: 'Your email is already verified. You can sign in normally.',
+          })
+          break
+        case 'PasswordReset':
+          toast({
+            title: 'Password Reset Complete',
+            description: 'Your password has been updated. You can now sign in with your new password.',
+          })
+          break
+        default:
+          break
+      }
+    }
+  }, [message, toast])
 
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true)
@@ -47,11 +74,40 @@ export default function LoginPage() {
       })
 
       if (result?.error) {
-        toast({
-          title: 'Login Failed',
-          description: 'Invalid email or password',
-          variant: 'destructive',
-        })
+        // Enhanced error handling for different authentication failure scenarios
+        const errorMessage = result.error.toLowerCase()
+
+        if (errorMessage.includes('too many')) {
+          toast({
+            title: 'Account Temporarily Locked',
+            description: 'Too many failed login attempts. Please try again later.',
+            variant: 'destructive',
+          })
+        } else if (errorMessage.includes('verify your email')) {
+          toast({
+            title: 'Email Verification Required',
+            description: 'Please verify your email address before signing in.',
+            variant: 'destructive',
+          })
+        } else if (errorMessage.includes('locked')) {
+          toast({
+            title: 'Account Locked',
+            description: 'Your account has been locked due to multiple failed attempts.',
+            variant: 'destructive',
+          })
+        } else if (errorMessage.includes('inactive')) {
+          toast({
+            title: 'Account Inactive',
+            description: 'Your account is inactive. Please contact support.',
+            variant: 'destructive',
+          })
+        } else {
+          toast({
+            title: 'Login Failed',
+            description: 'Invalid email or password',
+            variant: 'destructive',
+          })
+        }
       } else {
         // Get session to check user role and redirect accordingly
         const session = await getSession()
@@ -76,8 +132,8 @@ export default function LoginPage() {
       }
     } catch (error) {
       toast({
-        title: 'Error',
-        description: 'Something went wrong. Please try again.',
+        title: 'Network Error',
+        description: 'Please check your connection and try again.',
         variant: 'destructive',
       })
     } finally {
@@ -96,6 +152,16 @@ export default function LoginPage() {
             Enter your email and password to sign in to your account
           </p>
         </div>
+
+        {message && (message === 'EmailVerified' || message === 'PasswordReset') && (
+          <Alert>
+            <CheckCircle className="h-4 w-4" />
+            <AlertDescription>
+              {message === 'EmailVerified' && 'Your email has been verified! You can now sign in to your account.'}
+              {message === 'PasswordReset' && 'Your password has been reset successfully! You can now sign in with your new password.'}
+            </AlertDescription>
+          </Alert>
+        )}
 
         <Card>
           <CardHeader className="space-y-1">

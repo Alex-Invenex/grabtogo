@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Users, Package, ShoppingCart, DollarSign, TrendingUp, AlertTriangle, UserCheck, UserX, Activity, Database } from 'lucide-react'
+import { Users, Package, ShoppingCart, DollarSign, TrendingUp, AlertTriangle, UserCheck, UserX, Activity, Database, Shield, Lock, Eye, Clock } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -42,6 +42,28 @@ interface SystemAlert {
   id: string
   type: 'error' | 'warning' | 'info'
   message: string
+  timestamp: string
+  resolved: boolean
+}
+
+interface SecurityEvent {
+  id: string
+  userId?: string
+  userName?: string
+  event: string
+  details: string
+  ipAddress: string
+  userAgent: string
+  timestamp: string
+  riskLevel: 'low' | 'medium' | 'high'
+}
+
+interface SuspiciousActivity {
+  id: string
+  userId: string
+  userName: string
+  reasons: string[]
+  ipAddress: string
   timestamp: string
   resolved: boolean
 }
@@ -134,6 +156,83 @@ export default function AdminDashboard() {
     }
   ]
 
+  const securityEvents: SecurityEvent[] = [
+    {
+      id: '1',
+      userId: '1',
+      userName: 'Rajesh Kumar',
+      event: 'login_failed_invalid_password',
+      details: 'Failed login attempt with invalid password',
+      ipAddress: '192.168.1.100',
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+      timestamp: '2024-01-28T10:45:00Z',
+      riskLevel: 'medium'
+    },
+    {
+      id: '2',
+      userId: '2',
+      userName: 'Priya Sharma',
+      event: 'login_success',
+      details: 'Successful login',
+      ipAddress: '192.168.1.50',
+      userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS)',
+      timestamp: '2024-01-28T10:30:00Z',
+      riskLevel: 'low'
+    },
+    {
+      id: '3',
+      event: 'signup_duplicate_email',
+      details: 'Attempted registration with existing email',
+      ipAddress: '10.0.0.25',
+      userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X)',
+      timestamp: '2024-01-28T09:15:00Z',
+      riskLevel: 'medium'
+    },
+    {
+      id: '4',
+      userId: '4',
+      userName: 'Sarah Johnson',
+      event: 'account_locked',
+      details: 'Account locked due to multiple failed attempts',
+      ipAddress: '203.0.113.10',
+      userAgent: 'Mozilla/5.0 (X11; Linux x86_64)',
+      timestamp: '2024-01-28T08:45:00Z',
+      riskLevel: 'high'
+    },
+    {
+      id: '5',
+      userId: '1',
+      userName: 'Rajesh Kumar',
+      event: 'password_reset_requested',
+      details: 'Password reset requested',
+      ipAddress: '192.168.1.100',
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+      timestamp: '2024-01-28T07:30:00Z',
+      riskLevel: 'medium'
+    }
+  ]
+
+  const suspiciousActivities: SuspiciousActivity[] = [
+    {
+      id: '1',
+      userId: '4',
+      userName: 'Sarah Johnson',
+      reasons: ['Multiple failed login attempts in the last hour', 'Logins from multiple IP addresses'],
+      ipAddress: '203.0.113.10',
+      timestamp: '2024-01-28T08:45:00Z',
+      resolved: false
+    },
+    {
+      id: '2',
+      userId: '5',
+      userName: 'Unknown User',
+      reasons: ['New account with immediate activity', 'Unusual time patterns'],
+      ipAddress: '198.51.100.5',
+      timestamp: '2024-01-28T06:20:00Z',
+      resolved: true
+    }
+  ]
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'ACTIVE':
@@ -173,6 +272,28 @@ export default function AdminDashboard() {
     }
   }
 
+  const getRiskBadge = (riskLevel: string) => {
+    switch (riskLevel) {
+      case 'high':
+        return <Badge variant="destructive">High Risk</Badge>
+      case 'medium':
+        return <Badge className="bg-yellow-100 text-yellow-800">Medium Risk</Badge>
+      case 'low':
+        return <Badge className="bg-green-100 text-green-800">Low Risk</Badge>
+      default:
+        return <Badge variant="outline">{riskLevel}</Badge>
+    }
+  }
+
+  const getEventIcon = (event: string) => {
+    if (event.includes('login_success')) return <UserCheck className="h-4 w-4 text-green-500" />
+    if (event.includes('login_failed')) return <UserX className="h-4 w-4 text-red-500" />
+    if (event.includes('locked')) return <Lock className="h-4 w-4 text-red-600" />
+    if (event.includes('password_reset')) return <Shield className="h-4 w-4 text-blue-500" />
+    if (event.includes('signup')) return <Users className="h-4 w-4 text-blue-500" />
+    return <Activity className="h-4 w-4 text-gray-500" />
+  }
+
   const filteredUsers = mockUsers.filter(user => {
     const matchesSearch = user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          user.email.toLowerCase().includes(searchQuery.toLowerCase())
@@ -197,9 +318,10 @@ export default function AdminDashboard() {
       </div>
 
       <Tabs value={selectedTab} onValueChange={setSelectedTab}>
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="users">Users</TabsTrigger>
+          <TabsTrigger value="security">Security</TabsTrigger>
           <TabsTrigger value="system">System</TabsTrigger>
           <TabsTrigger value="alerts">Alerts</TabsTrigger>
         </TabsList>
@@ -433,6 +555,222 @@ export default function AdminDashboard() {
                             </Button>
                           )}
                         </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="security" className="space-y-6">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Security Events</CardTitle>
+                <Shield className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{securityEvents.length}</div>
+                <p className="text-xs text-muted-foreground">
+                  Last 24 hours
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Failed Logins</CardTitle>
+                <UserX className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {securityEvents.filter(e => e.event.includes('login_failed')).length}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  +2 from yesterday
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Locked Accounts</CardTitle>
+                <Lock className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {securityEvents.filter(e => e.event.includes('locked')).length}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Requires attention
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Suspicious Activity</CardTitle>
+                <Eye className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {suspiciousActivities.filter(a => !a.resolved).length}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Needs investigation
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Security Events</CardTitle>
+                <CardDescription>Latest authentication and security events</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {securityEvents.slice(0, 5).map((event) => (
+                    <div key={event.id} className="flex items-start space-x-3 p-3 border rounded-lg">
+                      {getEventIcon(event.event)}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm font-medium">
+                            {event.userName || 'Unknown User'}
+                          </p>
+                          <div className="flex items-center space-x-2">
+                            {getRiskBadge(event.riskLevel)}
+                            <span className="text-xs text-muted-foreground">
+                              {new Date(event.timestamp).toLocaleTimeString()}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{event.details}</p>
+                        <div className="flex items-center space-x-4 mt-1">
+                          <span className="text-xs text-muted-foreground">
+                            IP: {event.ipAddress}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            Event: {event.event}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <Button variant="outline" className="w-full mt-4">
+                  View All Events
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Suspicious Activities</CardTitle>
+                <CardDescription>Activities requiring investigation</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {suspiciousActivities.map((activity) => (
+                    <div
+                      key={activity.id}
+                      className={`p-3 border rounded-lg ${
+                        activity.resolved ? 'bg-muted/50' : 'bg-background'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-start space-x-3">
+                          <AlertTriangle className={`h-4 w-4 mt-0.5 ${
+                            activity.resolved ? 'text-muted-foreground' : 'text-red-500'
+                          }`} />
+                          <div className="flex-1">
+                            <p className={`font-medium ${activity.resolved ? 'text-muted-foreground' : ''}`}>
+                              {activity.userName}
+                            </p>
+                            <div className="space-y-1 mt-1">
+                              {activity.reasons.map((reason, index) => (
+                                <p key={index} className="text-sm text-muted-foreground">
+                                  • {reason}
+                                </p>
+                              ))}
+                            </div>
+                            <div className="flex items-center space-x-4 mt-2">
+                              <span className="text-xs text-muted-foreground">
+                                IP: {activity.ipAddress}
+                              </span>
+                              <span className="text-xs text-muted-foreground">
+                                {new Date(activity.timestamp).toLocaleString()}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          {activity.resolved ? (
+                            <Badge variant="secondary">Resolved</Badge>
+                          ) : (
+                            <Button variant="outline" size="sm">
+                              Investigate
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Security Event Log</CardTitle>
+              <CardDescription>Complete audit trail of security events</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Time</TableHead>
+                    <TableHead>User</TableHead>
+                    <TableHead>Event</TableHead>
+                    <TableHead>IP Address</TableHead>
+                    <TableHead>Risk Level</TableHead>
+                    <TableHead>Details</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {securityEvents.map((event) => (
+                    <TableRow key={event.id}>
+                      <TableCell>
+                        <div className="flex items-center space-x-2">
+                          <Clock className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm">
+                            {new Date(event.timestamp).toLocaleString()}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center space-x-2">
+                          {getEventIcon(event.event)}
+                          <span>{event.userName || 'Unknown'}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className="text-xs">
+                          {event.event.replace(/_/g, ' ')}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <span className="font-mono text-sm">{event.ipAddress}</span>
+                      </TableCell>
+                      <TableCell>{getRiskBadge(event.riskLevel)}</TableCell>
+                      <TableCell>
+                        <span className="text-sm text-muted-foreground">
+                          {event.details}
+                        </span>
                       </TableCell>
                     </TableRow>
                   ))}

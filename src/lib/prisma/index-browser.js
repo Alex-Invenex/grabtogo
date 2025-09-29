@@ -130,6 +130,11 @@ exports.Prisma.UserScalarFieldEnum = {
   phone: 'phone',
   role: 'role',
   isActive: 'isActive',
+  accountLocked: 'accountLocked',
+  accountLockedUntil: 'accountLockedUntil',
+  failedAttempts: 'failedAttempts',
+  lastFailedAttempt: 'lastFailedAttempt',
+  passwordChangedAt: 'passwordChangedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -499,6 +504,16 @@ exports.Prisma.VendorAnalyticsScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.SecurityEventScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  event: 'event',
+  details: 'details',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -576,7 +591,8 @@ exports.Prisma.ModelName = {
   SubscriptionPayment: 'SubscriptionPayment',
   VendorStory: 'VendorStory',
   StoryView: 'StoryView',
-  VendorAnalytics: 'VendorAnalytics'
+  VendorAnalytics: 'VendorAnalytics',
+  SecurityEvent: 'SecurityEvent'
 };
 
 /**

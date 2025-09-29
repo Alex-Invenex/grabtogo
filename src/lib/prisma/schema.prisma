@@ -49,8 +49,16 @@ model User {
   phone         String?
   role          UserRole  @default(CUSTOMER)
   isActive      Boolean   @default(true)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+
+  // Security fields
+  accountLocked      Boolean   @default(false)
+  accountLockedUntil DateTime?
+  failedAttempts     Int       @default(0)
+  lastFailedAttempt  DateTime?
+  passwordChangedAt  DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Auth
   accounts Account[]
@@ -79,6 +87,7 @@ model User {
   vendorSubscription VendorSubscription? @relation("VendorSubscription")
   vendorStories      VendorStory[]       @relation("VendorStories")
   vendorAnalytics    VendorAnalytics[]   @relation("VendorAnalytics")
+  securityEvents     SecurityEvent[]
 
   @@map("users")
 }
@@ -635,4 +644,18 @@ model VendorAnalytics {
 
   @@unique([vendorId, date])
   @@map("vendor_analytics")
+}
+
+model SecurityEvent {
+  id        String   @id @default(cuid())
+  userId    String?
+  event     String // login_success, login_failed, password_reset, email_verified, account_locked, etc.
+  details   String? // JSON string with additional details
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("security_events")
 }

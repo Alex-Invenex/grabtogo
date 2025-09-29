@@ -158,6 +158,11 @@ export type StoryView = $Result.DefaultSelection<Prisma.$StoryViewPayload>
  * 
  */
 export type VendorAnalytics = $Result.DefaultSelection<Prisma.$VendorAnalyticsPayload>
+/**
+ * Model SecurityEvent
+ * 
+ */
+export type SecurityEvent = $Result.DefaultSelection<Prisma.$SecurityEventPayload>
 
 /**
  * Enums
@@ -615,6 +620,16 @@ export class PrismaClient<
     * ```
     */
   get vendorAnalytics(): Prisma.VendorAnalyticsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.securityEvent`: Exposes CRUD operations for the **SecurityEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SecurityEvents
+    * const securityEvents = await prisma.securityEvent.findMany()
+    * ```
+    */
+  get securityEvent(): Prisma.SecurityEventDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1083,7 +1098,8 @@ export namespace Prisma {
     SubscriptionPayment: 'SubscriptionPayment',
     VendorStory: 'VendorStory',
     StoryView: 'StoryView',
-    VendorAnalytics: 'VendorAnalytics'
+    VendorAnalytics: 'VendorAnalytics',
+    SecurityEvent: 'SecurityEvent'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1102,7 +1118,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "vendorProfile" | "category" | "product" | "productImage" | "productVariant" | "address" | "cartItem" | "favorite" | "order" | "orderItem" | "payment" | "review" | "reviewImage" | "reviewHelpfulVote" | "searchHistory" | "trendingSearch" | "chat" | "chatParticipant" | "chatMessage" | "notification" | "vendorSubscription" | "subscriptionPayment" | "vendorStory" | "storyView" | "vendorAnalytics"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "vendorProfile" | "category" | "product" | "productImage" | "productVariant" | "address" | "cartItem" | "favorite" | "order" | "orderItem" | "payment" | "review" | "reviewImage" | "reviewHelpfulVote" | "searchHistory" | "trendingSearch" | "chat" | "chatParticipant" | "chatMessage" | "notification" | "vendorSubscription" | "subscriptionPayment" | "vendorStory" | "storyView" | "vendorAnalytics" | "securityEvent"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3252,6 +3268,80 @@ export namespace Prisma {
           }
         }
       }
+      SecurityEvent: {
+        payload: Prisma.$SecurityEventPayload<ExtArgs>
+        fields: Prisma.SecurityEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SecurityEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecurityEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SecurityEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecurityEventPayload>
+          }
+          findFirst: {
+            args: Prisma.SecurityEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecurityEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SecurityEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecurityEventPayload>
+          }
+          findMany: {
+            args: Prisma.SecurityEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecurityEventPayload>[]
+          }
+          create: {
+            args: Prisma.SecurityEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecurityEventPayload>
+          }
+          createMany: {
+            args: Prisma.SecurityEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SecurityEventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecurityEventPayload>[]
+          }
+          delete: {
+            args: Prisma.SecurityEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecurityEventPayload>
+          }
+          update: {
+            args: Prisma.SecurityEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecurityEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.SecurityEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SecurityEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SecurityEventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecurityEventPayload>[]
+          }
+          upsert: {
+            args: Prisma.SecurityEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecurityEventPayload>
+          }
+          aggregate: {
+            args: Prisma.SecurityEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSecurityEvent>
+          }
+          groupBy: {
+            args: Prisma.SecurityEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SecurityEventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SecurityEventCountArgs<ExtArgs>
+            result: $Utils.Optional<SecurityEventCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3377,6 +3467,7 @@ export namespace Prisma {
     vendorStory?: VendorStoryOmit
     storyView?: StoryViewOmit
     vendorAnalytics?: VendorAnalyticsOmit
+    securityEvent?: SecurityEventOmit
   }
 
   /* Types for Logging */
@@ -3475,6 +3566,7 @@ export namespace Prisma {
     products: number
     vendorStories: number
     vendorAnalytics: number
+    securityEvents: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3496,6 +3588,7 @@ export namespace Prisma {
     products?: boolean | UserCountOutputTypeCountProductsArgs
     vendorStories?: boolean | UserCountOutputTypeCountVendorStoriesArgs
     vendorAnalytics?: boolean | UserCountOutputTypeCountVendorAnalyticsArgs
+    securityEvents?: boolean | UserCountOutputTypeCountSecurityEventsArgs
   }
 
   // Custom InputTypes
@@ -3633,6 +3726,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountVendorAnalyticsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: VendorAnalyticsWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSecurityEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SecurityEventWhereInput
   }
 
 
@@ -3984,8 +4084,18 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    failedAttempts: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    failedAttempts: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -3998,6 +4108,11 @@ export namespace Prisma {
     phone: string | null
     role: $Enums.UserRole | null
     isActive: boolean | null
+    accountLocked: boolean | null
+    accountLockedUntil: Date | null
+    failedAttempts: number | null
+    lastFailedAttempt: Date | null
+    passwordChangedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4012,6 +4127,11 @@ export namespace Prisma {
     phone: string | null
     role: $Enums.UserRole | null
     isActive: boolean | null
+    accountLocked: boolean | null
+    accountLockedUntil: Date | null
+    failedAttempts: number | null
+    lastFailedAttempt: Date | null
+    passwordChangedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4026,11 +4146,24 @@ export namespace Prisma {
     phone: number
     role: number
     isActive: number
+    accountLocked: number
+    accountLockedUntil: number
+    failedAttempts: number
+    lastFailedAttempt: number
+    passwordChangedAt: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
+
+  export type UserAvgAggregateInputType = {
+    failedAttempts?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    failedAttempts?: true
+  }
 
   export type UserMinAggregateInputType = {
     id?: true
@@ -4042,6 +4175,11 @@ export namespace Prisma {
     phone?: true
     role?: true
     isActive?: true
+    accountLocked?: true
+    accountLockedUntil?: true
+    failedAttempts?: true
+    lastFailedAttempt?: true
+    passwordChangedAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4056,6 +4194,11 @@ export namespace Prisma {
     phone?: true
     role?: true
     isActive?: true
+    accountLocked?: true
+    accountLockedUntil?: true
+    failedAttempts?: true
+    lastFailedAttempt?: true
+    passwordChangedAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4070,6 +4213,11 @@ export namespace Prisma {
     phone?: true
     role?: true
     isActive?: true
+    accountLocked?: true
+    accountLockedUntil?: true
+    failedAttempts?: true
+    lastFailedAttempt?: true
+    passwordChangedAt?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4113,6 +4261,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -4143,6 +4303,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -4157,9 +4319,16 @@ export namespace Prisma {
     phone: string | null
     role: $Enums.UserRole
     isActive: boolean
+    accountLocked: boolean
+    accountLockedUntil: Date | null
+    failedAttempts: number
+    lastFailedAttempt: Date | null
+    passwordChangedAt: Date | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -4188,6 +4357,11 @@ export namespace Prisma {
     phone?: boolean
     role?: boolean
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: boolean
+    failedAttempts?: boolean
+    lastFailedAttempt?: boolean
+    passwordChangedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
@@ -4210,6 +4384,7 @@ export namespace Prisma {
     vendorSubscription?: boolean | User$vendorSubscriptionArgs<ExtArgs>
     vendorStories?: boolean | User$vendorStoriesArgs<ExtArgs>
     vendorAnalytics?: boolean | User$vendorAnalyticsArgs<ExtArgs>
+    securityEvents?: boolean | User$securityEventsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4223,6 +4398,11 @@ export namespace Prisma {
     phone?: boolean
     role?: boolean
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: boolean
+    failedAttempts?: boolean
+    lastFailedAttempt?: boolean
+    passwordChangedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -4237,6 +4417,11 @@ export namespace Prisma {
     phone?: boolean
     role?: boolean
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: boolean
+    failedAttempts?: boolean
+    lastFailedAttempt?: boolean
+    passwordChangedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -4251,11 +4436,16 @@ export namespace Prisma {
     phone?: boolean
     role?: boolean
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: boolean
+    failedAttempts?: boolean
+    lastFailedAttempt?: boolean
+    passwordChangedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "emailVerified" | "name" | "image" | "password" | "phone" | "role" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "emailVerified" | "name" | "image" | "password" | "phone" | "role" | "isActive" | "accountLocked" | "accountLockedUntil" | "failedAttempts" | "lastFailedAttempt" | "passwordChangedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
@@ -4277,6 +4467,7 @@ export namespace Prisma {
     vendorSubscription?: boolean | User$vendorSubscriptionArgs<ExtArgs>
     vendorStories?: boolean | User$vendorStoriesArgs<ExtArgs>
     vendorAnalytics?: boolean | User$vendorAnalyticsArgs<ExtArgs>
+    securityEvents?: boolean | User$securityEventsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4305,6 +4496,7 @@ export namespace Prisma {
       vendorSubscription: Prisma.$VendorSubscriptionPayload<ExtArgs> | null
       vendorStories: Prisma.$VendorStoryPayload<ExtArgs>[]
       vendorAnalytics: Prisma.$VendorAnalyticsPayload<ExtArgs>[]
+      securityEvents: Prisma.$SecurityEventPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4316,6 +4508,11 @@ export namespace Prisma {
       phone: string | null
       role: $Enums.UserRole
       isActive: boolean
+      accountLocked: boolean
+      accountLockedUntil: Date | null
+      failedAttempts: number
+      lastFailedAttempt: Date | null
+      passwordChangedAt: Date | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -4732,6 +4929,7 @@ export namespace Prisma {
     vendorSubscription<T extends User$vendorSubscriptionArgs<ExtArgs> = {}>(args?: Subset<T, User$vendorSubscriptionArgs<ExtArgs>>): Prisma__VendorSubscriptionClient<$Result.GetResult<Prisma.$VendorSubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     vendorStories<T extends User$vendorStoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$vendorStoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorStoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     vendorAnalytics<T extends User$vendorAnalyticsArgs<ExtArgs> = {}>(args?: Subset<T, User$vendorAnalyticsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorAnalyticsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    securityEvents<T extends User$securityEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$securityEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SecurityEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4770,6 +4968,11 @@ export namespace Prisma {
     readonly phone: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserRole'>
     readonly isActive: FieldRef<"User", 'Boolean'>
+    readonly accountLocked: FieldRef<"User", 'Boolean'>
+    readonly accountLockedUntil: FieldRef<"User", 'DateTime'>
+    readonly failedAttempts: FieldRef<"User", 'Int'>
+    readonly lastFailedAttempt: FieldRef<"User", 'DateTime'>
+    readonly passwordChangedAt: FieldRef<"User", 'DateTime'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -5627,6 +5830,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: VendorAnalyticsScalarFieldEnum | VendorAnalyticsScalarFieldEnum[]
+  }
+
+  /**
+   * User.securityEvents
+   */
+  export type User$securityEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SecurityEvent
+     */
+    select?: SecurityEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SecurityEvent
+     */
+    omit?: SecurityEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SecurityEventInclude<ExtArgs> | null
+    where?: SecurityEventWhereInput
+    orderBy?: SecurityEventOrderByWithRelationInput | SecurityEventOrderByWithRelationInput[]
+    cursor?: SecurityEventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SecurityEventScalarFieldEnum | SecurityEventScalarFieldEnum[]
   }
 
   /**
@@ -38354,6 +38581,1109 @@ export namespace Prisma {
 
 
   /**
+   * Model SecurityEvent
+   */
+
+  export type AggregateSecurityEvent = {
+    _count: SecurityEventCountAggregateOutputType | null
+    _min: SecurityEventMinAggregateOutputType | null
+    _max: SecurityEventMaxAggregateOutputType | null
+  }
+
+  export type SecurityEventMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    event: string | null
+    details: string | null
+    ipAddress: string | null
+    userAgent: string | null
+    createdAt: Date | null
+  }
+
+  export type SecurityEventMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    event: string | null
+    details: string | null
+    ipAddress: string | null
+    userAgent: string | null
+    createdAt: Date | null
+  }
+
+  export type SecurityEventCountAggregateOutputType = {
+    id: number
+    userId: number
+    event: number
+    details: number
+    ipAddress: number
+    userAgent: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type SecurityEventMinAggregateInputType = {
+    id?: true
+    userId?: true
+    event?: true
+    details?: true
+    ipAddress?: true
+    userAgent?: true
+    createdAt?: true
+  }
+
+  export type SecurityEventMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    event?: true
+    details?: true
+    ipAddress?: true
+    userAgent?: true
+    createdAt?: true
+  }
+
+  export type SecurityEventCountAggregateInputType = {
+    id?: true
+    userId?: true
+    event?: true
+    details?: true
+    ipAddress?: true
+    userAgent?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type SecurityEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SecurityEvent to aggregate.
+     */
+    where?: SecurityEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SecurityEvents to fetch.
+     */
+    orderBy?: SecurityEventOrderByWithRelationInput | SecurityEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SecurityEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SecurityEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SecurityEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SecurityEvents
+    **/
+    _count?: true | SecurityEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SecurityEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SecurityEventMaxAggregateInputType
+  }
+
+  export type GetSecurityEventAggregateType<T extends SecurityEventAggregateArgs> = {
+        [P in keyof T & keyof AggregateSecurityEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSecurityEvent[P]>
+      : GetScalarType<T[P], AggregateSecurityEvent[P]>
+  }
+
+
+
+
+  export type SecurityEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SecurityEventWhereInput
+    orderBy?: SecurityEventOrderByWithAggregationInput | SecurityEventOrderByWithAggregationInput[]
+    by: SecurityEventScalarFieldEnum[] | SecurityEventScalarFieldEnum
+    having?: SecurityEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SecurityEventCountAggregateInputType | true
+    _min?: SecurityEventMinAggregateInputType
+    _max?: SecurityEventMaxAggregateInputType
+  }
+
+  export type SecurityEventGroupByOutputType = {
+    id: string
+    userId: string | null
+    event: string
+    details: string | null
+    ipAddress: string | null
+    userAgent: string | null
+    createdAt: Date
+    _count: SecurityEventCountAggregateOutputType | null
+    _min: SecurityEventMinAggregateOutputType | null
+    _max: SecurityEventMaxAggregateOutputType | null
+  }
+
+  type GetSecurityEventGroupByPayload<T extends SecurityEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SecurityEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SecurityEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SecurityEventGroupByOutputType[P]>
+            : GetScalarType<T[P], SecurityEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SecurityEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    event?: boolean
+    details?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    createdAt?: boolean
+    user?: boolean | SecurityEvent$userArgs<ExtArgs>
+  }, ExtArgs["result"]["securityEvent"]>
+
+  export type SecurityEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    event?: boolean
+    details?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    createdAt?: boolean
+    user?: boolean | SecurityEvent$userArgs<ExtArgs>
+  }, ExtArgs["result"]["securityEvent"]>
+
+  export type SecurityEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    event?: boolean
+    details?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    createdAt?: boolean
+    user?: boolean | SecurityEvent$userArgs<ExtArgs>
+  }, ExtArgs["result"]["securityEvent"]>
+
+  export type SecurityEventSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    event?: boolean
+    details?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    createdAt?: boolean
+  }
+
+  export type SecurityEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "event" | "details" | "ipAddress" | "userAgent" | "createdAt", ExtArgs["result"]["securityEvent"]>
+  export type SecurityEventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | SecurityEvent$userArgs<ExtArgs>
+  }
+  export type SecurityEventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | SecurityEvent$userArgs<ExtArgs>
+  }
+  export type SecurityEventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | SecurityEvent$userArgs<ExtArgs>
+  }
+
+  export type $SecurityEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SecurityEvent"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string | null
+      event: string
+      details: string | null
+      ipAddress: string | null
+      userAgent: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["securityEvent"]>
+    composites: {}
+  }
+
+  type SecurityEventGetPayload<S extends boolean | null | undefined | SecurityEventDefaultArgs> = $Result.GetResult<Prisma.$SecurityEventPayload, S>
+
+  type SecurityEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SecurityEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SecurityEventCountAggregateInputType | true
+    }
+
+  export interface SecurityEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SecurityEvent'], meta: { name: 'SecurityEvent' } }
+    /**
+     * Find zero or one SecurityEvent that matches the filter.
+     * @param {SecurityEventFindUniqueArgs} args - Arguments to find a SecurityEvent
+     * @example
+     * // Get one SecurityEvent
+     * const securityEvent = await prisma.securityEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SecurityEventFindUniqueArgs>(args: SelectSubset<T, SecurityEventFindUniqueArgs<ExtArgs>>): Prisma__SecurityEventClient<$Result.GetResult<Prisma.$SecurityEventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SecurityEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SecurityEventFindUniqueOrThrowArgs} args - Arguments to find a SecurityEvent
+     * @example
+     * // Get one SecurityEvent
+     * const securityEvent = await prisma.securityEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SecurityEventFindUniqueOrThrowArgs>(args: SelectSubset<T, SecurityEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SecurityEventClient<$Result.GetResult<Prisma.$SecurityEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SecurityEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecurityEventFindFirstArgs} args - Arguments to find a SecurityEvent
+     * @example
+     * // Get one SecurityEvent
+     * const securityEvent = await prisma.securityEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SecurityEventFindFirstArgs>(args?: SelectSubset<T, SecurityEventFindFirstArgs<ExtArgs>>): Prisma__SecurityEventClient<$Result.GetResult<Prisma.$SecurityEventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SecurityEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecurityEventFindFirstOrThrowArgs} args - Arguments to find a SecurityEvent
+     * @example
+     * // Get one SecurityEvent
+     * const securityEvent = await prisma.securityEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SecurityEventFindFirstOrThrowArgs>(args?: SelectSubset<T, SecurityEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__SecurityEventClient<$Result.GetResult<Prisma.$SecurityEventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SecurityEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecurityEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SecurityEvents
+     * const securityEvents = await prisma.securityEvent.findMany()
+     * 
+     * // Get first 10 SecurityEvents
+     * const securityEvents = await prisma.securityEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const securityEventWithIdOnly = await prisma.securityEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SecurityEventFindManyArgs>(args?: SelectSubset<T, SecurityEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SecurityEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SecurityEvent.
+     * @param {SecurityEventCreateArgs} args - Arguments to create a SecurityEvent.
+     * @example
+     * // Create one SecurityEvent
+     * const SecurityEvent = await prisma.securityEvent.create({
+     *   data: {
+     *     // ... data to create a SecurityEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends SecurityEventCreateArgs>(args: SelectSubset<T, SecurityEventCreateArgs<ExtArgs>>): Prisma__SecurityEventClient<$Result.GetResult<Prisma.$SecurityEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SecurityEvents.
+     * @param {SecurityEventCreateManyArgs} args - Arguments to create many SecurityEvents.
+     * @example
+     * // Create many SecurityEvents
+     * const securityEvent = await prisma.securityEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SecurityEventCreateManyArgs>(args?: SelectSubset<T, SecurityEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SecurityEvents and returns the data saved in the database.
+     * @param {SecurityEventCreateManyAndReturnArgs} args - Arguments to create many SecurityEvents.
+     * @example
+     * // Create many SecurityEvents
+     * const securityEvent = await prisma.securityEvent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SecurityEvents and only return the `id`
+     * const securityEventWithIdOnly = await prisma.securityEvent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SecurityEventCreateManyAndReturnArgs>(args?: SelectSubset<T, SecurityEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SecurityEventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SecurityEvent.
+     * @param {SecurityEventDeleteArgs} args - Arguments to delete one SecurityEvent.
+     * @example
+     * // Delete one SecurityEvent
+     * const SecurityEvent = await prisma.securityEvent.delete({
+     *   where: {
+     *     // ... filter to delete one SecurityEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SecurityEventDeleteArgs>(args: SelectSubset<T, SecurityEventDeleteArgs<ExtArgs>>): Prisma__SecurityEventClient<$Result.GetResult<Prisma.$SecurityEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SecurityEvent.
+     * @param {SecurityEventUpdateArgs} args - Arguments to update one SecurityEvent.
+     * @example
+     * // Update one SecurityEvent
+     * const securityEvent = await prisma.securityEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SecurityEventUpdateArgs>(args: SelectSubset<T, SecurityEventUpdateArgs<ExtArgs>>): Prisma__SecurityEventClient<$Result.GetResult<Prisma.$SecurityEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SecurityEvents.
+     * @param {SecurityEventDeleteManyArgs} args - Arguments to filter SecurityEvents to delete.
+     * @example
+     * // Delete a few SecurityEvents
+     * const { count } = await prisma.securityEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SecurityEventDeleteManyArgs>(args?: SelectSubset<T, SecurityEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SecurityEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecurityEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SecurityEvents
+     * const securityEvent = await prisma.securityEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SecurityEventUpdateManyArgs>(args: SelectSubset<T, SecurityEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SecurityEvents and returns the data updated in the database.
+     * @param {SecurityEventUpdateManyAndReturnArgs} args - Arguments to update many SecurityEvents.
+     * @example
+     * // Update many SecurityEvents
+     * const securityEvent = await prisma.securityEvent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SecurityEvents and only return the `id`
+     * const securityEventWithIdOnly = await prisma.securityEvent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SecurityEventUpdateManyAndReturnArgs>(args: SelectSubset<T, SecurityEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SecurityEventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SecurityEvent.
+     * @param {SecurityEventUpsertArgs} args - Arguments to update or create a SecurityEvent.
+     * @example
+     * // Update or create a SecurityEvent
+     * const securityEvent = await prisma.securityEvent.upsert({
+     *   create: {
+     *     // ... data to create a SecurityEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SecurityEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SecurityEventUpsertArgs>(args: SelectSubset<T, SecurityEventUpsertArgs<ExtArgs>>): Prisma__SecurityEventClient<$Result.GetResult<Prisma.$SecurityEventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SecurityEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecurityEventCountArgs} args - Arguments to filter SecurityEvents to count.
+     * @example
+     * // Count the number of SecurityEvents
+     * const count = await prisma.securityEvent.count({
+     *   where: {
+     *     // ... the filter for the SecurityEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends SecurityEventCountArgs>(
+      args?: Subset<T, SecurityEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SecurityEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SecurityEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecurityEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SecurityEventAggregateArgs>(args: Subset<T, SecurityEventAggregateArgs>): Prisma.PrismaPromise<GetSecurityEventAggregateType<T>>
+
+    /**
+     * Group by SecurityEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecurityEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SecurityEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SecurityEventGroupByArgs['orderBy'] }
+        : { orderBy?: SecurityEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SecurityEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSecurityEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SecurityEvent model
+   */
+  readonly fields: SecurityEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SecurityEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SecurityEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends SecurityEvent$userArgs<ExtArgs> = {}>(args?: Subset<T, SecurityEvent$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SecurityEvent model
+   */
+  interface SecurityEventFieldRefs {
+    readonly id: FieldRef<"SecurityEvent", 'String'>
+    readonly userId: FieldRef<"SecurityEvent", 'String'>
+    readonly event: FieldRef<"SecurityEvent", 'String'>
+    readonly details: FieldRef<"SecurityEvent", 'String'>
+    readonly ipAddress: FieldRef<"SecurityEvent", 'String'>
+    readonly userAgent: FieldRef<"SecurityEvent", 'String'>
+    readonly createdAt: FieldRef<"SecurityEvent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SecurityEvent findUnique
+   */
+  export type SecurityEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SecurityEvent
+     */
+    select?: SecurityEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SecurityEvent
+     */
+    omit?: SecurityEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SecurityEventInclude<ExtArgs> | null
+    /**
+     * Filter, which SecurityEvent to fetch.
+     */
+    where: SecurityEventWhereUniqueInput
+  }
+
+  /**
+   * SecurityEvent findUniqueOrThrow
+   */
+  export type SecurityEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SecurityEvent
+     */
+    select?: SecurityEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SecurityEvent
+     */
+    omit?: SecurityEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SecurityEventInclude<ExtArgs> | null
+    /**
+     * Filter, which SecurityEvent to fetch.
+     */
+    where: SecurityEventWhereUniqueInput
+  }
+
+  /**
+   * SecurityEvent findFirst
+   */
+  export type SecurityEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SecurityEvent
+     */
+    select?: SecurityEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SecurityEvent
+     */
+    omit?: SecurityEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SecurityEventInclude<ExtArgs> | null
+    /**
+     * Filter, which SecurityEvent to fetch.
+     */
+    where?: SecurityEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SecurityEvents to fetch.
+     */
+    orderBy?: SecurityEventOrderByWithRelationInput | SecurityEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SecurityEvents.
+     */
+    cursor?: SecurityEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SecurityEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SecurityEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SecurityEvents.
+     */
+    distinct?: SecurityEventScalarFieldEnum | SecurityEventScalarFieldEnum[]
+  }
+
+  /**
+   * SecurityEvent findFirstOrThrow
+   */
+  export type SecurityEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SecurityEvent
+     */
+    select?: SecurityEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SecurityEvent
+     */
+    omit?: SecurityEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SecurityEventInclude<ExtArgs> | null
+    /**
+     * Filter, which SecurityEvent to fetch.
+     */
+    where?: SecurityEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SecurityEvents to fetch.
+     */
+    orderBy?: SecurityEventOrderByWithRelationInput | SecurityEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SecurityEvents.
+     */
+    cursor?: SecurityEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SecurityEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SecurityEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SecurityEvents.
+     */
+    distinct?: SecurityEventScalarFieldEnum | SecurityEventScalarFieldEnum[]
+  }
+
+  /**
+   * SecurityEvent findMany
+   */
+  export type SecurityEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SecurityEvent
+     */
+    select?: SecurityEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SecurityEvent
+     */
+    omit?: SecurityEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SecurityEventInclude<ExtArgs> | null
+    /**
+     * Filter, which SecurityEvents to fetch.
+     */
+    where?: SecurityEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SecurityEvents to fetch.
+     */
+    orderBy?: SecurityEventOrderByWithRelationInput | SecurityEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SecurityEvents.
+     */
+    cursor?: SecurityEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SecurityEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SecurityEvents.
+     */
+    skip?: number
+    distinct?: SecurityEventScalarFieldEnum | SecurityEventScalarFieldEnum[]
+  }
+
+  /**
+   * SecurityEvent create
+   */
+  export type SecurityEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SecurityEvent
+     */
+    select?: SecurityEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SecurityEvent
+     */
+    omit?: SecurityEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SecurityEventInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SecurityEvent.
+     */
+    data: XOR<SecurityEventCreateInput, SecurityEventUncheckedCreateInput>
+  }
+
+  /**
+   * SecurityEvent createMany
+   */
+  export type SecurityEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SecurityEvents.
+     */
+    data: SecurityEventCreateManyInput | SecurityEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SecurityEvent createManyAndReturn
+   */
+  export type SecurityEventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SecurityEvent
+     */
+    select?: SecurityEventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SecurityEvent
+     */
+    omit?: SecurityEventOmit<ExtArgs> | null
+    /**
+     * The data used to create many SecurityEvents.
+     */
+    data: SecurityEventCreateManyInput | SecurityEventCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SecurityEventIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SecurityEvent update
+   */
+  export type SecurityEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SecurityEvent
+     */
+    select?: SecurityEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SecurityEvent
+     */
+    omit?: SecurityEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SecurityEventInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SecurityEvent.
+     */
+    data: XOR<SecurityEventUpdateInput, SecurityEventUncheckedUpdateInput>
+    /**
+     * Choose, which SecurityEvent to update.
+     */
+    where: SecurityEventWhereUniqueInput
+  }
+
+  /**
+   * SecurityEvent updateMany
+   */
+  export type SecurityEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SecurityEvents.
+     */
+    data: XOR<SecurityEventUpdateManyMutationInput, SecurityEventUncheckedUpdateManyInput>
+    /**
+     * Filter which SecurityEvents to update
+     */
+    where?: SecurityEventWhereInput
+    /**
+     * Limit how many SecurityEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SecurityEvent updateManyAndReturn
+   */
+  export type SecurityEventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SecurityEvent
+     */
+    select?: SecurityEventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SecurityEvent
+     */
+    omit?: SecurityEventOmit<ExtArgs> | null
+    /**
+     * The data used to update SecurityEvents.
+     */
+    data: XOR<SecurityEventUpdateManyMutationInput, SecurityEventUncheckedUpdateManyInput>
+    /**
+     * Filter which SecurityEvents to update
+     */
+    where?: SecurityEventWhereInput
+    /**
+     * Limit how many SecurityEvents to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SecurityEventIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SecurityEvent upsert
+   */
+  export type SecurityEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SecurityEvent
+     */
+    select?: SecurityEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SecurityEvent
+     */
+    omit?: SecurityEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SecurityEventInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SecurityEvent to update in case it exists.
+     */
+    where: SecurityEventWhereUniqueInput
+    /**
+     * In case the SecurityEvent found by the `where` argument doesn't exist, create a new SecurityEvent with this data.
+     */
+    create: XOR<SecurityEventCreateInput, SecurityEventUncheckedCreateInput>
+    /**
+     * In case the SecurityEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SecurityEventUpdateInput, SecurityEventUncheckedUpdateInput>
+  }
+
+  /**
+   * SecurityEvent delete
+   */
+  export type SecurityEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SecurityEvent
+     */
+    select?: SecurityEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SecurityEvent
+     */
+    omit?: SecurityEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SecurityEventInclude<ExtArgs> | null
+    /**
+     * Filter which SecurityEvent to delete.
+     */
+    where: SecurityEventWhereUniqueInput
+  }
+
+  /**
+   * SecurityEvent deleteMany
+   */
+  export type SecurityEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SecurityEvents to delete
+     */
+    where?: SecurityEventWhereInput
+    /**
+     * Limit how many SecurityEvents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SecurityEvent.user
+   */
+  export type SecurityEvent$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * SecurityEvent without action
+   */
+  export type SecurityEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SecurityEvent
+     */
+    select?: SecurityEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SecurityEvent
+     */
+    omit?: SecurityEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SecurityEventInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -38377,6 +39707,11 @@ export namespace Prisma {
     phone: 'phone',
     role: 'role',
     isActive: 'isActive',
+    accountLocked: 'accountLocked',
+    accountLockedUntil: 'accountLockedUntil',
+    failedAttempts: 'failedAttempts',
+    lastFailedAttempt: 'lastFailedAttempt',
+    passwordChangedAt: 'passwordChangedAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -38833,6 +40168,19 @@ export namespace Prisma {
   export type VendorAnalyticsScalarFieldEnum = (typeof VendorAnalyticsScalarFieldEnum)[keyof typeof VendorAnalyticsScalarFieldEnum]
 
 
+  export const SecurityEventScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    event: 'event',
+    details: 'details',
+    ipAddress: 'ipAddress',
+    userAgent: 'userAgent',
+    createdAt: 'createdAt'
+  };
+
+  export type SecurityEventScalarFieldEnum = (typeof SecurityEventScalarFieldEnum)[keyof typeof SecurityEventScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -39028,6 +40376,11 @@ export namespace Prisma {
     phone?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     isActive?: BoolFilter<"User"> | boolean
+    accountLocked?: BoolFilter<"User"> | boolean
+    accountLockedUntil?: DateTimeNullableFilter<"User"> | Date | string | null
+    failedAttempts?: IntFilter<"User"> | number
+    lastFailedAttempt?: DateTimeNullableFilter<"User"> | Date | string | null
+    passwordChangedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
@@ -39050,6 +40403,7 @@ export namespace Prisma {
     vendorSubscription?: XOR<VendorSubscriptionNullableScalarRelationFilter, VendorSubscriptionWhereInput> | null
     vendorStories?: VendorStoryListRelationFilter
     vendorAnalytics?: VendorAnalyticsListRelationFilter
+    securityEvents?: SecurityEventListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -39062,6 +40416,11 @@ export namespace Prisma {
     phone?: SortOrderInput | SortOrder
     role?: SortOrder
     isActive?: SortOrder
+    accountLocked?: SortOrder
+    accountLockedUntil?: SortOrderInput | SortOrder
+    failedAttempts?: SortOrder
+    lastFailedAttempt?: SortOrderInput | SortOrder
+    passwordChangedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     accounts?: AccountOrderByRelationAggregateInput
@@ -39084,6 +40443,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionOrderByWithRelationInput
     vendorStories?: VendorStoryOrderByRelationAggregateInput
     vendorAnalytics?: VendorAnalyticsOrderByRelationAggregateInput
+    securityEvents?: SecurityEventOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -39099,6 +40459,11 @@ export namespace Prisma {
     phone?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     isActive?: BoolFilter<"User"> | boolean
+    accountLocked?: BoolFilter<"User"> | boolean
+    accountLockedUntil?: DateTimeNullableFilter<"User"> | Date | string | null
+    failedAttempts?: IntFilter<"User"> | number
+    lastFailedAttempt?: DateTimeNullableFilter<"User"> | Date | string | null
+    passwordChangedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
@@ -39121,6 +40486,7 @@ export namespace Prisma {
     vendorSubscription?: XOR<VendorSubscriptionNullableScalarRelationFilter, VendorSubscriptionWhereInput> | null
     vendorStories?: VendorStoryListRelationFilter
     vendorAnalytics?: VendorAnalyticsListRelationFilter
+    securityEvents?: SecurityEventListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -39133,11 +40499,18 @@ export namespace Prisma {
     phone?: SortOrderInput | SortOrder
     role?: SortOrder
     isActive?: SortOrder
+    accountLocked?: SortOrder
+    accountLockedUntil?: SortOrderInput | SortOrder
+    failedAttempts?: SortOrder
+    lastFailedAttempt?: SortOrderInput | SortOrder
+    passwordChangedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -39153,6 +40526,11 @@ export namespace Prisma {
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     isActive?: BoolWithAggregatesFilter<"User"> | boolean
+    accountLocked?: BoolWithAggregatesFilter<"User"> | boolean
+    accountLockedUntil?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    failedAttempts?: IntWithAggregatesFilter<"User"> | number
+    lastFailedAttempt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    passwordChangedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -41531,6 +42909,71 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"VendorAnalytics"> | Date | string
   }
 
+  export type SecurityEventWhereInput = {
+    AND?: SecurityEventWhereInput | SecurityEventWhereInput[]
+    OR?: SecurityEventWhereInput[]
+    NOT?: SecurityEventWhereInput | SecurityEventWhereInput[]
+    id?: StringFilter<"SecurityEvent"> | string
+    userId?: StringNullableFilter<"SecurityEvent"> | string | null
+    event?: StringFilter<"SecurityEvent"> | string
+    details?: StringNullableFilter<"SecurityEvent"> | string | null
+    ipAddress?: StringNullableFilter<"SecurityEvent"> | string | null
+    userAgent?: StringNullableFilter<"SecurityEvent"> | string | null
+    createdAt?: DateTimeFilter<"SecurityEvent"> | Date | string
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type SecurityEventOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    event?: SortOrder
+    details?: SortOrderInput | SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type SecurityEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SecurityEventWhereInput | SecurityEventWhereInput[]
+    OR?: SecurityEventWhereInput[]
+    NOT?: SecurityEventWhereInput | SecurityEventWhereInput[]
+    userId?: StringNullableFilter<"SecurityEvent"> | string | null
+    event?: StringFilter<"SecurityEvent"> | string
+    details?: StringNullableFilter<"SecurityEvent"> | string | null
+    ipAddress?: StringNullableFilter<"SecurityEvent"> | string | null
+    userAgent?: StringNullableFilter<"SecurityEvent"> | string | null
+    createdAt?: DateTimeFilter<"SecurityEvent"> | Date | string
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type SecurityEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    event?: SortOrder
+    details?: SortOrderInput | SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: SecurityEventCountOrderByAggregateInput
+    _max?: SecurityEventMaxOrderByAggregateInput
+    _min?: SecurityEventMinOrderByAggregateInput
+  }
+
+  export type SecurityEventScalarWhereWithAggregatesInput = {
+    AND?: SecurityEventScalarWhereWithAggregatesInput | SecurityEventScalarWhereWithAggregatesInput[]
+    OR?: SecurityEventScalarWhereWithAggregatesInput[]
+    NOT?: SecurityEventScalarWhereWithAggregatesInput | SecurityEventScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SecurityEvent"> | string
+    userId?: StringNullableWithAggregatesFilter<"SecurityEvent"> | string | null
+    event?: StringWithAggregatesFilter<"SecurityEvent"> | string
+    details?: StringNullableWithAggregatesFilter<"SecurityEvent"> | string | null
+    ipAddress?: StringNullableWithAggregatesFilter<"SecurityEvent"> | string | null
+    userAgent?: StringNullableWithAggregatesFilter<"SecurityEvent"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"SecurityEvent"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -41541,6 +42984,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -41563,6 +43011,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -41575,6 +43024,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -41597,6 +43051,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -41609,6 +43064,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -41631,6 +43091,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -41643,6 +43104,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -41665,6 +43131,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -41677,6 +43144,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -41691,6 +43163,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -41705,6 +43182,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -44298,6 +45780,75 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SecurityEventCreateInput = {
+    id?: string
+    event: string
+    details?: string | null
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+    user?: UserCreateNestedOneWithoutSecurityEventsInput
+  }
+
+  export type SecurityEventUncheckedCreateInput = {
+    id?: string
+    userId?: string | null
+    event: string
+    details?: string | null
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SecurityEventUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutSecurityEventsNestedInput
+  }
+
+  export type SecurityEventUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    event?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SecurityEventCreateManyInput = {
+    id?: string
+    userId?: string | null
+    event: string
+    details?: string | null
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SecurityEventUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SecurityEventUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    event?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -44349,6 +45900,17 @@ export namespace Prisma {
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -44474,6 +46036,12 @@ export namespace Prisma {
     none?: VendorAnalyticsWhereInput
   }
 
+  export type SecurityEventListRelationFilter = {
+    every?: SecurityEventWhereInput
+    some?: SecurityEventWhereInput
+    none?: SecurityEventWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -44547,6 +46115,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type SecurityEventOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
@@ -44557,8 +46129,17 @@ export namespace Prisma {
     phone?: SortOrder
     role?: SortOrder
     isActive?: SortOrder
+    accountLocked?: SortOrder
+    accountLockedUntil?: SortOrder
+    failedAttempts?: SortOrder
+    lastFailedAttempt?: SortOrder
+    passwordChangedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    failedAttempts?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -44571,6 +46152,11 @@ export namespace Prisma {
     phone?: SortOrder
     role?: SortOrder
     isActive?: SortOrder
+    accountLocked?: SortOrder
+    accountLockedUntil?: SortOrder
+    failedAttempts?: SortOrder
+    lastFailedAttempt?: SortOrder
+    passwordChangedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -44585,8 +46171,17 @@ export namespace Prisma {
     phone?: SortOrder
     role?: SortOrder
     isActive?: SortOrder
+    accountLocked?: SortOrder
+    accountLockedUntil?: SortOrder
+    failedAttempts?: SortOrder
+    lastFailedAttempt?: SortOrder
+    passwordChangedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    failedAttempts?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -44655,6 +46250,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -44916,17 +46527,6 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type CategoryNullableScalarRelationFilter = {
     is?: CategoryWhereInput | null
     isNot?: CategoryWhereInput | null
@@ -44987,22 +46587,6 @@ export namespace Prisma {
 
   export type CategorySumOrderByAggregateInput = {
     sortOrder?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type DecimalFilter<$PrismaModel = never> = {
@@ -46388,6 +47972,36 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type SecurityEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    event?: SortOrder
+    details?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SecurityEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    event?: SortOrder
+    details?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SecurityEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    event?: SortOrder
+    details?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    createdAt?: SortOrder
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -46524,6 +48138,13 @@ export namespace Prisma {
     connectOrCreate?: VendorAnalyticsCreateOrConnectWithoutVendorInput | VendorAnalyticsCreateOrConnectWithoutVendorInput[]
     createMany?: VendorAnalyticsCreateManyVendorInputEnvelope
     connect?: VendorAnalyticsWhereUniqueInput | VendorAnalyticsWhereUniqueInput[]
+  }
+
+  export type SecurityEventCreateNestedManyWithoutUserInput = {
+    create?: XOR<SecurityEventCreateWithoutUserInput, SecurityEventUncheckedCreateWithoutUserInput> | SecurityEventCreateWithoutUserInput[] | SecurityEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SecurityEventCreateOrConnectWithoutUserInput | SecurityEventCreateOrConnectWithoutUserInput[]
+    createMany?: SecurityEventCreateManyUserInputEnvelope
+    connect?: SecurityEventWhereUniqueInput | SecurityEventWhereUniqueInput[]
   }
 
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
@@ -46664,6 +48285,13 @@ export namespace Prisma {
     connect?: VendorAnalyticsWhereUniqueInput | VendorAnalyticsWhereUniqueInput[]
   }
 
+  export type SecurityEventUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SecurityEventCreateWithoutUserInput, SecurityEventUncheckedCreateWithoutUserInput> | SecurityEventCreateWithoutUserInput[] | SecurityEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SecurityEventCreateOrConnectWithoutUserInput | SecurityEventCreateOrConnectWithoutUserInput[]
+    createMany?: SecurityEventCreateManyUserInputEnvelope
+    connect?: SecurityEventWhereUniqueInput | SecurityEventWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -46682,6 +48310,14 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -46960,6 +48596,20 @@ export namespace Prisma {
     deleteMany?: VendorAnalyticsScalarWhereInput | VendorAnalyticsScalarWhereInput[]
   }
 
+  export type SecurityEventUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SecurityEventCreateWithoutUserInput, SecurityEventUncheckedCreateWithoutUserInput> | SecurityEventCreateWithoutUserInput[] | SecurityEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SecurityEventCreateOrConnectWithoutUserInput | SecurityEventCreateOrConnectWithoutUserInput[]
+    upsert?: SecurityEventUpsertWithWhereUniqueWithoutUserInput | SecurityEventUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SecurityEventCreateManyUserInputEnvelope
+    set?: SecurityEventWhereUniqueInput | SecurityEventWhereUniqueInput[]
+    disconnect?: SecurityEventWhereUniqueInput | SecurityEventWhereUniqueInput[]
+    delete?: SecurityEventWhereUniqueInput | SecurityEventWhereUniqueInput[]
+    connect?: SecurityEventWhereUniqueInput | SecurityEventWhereUniqueInput[]
+    update?: SecurityEventUpdateWithWhereUniqueWithoutUserInput | SecurityEventUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SecurityEventUpdateManyWithWhereWithoutUserInput | SecurityEventUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SecurityEventScalarWhereInput | SecurityEventScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -47232,6 +48882,20 @@ export namespace Prisma {
     deleteMany?: VendorAnalyticsScalarWhereInput | VendorAnalyticsScalarWhereInput[]
   }
 
+  export type SecurityEventUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SecurityEventCreateWithoutUserInput, SecurityEventUncheckedCreateWithoutUserInput> | SecurityEventCreateWithoutUserInput[] | SecurityEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SecurityEventCreateOrConnectWithoutUserInput | SecurityEventCreateOrConnectWithoutUserInput[]
+    upsert?: SecurityEventUpsertWithWhereUniqueWithoutUserInput | SecurityEventUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SecurityEventCreateManyUserInputEnvelope
+    set?: SecurityEventWhereUniqueInput | SecurityEventWhereUniqueInput[]
+    disconnect?: SecurityEventWhereUniqueInput | SecurityEventWhereUniqueInput[]
+    delete?: SecurityEventWhereUniqueInput | SecurityEventWhereUniqueInput[]
+    connect?: SecurityEventWhereUniqueInput | SecurityEventWhereUniqueInput[]
+    update?: SecurityEventUpdateWithWhereUniqueWithoutUserInput | SecurityEventUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SecurityEventUpdateManyWithWhereWithoutUserInput | SecurityEventUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SecurityEventScalarWhereInput | SecurityEventScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutAccountsInput = {
     create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
@@ -47322,14 +48986,6 @@ export namespace Prisma {
     connectOrCreate?: ProductCreateOrConnectWithoutCategoryInput | ProductCreateOrConnectWithoutCategoryInput[]
     createMany?: ProductCreateManyCategoryInputEnvelope
     connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type CategoryUpdateOneWithoutChildrenNestedInput = {
@@ -48598,6 +50254,22 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutVendorAnalyticsInput, UserUpdateWithoutVendorAnalyticsInput>, UserUncheckedUpdateWithoutVendorAnalyticsInput>
   }
 
+  export type UserCreateNestedOneWithoutSecurityEventsInput = {
+    create?: XOR<UserCreateWithoutSecurityEventsInput, UserUncheckedCreateWithoutSecurityEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSecurityEventsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneWithoutSecurityEventsNestedInput = {
+    create?: XOR<UserCreateWithoutSecurityEventsInput, UserUncheckedCreateWithoutSecurityEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSecurityEventsInput
+    upsert?: UserUpsertWithoutSecurityEventsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSecurityEventsInput, UserUpdateWithoutSecurityEventsInput>, UserUncheckedUpdateWithoutSecurityEventsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -48649,6 +50321,17 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -48675,17 +50358,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -48748,6 +50420,33 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -48803,33 +50502,6 @@ export namespace Prisma {
     _sum?: NestedFloatNullableFilter<$PrismaModel>
     _min?: NestedFloatNullableFilter<$PrismaModel>
     _max?: NestedFloatNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedDecimalFilter<$PrismaModel = never> = {
@@ -49697,6 +51369,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SecurityEventCreateWithoutUserInput = {
+    id?: string
+    event: string
+    details?: string | null
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SecurityEventUncheckedCreateWithoutUserInput = {
+    id?: string
+    event: string
+    details?: string | null
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SecurityEventCreateOrConnectWithoutUserInput = {
+    where: SecurityEventWhereUniqueInput
+    create: XOR<SecurityEventCreateWithoutUserInput, SecurityEventUncheckedCreateWithoutUserInput>
+  }
+
+  export type SecurityEventCreateManyUserInputEnvelope = {
+    data: SecurityEventCreateManyUserInput | SecurityEventCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -50367,6 +52067,35 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"VendorAnalytics"> | Date | string
   }
 
+  export type SecurityEventUpsertWithWhereUniqueWithoutUserInput = {
+    where: SecurityEventWhereUniqueInput
+    update: XOR<SecurityEventUpdateWithoutUserInput, SecurityEventUncheckedUpdateWithoutUserInput>
+    create: XOR<SecurityEventCreateWithoutUserInput, SecurityEventUncheckedCreateWithoutUserInput>
+  }
+
+  export type SecurityEventUpdateWithWhereUniqueWithoutUserInput = {
+    where: SecurityEventWhereUniqueInput
+    data: XOR<SecurityEventUpdateWithoutUserInput, SecurityEventUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SecurityEventUpdateManyWithWhereWithoutUserInput = {
+    where: SecurityEventScalarWhereInput
+    data: XOR<SecurityEventUpdateManyMutationInput, SecurityEventUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SecurityEventScalarWhereInput = {
+    AND?: SecurityEventScalarWhereInput | SecurityEventScalarWhereInput[]
+    OR?: SecurityEventScalarWhereInput[]
+    NOT?: SecurityEventScalarWhereInput | SecurityEventScalarWhereInput[]
+    id?: StringFilter<"SecurityEvent"> | string
+    userId?: StringNullableFilter<"SecurityEvent"> | string | null
+    event?: StringFilter<"SecurityEvent"> | string
+    details?: StringNullableFilter<"SecurityEvent"> | string | null
+    ipAddress?: StringNullableFilter<"SecurityEvent"> | string | null
+    userAgent?: StringNullableFilter<"SecurityEvent"> | string | null
+    createdAt?: DateTimeFilter<"SecurityEvent"> | Date | string
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     email: string
@@ -50377,6 +52106,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
@@ -50398,6 +52132,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -50410,6 +52145,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
@@ -50431,6 +52171,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -50459,6 +52200,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
@@ -50480,6 +52226,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -50492,6 +52239,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -50513,6 +52265,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -50525,6 +52278,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -50546,6 +52304,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -50558,6 +52317,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -50579,6 +52343,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -50607,6 +52372,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -50628,6 +52398,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -50640,6 +52411,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -50661,6 +52437,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutVendorProfileInput = {
@@ -50673,6 +52450,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -50694,6 +52476,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVendorProfileInput = {
@@ -50706,6 +52489,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -50727,6 +52515,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVendorProfileInput = {
@@ -50755,6 +52544,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -50776,6 +52570,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVendorProfileInput = {
@@ -50788,6 +52583,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -50809,6 +52609,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CategoryCreateWithoutChildrenInput = {
@@ -51059,6 +52860,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -51080,6 +52886,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProductsInput = {
@@ -51092,6 +52899,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -51113,6 +52925,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProductsInput = {
@@ -51350,6 +53163,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -51371,6 +53189,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProductsInput = {
@@ -51383,6 +53202,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -51404,6 +53228,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CategoryUpsertWithoutProductsInput = {
@@ -51904,6 +53729,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -51925,6 +53755,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAddressesInput = {
@@ -51937,6 +53768,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -51958,6 +53794,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAddressesInput = {
@@ -52090,6 +53927,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -52111,6 +53953,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAddressesInput = {
@@ -52123,6 +53966,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -52144,6 +53992,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrderUpsertWithWhereUniqueWithoutShippingAddressInput = {
@@ -52188,6 +54037,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -52209,6 +54063,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCartItemsInput = {
@@ -52221,6 +54076,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -52242,6 +54102,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCartItemsInput = {
@@ -52345,6 +54206,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -52366,6 +54232,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCartItemsInput = {
@@ -52378,6 +54245,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -52399,6 +54271,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductUpsertWithoutCartItemsInput = {
@@ -52492,6 +54365,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -52513,6 +54391,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFavoritesInput = {
@@ -52525,6 +54404,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -52546,6 +54430,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFavoritesInput = {
@@ -52649,6 +54534,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -52670,6 +54560,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFavoritesInput = {
@@ -52682,6 +54573,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -52703,6 +54599,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductUpsertWithoutFavoritesInput = {
@@ -52796,6 +54693,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -52817,6 +54719,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutOrdersInput = {
@@ -52829,6 +54732,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -52850,6 +54758,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutOrdersInput = {
@@ -53050,6 +54959,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -53071,6 +54985,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -53083,6 +54998,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -53104,6 +55024,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AddressUpsertWithoutOrdersShippingInput = {
@@ -53635,6 +55556,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -53656,6 +55582,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -53668,6 +55595,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -53689,6 +55621,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -53840,6 +55773,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -53861,6 +55799,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -53873,6 +55812,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -53894,6 +55838,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProductUpsertWithoutReviewsInput = {
@@ -54135,6 +56080,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -54156,6 +56106,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewVotesInput = {
@@ -54168,6 +56119,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -54189,6 +56145,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewVotesInput = {
@@ -54256,6 +56213,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -54277,6 +56239,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewVotesInput = {
@@ -54289,6 +56252,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -54310,6 +56278,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSearchHistoryInput = {
@@ -54322,6 +56291,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -54343,6 +56317,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSearchHistoryInput = {
@@ -54355,6 +56330,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -54376,6 +56356,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSearchHistoryInput = {
@@ -54404,6 +56385,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -54425,6 +56411,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSearchHistoryInput = {
@@ -54437,6 +56424,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -54458,6 +56450,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCreatedChatsInput = {
@@ -54470,6 +56463,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -54491,6 +56489,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedChatsInput = {
@@ -54503,6 +56502,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -54524,6 +56528,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreatedChatsInput = {
@@ -54610,6 +56615,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -54631,6 +56641,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedChatsInput = {
@@ -54643,6 +56654,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -54664,6 +56680,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ChatParticipantUpsertWithWhereUniqueWithoutChatInput = {
@@ -54733,6 +56750,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -54754,6 +56776,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChatParticipantsInput = {
@@ -54766,6 +56789,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -54787,6 +56815,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChatParticipantsInput = {
@@ -54846,6 +56875,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -54867,6 +56901,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatParticipantsInput = {
@@ -54879,6 +56914,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -54900,6 +56940,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ChatCreateWithoutMessagesInput = {
@@ -54937,6 +56978,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -54958,6 +57004,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -54970,6 +57017,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -54991,6 +57043,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -55008,6 +57061,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -55029,6 +57087,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReceivedMessagesInput = {
@@ -55041,6 +57100,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -55062,6 +57126,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReceivedMessagesInput = {
@@ -55121,6 +57186,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -55142,6 +57212,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -55154,6 +57225,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -55175,6 +57251,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReceivedMessagesInput = {
@@ -55198,6 +57275,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -55219,6 +57301,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
@@ -55231,6 +57314,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -55252,6 +57340,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -55264,6 +57353,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -55285,6 +57379,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -55297,6 +57392,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -55318,6 +57418,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -55346,6 +57447,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -55367,6 +57473,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -55379,6 +57486,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -55400,6 +57512,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutVendorSubscriptionInput = {
@@ -55412,6 +57525,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -55433,6 +57551,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVendorSubscriptionInput = {
@@ -55445,6 +57564,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -55466,6 +57590,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVendorSubscriptionInput = {
@@ -55530,6 +57655,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -55551,6 +57681,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVendorSubscriptionInput = {
@@ -55563,6 +57694,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -55584,6 +57720,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SubscriptionPaymentUpsertWithWhereUniqueWithoutSubscriptionInput = {
@@ -55733,6 +57870,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -55754,6 +57896,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutVendorInput
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVendorStoriesInput = {
@@ -55766,6 +57909,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -55787,6 +57935,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutVendorInput
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVendorStoriesInput = {
@@ -55837,6 +57986,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -55858,6 +58012,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutVendorNestedInput
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVendorStoriesInput = {
@@ -55870,6 +58025,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -55891,6 +58051,7 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutVendorNestedInput
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type StoryViewUpsertWithWhereUniqueWithoutStoryInput = {
@@ -55950,6 +58111,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -55971,6 +58137,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStoryViewsInput = {
@@ -55983,6 +58150,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -56004,6 +58176,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStoryViewsInput = {
@@ -56069,6 +58242,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -56090,6 +58268,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStoryViewsInput = {
@@ -56102,6 +58281,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -56123,6 +58307,7 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutVendorAnalyticsInput = {
@@ -56135,6 +58320,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -56156,6 +58346,7 @@ export namespace Prisma {
     products?: ProductCreateNestedManyWithoutVendorInput
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVendorAnalyticsInput = {
@@ -56168,6 +58359,11 @@ export namespace Prisma {
     phone?: string | null
     role?: $Enums.UserRole
     isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -56189,6 +58385,7 @@ export namespace Prisma {
     products?: ProductUncheckedCreateNestedManyWithoutVendorInput
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVendorAnalyticsInput = {
@@ -56217,6 +58414,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -56238,6 +58440,7 @@ export namespace Prisma {
     products?: ProductUpdateManyWithoutVendorNestedInput
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVendorAnalyticsInput = {
@@ -56250,6 +58453,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -56271,6 +58479,179 @@ export namespace Prisma {
     products?: ProductUncheckedUpdateManyWithoutVendorNestedInput
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutSecurityEventsInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
+    orders?: OrderCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    cartItems?: CartItemCreateNestedManyWithoutUserInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewCreateNestedManyWithoutUserInput
+    createdChats?: ChatCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileCreateNestedOneWithoutUserInput
+    products?: ProductCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+  }
+
+  export type UserUncheckedCreateWithoutSecurityEventsInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    cartItems?: CartItemUncheckedCreateNestedManyWithoutUserInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryUncheckedCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewUncheckedCreateNestedManyWithoutUserInput
+    createdChats?: ChatUncheckedCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileUncheckedCreateNestedOneWithoutUserInput
+    products?: ProductUncheckedCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+  }
+
+  export type UserCreateOrConnectWithoutSecurityEventsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSecurityEventsInput, UserUncheckedCreateWithoutSecurityEventsInput>
+  }
+
+  export type UserUpsertWithoutSecurityEventsInput = {
+    update: XOR<UserUpdateWithoutSecurityEventsInput, UserUncheckedUpdateWithoutSecurityEventsInput>
+    create: XOR<UserCreateWithoutSecurityEventsInput, UserUncheckedCreateWithoutSecurityEventsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSecurityEventsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSecurityEventsInput, UserUncheckedUpdateWithoutSecurityEventsInput>
+  }
+
+  export type UserUpdateWithoutSecurityEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
+    orders?: OrderUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUpdateOneWithoutUserNestedInput
+    products?: ProductUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSecurityEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUncheckedUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUncheckedUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUncheckedUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUncheckedUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUncheckedUpdateOneWithoutUserNestedInput
+    products?: ProductUncheckedUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -56485,6 +58866,15 @@ export namespace Prisma {
     storyEngagement?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type SecurityEventCreateManyUserInput = {
+    id?: string
+    event: string
+    details?: string | null
+    ipAddress?: string | null
+    userAgent?: string | null
+    createdAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -57157,6 +59547,33 @@ export namespace Prisma {
     storyEngagement?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SecurityEventUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SecurityEventUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SecurityEventUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    event?: StringFieldUpdateOperationsInput | string
+    details?: NullableStringFieldUpdateOperationsInput | string | null
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CategoryCreateManyParentInput = {

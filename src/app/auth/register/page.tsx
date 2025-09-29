@@ -6,49 +6,51 @@ import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { Eye, EyeOff, Loader2 } from 'lucide-react'
+import { Eye, EyeOff, Loader2, CheckCircle, Mail } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Progress } from '@/components/ui/progress'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { useToast } from '@/hooks/use-toast'
+import { signUpSchema, calculatePasswordStrength } from '@/lib/password'
 
-const registerSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-  confirmPassword: z.string(),
-  role: z.enum(['CUSTOMER', 'VENDOR'], {
-    message: 'Please select a role',
-  }),
-  phone: z.string().optional(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ['confirmPassword'],
-})
-
-type RegisterFormValues = z.infer<typeof registerSchema>
+type RegisterFormValues = z.input<typeof signUpSchema>
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = React.useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
+  const [isSuccess, setIsSuccess] = React.useState(false)
+  const [userEmail, setUserEmail] = React.useState('')
+  const [passwordStrength, setPasswordStrength] = React.useState<{ score: number; feedback: string[] }>({ score: 0, feedback: [] })
   const router = useRouter()
   const { toast } = useToast()
 
   const form = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: '',
       email: '',
       password: '',
       confirmPassword: '',
       phone: '',
-      role: 'CUSTOMER',
+      role: undefined,
     },
   })
+
+  const password = form.watch('password')
+
+  React.useEffect(() => {
+    if (password) {
+      setPasswordStrength(calculatePasswordStrength(password))
+    } else {
+      setPasswordStrength({ score: 0, feedback: [] })
+    }
+  }, [password])
 
   const onSubmit = async (data: RegisterFormValues) => {
     setIsLoading(true)
@@ -71,24 +73,97 @@ export default function RegisterPage() {
       const result = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.error || 'Registration failed')
+        if (response.status === 429) {
+          toast({
+            title: 'Too Many Attempts',
+            description: result.message || 'Please wait before trying again',
+            variant: 'destructive',
+          })
+        } else if (response.status === 400 && result.error?.includes('already exists')) {
+          toast({
+            title: 'Account Already Exists',
+            description: 'An account with this email already exists. Try signing in instead.',
+            variant: 'destructive',
+          })
+        } else {
+          throw new Error(result.error || 'Registration failed')
+        }
+        return
       }
 
-      toast({
-        title: 'Account created!',
-        description: 'Your account has been created successfully. Please sign in.',
-      })
+      setUserEmail(data.email)
+      setIsSuccess(true)
 
-      router.push('/auth/login')
+      toast({
+        title: 'Account Created!',
+        description: 'Please check your email to verify your account.',
+      })
     } catch (error) {
       toast({
-        title: 'Registration failed',
+        title: 'Registration Failed',
         description: error instanceof Error ? error.message : 'Something went wrong',
         variant: 'destructive',
       })
     } finally {
       setIsLoading(false)
     }
+  }
+
+  if (isSuccess) {
+    return (
+      <div className="container flex h-screen w-screen flex-col items-center justify-center">
+        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
+          <div className="flex flex-col space-y-2 text-center">
+            <h1 className="text-2xl font-semibold tracking-tight">
+              Check Your Email
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              Account created successfully! Verification required.
+            </p>
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-center">Email Verification Required</CardTitle>
+              <CardDescription className="text-center">
+                We've sent a verification link to your email
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center">
+                <Mail className="h-12 w-12 mx-auto mb-4 text-green-600" />
+                <h2 className="text-xl font-semibold mb-2 text-green-800">Almost There!</h2>
+                <p className="text-muted-foreground mb-4">
+                  We've sent a verification link to <strong>{userEmail}</strong>
+                </p>
+                <Alert className="mb-4">
+                  <CheckCircle className="h-4 w-4" />
+                  <AlertDescription>
+                    Please check your email and click the verification link to activate your account.
+                    The link will expire in 24 hours.
+                  </AlertDescription>
+                </Alert>
+                <div className="space-y-2">
+                  <Button asChild className="w-full">
+                    <Link href="/auth/login">Continue to Login</Link>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setIsSuccess(false)
+                      form.reset()
+                    }}
+                    className="w-full"
+                  >
+                    Create Another Account
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -180,7 +255,7 @@ export default function RegisterPage() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Account Type</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isLoading}>
+                      <Select onValueChange={field.onChange} defaultValue={field.value || 'CUSTOMER'} disabled={isLoading}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select account type" />
@@ -227,6 +302,33 @@ export default function RegisterPage() {
                           </Button>
                         </div>
                       </FormControl>
+                      {password && (
+                        <div className="space-y-2">
+                          <div className="flex items-center space-x-2">
+                            <span className="text-sm text-muted-foreground">Password strength:</span>
+                            <Progress
+                              value={passwordStrength.score}
+                              className="h-2 flex-1"
+                              style={{
+                                backgroundColor: passwordStrength.score < 30 ? '#ef4444' : passwordStrength.score < 70 ? '#f59e0b' : '#10b981'
+                              }}
+                            />
+                            <span className="text-sm font-medium">
+                              {passwordStrength.score < 30 ? 'Weak' : passwordStrength.score < 70 ? 'Good' : 'Strong'}
+                            </span>
+                          </div>
+                          {passwordStrength.feedback.length > 0 && (
+                            <ul className="text-sm text-muted-foreground space-y-1">
+                              {passwordStrength.feedback.map((item, index) => (
+                                <li key={index} className="flex items-center space-x-2">
+                                  <div className="w-1 h-1 bg-gray-400 rounded-full" />
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      )}
                       <FormMessage />
                     </FormItem>
                   )}
