@@ -1,7 +1,6 @@
 import { HeroSection } from '@/components/home/hero-section';
 import { SearchSection } from '@/components/home/search-section';
 import { VendorStories } from '@/components/home/vendor-stories';
-import { InstantOffers } from '@/components/home/instant-offers';
 import { OffersCarousel } from '@/components/home/offers-carousel';
 import { FlashDeals } from '@/components/home/flash-deals';
 import { CategoriesSection } from '@/components/home/categories-section';
@@ -20,9 +19,6 @@ export default function HomePage() {
 
       {/* Vendor Stories (Instagram-style) - Moved to Top */}
       <VendorStories />
-
-      {/* Instant Offers - NEW Section */}
-      <InstantOffers />
 
       {/* Promotional Offers Carousel */}
       <OffersCarousel />
