@@ -1,0 +1,21 @@
+<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" fill="url(#grad)" rx="4.8"/>
+  <g transform="translate(6.4, 6.4)">
+    <!-- Fork and Knife icon -->
+    <path fill="white" d="M 4.8 3.2 L 4.8 17.6 M 3.2 3.2 L 3.2 8 M 6.4 3.2 L 6.4 8"
+          stroke="white" stroke-width="0.96" stroke-linecap="round"/>
+    <!-- Shopping bag -->
+    <path fill="none" stroke="white" stroke-width="1.28" stroke-linecap="round" stroke-linejoin="round"
+          d="M 11.2 4.8 L 11.2 8 Q 11.2 4.8 13.6 4.8 Q 16 4.8 16 8 L 16 4.8"/>
+    <rect x="10.24" y="6.4" width="6.72" height="11.2"
+          fill="none" stroke="white" stroke-width="1.28" rx="0.64"/>
+  </g>
+  <text x="50%" y="27.2" font-family="Arial, sans-serif" font-size="3.84"
+        font-weight="bold" fill="white" text-anchor="middle">GrabtoGo</text>
+</svg>

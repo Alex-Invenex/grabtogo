@@ -152,12 +152,9 @@ export function calculatePasswordStrength(password: string): {
  * Generate secure random token
  */
 export function generateSecureToken(length: number = 32): string {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  let result = ''
-  for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length))
-  }
-  return result
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const crypto = require('crypto')
+  return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length)
 }
 
 /**

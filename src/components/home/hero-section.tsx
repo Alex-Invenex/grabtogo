@@ -1,99 +1,103 @@
 'use client'
 
 import * as React from 'react'
-import Link from 'next/link'
-import { Search, MapPin, Truck, Shield } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { SearchBar } from '@/components/ui/search-bar'
+import { getBusinessImage } from '@/lib/images'
+import { MapPin, Users, Calendar } from 'lucide-react'
 
 export function HeroSection() {
-  const handleSearch = (query: string) => {
-    if (query.trim()) {
-      window.location.href = `/search?q=${encodeURIComponent(query)}`
-    }
-  }
-
   return (
-    <section className="relative bg-gradient-to-r from-primary/10 via-background to-secondary/10 py-16 md:py-24">
-      <div className="container">
-        <div className="mx-auto max-w-4xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-            Discover Amazing Products from
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              {' '}Local Vendors
-            </span>
-          </h1>
-          <p className="mt-6 text-lg leading-8 text-muted-foreground">
-            Connect with trusted vendors in your area. Shop for fresh products,
-            unique items, and local specialties with fast delivery and secure payments.
-          </p>
+    <section className="relative bg-gradient-to-br from-gray-50 via-white to-primary/5 pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgb(219, 74, 43) 1px, transparent 0)',
+          backgroundSize: '40px 40px'
+        }} />
+      </div>
 
-          {/* Search Bar */}
-          <div className="mt-10 flex justify-center">
-            <div className="w-full max-w-lg">
-              <SearchBar
-                placeholder="Search for products, vendors, or categories..."
-                onSearch={handleSearch}
-                className="h-12 text-base"
-              />
+      <div className="relative container-custom">
+        <div className="split-60-40">
+          {/* Left Side - Content */}
+          <div className="space-y-8">
+            {/* Small Badge */}
+            <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-md">
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+              <span className="text-sm font-semibold text-gray-700">CRAVING SOMETHING DELICIOUS?</span>
+            </div>
+
+            {/* Main Heading */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-[1.1]">
+              Experience
+              <span className="block mt-2">The Joy Of</span>
+              <span className="block text-primary mt-2">Fresh Food!</span>
+            </h1>
+
+            {/* Description */}
+            <p className="text-xl md:text-2xl text-gray-600 max-w-xl leading-relaxed">
+              Discover delicious meals from local restaurants and vendors. Order now and enjoy fast delivery to your doorstep.
+            </p>
+
+            {/* CTA Button */}
+            <div>
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-white font-bold text-lg px-10 py-7 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+              >
+                Explore Now →
+              </Button>
+            </div>
+
+            {/* Small Feature Icons */}
+            <div className="flex items-center gap-6 pt-4">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <MapPin className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-sm font-medium text-gray-700">Fast Delivery</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <Users className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-sm font-medium text-gray-700">1000+ Restaurants</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <Calendar className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-sm font-medium text-gray-700">Order Anytime</span>
+              </div>
             </div>
           </div>
 
-          {/* Quick Actions */}
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Button asChild size="lg">
-              <Link href="/products">
-                <Search className="mr-2 h-4 w-4" />
-                Browse Products
-              </Link>
-            </Button>
-            <Button variant="outline" size="lg" asChild>
-              <Link href="/vendors">
-                <MapPin className="mr-2 h-4 w-4" />
-                Find Vendors
-              </Link>
-            </Button>
+          {/* Right Side - Image with Corner Cut */}
+          <div className="relative">
+            <div className="relative corner-cut-large overflow-hidden rounded-3xl shadow-2xl">
+              <img
+                src={getBusinessImage(0, 'storefront')}
+                alt="Discover delicious food from local restaurants"
+                className="w-full h-[600px] object-cover"
+              />
+            </div>
+
+            {/* Floating Info Card */}
+            <div className="floating-info-card bottom-8 left-8 max-w-xs">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="text-xs font-semibold text-gray-500 uppercase">Popular Cuisines</div>
+                  <div className="text-lg font-bold text-gray-900">Kerala Delicacies</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Decorative Circles */}
+            <div className="absolute -top-8 -right-8 w-24 h-24 bg-primary/10 rounded-full blur-2xl"></div>
+            <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
           </div>
-        </div>
-
-        {/* Feature Cards */}
-        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-3">
-          <Card className="bg-background/50 backdrop-blur">
-            <CardContent className="p-6 text-center">
-              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <Truck className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-semibold">Fast Delivery</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Get your orders delivered quickly from local vendors in your area.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-background/50 backdrop-blur">
-            <CardContent className="p-6 text-center">
-              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <Shield className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-semibold">Secure Payments</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Shop with confidence using our secure payment system powered by Razorpay.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-background/50 backdrop-blur">
-            <CardContent className="p-6 text-center">
-              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <MapPin className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="font-semibold">Local Vendors</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Support local businesses and discover unique products in your neighborhood.
-              </p>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </section>

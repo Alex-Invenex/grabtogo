@@ -1,7 +1,6 @@
 import { Server as NetServer } from 'http'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiResponse } from 'next'
 import { Server as ServerIO } from 'socket.io'
-import { auth } from '@/lib/auth'
 import { db } from '@/lib/db'
 
 export type NextApiResponseServerIO = NextApiResponse & {

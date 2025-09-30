@@ -101,6 +101,35 @@ export async function sendWelcomeEmail(
 }
 
 /**
+ * Generic send email function
+ */
+export async function sendEmail({
+  to,
+  subject,
+  html,
+  text,
+}: {
+  to: string
+  subject: string
+  html: string
+  text?: string
+}): Promise<boolean> {
+  try {
+    await resend.emails.send({
+      from: process.env.EMAIL_FROM || 'noreply@grabtogo.com',
+      to,
+      subject,
+      html,
+      text: text || html.replace(/<[^>]*>/g, ''), // Strip HTML tags if no text provided
+    })
+    return true
+  } catch (error) {
+    console.error('Failed to send email:', error)
+    return false
+  }
+}
+
+/**
  * Create email verification template
  */
 function createVerificationEmailTemplate({

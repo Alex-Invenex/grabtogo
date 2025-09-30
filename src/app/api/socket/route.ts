@@ -3,6 +3,8 @@ import { Server as NetServer } from 'http'
 import { Server as ServerIO } from 'socket.io'
 import { initializeSocket, NextApiResponseServerIO } from '@/lib/socket'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest) {
   if (!global.io) {
     console.log('Initializing Socket.io server...')

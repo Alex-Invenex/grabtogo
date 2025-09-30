@@ -1,13 +1,12 @@
 import type { Metadata } from 'next'
-import { Header } from '@/components/layout/header'
 import { Toaster } from '@/components/ui/toaster'
 import { ErrorBoundary } from '@/components/ui/error-boundary'
 import { AuthProvider } from '@/components/providers/session-provider'
 import { SocketProvider } from '@/components/providers/socket-provider'
-import { PWAInstaller } from '@/components/ui/pwa-installer'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXTAUTH_URL || 'http://localhost:3000'),
   title: 'GrabtoGo - Multi-Vendor Marketplace',
   description: 'Discover local vendors and products in your neighborhood with real-time features',
   keywords: ['marketplace', 'local vendors', 'e-commerce', 'shopping', 'real-time'],
@@ -93,11 +92,7 @@ export default function RootLayout({
         <AuthProvider>
           <SocketProvider>
             <ErrorBoundary>
-              <div className="relative flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <PWAInstaller />
-              </div>
+              {children}
               <Toaster />
             </ErrorBoundary>
           </SocketProvider>

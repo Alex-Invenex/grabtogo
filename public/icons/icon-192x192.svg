@@ -1,0 +1,21 @@
+<svg width="192" height="192" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" fill="url(#grad)" rx="28.799999999999997"/>
+  <g transform="translate(38.400000000000006, 38.400000000000006)">
+    <!-- Fork and Knife icon -->
+    <path fill="white" d="M 28.799999999999997 19.200000000000003 L 28.799999999999997 105.60000000000001 M 19.200000000000003 19.200000000000003 L 19.200000000000003 48 M 38.400000000000006 19.200000000000003 L 38.400000000000006 48"
+          stroke="white" stroke-width="5.76" stroke-linecap="round"/>
+    <!-- Shopping bag -->
+    <path fill="none" stroke="white" stroke-width="7.68" stroke-linecap="round" stroke-linejoin="round"
+          d="M 67.19999999999999 28.799999999999997 L 67.19999999999999 48 Q 67.19999999999999 28.799999999999997 81.6 28.799999999999997 Q 96 28.799999999999997 96 48 L 96 28.799999999999997"/>
+    <rect x="61.44" y="38.400000000000006" width="40.32" height="67.19999999999999"
+          fill="none" stroke="white" stroke-width="7.68" rx="3.84"/>
+  </g>
+  <text x="50%" y="163.2" font-family="Arial, sans-serif" font-size="23.04"
+        font-weight="bold" fill="white" text-anchor="middle">GrabtoGo</text>
+</svg>

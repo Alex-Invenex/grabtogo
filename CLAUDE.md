@@ -23,6 +23,9 @@ npm run db:reset
 
 # Deploy migrations to production
 npm run db:deploy
+
+# Create admin user (for initial setup)
+npm run create-admin
 ```
 
 ### Application Development
@@ -151,6 +154,15 @@ Razorpay integration follows this flow:
 2. Process payment on frontend with Razorpay Checkout
 3. Verify payment via `/api/payments/verify`
 4. Update order status and create payment record
+
+### Admin Access
+**Default Admin Account:**
+- Email: `admin@admin.com`
+- Password: `admin`
+- Access: `/admin` route (requires admin role)
+
+**Admin Setup:**
+Run `npm run create-admin` after initial database setup to create the admin user.
 
 ### Repository Configuration
 - **Always commit changes** to GitHub repository: https://github.com/Alex-Invenex/grabtogo

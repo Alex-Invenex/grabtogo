@@ -5,6 +5,8 @@ import { generateEmailVerificationToken, checkRateLimit, logSecurityEvent } from
 import { sendVerificationEmail } from '@/lib/email'
 import { emailSchema } from '@/lib/password'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()

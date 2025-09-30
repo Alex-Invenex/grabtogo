@@ -4,6 +4,8 @@ import { db } from '@/lib/db'
 import { cache } from '@/lib/redis'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const createChatSchema = z.object({
   type: z.enum(['private', 'group', 'support']).default('private'),
   title: z.string().optional(),

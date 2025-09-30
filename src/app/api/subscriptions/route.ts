@@ -5,6 +5,8 @@ import { cache } from '@/lib/redis'
 import { razorpay } from '@/lib/razorpay'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const createSubscriptionSchema = z.object({
   planType: z.enum(['basic', 'premium', 'enterprise']),
   billingCycle: z.enum(['monthly', 'yearly']).default('monthly'),

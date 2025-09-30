@@ -5,7 +5,7 @@ import { Minus, Plus, X, ShoppingBag, ArrowRight, Truck, Shield, CreditCard } fr
 import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'

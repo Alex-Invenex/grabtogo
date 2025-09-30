@@ -4,6 +4,8 @@ import { db } from '@/lib/db'
 import { cache } from '@/lib/redis'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const createNotificationSchema = z.object({
   userId: z.string().min(1),
   type: z.enum(['order', 'message', 'review', 'vendor', 'system']),

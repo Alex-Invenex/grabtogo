@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { ChevronLeft, ChevronRight, Heart, MessageCircle, Share, Eye, MoreHorizontal, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Heart, MessageCircle, Share, Eye, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'

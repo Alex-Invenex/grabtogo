@@ -4,6 +4,8 @@ import { db } from '@/lib/db'
 import { cache } from '@/lib/redis'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const analyticsQuerySchema = z.object({
   vendorId: z.string().optional(),
   startDate: z.string().optional(),

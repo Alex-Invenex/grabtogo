@@ -4,6 +4,8 @@ import { db } from '@/lib/db'
 import { cache } from '@/lib/redis'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const bulkActionSchema = z.object({
   action: z.enum(['mark_all_read', 'delete_all_read', 'delete_all']),
   notificationIds: z.array(z.string()).optional(),

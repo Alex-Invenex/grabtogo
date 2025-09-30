@@ -4,6 +4,8 @@ import { db } from '@/lib/db'
 import { cache } from '@/lib/redis'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const getMessagesSchema = z.object({
   page: z.string().optional(),
   limit: z.string().optional(),

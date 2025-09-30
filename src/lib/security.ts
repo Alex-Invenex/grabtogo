@@ -112,6 +112,15 @@ export async function checkRateLimit(
   const window = parseInt(process.env.RATE_LIMIT_WINDOW || '900000') // 15 minutes
   const maxAttempts = parseInt(process.env.RATE_LIMIT_MAX_ATTEMPTS || '10')
 
+  // If Redis is not available, allow the request
+  if (!redis) {
+    return {
+      allowed: true,
+      remaining: maxAttempts - 1,
+      resetTime: Date.now() + window,
+    }
+  }
+
   try {
     const current = await redis.get(key)
     const count = current ? parseInt(current) : 0
@@ -152,7 +161,7 @@ export async function checkRateLimit(
  */
 export async function detectSuspiciousActivity(
   userId: string,
-  ipAddress: string
+  _ipAddress: string
 ): Promise<{ suspicious: boolean; reasons: string[] }> {
   const reasons: string[] = []
 
@@ -302,12 +311,9 @@ export async function deletePasswordResetToken(token: string): Promise<void> {
  * Generate cryptographically secure random token
  */
 function generateRandomToken(length: number): string {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  let result = ''
-  for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length))
-  }
-  return result
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const crypto = require('crypto')
+  return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length)
 }
 
 /**

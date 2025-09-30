@@ -4,6 +4,8 @@ import { db } from '@/lib/db'
 import { cache } from '@/lib/redis'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const createStorySchema = z.object({
   type: z.enum(['image', 'video']).default('image'),
   mediaUrl: z.string().url(),

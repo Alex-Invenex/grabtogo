@@ -38,13 +38,19 @@ const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
 
     return (
       <div className={cn('relative flex items-center', className)}>
-        <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
+        <Search className="absolute left-4 h-5 w-5 text-gray-400 z-10" />
         <Input
           ref={ref}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="pl-10 pr-12"
+          className={cn(
+            "pl-12 pr-12 h-12 border-gray-200 rounded-xl text-base bg-white",
+            "focus:border-primary focus:ring-2 focus:ring-primary/10 focus:shadow-lg",
+            "placeholder:text-gray-400 placeholder:font-normal",
+            "transition-all duration-200 hover:border-gray-300 hover:shadow-md",
+            "focus:bg-white focus:outline-none"
+          )}
           disabled={loading}
           {...props}
         />
@@ -53,15 +59,15 @@ const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
             type="button"
             variant="ghost"
             size="sm"
-            className="absolute right-1 h-8 w-8 p-0"
+            className="absolute right-2 h-8 w-8 p-0 hover:bg-gray-100 rounded-full z-10 transition-colors"
             onClick={handleClear}
           >
-            <X className="h-4 w-4" />
+            <X className="h-4 w-4 text-gray-400 hover:text-gray-600" />
             <span className="sr-only">Clear search</span>
           </Button>
         )}
         {loading && (
-          <div className="absolute right-3 h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+          <div className="absolute right-4 h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent z-10" />
         )}
       </div>
     )

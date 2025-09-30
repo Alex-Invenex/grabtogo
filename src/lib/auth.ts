@@ -181,7 +181,7 @@ const config = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account: _account }) {
       if (user) {
         token.role = (user as any).role
         token.emailVerified = (user as any).emailVerified
@@ -196,7 +196,7 @@ const config = NextAuth({
       }
       return session
     },
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account, profile: _profile }) {
       // Handle OAuth providers (Google, etc.)
       if (account?.provider === 'google') {
         try {

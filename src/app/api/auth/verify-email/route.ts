@@ -5,6 +5,8 @@ import { verifyEmailToken } from '@/lib/security'
 import { sendWelcomeEmail } from '@/lib/email'
 import { logSecurityEvent } from '@/lib/security'
 
+export const dynamic = 'force-dynamic'
+
 const verifyEmailSchema = z.object({
   token: z.string().min(1, 'Verification token is required'),
 })

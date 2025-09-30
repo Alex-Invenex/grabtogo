@@ -3,6 +3,8 @@ import { db } from '@/lib/db'
 import { verifyPasswordResetToken, deletePasswordResetToken, logSecurityEvent } from '@/lib/security'
 import { hashPassword, passwordResetSchema } from '@/lib/password'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()

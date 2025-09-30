@@ -134,6 +134,11 @@ export type ChatMessage = $Result.DefaultSelection<Prisma.$ChatMessagePayload>
  */
 export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
 /**
+ * Model VendorRegistrationRequest
+ * 
+ */
+export type VendorRegistrationRequest = $Result.DefaultSelection<Prisma.$VendorRegistrationRequestPayload>
+/**
  * Model VendorSubscription
  * 
  */
@@ -570,6 +575,16 @@ export class PrismaClient<
     * ```
     */
   get notification(): Prisma.NotificationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.vendorRegistrationRequest`: Exposes CRUD operations for the **VendorRegistrationRequest** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VendorRegistrationRequests
+    * const vendorRegistrationRequests = await prisma.vendorRegistrationRequest.findMany()
+    * ```
+    */
+  get vendorRegistrationRequest(): Prisma.VendorRegistrationRequestDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.vendorSubscription`: Exposes CRUD operations for the **VendorSubscription** model.
@@ -1094,6 +1109,7 @@ export namespace Prisma {
     ChatParticipant: 'ChatParticipant',
     ChatMessage: 'ChatMessage',
     Notification: 'Notification',
+    VendorRegistrationRequest: 'VendorRegistrationRequest',
     VendorSubscription: 'VendorSubscription',
     SubscriptionPayment: 'SubscriptionPayment',
     VendorStory: 'VendorStory',
@@ -1118,7 +1134,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "vendorProfile" | "category" | "product" | "productImage" | "productVariant" | "address" | "cartItem" | "favorite" | "order" | "orderItem" | "payment" | "review" | "reviewImage" | "reviewHelpfulVote" | "searchHistory" | "trendingSearch" | "chat" | "chatParticipant" | "chatMessage" | "notification" | "vendorSubscription" | "subscriptionPayment" | "vendorStory" | "storyView" | "vendorAnalytics" | "securityEvent"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "vendorProfile" | "category" | "product" | "productImage" | "productVariant" | "address" | "cartItem" | "favorite" | "order" | "orderItem" | "payment" | "review" | "reviewImage" | "reviewHelpfulVote" | "searchHistory" | "trendingSearch" | "chat" | "chatParticipant" | "chatMessage" | "notification" | "vendorRegistrationRequest" | "vendorSubscription" | "subscriptionPayment" | "vendorStory" | "storyView" | "vendorAnalytics" | "securityEvent"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2898,6 +2914,80 @@ export namespace Prisma {
           }
         }
       }
+      VendorRegistrationRequest: {
+        payload: Prisma.$VendorRegistrationRequestPayload<ExtArgs>
+        fields: Prisma.VendorRegistrationRequestFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VendorRegistrationRequestFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorRegistrationRequestPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VendorRegistrationRequestFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorRegistrationRequestPayload>
+          }
+          findFirst: {
+            args: Prisma.VendorRegistrationRequestFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorRegistrationRequestPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VendorRegistrationRequestFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorRegistrationRequestPayload>
+          }
+          findMany: {
+            args: Prisma.VendorRegistrationRequestFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorRegistrationRequestPayload>[]
+          }
+          create: {
+            args: Prisma.VendorRegistrationRequestCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorRegistrationRequestPayload>
+          }
+          createMany: {
+            args: Prisma.VendorRegistrationRequestCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VendorRegistrationRequestCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorRegistrationRequestPayload>[]
+          }
+          delete: {
+            args: Prisma.VendorRegistrationRequestDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorRegistrationRequestPayload>
+          }
+          update: {
+            args: Prisma.VendorRegistrationRequestUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorRegistrationRequestPayload>
+          }
+          deleteMany: {
+            args: Prisma.VendorRegistrationRequestDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VendorRegistrationRequestUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VendorRegistrationRequestUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorRegistrationRequestPayload>[]
+          }
+          upsert: {
+            args: Prisma.VendorRegistrationRequestUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VendorRegistrationRequestPayload>
+          }
+          aggregate: {
+            args: Prisma.VendorRegistrationRequestAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVendorRegistrationRequest>
+          }
+          groupBy: {
+            args: Prisma.VendorRegistrationRequestGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VendorRegistrationRequestGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VendorRegistrationRequestCountArgs<ExtArgs>
+            result: $Utils.Optional<VendorRegistrationRequestCountAggregateOutputType> | number
+          }
+        }
+      }
       VendorSubscription: {
         payload: Prisma.$VendorSubscriptionPayload<ExtArgs>
         fields: Prisma.VendorSubscriptionFieldRefs
@@ -3462,6 +3552,7 @@ export namespace Prisma {
     chatParticipant?: ChatParticipantOmit
     chatMessage?: ChatMessageOmit
     notification?: NotificationOmit
+    vendorRegistrationRequest?: VendorRegistrationRequestOmit
     vendorSubscription?: VendorSubscriptionOmit
     subscriptionPayment?: SubscriptionPaymentOmit
     vendorStory?: VendorStoryOmit
@@ -4113,6 +4204,10 @@ export namespace Prisma {
     failedAttempts: number | null
     lastFailedAttempt: Date | null
     passwordChangedAt: Date | null
+    twoFactorEnabled: boolean | null
+    twoFactorSecret: string | null
+    phoneVerified: boolean | null
+    phoneVerifiedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4132,6 +4227,10 @@ export namespace Prisma {
     failedAttempts: number | null
     lastFailedAttempt: Date | null
     passwordChangedAt: Date | null
+    twoFactorEnabled: boolean | null
+    twoFactorSecret: string | null
+    phoneVerified: boolean | null
+    phoneVerifiedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4151,6 +4250,10 @@ export namespace Prisma {
     failedAttempts: number
     lastFailedAttempt: number
     passwordChangedAt: number
+    twoFactorEnabled: number
+    twoFactorSecret: number
+    phoneVerified: number
+    phoneVerifiedAt: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -4180,6 +4283,10 @@ export namespace Prisma {
     failedAttempts?: true
     lastFailedAttempt?: true
     passwordChangedAt?: true
+    twoFactorEnabled?: true
+    twoFactorSecret?: true
+    phoneVerified?: true
+    phoneVerifiedAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4199,6 +4306,10 @@ export namespace Prisma {
     failedAttempts?: true
     lastFailedAttempt?: true
     passwordChangedAt?: true
+    twoFactorEnabled?: true
+    twoFactorSecret?: true
+    phoneVerified?: true
+    phoneVerifiedAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4218,6 +4329,10 @@ export namespace Prisma {
     failedAttempts?: true
     lastFailedAttempt?: true
     passwordChangedAt?: true
+    twoFactorEnabled?: true
+    twoFactorSecret?: true
+    phoneVerified?: true
+    phoneVerifiedAt?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4324,6 +4439,10 @@ export namespace Prisma {
     failedAttempts: number
     lastFailedAttempt: Date | null
     passwordChangedAt: Date | null
+    twoFactorEnabled: boolean
+    twoFactorSecret: string | null
+    phoneVerified: boolean
+    phoneVerifiedAt: Date | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -4362,6 +4481,10 @@ export namespace Prisma {
     failedAttempts?: boolean
     lastFailedAttempt?: boolean
     passwordChangedAt?: boolean
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: boolean
+    phoneVerified?: boolean
+    phoneVerifiedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
@@ -4403,6 +4526,10 @@ export namespace Prisma {
     failedAttempts?: boolean
     lastFailedAttempt?: boolean
     passwordChangedAt?: boolean
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: boolean
+    phoneVerified?: boolean
+    phoneVerifiedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -4422,6 +4549,10 @@ export namespace Prisma {
     failedAttempts?: boolean
     lastFailedAttempt?: boolean
     passwordChangedAt?: boolean
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: boolean
+    phoneVerified?: boolean
+    phoneVerifiedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -4441,11 +4572,15 @@ export namespace Prisma {
     failedAttempts?: boolean
     lastFailedAttempt?: boolean
     passwordChangedAt?: boolean
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: boolean
+    phoneVerified?: boolean
+    phoneVerifiedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "emailVerified" | "name" | "image" | "password" | "phone" | "role" | "isActive" | "accountLocked" | "accountLockedUntil" | "failedAttempts" | "lastFailedAttempt" | "passwordChangedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "emailVerified" | "name" | "image" | "password" | "phone" | "role" | "isActive" | "accountLocked" | "accountLockedUntil" | "failedAttempts" | "lastFailedAttempt" | "passwordChangedAt" | "twoFactorEnabled" | "twoFactorSecret" | "phoneVerified" | "phoneVerifiedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
@@ -4513,6 +4648,10 @@ export namespace Prisma {
       failedAttempts: number
       lastFailedAttempt: Date | null
       passwordChangedAt: Date | null
+      twoFactorEnabled: boolean
+      twoFactorSecret: string | null
+      phoneVerified: boolean
+      phoneVerifiedAt: Date | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -4973,6 +5112,10 @@ export namespace Prisma {
     readonly failedAttempts: FieldRef<"User", 'Int'>
     readonly lastFailedAttempt: FieldRef<"User", 'DateTime'>
     readonly passwordChangedAt: FieldRef<"User", 'DateTime'>
+    readonly twoFactorEnabled: FieldRef<"User", 'Boolean'>
+    readonly twoFactorSecret: FieldRef<"User", 'String'>
+    readonly phoneVerified: FieldRef<"User", 'Boolean'>
+    readonly phoneVerifiedAt: FieldRef<"User", 'DateTime'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -32601,6 +32744,1533 @@ export namespace Prisma {
 
 
   /**
+   * Model VendorRegistrationRequest
+   */
+
+  export type AggregateVendorRegistrationRequest = {
+    _count: VendorRegistrationRequestCountAggregateOutputType | null
+    _avg: VendorRegistrationRequestAvgAggregateOutputType | null
+    _sum: VendorRegistrationRequestSumAggregateOutputType | null
+    _min: VendorRegistrationRequestMinAggregateOutputType | null
+    _max: VendorRegistrationRequestMaxAggregateOutputType | null
+  }
+
+  export type VendorRegistrationRequestAvgAggregateOutputType = {
+    yearsInBusiness: number | null
+    latitude: number | null
+    longitude: number | null
+    deliveryRadius: number | null
+  }
+
+  export type VendorRegistrationRequestSumAggregateOutputType = {
+    yearsInBusiness: number | null
+    latitude: number | null
+    longitude: number | null
+    deliveryRadius: number | null
+  }
+
+  export type VendorRegistrationRequestMinAggregateOutputType = {
+    id: string | null
+    fullName: string | null
+    email: string | null
+    phone: string | null
+    password: string | null
+    companyName: string | null
+    businessType: string | null
+    yearsInBusiness: number | null
+    numberOfEmployees: string | null
+    businessCategory: string | null
+    addressLine1: string | null
+    addressLine2: string | null
+    city: string | null
+    state: string | null
+    pinCode: string | null
+    landmark: string | null
+    latitude: number | null
+    longitude: number | null
+    deliveryRadius: number | null
+    agentCode: string | null
+    agentName: string | null
+    agentPhone: string | null
+    agentVisitDate: string | null
+    referenceNotes: string | null
+    gstNumber: string | null
+    gstVerified: boolean | null
+    gstCertificate: string | null
+    logo: string | null
+    banner: string | null
+    tagline: string | null
+    selectedPackage: string | null
+    billingCycle: string | null
+    termsAccepted: boolean | null
+    privacyAccepted: boolean | null
+    status: string | null
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    rejectionReason: string | null
+    adminNotes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VendorRegistrationRequestMaxAggregateOutputType = {
+    id: string | null
+    fullName: string | null
+    email: string | null
+    phone: string | null
+    password: string | null
+    companyName: string | null
+    businessType: string | null
+    yearsInBusiness: number | null
+    numberOfEmployees: string | null
+    businessCategory: string | null
+    addressLine1: string | null
+    addressLine2: string | null
+    city: string | null
+    state: string | null
+    pinCode: string | null
+    landmark: string | null
+    latitude: number | null
+    longitude: number | null
+    deliveryRadius: number | null
+    agentCode: string | null
+    agentName: string | null
+    agentPhone: string | null
+    agentVisitDate: string | null
+    referenceNotes: string | null
+    gstNumber: string | null
+    gstVerified: boolean | null
+    gstCertificate: string | null
+    logo: string | null
+    banner: string | null
+    tagline: string | null
+    selectedPackage: string | null
+    billingCycle: string | null
+    termsAccepted: boolean | null
+    privacyAccepted: boolean | null
+    status: string | null
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    rejectionReason: string | null
+    adminNotes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VendorRegistrationRequestCountAggregateOutputType = {
+    id: number
+    fullName: number
+    email: number
+    phone: number
+    password: number
+    companyName: number
+    businessType: number
+    yearsInBusiness: number
+    numberOfEmployees: number
+    businessCategory: number
+    addressLine1: number
+    addressLine2: number
+    city: number
+    state: number
+    pinCode: number
+    landmark: number
+    latitude: number
+    longitude: number
+    deliveryRadius: number
+    agentCode: number
+    agentName: number
+    agentPhone: number
+    agentVisitDate: number
+    referenceNotes: number
+    gstNumber: number
+    gstVerified: number
+    gstDetails: number
+    gstCertificate: number
+    logo: number
+    banner: number
+    tagline: number
+    selectedPackage: number
+    billingCycle: number
+    addOns: number
+    termsAccepted: number
+    privacyAccepted: number
+    status: number
+    reviewedBy: number
+    reviewedAt: number
+    rejectionReason: number
+    adminNotes: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type VendorRegistrationRequestAvgAggregateInputType = {
+    yearsInBusiness?: true
+    latitude?: true
+    longitude?: true
+    deliveryRadius?: true
+  }
+
+  export type VendorRegistrationRequestSumAggregateInputType = {
+    yearsInBusiness?: true
+    latitude?: true
+    longitude?: true
+    deliveryRadius?: true
+  }
+
+  export type VendorRegistrationRequestMinAggregateInputType = {
+    id?: true
+    fullName?: true
+    email?: true
+    phone?: true
+    password?: true
+    companyName?: true
+    businessType?: true
+    yearsInBusiness?: true
+    numberOfEmployees?: true
+    businessCategory?: true
+    addressLine1?: true
+    addressLine2?: true
+    city?: true
+    state?: true
+    pinCode?: true
+    landmark?: true
+    latitude?: true
+    longitude?: true
+    deliveryRadius?: true
+    agentCode?: true
+    agentName?: true
+    agentPhone?: true
+    agentVisitDate?: true
+    referenceNotes?: true
+    gstNumber?: true
+    gstVerified?: true
+    gstCertificate?: true
+    logo?: true
+    banner?: true
+    tagline?: true
+    selectedPackage?: true
+    billingCycle?: true
+    termsAccepted?: true
+    privacyAccepted?: true
+    status?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    rejectionReason?: true
+    adminNotes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VendorRegistrationRequestMaxAggregateInputType = {
+    id?: true
+    fullName?: true
+    email?: true
+    phone?: true
+    password?: true
+    companyName?: true
+    businessType?: true
+    yearsInBusiness?: true
+    numberOfEmployees?: true
+    businessCategory?: true
+    addressLine1?: true
+    addressLine2?: true
+    city?: true
+    state?: true
+    pinCode?: true
+    landmark?: true
+    latitude?: true
+    longitude?: true
+    deliveryRadius?: true
+    agentCode?: true
+    agentName?: true
+    agentPhone?: true
+    agentVisitDate?: true
+    referenceNotes?: true
+    gstNumber?: true
+    gstVerified?: true
+    gstCertificate?: true
+    logo?: true
+    banner?: true
+    tagline?: true
+    selectedPackage?: true
+    billingCycle?: true
+    termsAccepted?: true
+    privacyAccepted?: true
+    status?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    rejectionReason?: true
+    adminNotes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VendorRegistrationRequestCountAggregateInputType = {
+    id?: true
+    fullName?: true
+    email?: true
+    phone?: true
+    password?: true
+    companyName?: true
+    businessType?: true
+    yearsInBusiness?: true
+    numberOfEmployees?: true
+    businessCategory?: true
+    addressLine1?: true
+    addressLine2?: true
+    city?: true
+    state?: true
+    pinCode?: true
+    landmark?: true
+    latitude?: true
+    longitude?: true
+    deliveryRadius?: true
+    agentCode?: true
+    agentName?: true
+    agentPhone?: true
+    agentVisitDate?: true
+    referenceNotes?: true
+    gstNumber?: true
+    gstVerified?: true
+    gstDetails?: true
+    gstCertificate?: true
+    logo?: true
+    banner?: true
+    tagline?: true
+    selectedPackage?: true
+    billingCycle?: true
+    addOns?: true
+    termsAccepted?: true
+    privacyAccepted?: true
+    status?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    rejectionReason?: true
+    adminNotes?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type VendorRegistrationRequestAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VendorRegistrationRequest to aggregate.
+     */
+    where?: VendorRegistrationRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VendorRegistrationRequests to fetch.
+     */
+    orderBy?: VendorRegistrationRequestOrderByWithRelationInput | VendorRegistrationRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VendorRegistrationRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VendorRegistrationRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VendorRegistrationRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VendorRegistrationRequests
+    **/
+    _count?: true | VendorRegistrationRequestCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VendorRegistrationRequestAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VendorRegistrationRequestSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VendorRegistrationRequestMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VendorRegistrationRequestMaxAggregateInputType
+  }
+
+  export type GetVendorRegistrationRequestAggregateType<T extends VendorRegistrationRequestAggregateArgs> = {
+        [P in keyof T & keyof AggregateVendorRegistrationRequest]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVendorRegistrationRequest[P]>
+      : GetScalarType<T[P], AggregateVendorRegistrationRequest[P]>
+  }
+
+
+
+
+  export type VendorRegistrationRequestGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VendorRegistrationRequestWhereInput
+    orderBy?: VendorRegistrationRequestOrderByWithAggregationInput | VendorRegistrationRequestOrderByWithAggregationInput[]
+    by: VendorRegistrationRequestScalarFieldEnum[] | VendorRegistrationRequestScalarFieldEnum
+    having?: VendorRegistrationRequestScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VendorRegistrationRequestCountAggregateInputType | true
+    _avg?: VendorRegistrationRequestAvgAggregateInputType
+    _sum?: VendorRegistrationRequestSumAggregateInputType
+    _min?: VendorRegistrationRequestMinAggregateInputType
+    _max?: VendorRegistrationRequestMaxAggregateInputType
+  }
+
+  export type VendorRegistrationRequestGroupByOutputType = {
+    id: string
+    fullName: string
+    email: string
+    phone: string
+    password: string
+    companyName: string
+    businessType: string | null
+    yearsInBusiness: number | null
+    numberOfEmployees: string | null
+    businessCategory: string | null
+    addressLine1: string
+    addressLine2: string | null
+    city: string
+    state: string
+    pinCode: string
+    landmark: string | null
+    latitude: number | null
+    longitude: number | null
+    deliveryRadius: number
+    agentCode: string | null
+    agentName: string | null
+    agentPhone: string | null
+    agentVisitDate: string | null
+    referenceNotes: string | null
+    gstNumber: string | null
+    gstVerified: boolean
+    gstDetails: JsonValue | null
+    gstCertificate: string | null
+    logo: string | null
+    banner: string | null
+    tagline: string | null
+    selectedPackage: string
+    billingCycle: string
+    addOns: JsonValue | null
+    termsAccepted: boolean
+    privacyAccepted: boolean
+    status: string
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    rejectionReason: string | null
+    adminNotes: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: VendorRegistrationRequestCountAggregateOutputType | null
+    _avg: VendorRegistrationRequestAvgAggregateOutputType | null
+    _sum: VendorRegistrationRequestSumAggregateOutputType | null
+    _min: VendorRegistrationRequestMinAggregateOutputType | null
+    _max: VendorRegistrationRequestMaxAggregateOutputType | null
+  }
+
+  type GetVendorRegistrationRequestGroupByPayload<T extends VendorRegistrationRequestGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VendorRegistrationRequestGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VendorRegistrationRequestGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VendorRegistrationRequestGroupByOutputType[P]>
+            : GetScalarType<T[P], VendorRegistrationRequestGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VendorRegistrationRequestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fullName?: boolean
+    email?: boolean
+    phone?: boolean
+    password?: boolean
+    companyName?: boolean
+    businessType?: boolean
+    yearsInBusiness?: boolean
+    numberOfEmployees?: boolean
+    businessCategory?: boolean
+    addressLine1?: boolean
+    addressLine2?: boolean
+    city?: boolean
+    state?: boolean
+    pinCode?: boolean
+    landmark?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    deliveryRadius?: boolean
+    agentCode?: boolean
+    agentName?: boolean
+    agentPhone?: boolean
+    agentVisitDate?: boolean
+    referenceNotes?: boolean
+    gstNumber?: boolean
+    gstVerified?: boolean
+    gstDetails?: boolean
+    gstCertificate?: boolean
+    logo?: boolean
+    banner?: boolean
+    tagline?: boolean
+    selectedPackage?: boolean
+    billingCycle?: boolean
+    addOns?: boolean
+    termsAccepted?: boolean
+    privacyAccepted?: boolean
+    status?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    rejectionReason?: boolean
+    adminNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["vendorRegistrationRequest"]>
+
+  export type VendorRegistrationRequestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fullName?: boolean
+    email?: boolean
+    phone?: boolean
+    password?: boolean
+    companyName?: boolean
+    businessType?: boolean
+    yearsInBusiness?: boolean
+    numberOfEmployees?: boolean
+    businessCategory?: boolean
+    addressLine1?: boolean
+    addressLine2?: boolean
+    city?: boolean
+    state?: boolean
+    pinCode?: boolean
+    landmark?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    deliveryRadius?: boolean
+    agentCode?: boolean
+    agentName?: boolean
+    agentPhone?: boolean
+    agentVisitDate?: boolean
+    referenceNotes?: boolean
+    gstNumber?: boolean
+    gstVerified?: boolean
+    gstDetails?: boolean
+    gstCertificate?: boolean
+    logo?: boolean
+    banner?: boolean
+    tagline?: boolean
+    selectedPackage?: boolean
+    billingCycle?: boolean
+    addOns?: boolean
+    termsAccepted?: boolean
+    privacyAccepted?: boolean
+    status?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    rejectionReason?: boolean
+    adminNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["vendorRegistrationRequest"]>
+
+  export type VendorRegistrationRequestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fullName?: boolean
+    email?: boolean
+    phone?: boolean
+    password?: boolean
+    companyName?: boolean
+    businessType?: boolean
+    yearsInBusiness?: boolean
+    numberOfEmployees?: boolean
+    businessCategory?: boolean
+    addressLine1?: boolean
+    addressLine2?: boolean
+    city?: boolean
+    state?: boolean
+    pinCode?: boolean
+    landmark?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    deliveryRadius?: boolean
+    agentCode?: boolean
+    agentName?: boolean
+    agentPhone?: boolean
+    agentVisitDate?: boolean
+    referenceNotes?: boolean
+    gstNumber?: boolean
+    gstVerified?: boolean
+    gstDetails?: boolean
+    gstCertificate?: boolean
+    logo?: boolean
+    banner?: boolean
+    tagline?: boolean
+    selectedPackage?: boolean
+    billingCycle?: boolean
+    addOns?: boolean
+    termsAccepted?: boolean
+    privacyAccepted?: boolean
+    status?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    rejectionReason?: boolean
+    adminNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["vendorRegistrationRequest"]>
+
+  export type VendorRegistrationRequestSelectScalar = {
+    id?: boolean
+    fullName?: boolean
+    email?: boolean
+    phone?: boolean
+    password?: boolean
+    companyName?: boolean
+    businessType?: boolean
+    yearsInBusiness?: boolean
+    numberOfEmployees?: boolean
+    businessCategory?: boolean
+    addressLine1?: boolean
+    addressLine2?: boolean
+    city?: boolean
+    state?: boolean
+    pinCode?: boolean
+    landmark?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    deliveryRadius?: boolean
+    agentCode?: boolean
+    agentName?: boolean
+    agentPhone?: boolean
+    agentVisitDate?: boolean
+    referenceNotes?: boolean
+    gstNumber?: boolean
+    gstVerified?: boolean
+    gstDetails?: boolean
+    gstCertificate?: boolean
+    logo?: boolean
+    banner?: boolean
+    tagline?: boolean
+    selectedPackage?: boolean
+    billingCycle?: boolean
+    addOns?: boolean
+    termsAccepted?: boolean
+    privacyAccepted?: boolean
+    status?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    rejectionReason?: boolean
+    adminNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type VendorRegistrationRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "email" | "phone" | "password" | "companyName" | "businessType" | "yearsInBusiness" | "numberOfEmployees" | "businessCategory" | "addressLine1" | "addressLine2" | "city" | "state" | "pinCode" | "landmark" | "latitude" | "longitude" | "deliveryRadius" | "agentCode" | "agentName" | "agentPhone" | "agentVisitDate" | "referenceNotes" | "gstNumber" | "gstVerified" | "gstDetails" | "gstCertificate" | "logo" | "banner" | "tagline" | "selectedPackage" | "billingCycle" | "addOns" | "termsAccepted" | "privacyAccepted" | "status" | "reviewedBy" | "reviewedAt" | "rejectionReason" | "adminNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["vendorRegistrationRequest"]>
+
+  export type $VendorRegistrationRequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VendorRegistrationRequest"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      fullName: string
+      email: string
+      phone: string
+      password: string
+      companyName: string
+      businessType: string | null
+      yearsInBusiness: number | null
+      numberOfEmployees: string | null
+      businessCategory: string | null
+      addressLine1: string
+      addressLine2: string | null
+      city: string
+      state: string
+      pinCode: string
+      landmark: string | null
+      latitude: number | null
+      longitude: number | null
+      deliveryRadius: number
+      agentCode: string | null
+      agentName: string | null
+      agentPhone: string | null
+      agentVisitDate: string | null
+      referenceNotes: string | null
+      gstNumber: string | null
+      gstVerified: boolean
+      gstDetails: Prisma.JsonValue | null
+      gstCertificate: string | null
+      logo: string | null
+      banner: string | null
+      tagline: string | null
+      selectedPackage: string
+      billingCycle: string
+      addOns: Prisma.JsonValue | null
+      termsAccepted: boolean
+      privacyAccepted: boolean
+      status: string
+      reviewedBy: string | null
+      reviewedAt: Date | null
+      rejectionReason: string | null
+      adminNotes: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["vendorRegistrationRequest"]>
+    composites: {}
+  }
+
+  type VendorRegistrationRequestGetPayload<S extends boolean | null | undefined | VendorRegistrationRequestDefaultArgs> = $Result.GetResult<Prisma.$VendorRegistrationRequestPayload, S>
+
+  type VendorRegistrationRequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VendorRegistrationRequestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VendorRegistrationRequestCountAggregateInputType | true
+    }
+
+  export interface VendorRegistrationRequestDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VendorRegistrationRequest'], meta: { name: 'VendorRegistrationRequest' } }
+    /**
+     * Find zero or one VendorRegistrationRequest that matches the filter.
+     * @param {VendorRegistrationRequestFindUniqueArgs} args - Arguments to find a VendorRegistrationRequest
+     * @example
+     * // Get one VendorRegistrationRequest
+     * const vendorRegistrationRequest = await prisma.vendorRegistrationRequest.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VendorRegistrationRequestFindUniqueArgs>(args: SelectSubset<T, VendorRegistrationRequestFindUniqueArgs<ExtArgs>>): Prisma__VendorRegistrationRequestClient<$Result.GetResult<Prisma.$VendorRegistrationRequestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one VendorRegistrationRequest that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VendorRegistrationRequestFindUniqueOrThrowArgs} args - Arguments to find a VendorRegistrationRequest
+     * @example
+     * // Get one VendorRegistrationRequest
+     * const vendorRegistrationRequest = await prisma.vendorRegistrationRequest.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VendorRegistrationRequestFindUniqueOrThrowArgs>(args: SelectSubset<T, VendorRegistrationRequestFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VendorRegistrationRequestClient<$Result.GetResult<Prisma.$VendorRegistrationRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VendorRegistrationRequest that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorRegistrationRequestFindFirstArgs} args - Arguments to find a VendorRegistrationRequest
+     * @example
+     * // Get one VendorRegistrationRequest
+     * const vendorRegistrationRequest = await prisma.vendorRegistrationRequest.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VendorRegistrationRequestFindFirstArgs>(args?: SelectSubset<T, VendorRegistrationRequestFindFirstArgs<ExtArgs>>): Prisma__VendorRegistrationRequestClient<$Result.GetResult<Prisma.$VendorRegistrationRequestPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VendorRegistrationRequest that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorRegistrationRequestFindFirstOrThrowArgs} args - Arguments to find a VendorRegistrationRequest
+     * @example
+     * // Get one VendorRegistrationRequest
+     * const vendorRegistrationRequest = await prisma.vendorRegistrationRequest.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VendorRegistrationRequestFindFirstOrThrowArgs>(args?: SelectSubset<T, VendorRegistrationRequestFindFirstOrThrowArgs<ExtArgs>>): Prisma__VendorRegistrationRequestClient<$Result.GetResult<Prisma.$VendorRegistrationRequestPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more VendorRegistrationRequests that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorRegistrationRequestFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VendorRegistrationRequests
+     * const vendorRegistrationRequests = await prisma.vendorRegistrationRequest.findMany()
+     * 
+     * // Get first 10 VendorRegistrationRequests
+     * const vendorRegistrationRequests = await prisma.vendorRegistrationRequest.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const vendorRegistrationRequestWithIdOnly = await prisma.vendorRegistrationRequest.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VendorRegistrationRequestFindManyArgs>(args?: SelectSubset<T, VendorRegistrationRequestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorRegistrationRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a VendorRegistrationRequest.
+     * @param {VendorRegistrationRequestCreateArgs} args - Arguments to create a VendorRegistrationRequest.
+     * @example
+     * // Create one VendorRegistrationRequest
+     * const VendorRegistrationRequest = await prisma.vendorRegistrationRequest.create({
+     *   data: {
+     *     // ... data to create a VendorRegistrationRequest
+     *   }
+     * })
+     * 
+     */
+    create<T extends VendorRegistrationRequestCreateArgs>(args: SelectSubset<T, VendorRegistrationRequestCreateArgs<ExtArgs>>): Prisma__VendorRegistrationRequestClient<$Result.GetResult<Prisma.$VendorRegistrationRequestPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many VendorRegistrationRequests.
+     * @param {VendorRegistrationRequestCreateManyArgs} args - Arguments to create many VendorRegistrationRequests.
+     * @example
+     * // Create many VendorRegistrationRequests
+     * const vendorRegistrationRequest = await prisma.vendorRegistrationRequest.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VendorRegistrationRequestCreateManyArgs>(args?: SelectSubset<T, VendorRegistrationRequestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VendorRegistrationRequests and returns the data saved in the database.
+     * @param {VendorRegistrationRequestCreateManyAndReturnArgs} args - Arguments to create many VendorRegistrationRequests.
+     * @example
+     * // Create many VendorRegistrationRequests
+     * const vendorRegistrationRequest = await prisma.vendorRegistrationRequest.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VendorRegistrationRequests and only return the `id`
+     * const vendorRegistrationRequestWithIdOnly = await prisma.vendorRegistrationRequest.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VendorRegistrationRequestCreateManyAndReturnArgs>(args?: SelectSubset<T, VendorRegistrationRequestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorRegistrationRequestPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a VendorRegistrationRequest.
+     * @param {VendorRegistrationRequestDeleteArgs} args - Arguments to delete one VendorRegistrationRequest.
+     * @example
+     * // Delete one VendorRegistrationRequest
+     * const VendorRegistrationRequest = await prisma.vendorRegistrationRequest.delete({
+     *   where: {
+     *     // ... filter to delete one VendorRegistrationRequest
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VendorRegistrationRequestDeleteArgs>(args: SelectSubset<T, VendorRegistrationRequestDeleteArgs<ExtArgs>>): Prisma__VendorRegistrationRequestClient<$Result.GetResult<Prisma.$VendorRegistrationRequestPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one VendorRegistrationRequest.
+     * @param {VendorRegistrationRequestUpdateArgs} args - Arguments to update one VendorRegistrationRequest.
+     * @example
+     * // Update one VendorRegistrationRequest
+     * const vendorRegistrationRequest = await prisma.vendorRegistrationRequest.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VendorRegistrationRequestUpdateArgs>(args: SelectSubset<T, VendorRegistrationRequestUpdateArgs<ExtArgs>>): Prisma__VendorRegistrationRequestClient<$Result.GetResult<Prisma.$VendorRegistrationRequestPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more VendorRegistrationRequests.
+     * @param {VendorRegistrationRequestDeleteManyArgs} args - Arguments to filter VendorRegistrationRequests to delete.
+     * @example
+     * // Delete a few VendorRegistrationRequests
+     * const { count } = await prisma.vendorRegistrationRequest.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VendorRegistrationRequestDeleteManyArgs>(args?: SelectSubset<T, VendorRegistrationRequestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VendorRegistrationRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorRegistrationRequestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VendorRegistrationRequests
+     * const vendorRegistrationRequest = await prisma.vendorRegistrationRequest.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VendorRegistrationRequestUpdateManyArgs>(args: SelectSubset<T, VendorRegistrationRequestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VendorRegistrationRequests and returns the data updated in the database.
+     * @param {VendorRegistrationRequestUpdateManyAndReturnArgs} args - Arguments to update many VendorRegistrationRequests.
+     * @example
+     * // Update many VendorRegistrationRequests
+     * const vendorRegistrationRequest = await prisma.vendorRegistrationRequest.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more VendorRegistrationRequests and only return the `id`
+     * const vendorRegistrationRequestWithIdOnly = await prisma.vendorRegistrationRequest.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VendorRegistrationRequestUpdateManyAndReturnArgs>(args: SelectSubset<T, VendorRegistrationRequestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorRegistrationRequestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one VendorRegistrationRequest.
+     * @param {VendorRegistrationRequestUpsertArgs} args - Arguments to update or create a VendorRegistrationRequest.
+     * @example
+     * // Update or create a VendorRegistrationRequest
+     * const vendorRegistrationRequest = await prisma.vendorRegistrationRequest.upsert({
+     *   create: {
+     *     // ... data to create a VendorRegistrationRequest
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VendorRegistrationRequest we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VendorRegistrationRequestUpsertArgs>(args: SelectSubset<T, VendorRegistrationRequestUpsertArgs<ExtArgs>>): Prisma__VendorRegistrationRequestClient<$Result.GetResult<Prisma.$VendorRegistrationRequestPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of VendorRegistrationRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorRegistrationRequestCountArgs} args - Arguments to filter VendorRegistrationRequests to count.
+     * @example
+     * // Count the number of VendorRegistrationRequests
+     * const count = await prisma.vendorRegistrationRequest.count({
+     *   where: {
+     *     // ... the filter for the VendorRegistrationRequests we want to count
+     *   }
+     * })
+    **/
+    count<T extends VendorRegistrationRequestCountArgs>(
+      args?: Subset<T, VendorRegistrationRequestCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VendorRegistrationRequestCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VendorRegistrationRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorRegistrationRequestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VendorRegistrationRequestAggregateArgs>(args: Subset<T, VendorRegistrationRequestAggregateArgs>): Prisma.PrismaPromise<GetVendorRegistrationRequestAggregateType<T>>
+
+    /**
+     * Group by VendorRegistrationRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VendorRegistrationRequestGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VendorRegistrationRequestGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VendorRegistrationRequestGroupByArgs['orderBy'] }
+        : { orderBy?: VendorRegistrationRequestGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VendorRegistrationRequestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVendorRegistrationRequestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VendorRegistrationRequest model
+   */
+  readonly fields: VendorRegistrationRequestFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VendorRegistrationRequest.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VendorRegistrationRequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VendorRegistrationRequest model
+   */
+  interface VendorRegistrationRequestFieldRefs {
+    readonly id: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly fullName: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly email: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly phone: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly password: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly companyName: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly businessType: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly yearsInBusiness: FieldRef<"VendorRegistrationRequest", 'Int'>
+    readonly numberOfEmployees: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly businessCategory: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly addressLine1: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly addressLine2: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly city: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly state: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly pinCode: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly landmark: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly latitude: FieldRef<"VendorRegistrationRequest", 'Float'>
+    readonly longitude: FieldRef<"VendorRegistrationRequest", 'Float'>
+    readonly deliveryRadius: FieldRef<"VendorRegistrationRequest", 'Float'>
+    readonly agentCode: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly agentName: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly agentPhone: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly agentVisitDate: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly referenceNotes: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly gstNumber: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly gstVerified: FieldRef<"VendorRegistrationRequest", 'Boolean'>
+    readonly gstDetails: FieldRef<"VendorRegistrationRequest", 'Json'>
+    readonly gstCertificate: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly logo: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly banner: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly tagline: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly selectedPackage: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly billingCycle: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly addOns: FieldRef<"VendorRegistrationRequest", 'Json'>
+    readonly termsAccepted: FieldRef<"VendorRegistrationRequest", 'Boolean'>
+    readonly privacyAccepted: FieldRef<"VendorRegistrationRequest", 'Boolean'>
+    readonly status: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly reviewedBy: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly reviewedAt: FieldRef<"VendorRegistrationRequest", 'DateTime'>
+    readonly rejectionReason: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly adminNotes: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly createdAt: FieldRef<"VendorRegistrationRequest", 'DateTime'>
+    readonly updatedAt: FieldRef<"VendorRegistrationRequest", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VendorRegistrationRequest findUnique
+   */
+  export type VendorRegistrationRequestFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorRegistrationRequest
+     */
+    select?: VendorRegistrationRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorRegistrationRequest
+     */
+    omit?: VendorRegistrationRequestOmit<ExtArgs> | null
+    /**
+     * Filter, which VendorRegistrationRequest to fetch.
+     */
+    where: VendorRegistrationRequestWhereUniqueInput
+  }
+
+  /**
+   * VendorRegistrationRequest findUniqueOrThrow
+   */
+  export type VendorRegistrationRequestFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorRegistrationRequest
+     */
+    select?: VendorRegistrationRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorRegistrationRequest
+     */
+    omit?: VendorRegistrationRequestOmit<ExtArgs> | null
+    /**
+     * Filter, which VendorRegistrationRequest to fetch.
+     */
+    where: VendorRegistrationRequestWhereUniqueInput
+  }
+
+  /**
+   * VendorRegistrationRequest findFirst
+   */
+  export type VendorRegistrationRequestFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorRegistrationRequest
+     */
+    select?: VendorRegistrationRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorRegistrationRequest
+     */
+    omit?: VendorRegistrationRequestOmit<ExtArgs> | null
+    /**
+     * Filter, which VendorRegistrationRequest to fetch.
+     */
+    where?: VendorRegistrationRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VendorRegistrationRequests to fetch.
+     */
+    orderBy?: VendorRegistrationRequestOrderByWithRelationInput | VendorRegistrationRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VendorRegistrationRequests.
+     */
+    cursor?: VendorRegistrationRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VendorRegistrationRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VendorRegistrationRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VendorRegistrationRequests.
+     */
+    distinct?: VendorRegistrationRequestScalarFieldEnum | VendorRegistrationRequestScalarFieldEnum[]
+  }
+
+  /**
+   * VendorRegistrationRequest findFirstOrThrow
+   */
+  export type VendorRegistrationRequestFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorRegistrationRequest
+     */
+    select?: VendorRegistrationRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorRegistrationRequest
+     */
+    omit?: VendorRegistrationRequestOmit<ExtArgs> | null
+    /**
+     * Filter, which VendorRegistrationRequest to fetch.
+     */
+    where?: VendorRegistrationRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VendorRegistrationRequests to fetch.
+     */
+    orderBy?: VendorRegistrationRequestOrderByWithRelationInput | VendorRegistrationRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VendorRegistrationRequests.
+     */
+    cursor?: VendorRegistrationRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VendorRegistrationRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VendorRegistrationRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VendorRegistrationRequests.
+     */
+    distinct?: VendorRegistrationRequestScalarFieldEnum | VendorRegistrationRequestScalarFieldEnum[]
+  }
+
+  /**
+   * VendorRegistrationRequest findMany
+   */
+  export type VendorRegistrationRequestFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorRegistrationRequest
+     */
+    select?: VendorRegistrationRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorRegistrationRequest
+     */
+    omit?: VendorRegistrationRequestOmit<ExtArgs> | null
+    /**
+     * Filter, which VendorRegistrationRequests to fetch.
+     */
+    where?: VendorRegistrationRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VendorRegistrationRequests to fetch.
+     */
+    orderBy?: VendorRegistrationRequestOrderByWithRelationInput | VendorRegistrationRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VendorRegistrationRequests.
+     */
+    cursor?: VendorRegistrationRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VendorRegistrationRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VendorRegistrationRequests.
+     */
+    skip?: number
+    distinct?: VendorRegistrationRequestScalarFieldEnum | VendorRegistrationRequestScalarFieldEnum[]
+  }
+
+  /**
+   * VendorRegistrationRequest create
+   */
+  export type VendorRegistrationRequestCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorRegistrationRequest
+     */
+    select?: VendorRegistrationRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorRegistrationRequest
+     */
+    omit?: VendorRegistrationRequestOmit<ExtArgs> | null
+    /**
+     * The data needed to create a VendorRegistrationRequest.
+     */
+    data: XOR<VendorRegistrationRequestCreateInput, VendorRegistrationRequestUncheckedCreateInput>
+  }
+
+  /**
+   * VendorRegistrationRequest createMany
+   */
+  export type VendorRegistrationRequestCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VendorRegistrationRequests.
+     */
+    data: VendorRegistrationRequestCreateManyInput | VendorRegistrationRequestCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VendorRegistrationRequest createManyAndReturn
+   */
+  export type VendorRegistrationRequestCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorRegistrationRequest
+     */
+    select?: VendorRegistrationRequestSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorRegistrationRequest
+     */
+    omit?: VendorRegistrationRequestOmit<ExtArgs> | null
+    /**
+     * The data used to create many VendorRegistrationRequests.
+     */
+    data: VendorRegistrationRequestCreateManyInput | VendorRegistrationRequestCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VendorRegistrationRequest update
+   */
+  export type VendorRegistrationRequestUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorRegistrationRequest
+     */
+    select?: VendorRegistrationRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorRegistrationRequest
+     */
+    omit?: VendorRegistrationRequestOmit<ExtArgs> | null
+    /**
+     * The data needed to update a VendorRegistrationRequest.
+     */
+    data: XOR<VendorRegistrationRequestUpdateInput, VendorRegistrationRequestUncheckedUpdateInput>
+    /**
+     * Choose, which VendorRegistrationRequest to update.
+     */
+    where: VendorRegistrationRequestWhereUniqueInput
+  }
+
+  /**
+   * VendorRegistrationRequest updateMany
+   */
+  export type VendorRegistrationRequestUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VendorRegistrationRequests.
+     */
+    data: XOR<VendorRegistrationRequestUpdateManyMutationInput, VendorRegistrationRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which VendorRegistrationRequests to update
+     */
+    where?: VendorRegistrationRequestWhereInput
+    /**
+     * Limit how many VendorRegistrationRequests to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VendorRegistrationRequest updateManyAndReturn
+   */
+  export type VendorRegistrationRequestUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorRegistrationRequest
+     */
+    select?: VendorRegistrationRequestSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorRegistrationRequest
+     */
+    omit?: VendorRegistrationRequestOmit<ExtArgs> | null
+    /**
+     * The data used to update VendorRegistrationRequests.
+     */
+    data: XOR<VendorRegistrationRequestUpdateManyMutationInput, VendorRegistrationRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which VendorRegistrationRequests to update
+     */
+    where?: VendorRegistrationRequestWhereInput
+    /**
+     * Limit how many VendorRegistrationRequests to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VendorRegistrationRequest upsert
+   */
+  export type VendorRegistrationRequestUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorRegistrationRequest
+     */
+    select?: VendorRegistrationRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorRegistrationRequest
+     */
+    omit?: VendorRegistrationRequestOmit<ExtArgs> | null
+    /**
+     * The filter to search for the VendorRegistrationRequest to update in case it exists.
+     */
+    where: VendorRegistrationRequestWhereUniqueInput
+    /**
+     * In case the VendorRegistrationRequest found by the `where` argument doesn't exist, create a new VendorRegistrationRequest with this data.
+     */
+    create: XOR<VendorRegistrationRequestCreateInput, VendorRegistrationRequestUncheckedCreateInput>
+    /**
+     * In case the VendorRegistrationRequest was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VendorRegistrationRequestUpdateInput, VendorRegistrationRequestUncheckedUpdateInput>
+  }
+
+  /**
+   * VendorRegistrationRequest delete
+   */
+  export type VendorRegistrationRequestDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorRegistrationRequest
+     */
+    select?: VendorRegistrationRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorRegistrationRequest
+     */
+    omit?: VendorRegistrationRequestOmit<ExtArgs> | null
+    /**
+     * Filter which VendorRegistrationRequest to delete.
+     */
+    where: VendorRegistrationRequestWhereUniqueInput
+  }
+
+  /**
+   * VendorRegistrationRequest deleteMany
+   */
+  export type VendorRegistrationRequestDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VendorRegistrationRequests to delete
+     */
+    where?: VendorRegistrationRequestWhereInput
+    /**
+     * Limit how many VendorRegistrationRequests to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * VendorRegistrationRequest without action
+   */
+  export type VendorRegistrationRequestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VendorRegistrationRequest
+     */
+    select?: VendorRegistrationRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VendorRegistrationRequest
+     */
+    omit?: VendorRegistrationRequestOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model VendorSubscription
    */
 
@@ -32634,6 +34304,8 @@ export namespace Prisma {
     startDate: Date | null
     endDate: Date | null
     autoRenew: boolean | null
+    isTrial: boolean | null
+    trialEndsAt: Date | null
     maxProducts: number | null
     maxOrders: number | null
     storageLimit: number | null
@@ -32656,6 +34328,8 @@ export namespace Prisma {
     startDate: Date | null
     endDate: Date | null
     autoRenew: boolean | null
+    isTrial: boolean | null
+    trialEndsAt: Date | null
     maxProducts: number | null
     maxOrders: number | null
     storageLimit: number | null
@@ -32678,6 +34352,8 @@ export namespace Prisma {
     startDate: number
     endDate: number
     autoRenew: number
+    isTrial: number
+    trialEndsAt: number
     maxProducts: number
     maxOrders: number
     storageLimit: number
@@ -32716,6 +34392,8 @@ export namespace Prisma {
     startDate?: true
     endDate?: true
     autoRenew?: true
+    isTrial?: true
+    trialEndsAt?: true
     maxProducts?: true
     maxOrders?: true
     storageLimit?: true
@@ -32738,6 +34416,8 @@ export namespace Prisma {
     startDate?: true
     endDate?: true
     autoRenew?: true
+    isTrial?: true
+    trialEndsAt?: true
     maxProducts?: true
     maxOrders?: true
     storageLimit?: true
@@ -32760,6 +34440,8 @@ export namespace Prisma {
     startDate?: true
     endDate?: true
     autoRenew?: true
+    isTrial?: true
+    trialEndsAt?: true
     maxProducts?: true
     maxOrders?: true
     storageLimit?: true
@@ -32869,6 +34551,8 @@ export namespace Prisma {
     startDate: Date
     endDate: Date
     autoRenew: boolean
+    isTrial: boolean
+    trialEndsAt: Date | null
     maxProducts: number
     maxOrders: number
     storageLimit: number
@@ -32910,6 +34594,8 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     autoRenew?: boolean
+    isTrial?: boolean
+    trialEndsAt?: boolean
     maxProducts?: boolean
     maxOrders?: boolean
     storageLimit?: boolean
@@ -32935,6 +34621,8 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     autoRenew?: boolean
+    isTrial?: boolean
+    trialEndsAt?: boolean
     maxProducts?: boolean
     maxOrders?: boolean
     storageLimit?: boolean
@@ -32958,6 +34646,8 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     autoRenew?: boolean
+    isTrial?: boolean
+    trialEndsAt?: boolean
     maxProducts?: boolean
     maxOrders?: boolean
     storageLimit?: boolean
@@ -32981,6 +34671,8 @@ export namespace Prisma {
     startDate?: boolean
     endDate?: boolean
     autoRenew?: boolean
+    isTrial?: boolean
+    trialEndsAt?: boolean
     maxProducts?: boolean
     maxOrders?: boolean
     storageLimit?: boolean
@@ -32995,7 +34687,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type VendorSubscriptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "vendorId" | "planType" | "status" | "startDate" | "endDate" | "autoRenew" | "maxProducts" | "maxOrders" | "storageLimit" | "analyticsAccess" | "prioritySupport" | "amount" | "currency" | "billingCycle" | "razorpayPlanId" | "razorpaySubscriptionId" | "createdAt" | "updatedAt", ExtArgs["result"]["vendorSubscription"]>
+  export type VendorSubscriptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "vendorId" | "planType" | "status" | "startDate" | "endDate" | "autoRenew" | "isTrial" | "trialEndsAt" | "maxProducts" | "maxOrders" | "storageLimit" | "analyticsAccess" | "prioritySupport" | "amount" | "currency" | "billingCycle" | "razorpayPlanId" | "razorpaySubscriptionId" | "createdAt" | "updatedAt", ExtArgs["result"]["vendorSubscription"]>
   export type VendorSubscriptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     vendor?: boolean | UserDefaultArgs<ExtArgs>
     payments?: boolean | VendorSubscription$paymentsArgs<ExtArgs>
@@ -33022,6 +34714,8 @@ export namespace Prisma {
       startDate: Date
       endDate: Date
       autoRenew: boolean
+      isTrial: boolean
+      trialEndsAt: Date | null
       maxProducts: number
       maxOrders: number
       storageLimit: number
@@ -33466,6 +35160,8 @@ export namespace Prisma {
     readonly startDate: FieldRef<"VendorSubscription", 'DateTime'>
     readonly endDate: FieldRef<"VendorSubscription", 'DateTime'>
     readonly autoRenew: FieldRef<"VendorSubscription", 'Boolean'>
+    readonly isTrial: FieldRef<"VendorSubscription", 'Boolean'>
+    readonly trialEndsAt: FieldRef<"VendorSubscription", 'DateTime'>
     readonly maxProducts: FieldRef<"VendorSubscription", 'Int'>
     readonly maxOrders: FieldRef<"VendorSubscription", 'Int'>
     readonly storageLimit: FieldRef<"VendorSubscription", 'Int'>
@@ -39712,6 +41408,10 @@ export namespace Prisma {
     failedAttempts: 'failedAttempts',
     lastFailedAttempt: 'lastFailedAttempt',
     passwordChangedAt: 'passwordChangedAt',
+    twoFactorEnabled: 'twoFactorEnabled',
+    twoFactorSecret: 'twoFactorSecret',
+    phoneVerified: 'phoneVerified',
+    phoneVerifiedAt: 'phoneVerifiedAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -40079,6 +41779,55 @@ export namespace Prisma {
   export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
+  export const VendorRegistrationRequestScalarFieldEnum: {
+    id: 'id',
+    fullName: 'fullName',
+    email: 'email',
+    phone: 'phone',
+    password: 'password',
+    companyName: 'companyName',
+    businessType: 'businessType',
+    yearsInBusiness: 'yearsInBusiness',
+    numberOfEmployees: 'numberOfEmployees',
+    businessCategory: 'businessCategory',
+    addressLine1: 'addressLine1',
+    addressLine2: 'addressLine2',
+    city: 'city',
+    state: 'state',
+    pinCode: 'pinCode',
+    landmark: 'landmark',
+    latitude: 'latitude',
+    longitude: 'longitude',
+    deliveryRadius: 'deliveryRadius',
+    agentCode: 'agentCode',
+    agentName: 'agentName',
+    agentPhone: 'agentPhone',
+    agentVisitDate: 'agentVisitDate',
+    referenceNotes: 'referenceNotes',
+    gstNumber: 'gstNumber',
+    gstVerified: 'gstVerified',
+    gstDetails: 'gstDetails',
+    gstCertificate: 'gstCertificate',
+    logo: 'logo',
+    banner: 'banner',
+    tagline: 'tagline',
+    selectedPackage: 'selectedPackage',
+    billingCycle: 'billingCycle',
+    addOns: 'addOns',
+    termsAccepted: 'termsAccepted',
+    privacyAccepted: 'privacyAccepted',
+    status: 'status',
+    reviewedBy: 'reviewedBy',
+    reviewedAt: 'reviewedAt',
+    rejectionReason: 'rejectionReason',
+    adminNotes: 'adminNotes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type VendorRegistrationRequestScalarFieldEnum = (typeof VendorRegistrationRequestScalarFieldEnum)[keyof typeof VendorRegistrationRequestScalarFieldEnum]
+
+
   export const VendorSubscriptionScalarFieldEnum: {
     id: 'id',
     vendorId: 'vendorId',
@@ -40087,6 +41836,8 @@ export namespace Prisma {
     startDate: 'startDate',
     endDate: 'endDate',
     autoRenew: 'autoRenew',
+    isTrial: 'isTrial',
+    trialEndsAt: 'trialEndsAt',
     maxProducts: 'maxProducts',
     maxOrders: 'maxOrders',
     storageLimit: 'storageLimit',
@@ -40381,6 +42132,10 @@ export namespace Prisma {
     failedAttempts?: IntFilter<"User"> | number
     lastFailedAttempt?: DateTimeNullableFilter<"User"> | Date | string | null
     passwordChangedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    twoFactorEnabled?: BoolFilter<"User"> | boolean
+    twoFactorSecret?: StringNullableFilter<"User"> | string | null
+    phoneVerified?: BoolFilter<"User"> | boolean
+    phoneVerifiedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
@@ -40421,6 +42176,10 @@ export namespace Prisma {
     failedAttempts?: SortOrder
     lastFailedAttempt?: SortOrderInput | SortOrder
     passwordChangedAt?: SortOrderInput | SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrderInput | SortOrder
+    phoneVerified?: SortOrder
+    phoneVerifiedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     accounts?: AccountOrderByRelationAggregateInput
@@ -40464,6 +42223,10 @@ export namespace Prisma {
     failedAttempts?: IntFilter<"User"> | number
     lastFailedAttempt?: DateTimeNullableFilter<"User"> | Date | string | null
     passwordChangedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    twoFactorEnabled?: BoolFilter<"User"> | boolean
+    twoFactorSecret?: StringNullableFilter<"User"> | string | null
+    phoneVerified?: BoolFilter<"User"> | boolean
+    phoneVerifiedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
@@ -40504,6 +42267,10 @@ export namespace Prisma {
     failedAttempts?: SortOrder
     lastFailedAttempt?: SortOrderInput | SortOrder
     passwordChangedAt?: SortOrderInput | SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrderInput | SortOrder
+    phoneVerified?: SortOrder
+    phoneVerifiedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -40531,6 +42298,10 @@ export namespace Prisma {
     failedAttempts?: IntWithAggregatesFilter<"User"> | number
     lastFailedAttempt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     passwordChangedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    twoFactorEnabled?: BoolWithAggregatesFilter<"User"> | boolean
+    twoFactorSecret?: StringNullableWithAggregatesFilter<"User"> | string | null
+    phoneVerified?: BoolWithAggregatesFilter<"User"> | boolean
+    phoneVerifiedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -42445,6 +44216,250 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
   }
 
+  export type VendorRegistrationRequestWhereInput = {
+    AND?: VendorRegistrationRequestWhereInput | VendorRegistrationRequestWhereInput[]
+    OR?: VendorRegistrationRequestWhereInput[]
+    NOT?: VendorRegistrationRequestWhereInput | VendorRegistrationRequestWhereInput[]
+    id?: StringFilter<"VendorRegistrationRequest"> | string
+    fullName?: StringFilter<"VendorRegistrationRequest"> | string
+    email?: StringFilter<"VendorRegistrationRequest"> | string
+    phone?: StringFilter<"VendorRegistrationRequest"> | string
+    password?: StringFilter<"VendorRegistrationRequest"> | string
+    companyName?: StringFilter<"VendorRegistrationRequest"> | string
+    businessType?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    yearsInBusiness?: IntNullableFilter<"VendorRegistrationRequest"> | number | null
+    numberOfEmployees?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    businessCategory?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    addressLine1?: StringFilter<"VendorRegistrationRequest"> | string
+    addressLine2?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    city?: StringFilter<"VendorRegistrationRequest"> | string
+    state?: StringFilter<"VendorRegistrationRequest"> | string
+    pinCode?: StringFilter<"VendorRegistrationRequest"> | string
+    landmark?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    latitude?: FloatNullableFilter<"VendorRegistrationRequest"> | number | null
+    longitude?: FloatNullableFilter<"VendorRegistrationRequest"> | number | null
+    deliveryRadius?: FloatFilter<"VendorRegistrationRequest"> | number
+    agentCode?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    agentName?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    agentPhone?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    agentVisitDate?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    referenceNotes?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    gstNumber?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    gstVerified?: BoolFilter<"VendorRegistrationRequest"> | boolean
+    gstDetails?: JsonNullableFilter<"VendorRegistrationRequest">
+    gstCertificate?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    logo?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    banner?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    tagline?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    selectedPackage?: StringFilter<"VendorRegistrationRequest"> | string
+    billingCycle?: StringFilter<"VendorRegistrationRequest"> | string
+    addOns?: JsonNullableFilter<"VendorRegistrationRequest">
+    termsAccepted?: BoolFilter<"VendorRegistrationRequest"> | boolean
+    privacyAccepted?: BoolFilter<"VendorRegistrationRequest"> | boolean
+    status?: StringFilter<"VendorRegistrationRequest"> | string
+    reviewedBy?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"VendorRegistrationRequest"> | Date | string | null
+    rejectionReason?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    adminNotes?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    createdAt?: DateTimeFilter<"VendorRegistrationRequest"> | Date | string
+    updatedAt?: DateTimeFilter<"VendorRegistrationRequest"> | Date | string
+  }
+
+  export type VendorRegistrationRequestOrderByWithRelationInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    phone?: SortOrder
+    password?: SortOrder
+    companyName?: SortOrder
+    businessType?: SortOrderInput | SortOrder
+    yearsInBusiness?: SortOrderInput | SortOrder
+    numberOfEmployees?: SortOrderInput | SortOrder
+    businessCategory?: SortOrderInput | SortOrder
+    addressLine1?: SortOrder
+    addressLine2?: SortOrderInput | SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    pinCode?: SortOrder
+    landmark?: SortOrderInput | SortOrder
+    latitude?: SortOrderInput | SortOrder
+    longitude?: SortOrderInput | SortOrder
+    deliveryRadius?: SortOrder
+    agentCode?: SortOrderInput | SortOrder
+    agentName?: SortOrderInput | SortOrder
+    agentPhone?: SortOrderInput | SortOrder
+    agentVisitDate?: SortOrderInput | SortOrder
+    referenceNotes?: SortOrderInput | SortOrder
+    gstNumber?: SortOrderInput | SortOrder
+    gstVerified?: SortOrder
+    gstDetails?: SortOrderInput | SortOrder
+    gstCertificate?: SortOrderInput | SortOrder
+    logo?: SortOrderInput | SortOrder
+    banner?: SortOrderInput | SortOrder
+    tagline?: SortOrderInput | SortOrder
+    selectedPackage?: SortOrder
+    billingCycle?: SortOrder
+    addOns?: SortOrderInput | SortOrder
+    termsAccepted?: SortOrder
+    privacyAccepted?: SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrderInput | SortOrder
+    reviewedAt?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
+    adminNotes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VendorRegistrationRequestWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: VendorRegistrationRequestWhereInput | VendorRegistrationRequestWhereInput[]
+    OR?: VendorRegistrationRequestWhereInput[]
+    NOT?: VendorRegistrationRequestWhereInput | VendorRegistrationRequestWhereInput[]
+    fullName?: StringFilter<"VendorRegistrationRequest"> | string
+    email?: StringFilter<"VendorRegistrationRequest"> | string
+    phone?: StringFilter<"VendorRegistrationRequest"> | string
+    password?: StringFilter<"VendorRegistrationRequest"> | string
+    companyName?: StringFilter<"VendorRegistrationRequest"> | string
+    businessType?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    yearsInBusiness?: IntNullableFilter<"VendorRegistrationRequest"> | number | null
+    numberOfEmployees?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    businessCategory?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    addressLine1?: StringFilter<"VendorRegistrationRequest"> | string
+    addressLine2?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    city?: StringFilter<"VendorRegistrationRequest"> | string
+    state?: StringFilter<"VendorRegistrationRequest"> | string
+    pinCode?: StringFilter<"VendorRegistrationRequest"> | string
+    landmark?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    latitude?: FloatNullableFilter<"VendorRegistrationRequest"> | number | null
+    longitude?: FloatNullableFilter<"VendorRegistrationRequest"> | number | null
+    deliveryRadius?: FloatFilter<"VendorRegistrationRequest"> | number
+    agentCode?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    agentName?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    agentPhone?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    agentVisitDate?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    referenceNotes?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    gstNumber?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    gstVerified?: BoolFilter<"VendorRegistrationRequest"> | boolean
+    gstDetails?: JsonNullableFilter<"VendorRegistrationRequest">
+    gstCertificate?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    logo?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    banner?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    tagline?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    selectedPackage?: StringFilter<"VendorRegistrationRequest"> | string
+    billingCycle?: StringFilter<"VendorRegistrationRequest"> | string
+    addOns?: JsonNullableFilter<"VendorRegistrationRequest">
+    termsAccepted?: BoolFilter<"VendorRegistrationRequest"> | boolean
+    privacyAccepted?: BoolFilter<"VendorRegistrationRequest"> | boolean
+    status?: StringFilter<"VendorRegistrationRequest"> | string
+    reviewedBy?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"VendorRegistrationRequest"> | Date | string | null
+    rejectionReason?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    adminNotes?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    createdAt?: DateTimeFilter<"VendorRegistrationRequest"> | Date | string
+    updatedAt?: DateTimeFilter<"VendorRegistrationRequest"> | Date | string
+  }, "id">
+
+  export type VendorRegistrationRequestOrderByWithAggregationInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    phone?: SortOrder
+    password?: SortOrder
+    companyName?: SortOrder
+    businessType?: SortOrderInput | SortOrder
+    yearsInBusiness?: SortOrderInput | SortOrder
+    numberOfEmployees?: SortOrderInput | SortOrder
+    businessCategory?: SortOrderInput | SortOrder
+    addressLine1?: SortOrder
+    addressLine2?: SortOrderInput | SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    pinCode?: SortOrder
+    landmark?: SortOrderInput | SortOrder
+    latitude?: SortOrderInput | SortOrder
+    longitude?: SortOrderInput | SortOrder
+    deliveryRadius?: SortOrder
+    agentCode?: SortOrderInput | SortOrder
+    agentName?: SortOrderInput | SortOrder
+    agentPhone?: SortOrderInput | SortOrder
+    agentVisitDate?: SortOrderInput | SortOrder
+    referenceNotes?: SortOrderInput | SortOrder
+    gstNumber?: SortOrderInput | SortOrder
+    gstVerified?: SortOrder
+    gstDetails?: SortOrderInput | SortOrder
+    gstCertificate?: SortOrderInput | SortOrder
+    logo?: SortOrderInput | SortOrder
+    banner?: SortOrderInput | SortOrder
+    tagline?: SortOrderInput | SortOrder
+    selectedPackage?: SortOrder
+    billingCycle?: SortOrder
+    addOns?: SortOrderInput | SortOrder
+    termsAccepted?: SortOrder
+    privacyAccepted?: SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrderInput | SortOrder
+    reviewedAt?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
+    adminNotes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: VendorRegistrationRequestCountOrderByAggregateInput
+    _avg?: VendorRegistrationRequestAvgOrderByAggregateInput
+    _max?: VendorRegistrationRequestMaxOrderByAggregateInput
+    _min?: VendorRegistrationRequestMinOrderByAggregateInput
+    _sum?: VendorRegistrationRequestSumOrderByAggregateInput
+  }
+
+  export type VendorRegistrationRequestScalarWhereWithAggregatesInput = {
+    AND?: VendorRegistrationRequestScalarWhereWithAggregatesInput | VendorRegistrationRequestScalarWhereWithAggregatesInput[]
+    OR?: VendorRegistrationRequestScalarWhereWithAggregatesInput[]
+    NOT?: VendorRegistrationRequestScalarWhereWithAggregatesInput | VendorRegistrationRequestScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
+    fullName?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
+    email?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
+    phone?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
+    password?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
+    companyName?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
+    businessType?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    yearsInBusiness?: IntNullableWithAggregatesFilter<"VendorRegistrationRequest"> | number | null
+    numberOfEmployees?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    businessCategory?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    addressLine1?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
+    addressLine2?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    city?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
+    state?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
+    pinCode?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
+    landmark?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    latitude?: FloatNullableWithAggregatesFilter<"VendorRegistrationRequest"> | number | null
+    longitude?: FloatNullableWithAggregatesFilter<"VendorRegistrationRequest"> | number | null
+    deliveryRadius?: FloatWithAggregatesFilter<"VendorRegistrationRequest"> | number
+    agentCode?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    agentName?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    agentPhone?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    agentVisitDate?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    referenceNotes?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    gstNumber?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    gstVerified?: BoolWithAggregatesFilter<"VendorRegistrationRequest"> | boolean
+    gstDetails?: JsonNullableWithAggregatesFilter<"VendorRegistrationRequest">
+    gstCertificate?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    logo?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    banner?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    tagline?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    selectedPackage?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
+    billingCycle?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
+    addOns?: JsonNullableWithAggregatesFilter<"VendorRegistrationRequest">
+    termsAccepted?: BoolWithAggregatesFilter<"VendorRegistrationRequest"> | boolean
+    privacyAccepted?: BoolWithAggregatesFilter<"VendorRegistrationRequest"> | boolean
+    status?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
+    reviewedBy?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    reviewedAt?: DateTimeNullableWithAggregatesFilter<"VendorRegistrationRequest"> | Date | string | null
+    rejectionReason?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    adminNotes?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"VendorRegistrationRequest"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"VendorRegistrationRequest"> | Date | string
+  }
+
   export type VendorSubscriptionWhereInput = {
     AND?: VendorSubscriptionWhereInput | VendorSubscriptionWhereInput[]
     OR?: VendorSubscriptionWhereInput[]
@@ -42456,6 +44471,8 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"VendorSubscription"> | Date | string
     endDate?: DateTimeFilter<"VendorSubscription"> | Date | string
     autoRenew?: BoolFilter<"VendorSubscription"> | boolean
+    isTrial?: BoolFilter<"VendorSubscription"> | boolean
+    trialEndsAt?: DateTimeNullableFilter<"VendorSubscription"> | Date | string | null
     maxProducts?: IntFilter<"VendorSubscription"> | number
     maxOrders?: IntFilter<"VendorSubscription"> | number
     storageLimit?: IntFilter<"VendorSubscription"> | number
@@ -42480,6 +44497,8 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     autoRenew?: SortOrder
+    isTrial?: SortOrder
+    trialEndsAt?: SortOrderInput | SortOrder
     maxProducts?: SortOrder
     maxOrders?: SortOrder
     storageLimit?: SortOrder
@@ -42507,6 +44526,8 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"VendorSubscription"> | Date | string
     endDate?: DateTimeFilter<"VendorSubscription"> | Date | string
     autoRenew?: BoolFilter<"VendorSubscription"> | boolean
+    isTrial?: BoolFilter<"VendorSubscription"> | boolean
+    trialEndsAt?: DateTimeNullableFilter<"VendorSubscription"> | Date | string | null
     maxProducts?: IntFilter<"VendorSubscription"> | number
     maxOrders?: IntFilter<"VendorSubscription"> | number
     storageLimit?: IntFilter<"VendorSubscription"> | number
@@ -42531,6 +44552,8 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     autoRenew?: SortOrder
+    isTrial?: SortOrder
+    trialEndsAt?: SortOrderInput | SortOrder
     maxProducts?: SortOrder
     maxOrders?: SortOrder
     storageLimit?: SortOrder
@@ -42561,6 +44584,8 @@ export namespace Prisma {
     startDate?: DateTimeWithAggregatesFilter<"VendorSubscription"> | Date | string
     endDate?: DateTimeWithAggregatesFilter<"VendorSubscription"> | Date | string
     autoRenew?: BoolWithAggregatesFilter<"VendorSubscription"> | boolean
+    isTrial?: BoolWithAggregatesFilter<"VendorSubscription"> | boolean
+    trialEndsAt?: DateTimeNullableWithAggregatesFilter<"VendorSubscription"> | Date | string | null
     maxProducts?: IntWithAggregatesFilter<"VendorSubscription"> | number
     maxOrders?: IntWithAggregatesFilter<"VendorSubscription"> | number
     storageLimit?: IntWithAggregatesFilter<"VendorSubscription"> | number
@@ -42989,6 +45014,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -43029,6 +45058,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -43069,6 +45102,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -43109,6 +45146,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -43149,6 +45190,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -43168,6 +45213,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -43187,6 +45236,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -45260,6 +47313,328 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type VendorRegistrationRequestCreateInput = {
+    id?: string
+    fullName: string
+    email: string
+    phone: string
+    password: string
+    companyName: string
+    businessType?: string | null
+    yearsInBusiness?: number | null
+    numberOfEmployees?: string | null
+    businessCategory?: string | null
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    state?: string
+    pinCode: string
+    landmark?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    deliveryRadius?: number
+    agentCode?: string | null
+    agentName?: string | null
+    agentPhone?: string | null
+    agentVisitDate?: string | null
+    referenceNotes?: string | null
+    gstNumber?: string | null
+    gstVerified?: boolean
+    gstDetails?: NullableJsonNullValueInput | InputJsonValue
+    gstCertificate?: string | null
+    logo?: string | null
+    banner?: string | null
+    tagline?: string | null
+    selectedPackage?: string
+    billingCycle?: string
+    addOns?: NullableJsonNullValueInput | InputJsonValue
+    termsAccepted?: boolean
+    privacyAccepted?: boolean
+    status?: string
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    rejectionReason?: string | null
+    adminNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VendorRegistrationRequestUncheckedCreateInput = {
+    id?: string
+    fullName: string
+    email: string
+    phone: string
+    password: string
+    companyName: string
+    businessType?: string | null
+    yearsInBusiness?: number | null
+    numberOfEmployees?: string | null
+    businessCategory?: string | null
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    state?: string
+    pinCode: string
+    landmark?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    deliveryRadius?: number
+    agentCode?: string | null
+    agentName?: string | null
+    agentPhone?: string | null
+    agentVisitDate?: string | null
+    referenceNotes?: string | null
+    gstNumber?: string | null
+    gstVerified?: boolean
+    gstDetails?: NullableJsonNullValueInput | InputJsonValue
+    gstCertificate?: string | null
+    logo?: string | null
+    banner?: string | null
+    tagline?: string | null
+    selectedPackage?: string
+    billingCycle?: string
+    addOns?: NullableJsonNullValueInput | InputJsonValue
+    termsAccepted?: boolean
+    privacyAccepted?: boolean
+    status?: string
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    rejectionReason?: string | null
+    adminNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VendorRegistrationRequestUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    companyName?: StringFieldUpdateOperationsInput | string
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    yearsInBusiness?: NullableIntFieldUpdateOperationsInput | number | null
+    numberOfEmployees?: NullableStringFieldUpdateOperationsInput | string | null
+    businessCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    pinCode?: StringFieldUpdateOperationsInput | string
+    landmark?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    deliveryRadius?: FloatFieldUpdateOperationsInput | number
+    agentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    agentName?: NullableStringFieldUpdateOperationsInput | string | null
+    agentPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    agentVisitDate?: NullableStringFieldUpdateOperationsInput | string | null
+    referenceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    gstVerified?: BoolFieldUpdateOperationsInput | boolean
+    gstDetails?: NullableJsonNullValueInput | InputJsonValue
+    gstCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    selectedPackage?: StringFieldUpdateOperationsInput | string
+    billingCycle?: StringFieldUpdateOperationsInput | string
+    addOns?: NullableJsonNullValueInput | InputJsonValue
+    termsAccepted?: BoolFieldUpdateOperationsInput | boolean
+    privacyAccepted?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VendorRegistrationRequestUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    companyName?: StringFieldUpdateOperationsInput | string
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    yearsInBusiness?: NullableIntFieldUpdateOperationsInput | number | null
+    numberOfEmployees?: NullableStringFieldUpdateOperationsInput | string | null
+    businessCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    pinCode?: StringFieldUpdateOperationsInput | string
+    landmark?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    deliveryRadius?: FloatFieldUpdateOperationsInput | number
+    agentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    agentName?: NullableStringFieldUpdateOperationsInput | string | null
+    agentPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    agentVisitDate?: NullableStringFieldUpdateOperationsInput | string | null
+    referenceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    gstVerified?: BoolFieldUpdateOperationsInput | boolean
+    gstDetails?: NullableJsonNullValueInput | InputJsonValue
+    gstCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    selectedPackage?: StringFieldUpdateOperationsInput | string
+    billingCycle?: StringFieldUpdateOperationsInput | string
+    addOns?: NullableJsonNullValueInput | InputJsonValue
+    termsAccepted?: BoolFieldUpdateOperationsInput | boolean
+    privacyAccepted?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VendorRegistrationRequestCreateManyInput = {
+    id?: string
+    fullName: string
+    email: string
+    phone: string
+    password: string
+    companyName: string
+    businessType?: string | null
+    yearsInBusiness?: number | null
+    numberOfEmployees?: string | null
+    businessCategory?: string | null
+    addressLine1: string
+    addressLine2?: string | null
+    city: string
+    state?: string
+    pinCode: string
+    landmark?: string | null
+    latitude?: number | null
+    longitude?: number | null
+    deliveryRadius?: number
+    agentCode?: string | null
+    agentName?: string | null
+    agentPhone?: string | null
+    agentVisitDate?: string | null
+    referenceNotes?: string | null
+    gstNumber?: string | null
+    gstVerified?: boolean
+    gstDetails?: NullableJsonNullValueInput | InputJsonValue
+    gstCertificate?: string | null
+    logo?: string | null
+    banner?: string | null
+    tagline?: string | null
+    selectedPackage?: string
+    billingCycle?: string
+    addOns?: NullableJsonNullValueInput | InputJsonValue
+    termsAccepted?: boolean
+    privacyAccepted?: boolean
+    status?: string
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    rejectionReason?: string | null
+    adminNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VendorRegistrationRequestUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    companyName?: StringFieldUpdateOperationsInput | string
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    yearsInBusiness?: NullableIntFieldUpdateOperationsInput | number | null
+    numberOfEmployees?: NullableStringFieldUpdateOperationsInput | string | null
+    businessCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    pinCode?: StringFieldUpdateOperationsInput | string
+    landmark?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    deliveryRadius?: FloatFieldUpdateOperationsInput | number
+    agentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    agentName?: NullableStringFieldUpdateOperationsInput | string | null
+    agentPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    agentVisitDate?: NullableStringFieldUpdateOperationsInput | string | null
+    referenceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    gstVerified?: BoolFieldUpdateOperationsInput | boolean
+    gstDetails?: NullableJsonNullValueInput | InputJsonValue
+    gstCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    selectedPackage?: StringFieldUpdateOperationsInput | string
+    billingCycle?: StringFieldUpdateOperationsInput | string
+    addOns?: NullableJsonNullValueInput | InputJsonValue
+    termsAccepted?: BoolFieldUpdateOperationsInput | boolean
+    privacyAccepted?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VendorRegistrationRequestUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    companyName?: StringFieldUpdateOperationsInput | string
+    businessType?: NullableStringFieldUpdateOperationsInput | string | null
+    yearsInBusiness?: NullableIntFieldUpdateOperationsInput | number | null
+    numberOfEmployees?: NullableStringFieldUpdateOperationsInput | string | null
+    businessCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    addressLine1?: StringFieldUpdateOperationsInput | string
+    addressLine2?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    pinCode?: StringFieldUpdateOperationsInput | string
+    landmark?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    deliveryRadius?: FloatFieldUpdateOperationsInput | number
+    agentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    agentName?: NullableStringFieldUpdateOperationsInput | string | null
+    agentPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    agentVisitDate?: NullableStringFieldUpdateOperationsInput | string | null
+    referenceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    gstVerified?: BoolFieldUpdateOperationsInput | boolean
+    gstDetails?: NullableJsonNullValueInput | InputJsonValue
+    gstCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    banner?: NullableStringFieldUpdateOperationsInput | string | null
+    tagline?: NullableStringFieldUpdateOperationsInput | string | null
+    selectedPackage?: StringFieldUpdateOperationsInput | string
+    billingCycle?: StringFieldUpdateOperationsInput | string
+    addOns?: NullableJsonNullValueInput | InputJsonValue
+    termsAccepted?: BoolFieldUpdateOperationsInput | boolean
+    privacyAccepted?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type VendorSubscriptionCreateInput = {
     id?: string
     planType: string
@@ -45267,6 +47642,8 @@ export namespace Prisma {
     startDate?: Date | string
     endDate: Date | string
     autoRenew?: boolean
+    isTrial?: boolean
+    trialEndsAt?: Date | string | null
     maxProducts?: number
     maxOrders?: number
     storageLimit?: number
@@ -45291,6 +47668,8 @@ export namespace Prisma {
     startDate?: Date | string
     endDate: Date | string
     autoRenew?: boolean
+    isTrial?: boolean
+    trialEndsAt?: Date | string | null
     maxProducts?: number
     maxOrders?: number
     storageLimit?: number
@@ -45313,6 +47692,8 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    isTrial?: BoolFieldUpdateOperationsInput | boolean
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxProducts?: IntFieldUpdateOperationsInput | number
     maxOrders?: IntFieldUpdateOperationsInput | number
     storageLimit?: IntFieldUpdateOperationsInput | number
@@ -45337,6 +47718,8 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    isTrial?: BoolFieldUpdateOperationsInput | boolean
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxProducts?: IntFieldUpdateOperationsInput | number
     maxOrders?: IntFieldUpdateOperationsInput | number
     storageLimit?: IntFieldUpdateOperationsInput | number
@@ -45360,6 +47743,8 @@ export namespace Prisma {
     startDate?: Date | string
     endDate: Date | string
     autoRenew?: boolean
+    isTrial?: boolean
+    trialEndsAt?: Date | string | null
     maxProducts?: number
     maxOrders?: number
     storageLimit?: number
@@ -45381,6 +47766,8 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    isTrial?: BoolFieldUpdateOperationsInput | boolean
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxProducts?: IntFieldUpdateOperationsInput | number
     maxOrders?: IntFieldUpdateOperationsInput | number
     storageLimit?: IntFieldUpdateOperationsInput | number
@@ -45403,6 +47790,8 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    isTrial?: BoolFieldUpdateOperationsInput | boolean
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxProducts?: IntFieldUpdateOperationsInput | number
     maxOrders?: IntFieldUpdateOperationsInput | number
     storageLimit?: IntFieldUpdateOperationsInput | number
@@ -46134,6 +48523,10 @@ export namespace Prisma {
     failedAttempts?: SortOrder
     lastFailedAttempt?: SortOrder
     passwordChangedAt?: SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrder
+    phoneVerified?: SortOrder
+    phoneVerifiedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -46157,6 +48550,10 @@ export namespace Prisma {
     failedAttempts?: SortOrder
     lastFailedAttempt?: SortOrder
     passwordChangedAt?: SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrder
+    phoneVerified?: SortOrder
+    phoneVerifiedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -46176,6 +48573,10 @@ export namespace Prisma {
     failedAttempts?: SortOrder
     lastFailedAttempt?: SortOrder
     passwordChangedAt?: SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrder
+    phoneVerified?: SortOrder
+    phoneVerifiedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -47639,6 +50040,181 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type VendorRegistrationRequestCountOrderByAggregateInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    phone?: SortOrder
+    password?: SortOrder
+    companyName?: SortOrder
+    businessType?: SortOrder
+    yearsInBusiness?: SortOrder
+    numberOfEmployees?: SortOrder
+    businessCategory?: SortOrder
+    addressLine1?: SortOrder
+    addressLine2?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    pinCode?: SortOrder
+    landmark?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    deliveryRadius?: SortOrder
+    agentCode?: SortOrder
+    agentName?: SortOrder
+    agentPhone?: SortOrder
+    agentVisitDate?: SortOrder
+    referenceNotes?: SortOrder
+    gstNumber?: SortOrder
+    gstVerified?: SortOrder
+    gstDetails?: SortOrder
+    gstCertificate?: SortOrder
+    logo?: SortOrder
+    banner?: SortOrder
+    tagline?: SortOrder
+    selectedPackage?: SortOrder
+    billingCycle?: SortOrder
+    addOns?: SortOrder
+    termsAccepted?: SortOrder
+    privacyAccepted?: SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    rejectionReason?: SortOrder
+    adminNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VendorRegistrationRequestAvgOrderByAggregateInput = {
+    yearsInBusiness?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    deliveryRadius?: SortOrder
+  }
+
+  export type VendorRegistrationRequestMaxOrderByAggregateInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    phone?: SortOrder
+    password?: SortOrder
+    companyName?: SortOrder
+    businessType?: SortOrder
+    yearsInBusiness?: SortOrder
+    numberOfEmployees?: SortOrder
+    businessCategory?: SortOrder
+    addressLine1?: SortOrder
+    addressLine2?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    pinCode?: SortOrder
+    landmark?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    deliveryRadius?: SortOrder
+    agentCode?: SortOrder
+    agentName?: SortOrder
+    agentPhone?: SortOrder
+    agentVisitDate?: SortOrder
+    referenceNotes?: SortOrder
+    gstNumber?: SortOrder
+    gstVerified?: SortOrder
+    gstCertificate?: SortOrder
+    logo?: SortOrder
+    banner?: SortOrder
+    tagline?: SortOrder
+    selectedPackage?: SortOrder
+    billingCycle?: SortOrder
+    termsAccepted?: SortOrder
+    privacyAccepted?: SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    rejectionReason?: SortOrder
+    adminNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VendorRegistrationRequestMinOrderByAggregateInput = {
+    id?: SortOrder
+    fullName?: SortOrder
+    email?: SortOrder
+    phone?: SortOrder
+    password?: SortOrder
+    companyName?: SortOrder
+    businessType?: SortOrder
+    yearsInBusiness?: SortOrder
+    numberOfEmployees?: SortOrder
+    businessCategory?: SortOrder
+    addressLine1?: SortOrder
+    addressLine2?: SortOrder
+    city?: SortOrder
+    state?: SortOrder
+    pinCode?: SortOrder
+    landmark?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    deliveryRadius?: SortOrder
+    agentCode?: SortOrder
+    agentName?: SortOrder
+    agentPhone?: SortOrder
+    agentVisitDate?: SortOrder
+    referenceNotes?: SortOrder
+    gstNumber?: SortOrder
+    gstVerified?: SortOrder
+    gstCertificate?: SortOrder
+    logo?: SortOrder
+    banner?: SortOrder
+    tagline?: SortOrder
+    selectedPackage?: SortOrder
+    billingCycle?: SortOrder
+    termsAccepted?: SortOrder
+    privacyAccepted?: SortOrder
+    status?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    rejectionReason?: SortOrder
+    adminNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VendorRegistrationRequestSumOrderByAggregateInput = {
+    yearsInBusiness?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    deliveryRadius?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type SubscriptionPaymentListRelationFilter = {
     every?: SubscriptionPaymentWhereInput
     some?: SubscriptionPaymentWhereInput
@@ -47657,6 +50233,8 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     autoRenew?: SortOrder
+    isTrial?: SortOrder
+    trialEndsAt?: SortOrder
     maxProducts?: SortOrder
     maxOrders?: SortOrder
     storageLimit?: SortOrder
@@ -47686,6 +50264,8 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     autoRenew?: SortOrder
+    isTrial?: SortOrder
+    trialEndsAt?: SortOrder
     maxProducts?: SortOrder
     maxOrders?: SortOrder
     storageLimit?: SortOrder
@@ -47708,6 +50288,8 @@ export namespace Prisma {
     startDate?: SortOrder
     endDate?: SortOrder
     autoRenew?: SortOrder
+    isTrial?: SortOrder
+    trialEndsAt?: SortOrder
     maxProducts?: SortOrder
     maxOrders?: SortOrder
     storageLimit?: SortOrder
@@ -47860,17 +50442,6 @@ export namespace Prisma {
     viewedAt?: SortOrder
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type VendorAnalyticsVendorIdDateCompoundUniqueInput = {
     vendorId: string
     date: Date | string
@@ -47954,22 +50525,6 @@ export namespace Prisma {
     returningCustomers?: SortOrder
     storyViews?: SortOrder
     storyEngagement?: SortOrder
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type SecurityEventCountOrderByAggregateInput = {
@@ -50069,6 +52624,14 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNotificationsInput, UserUpdateWithoutNotificationsInput>, UserUncheckedUpdateWithoutNotificationsInput>
   }
 
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type UserCreateNestedOneWithoutVendorSubscriptionInput = {
     create?: XOR<UserCreateWithoutVendorSubscriptionInput, UserUncheckedCreateWithoutVendorSubscriptionInput>
     connectOrCreate?: UserCreateOrConnectWithoutVendorSubscriptionInput
@@ -50236,14 +52799,6 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutVendorAnalyticsInput, UserUncheckedCreateWithoutVendorAnalyticsInput>
     connectOrCreate?: UserCreateOrConnectWithoutVendorAnalyticsInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type UserUpdateOneRequiredWithoutVendorAnalyticsNestedInput = {
@@ -51247,6 +53802,8 @@ export namespace Prisma {
     startDate?: Date | string
     endDate: Date | string
     autoRenew?: boolean
+    isTrial?: boolean
+    trialEndsAt?: Date | string | null
     maxProducts?: number
     maxOrders?: number
     storageLimit?: number
@@ -51269,6 +53826,8 @@ export namespace Prisma {
     startDate?: Date | string
     endDate: Date | string
     autoRenew?: boolean
+    isTrial?: boolean
+    trialEndsAt?: Date | string | null
     maxProducts?: number
     maxOrders?: number
     storageLimit?: number
@@ -51961,6 +54520,8 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    isTrial?: BoolFieldUpdateOperationsInput | boolean
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxProducts?: IntFieldUpdateOperationsInput | number
     maxOrders?: IntFieldUpdateOperationsInput | number
     storageLimit?: IntFieldUpdateOperationsInput | number
@@ -51983,6 +54544,8 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    isTrial?: BoolFieldUpdateOperationsInput | boolean
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxProducts?: IntFieldUpdateOperationsInput | number
     maxOrders?: IntFieldUpdateOperationsInput | number
     storageLimit?: IntFieldUpdateOperationsInput | number
@@ -52111,6 +54674,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
@@ -52150,6 +54717,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
@@ -52205,6 +54776,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
@@ -52244,6 +54819,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -52283,6 +54862,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -52322,6 +54905,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -52377,6 +54964,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -52416,6 +55007,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -52455,6 +55050,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -52494,6 +55093,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -52549,6 +55152,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -52588,6 +55195,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -52865,6 +55476,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -52904,6 +55519,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -53168,6 +55787,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -53207,6 +55830,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -53734,6 +56361,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -53773,6 +56404,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -53932,6 +56567,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -53971,6 +56610,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -54042,6 +56685,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -54081,6 +56728,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -54211,6 +56862,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -54250,6 +56905,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -54370,6 +57029,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -54409,6 +57072,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -54539,6 +57206,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -54578,6 +57249,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -54698,6 +57373,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -54737,6 +57416,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -54964,6 +57647,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -55003,6 +57690,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -55561,6 +58252,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -55600,6 +58295,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -55778,6 +58477,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -55817,6 +58520,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -56085,6 +58792,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -56124,6 +58835,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -56218,6 +58933,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -56257,6 +58976,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -56296,6 +59019,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -56335,6 +59062,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -56390,6 +59121,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -56429,6 +59164,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -56468,6 +59207,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -56507,6 +59250,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -56620,6 +59367,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -56659,6 +59410,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -56755,6 +59510,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -56794,6 +59553,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -56880,6 +59643,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -56919,6 +59686,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -56983,6 +59754,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -57022,6 +59797,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -57066,6 +59845,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -57105,6 +59888,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -57191,6 +59978,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -57230,6 +60021,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -57280,6 +60075,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -57319,6 +60118,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -57358,6 +60161,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -57397,6 +60204,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -57452,6 +60263,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -57491,6 +60306,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -57530,6 +60349,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -57569,6 +60392,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -57660,6 +60487,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -57699,6 +60530,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -57763,6 +60598,8 @@ export namespace Prisma {
     startDate?: Date | string
     endDate: Date | string
     autoRenew?: boolean
+    isTrial?: boolean
+    trialEndsAt?: Date | string | null
     maxProducts?: number
     maxOrders?: number
     storageLimit?: number
@@ -57786,6 +60623,8 @@ export namespace Prisma {
     startDate?: Date | string
     endDate: Date | string
     autoRenew?: boolean
+    isTrial?: boolean
+    trialEndsAt?: Date | string | null
     maxProducts?: number
     maxOrders?: number
     storageLimit?: number
@@ -57823,6 +60662,8 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    isTrial?: BoolFieldUpdateOperationsInput | boolean
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxProducts?: IntFieldUpdateOperationsInput | number
     maxOrders?: IntFieldUpdateOperationsInput | number
     storageLimit?: IntFieldUpdateOperationsInput | number
@@ -57846,6 +60687,8 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     autoRenew?: BoolFieldUpdateOperationsInput | boolean
+    isTrial?: BoolFieldUpdateOperationsInput | boolean
+    trialEndsAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxProducts?: IntFieldUpdateOperationsInput | number
     maxOrders?: IntFieldUpdateOperationsInput | number
     storageLimit?: IntFieldUpdateOperationsInput | number
@@ -57875,6 +60718,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -57914,6 +60761,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -57991,6 +60842,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -58030,6 +60885,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -58116,6 +60975,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -58155,6 +61018,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -58247,6 +61114,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -58286,6 +61157,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -58325,6 +61200,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -58364,6 +61243,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -58419,6 +61302,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -58458,6 +61345,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -58497,6 +61388,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -58536,6 +61431,10 @@ export namespace Prisma {
     failedAttempts?: number
     lastFailedAttempt?: Date | string | null
     passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -58591,6 +61490,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -58630,6 +61533,10 @@ export namespace Prisma {
     failedAttempts?: IntFieldUpdateOperationsInput | number
     lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput

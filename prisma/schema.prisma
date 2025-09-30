@@ -16,6 +16,9 @@ datasource db {
   extensions = [postgis]
 }
 
+// Seed configuration
+// Run with: npm run db:seed
+
 enum UserRole {
   CUSTOMER
   VENDOR
@@ -56,6 +59,14 @@ model User {
   failedAttempts    Int      @default(0)
   lastFailedAttempt DateTime?
   passwordChangedAt DateTime?
+
+  // Two-Factor Authentication
+  twoFactorEnabled  Boolean  @default(false)
+  twoFactorSecret   String?
+
+  // Phone Verification
+  phoneVerified     Boolean  @default(false)
+  phoneVerifiedAt   DateTime?
 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -531,14 +542,83 @@ model Notification {
   @@map("notifications")
 }
 
+model VendorRegistrationRequest {
+  id                   String   @id @default(cuid())
+
+  // Personal Information
+  fullName             String
+  email                String
+  phone                String
+  password             String
+
+  // Business Details
+  companyName          String
+  businessType         String?
+  yearsInBusiness      Int?
+  numberOfEmployees    String?
+  businessCategory     String?
+
+  // Address & Location
+  addressLine1         String
+  addressLine2         String?
+  city                 String
+  state                String   @default("Kerala")
+  pinCode              String
+  landmark             String?
+  latitude             Float?
+  longitude            Float?
+  deliveryRadius       Float    @default(5)
+
+  // Agent Reference
+  agentCode            String?
+  agentName            String?
+  agentPhone           String?
+  agentVisitDate       String?
+  referenceNotes       String?
+
+  // GST & Documents
+  gstNumber            String?
+  gstVerified          Boolean  @default(false)
+  gstDetails           Json?
+  gstCertificate       String?
+
+  // Branding
+  logo                 String?
+  banner               String?
+  tagline              String?
+
+  // Package Selection
+  selectedPackage      String   @default("premium") // Will get premium trial
+  billingCycle         String   @default("monthly")
+  addOns               Json?
+
+  // Terms
+  termsAccepted        Boolean  @default(false)
+  privacyAccepted      Boolean  @default(false)
+
+  // Admin Review
+  status               String   @default("pending") // pending, approved, rejected
+  reviewedBy           String?
+  reviewedAt           DateTime?
+  rejectionReason      String?
+  adminNotes           String?
+
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@map("vendor_registration_requests")
+}
+
 model VendorSubscription {
   id          String   @id @default(cuid())
   vendorId    String   @unique
-  planType    String   // basic, premium, enterprise
-  status      String   @default("active") // active, cancelled, expired
+  planType    String   // basic, standard, premium
+  status      String   @default("active") // active, cancelled, expired, trial
   startDate   DateTime @default(now())
   endDate     DateTime
   autoRenew   Boolean  @default(true)
+  isTrial     Boolean  @default(false)
+  trialEndsAt DateTime?
 
   // Plan limits
   maxProducts      Int     @default(10)

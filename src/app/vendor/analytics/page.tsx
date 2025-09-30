@@ -4,7 +4,7 @@ import * as React from 'react'
 import { BarChart3, TrendingUp, Users, Package, Eye, Heart, MessageSquare, ShoppingCart, IndianRupee, Calendar, Download, Filter } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'

@@ -4,6 +4,8 @@ import { db } from '@/lib/db'
 import { cache } from '@/lib/redis'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const updateReviewSchema = z.object({
   rating: z.number().int().min(1).max(5).optional(),
   title: z.string().optional(),
