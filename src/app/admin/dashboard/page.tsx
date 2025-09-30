@@ -1,22 +1,18 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { motion } from 'framer-motion'
-import StatsCards from './components/StatsCards'
-import RecentActivity from './components/RecentActivity'
-import QuickActions from './components/QuickActions'
-import Charts from './components/Charts'
-import AdminBreadcrumb from '../components/AdminBreadcrumb'
+import React from 'react';
+import { motion } from 'framer-motion';
+import StatsCards from './components/StatsCards';
+import RecentActivity from './components/RecentActivity';
+import QuickActions from './components/QuickActions';
+import Charts from './components/Charts';
+import AdminBreadcrumb from '../components/AdminBreadcrumb';
 
 export default function AdminDashboardPage() {
   return (
     <div className="space-y-6">
       {/* Breadcrumb */}
-      <AdminBreadcrumb
-        items={[
-          { title: 'Dashboard', href: '/admin/dashboard' }
-        ]}
-      />
+      <AdminBreadcrumb items={[{ title: 'Dashboard', href: '/admin/dashboard' }]} />
 
       {/* Welcome Section */}
       <motion.div
@@ -26,15 +22,15 @@ export default function AdminDashboardPage() {
       >
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Welcome back, Admin!</h1>
-            <p className="text-blue-100">
-              Here's what's happening with your marketplace today.
+            <h1 className="font-display text-3xl font-bold mb-2">Welcome back, Admin!</h1>
+            <p className="text-blue-100 text-sm">
+              Here&apos;s what&apos;s happening with your marketplace today.
             </p>
           </div>
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring" }}
+            transition={{ delay: 0.2, type: 'spring' }}
             className="hidden md:block"
           >
             <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
@@ -84,5 +80,5 @@ export default function AdminDashboardPage() {
         <QuickActions />
       </motion.div>
     </div>
-  )
+  );
 }

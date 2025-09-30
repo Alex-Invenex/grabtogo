@@ -1,21 +1,21 @@
-'use client'
+'use client';
 
-import { useFormContext } from 'react-hook-form'
-import { useState } from 'react'
-import { Upload, Image, Type, X, Camera } from 'lucide-react'
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form'
-import { Textarea } from '@/components/ui/textarea'
-import { Button } from '@/components/ui/button'
+import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
+import { Upload, Image, Type, X, Camera } from 'lucide-react';
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 
 export default function LogoBrandingStep() {
-  const { control, setValue, watch } = useFormContext()
-  const [logoPreview, setLogoPreview] = useState<string | null>(null)
-  const [bannerPreview, setBannerPreview] = useState<string | null>(null)
+  const { control, setValue, watch } = useFormContext();
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [bannerPreview, setBannerPreview] = useState<string | null>(null);
 
   // Watch form fields (unused but kept for future use)
   // const logo = watch('logo')
   // const banner = watch('banner')
-  const tagline = watch('tagline')
+  const tagline = watch('tagline');
 
   const handleImageUpload = (
     file: File | null,
@@ -23,18 +23,18 @@ export default function LogoBrandingStep() {
     setPreview: (url: string | null) => void
   ) => {
     if (!file) {
-      setValue(fieldName, null)
-      setPreview(null)
-      return
+      setValue(fieldName, null);
+      setPreview(null);
+      return;
     }
 
-    setValue(fieldName, file)
-    const reader = new FileReader()
+    setValue(fieldName, file);
+    const reader = new FileReader();
     reader.onloadend = () => {
-      setPreview(reader.result as string)
-    }
-    reader.readAsDataURL(file)
-  }
+      setPreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
 
   return (
     <div className="space-y-6">
@@ -62,18 +62,16 @@ export default function LogoBrandingStep() {
                         <p className="mb-2 text-sm text-gray-500">
                           <span className="font-semibold">Click to upload logo</span>
                         </p>
-                        <p className="text-xs text-gray-500">
-                          Square image (min 500x500px)
-                        </p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          PNG, JPG (MAX. 2MB)
-                        </p>
+                        <p className="text-xs text-gray-500">Square image (min 500x500px)</p>
+                        <p className="text-xs text-gray-500 mt-1">PNG, JPG (MAX. 2MB)</p>
                       </div>
                       <input
                         type="file"
                         className="hidden"
                         accept="image/png,image/jpeg,image/jpg"
-                        onChange={(e) => handleImageUpload(e.target.files?.[0] || null, 'logo', setLogoPreview)}
+                        onChange={(e) =>
+                          handleImageUpload(e.target.files?.[0] || null, 'logo', setLogoPreview)
+                        }
                       />
                     </label>
                   ) : (
@@ -90,8 +88,8 @@ export default function LogoBrandingStep() {
                             variant="destructive"
                             size="sm"
                             onClick={() => {
-                              setValue('logo', null)
-                              setLogoPreview(null)
+                              setValue('logo', null);
+                              setLogoPreview(null);
                             }}
                           >
                             <X className="w-4 h-4 mr-1" />
@@ -129,15 +127,15 @@ export default function LogoBrandingStep() {
                         <p className="mb-2 text-sm text-gray-500">
                           <span className="font-semibold">Upload banner image</span>
                         </p>
-                        <p className="text-xs text-gray-500">
-                          Recommended: 1920x400px (MAX. 5MB)
-                        </p>
+                        <p className="text-xs text-gray-500">Recommended: 1920x400px (MAX. 5MB)</p>
                       </div>
                       <input
                         type="file"
                         className="hidden"
                         accept="image/png,image/jpeg,image/jpg"
-                        onChange={(e) => handleImageUpload(e.target.files?.[0] || null, 'banner', setBannerPreview)}
+                        onChange={(e) =>
+                          handleImageUpload(e.target.files?.[0] || null, 'banner', setBannerPreview)
+                        }
                       />
                     </label>
                   ) : (
@@ -153,8 +151,8 @@ export default function LogoBrandingStep() {
                         size="sm"
                         className="absolute top-2 right-2"
                         onClick={() => {
-                          setValue('banner', null)
-                          setBannerPreview(null)
+                          setValue('banner', null);
+                          setBannerPreview(null);
                         }}
                       >
                         <X className="w-4 h-4" />
@@ -171,7 +169,7 @@ export default function LogoBrandingStep() {
         <FormField
           control={control}
           name="tagline"
-          render={() => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel className="flex items-center gap-2">
                 <Type className="w-4 h-4" />
@@ -210,7 +208,9 @@ export default function LogoBrandingStep() {
                 </div>
               )}
               <div>
-                <h4 className="font-semibold text-lg">{watch('companyName') || 'Your Business Name'}</h4>
+                <h4 className="font-semibold text-lg">
+                  {watch('companyName') || 'Your Business Name'}
+                </h4>
                 {tagline && <p className="text-sm text-gray-600 italic">"{tagline}"</p>}
               </div>
             </div>
@@ -218,5 +218,5 @@ export default function LogoBrandingStep() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,19 +1,19 @@
-'use client'
+'use client';
 
-import { useFormContext } from 'react-hook-form'
-import { useState } from 'react'
-import { FileText, Upload, Eye, X, Check } from 'lucide-react'
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form'
-import { Button } from '@/components/ui/button'
-import { Progress } from '@/components/ui/progress'
+import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
+import { FileText, Upload, Eye, X, Check } from 'lucide-react';
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
 
 interface DocumentType {
-  id: string
-  label: string
-  fieldName: string
-  maxSize: number
-  acceptedFormats: string[]
-  required: boolean
+  id: string;
+  label: string;
+  fieldName: string;
+  maxSize: number;
+  acceptedFormats: string[];
+  required: boolean;
 }
 
 const DOCUMENTS: DocumentType[] = [
@@ -49,64 +49,64 @@ const DOCUMENTS: DocumentType[] = [
     acceptedFormats: ['.pdf', '.jpg', '.jpeg', '.png'],
     required: true,
   },
-]
+];
 
 export default function DocumentUploadStep() {
-  const { control, setValue, watch } = useFormContext()
-  const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({})
-  const [previews, setPreviews] = useState<{ [key: string]: string }>({})
+  const { control, setValue, watch } = useFormContext();
+  const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
+  const [previews, setPreviews] = useState<{ [key: string]: string }>({});
 
   const handleFileSelect = (fieldName: string, file: File | null, maxSize: number) => {
     if (!file) {
-      setValue(fieldName, null)
-      setPreviews(prev => {
-        const newPreviews = { ...prev }
-        delete newPreviews[fieldName]
-        return newPreviews
-      })
-      return
+      setValue(fieldName, null);
+      setPreviews((prev) => {
+        const newPreviews = { ...prev };
+        delete newPreviews[fieldName];
+        return newPreviews;
+      });
+      return;
     }
 
     if (file.size > maxSize) {
-      alert(`File size must be less than ${maxSize / (1024 * 1024)}MB`)
-      return
+      alert(`File size must be less than ${maxSize / (1024 * 1024)}MB`);
+      return;
     }
 
     // Simulate upload progress
-    let progress = 0
+    let progress = 0;
     const interval = setInterval(() => {
-      progress += 10
-      setUploadProgress(prev => ({ ...prev, [fieldName]: progress }))
+      progress += 10;
+      setUploadProgress((prev) => ({ ...prev, [fieldName]: progress }));
 
       if (progress >= 100) {
-        clearInterval(interval)
-        setValue(fieldName, file)
+        clearInterval(interval);
+        setValue(fieldName, file);
 
         // Create preview for images
         if (file.type.startsWith('image/')) {
-          const reader = new FileReader()
+          const reader = new FileReader();
           reader.onloadend = () => {
-            setPreviews(prev => ({ ...prev, [fieldName]: reader.result as string }))
-          }
-          reader.readAsDataURL(file)
+            setPreviews((prev) => ({ ...prev, [fieldName]: reader.result as string }));
+          };
+          reader.readAsDataURL(file);
         }
       }
-    }, 100)
-  }
+    }, 100);
+  };
 
   const removeFile = (fieldName: string) => {
-    setValue(fieldName, null)
-    setUploadProgress(prev => {
-      const newProgress = { ...prev }
-      delete newProgress[fieldName]
-      return newProgress
-    })
-    setPreviews(prev => {
-      const newPreviews = { ...prev }
-      delete newPreviews[fieldName]
-      return newPreviews
-    })
-  }
+    setValue(fieldName, null);
+    setUploadProgress((prev) => {
+      const newProgress = { ...prev };
+      delete newProgress[fieldName];
+      return newProgress;
+    });
+    setPreviews((prev) => {
+      const newPreviews = { ...prev };
+      delete newPreviews[fieldName];
+      return newPreviews;
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -117,9 +117,9 @@ export default function DocumentUploadStep() {
 
       <div className="space-y-4">
         {DOCUMENTS.map((doc) => {
-          const value = watch(doc.fieldName)
-          const progress = uploadProgress[doc.fieldName] || 0
-          const preview = previews[doc.fieldName]
+          const value = watch(doc.fieldName);
+          const progress = uploadProgress[doc.fieldName] || 0;
+          const preview = previews[doc.fieldName];
 
           return (
             <FormField
@@ -140,17 +140,25 @@ export default function DocumentUploadStep() {
                           <div className="flex flex-col items-center justify-center pt-5 pb-6">
                             <Upload className="w-8 h-8 mb-3 text-gray-400" />
                             <p className="mb-2 text-sm text-gray-500">
-                              <span className="font-semibold">Click to upload</span> or drag and drop
+                              <span className="font-semibold">Click to upload</span> or drag and
+                              drop
                             </p>
                             <p className="text-xs text-gray-500">
-                              {doc.acceptedFormats.join(', ')} (MAX. {doc.maxSize / (1024 * 1024)}MB)
+                              {doc.acceptedFormats.join(', ')} (MAX. {doc.maxSize / (1024 * 1024)}
+                              MB)
                             </p>
                           </div>
                           <input
                             type="file"
                             className="hidden"
                             accept={doc.acceptedFormats.join(',')}
-                            onChange={(e) => handleFileSelect(doc.fieldName, e.target.files?.[0] || null, doc.maxSize)}
+                            onChange={(e) =>
+                              handleFileSelect(
+                                doc.fieldName,
+                                e.target.files?.[0] || null,
+                                doc.maxSize
+                              )
+                            }
                           />
                         </label>
                       ) : (
@@ -158,7 +166,11 @@ export default function DocumentUploadStep() {
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               {preview ? (
-                                <img src={preview} alt="Preview" className="w-16 h-16 object-cover rounded" />
+                                <img
+                                  src={preview}
+                                  alt="Preview"
+                                  className="w-16 h-16 object-cover rounded"
+                                />
                               ) : (
                                 <div className="w-16 h-16 bg-gray-200 rounded flex items-center justify-center">
                                   <FileText className="w-8 h-8 text-gray-500" />
@@ -209,15 +221,16 @@ export default function DocumentUploadStep() {
                 </FormItem>
               )}
             />
-          )
+          );
         })}
       </div>
 
       <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
         <p className="text-sm text-blue-800">
-          <strong>Note:</strong> All documents will be verified by our team. Ensure all documents are clear and valid.
+          <strong>Note:</strong> All documents will be verified by our team. Ensure all documents
+          are clear and valid.
         </p>
       </div>
     </div>
-  )
+  );
 }

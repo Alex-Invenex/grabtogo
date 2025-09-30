@@ -1,13 +1,19 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Calendar } from '@/components/ui/calendar'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { CalendarIcon, X } from 'lucide-react'
-import { format } from 'date-fns'
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { CalendarIcon, X } from 'lucide-react';
+import { format } from 'date-fns';
 
 export default function VendorFilters() {
   const [selectedFilters, setSelectedFilters] = useState({
@@ -15,8 +21,8 @@ export default function VendorFilters() {
     city: '',
     subscriptionPlan: '',
     registrationDate: null as Date | null,
-    gstStatus: ''
-  })
+    gstStatus: '',
+  });
 
   const businessTypes = [
     'Restaurant',
@@ -26,8 +32,8 @@ export default function VendorFilters() {
     'Fast Food',
     'Cafe',
     'Cloud Kitchen',
-    'Catering'
-  ]
+    'Catering',
+  ];
 
   const cities = [
     'Thiruvananthapuram',
@@ -37,25 +43,25 @@ export default function VendorFilters() {
     'Kottayam',
     'Alappuzha',
     'Palakkad',
-    'Malappuram'
-  ]
+    'Malappuram',
+  ];
 
-  const subscriptionPlans = ['Basic', 'Premium', 'Enterprise']
-  const gstStatuses = ['Verified', 'Pending', 'Not Required']
+  const subscriptionPlans = ['Basic', 'Premium', 'Enterprise'];
+  const gstStatuses = ['Verified', 'Pending', 'Not Required'];
 
   const handleFilterChange = (key: string, value: string | Date | null) => {
-    setSelectedFilters(prev => ({
+    setSelectedFilters((prev) => ({
       ...prev,
-      [key]: value
-    }))
-  }
+      [key]: value,
+    }));
+  };
 
   const clearFilter = (key: string) => {
-    setSelectedFilters(prev => ({
+    setSelectedFilters((prev) => ({
       ...prev,
-      [key]: key === 'registrationDate' ? null : ''
-    }))
-  }
+      [key]: key === 'registrationDate' ? null : '',
+    }));
+  };
 
   const clearAllFilters = () => {
     setSelectedFilters({
@@ -63,15 +69,13 @@ export default function VendorFilters() {
       city: '',
       subscriptionPlan: '',
       registrationDate: null,
-      gstStatus: ''
-    })
-  }
+      gstStatus: '',
+    });
+  };
 
   const getActiveFilterCount = () => {
-    return Object.values(selectedFilters).filter(value =>
-      value !== '' && value !== null
-    ).length
-  }
+    return Object.values(selectedFilters).filter((value) => value !== '' && value !== null).length;
+  };
 
   return (
     <div className="border-t pt-4 space-y-4">
@@ -92,9 +96,7 @@ export default function VendorFilters() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         {/* Business Type */}
         <div>
-          <label className="text-xs font-medium text-gray-700 mb-2 block">
-            Business Type
-          </label>
+          <label className="text-xs font-medium text-gray-700 mb-2 block">Business Type</label>
           <Select
             value={selectedFilters.businessType}
             onValueChange={(value) => handleFilterChange('businessType', value)}
@@ -114,9 +116,7 @@ export default function VendorFilters() {
 
         {/* City */}
         <div>
-          <label className="text-xs font-medium text-gray-700 mb-2 block">
-            City
-          </label>
+          <label className="text-xs font-medium text-gray-700 mb-2 block">City</label>
           <Select
             value={selectedFilters.city}
             onValueChange={(value) => handleFilterChange('city', value)}
@@ -136,9 +136,7 @@ export default function VendorFilters() {
 
         {/* Subscription Plan */}
         <div>
-          <label className="text-xs font-medium text-gray-700 mb-2 block">
-            Subscription Plan
-          </label>
+          <label className="text-xs font-medium text-gray-700 mb-2 block">Subscription Plan</label>
           <Select
             value={selectedFilters.subscriptionPlan}
             onValueChange={(value) => handleFilterChange('subscriptionPlan', value)}
@@ -158,15 +156,10 @@ export default function VendorFilters() {
 
         {/* Registration Date */}
         <div>
-          <label className="text-xs font-medium text-gray-700 mb-2 block">
-            Registration Date
-          </label>
+          <label className="text-xs font-medium text-gray-700 mb-2 block">Registration Date</label>
           <Popover>
             <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-full justify-start text-left font-normal"
-              >
+              <Button variant="outline" className="w-full justify-start text-left font-normal">
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {selectedFilters.registrationDate ? (
                   format(selectedFilters.registrationDate, 'PPP')
@@ -188,9 +181,7 @@ export default function VendorFilters() {
 
         {/* GST Status */}
         <div>
-          <label className="text-xs font-medium text-gray-700 mb-2 block">
-            GST Status
-          </label>
+          <label className="text-xs font-medium text-gray-700 mb-2 block">GST Status</label>
           <Select
             value={selectedFilters.gstStatus}
             onValueChange={(value) => handleFilterChange('gstStatus', value)}
@@ -225,10 +216,7 @@ export default function VendorFilters() {
           {selectedFilters.city && (
             <Badge variant="secondary" className="text-xs">
               City: {selectedFilters.city}
-              <X
-                className="ml-1 h-3 w-3 cursor-pointer"
-                onClick={() => clearFilter('city')}
-              />
+              <X className="ml-1 h-3 w-3 cursor-pointer" onClick={() => clearFilter('city')} />
             </Badge>
           )}
           {selectedFilters.subscriptionPlan && (
@@ -252,14 +240,11 @@ export default function VendorFilters() {
           {selectedFilters.gstStatus && (
             <Badge variant="secondary" className="text-xs">
               GST: {selectedFilters.gstStatus}
-              <X
-                className="ml-1 h-3 w-3 cursor-pointer"
-                onClick={() => clearFilter('gstStatus')}
-              />
+              <X className="ml-1 h-3 w-3 cursor-pointer" onClick={() => clearFilter('gstStatus')} />
             </Badge>
           )}
         </div>
       )}
     </div>
-  )
+  );
 }

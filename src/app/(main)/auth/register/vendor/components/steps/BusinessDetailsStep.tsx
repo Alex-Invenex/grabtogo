@@ -1,15 +1,21 @@
-'use client'
+'use client';
 
-import { useFormContext } from 'react-hook-form'
-import { Building, Briefcase, Calendar, Users, Tag } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form'
-import { BUSINESS_CATEGORIES } from '../../lib/constants'
-import { Slider } from '@/components/ui/slider'
+import { useFormContext } from 'react-hook-form';
+import { Building, Briefcase, Calendar, Users, Tag } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { BUSINESS_CATEGORIES } from '../../lib/constants';
+import { Slider } from '@/components/ui/slider';
 
 export default function BusinessDetailsStep() {
-  const { control } = useFormContext()
+  const { control } = useFormContext();
 
   return (
     <div className="space-y-6">
@@ -29,11 +35,7 @@ export default function BusinessDetailsStep() {
                 Company/Shop Name
               </FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter your business name"
-                  {...field}
-                  className="h-12"
-                />
+                <Input placeholder="Enter your business name" {...field} className="h-12" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -74,7 +76,8 @@ export default function BusinessDetailsStep() {
             <FormItem>
               <FormLabel className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
-                Years in Business: <span className="font-bold text-blue-600">{field.value || 0}</span>
+                Years in Business:{' '}
+                <span className="font-bold text-blue-600">{field.value || 0}</span>
               </FormLabel>
               <FormControl>
                 <Slider
@@ -147,5 +150,5 @@ export default function BusinessDetailsStep() {
         />
       </div>
     </div>
-  )
+  );
 }

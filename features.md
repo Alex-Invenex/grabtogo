@@ -1,9 +1,11 @@
 # GrabtoGo Marketplace - Complete Features Specification
+
 **Version:** 1.0.0
 **Last Updated:** January 2025
 **Project Status:** Development Phase
 
 ## 📋 Table of Contents
+
 1. [Core Platform Features](#core-platform-features)
 2. [Vendor Features](#vendor-features)
 3. [Customer Features](#customer-features)
@@ -18,6 +20,7 @@
 ## Core Platform Features
 
 ### 🔐 Authentication & Authorization
+
 - [x] **Multi-role System**
   - Customer role
   - Vendor role
@@ -39,6 +42,7 @@
   - IP-based rate limiting
 
 ### 🔍 Search & Discovery
+
 - [x] **Location-Based Search**
   - PostGIS integration for geospatial queries
   - 10km radius search from user location
@@ -61,6 +65,7 @@
   - Sort by: Relevance, Price, Rating, Distance, Newest
 
 ### 📦 Product Management
+
 - [x] **Product Attributes**
   - Multiple images (up to 10)
   - Title and description
@@ -83,6 +88,7 @@
   - Bulk inventory update via CSV
 
 ### 🛒 Shopping Cart & Checkout
+
 - [x] **Cart Features**
   - Persistent cart (Redis-backed)
   - Guest cart support
@@ -106,6 +112,7 @@
 ## Vendor Features
 
 ### 👔 Vendor Onboarding
+
 - [x] **Registration Process**
   - Business name and type
   - GST number (required)
@@ -122,7 +129,9 @@
   - Re-submission for rejected documents
 
 ### 💼 Vendor Subscription Plans
+
 - [x] **Tier Structure**
+
   ```
   Basic Plan: ₹99/month or ₹999/year
   - Up to 50 products
@@ -145,6 +154,7 @@
   - Featured listings
   - API access
   ```
+
 - [x] **Subscription Management**
   - Auto-renewal
   - Plan upgrade/downgrade
@@ -153,6 +163,7 @@
   - Grace period (7 days)
 
 ### 📊 Vendor Dashboard
+
 - [x] **Analytics & Insights**
   - Revenue metrics (daily/weekly/monthly/yearly)
   - Order statistics
@@ -195,6 +206,7 @@
   - Earnings forecast
 
 ### 📱 Vendor Stories (Instagram-style)
+
 - [x] **Story Features**
   - 15-second video/image stories
   - 24-hour expiry
@@ -205,6 +217,7 @@
   - Story scheduling
 
 ### 💬 Vendor-Customer Communication
+
 - [x] **Chat System**
   - Real-time messaging
   - Automated responses
@@ -219,6 +232,7 @@
 ## Customer Features
 
 ### 👤 User Profile
+
 - [x] **Profile Management**
   - Personal information
   - Multiple delivery addresses
@@ -236,6 +250,7 @@
   - Milestone rewards
 
 ### 🛍️ Shopping Experience
+
 - [x] **Product Discovery**
   - Personalized homepage
   - Recently viewed products
@@ -263,6 +278,7 @@
   - Create collections/lists
 
 ### 📦 Order Management
+
 - [x] **Order Tracking**
   - Real-time status updates
   - Delivery tracking with map
@@ -277,6 +293,7 @@
   - Rate delivery experience
 
 ### 🎁 Deals & Offers
+
 - [x] **Discount Features**
   - Coupon wallet
   - Auto-apply best coupon
@@ -292,6 +309,7 @@
 ## Admin Features
 
 ### 🎛️ Admin Dashboard
+
 - [x] **Platform Overview**
   - Total GMV tracking
   - Active vendors count
@@ -333,6 +351,7 @@
   - Refund management
 
 ### 🔧 System Administration
+
 - [x] **Configuration**
   - Platform fees setting
   - Delivery radius setting
@@ -362,6 +381,7 @@
 ## Payment & Financial Features
 
 ### 💳 Payment Methods
+
 - [x] **Online Payments**
   - Credit/Debit cards
   - UPI payments
@@ -376,6 +396,7 @@
   - Corporate billing - Phase 3
 
 ### 💰 Razorpay Integration
+
 - [x] **Payment Features**
   - Payment gateway integration
   - Split payment (Route API)
@@ -394,6 +415,7 @@
   - Fraud detection
 
 ### 📊 Financial Operations
+
 - [x] **Commission Management**
   - Platform fee: 15% (configurable by plan)
   - Automatic commission deduction
@@ -411,6 +433,7 @@
 ## Technical Features
 
 ### 🚀 Performance & Scalability
+
 - [x] **Optimization**
   - Server-side rendering (SSR)
   - Static site generation (SSG)
@@ -428,6 +451,7 @@
   - TTFB < 600ms
 
 ### 🔒 Security Features
+
 - [x] **Application Security**
   - OWASP Top 10 compliance
   - SQL injection prevention
@@ -447,6 +471,7 @@
   - GDPR compliance
 
 ### 📡 Real-time Features
+
 - [x] **WebSocket Implementation**
   - Live order updates
   - Real-time chat
@@ -457,6 +482,7 @@
   - Admin notifications
 
 ### 🔄 API Architecture
+
 - [x] **API Design**
   - RESTful APIs
   - GraphQL endpoint
@@ -467,6 +493,7 @@
   - Third-party integrations
 
 ### 📱 Progressive Web App (PWA)
+
 - [x] **PWA Features**
   - Offline functionality
   - App-like experience
@@ -476,6 +503,7 @@
   - Service worker caching
 
 ### 🌍 Internationalization
+
 - [x] **Multi-language Support** - Phase 2
   - English (default)
   - Hindi
@@ -489,6 +517,7 @@
 ## Mobile App Features
 
 ### 📱 React Native App
+
 - [x] **Platform Support**
   - iOS (14+)
   - Android (API 23+)
@@ -522,7 +551,9 @@
 ## Implementation Priority
 
 ### Phase 1: MVP (Weeks 1-8) ✅
+
 **Core Marketplace Functionality**
+
 - [x] User authentication (Customer, Vendor, Admin)
 - [x] Vendor registration with payment (₹299)
 - [x] Product CRUD operations
@@ -535,7 +566,9 @@
 - [x] Email notifications
 
 ### Phase 2: Advanced Features (Weeks 9-16) 🚧
+
 **Enhanced User Experience**
+
 - [ ] Location-based search with PostGIS
 - [ ] Real-time features (chat, notifications)
 - [ ] Vendor stories
@@ -548,7 +581,9 @@
 - [ ] Advanced filtering
 
 ### Phase 3: Growth Features (Weeks 17-24) 📅
+
 **Scaling & Optimization**
+
 - [ ] AI-powered recommendations
 - [ ] Voice search
 - [ ] Multi-language support
@@ -561,7 +596,9 @@
 - [ ] A/B testing framework
 
 ### Phase 4: Enterprise Features (Future) 🔮
+
 **Enterprise & Innovation**
+
 - [ ] B2B marketplace
 - [ ] Franchise management
 - [ ] AI chatbot support
@@ -578,6 +615,7 @@
 ## Success Metrics
 
 ### 🎯 Key Performance Indicators (KPIs)
+
 - **Business Metrics**
   - GMV (Gross Merchandise Value)
   - Number of active vendors: Target 1,000 in 6 months
@@ -607,6 +645,7 @@
 ## Notes for Development
 
 ### 🔧 Technical Stack Confirmation
+
 - **Frontend**: Next.js 14 with TypeScript
 - **Backend**: Next.js API routes + GraphQL
 - **Database**: PostgreSQL with PostGIS
@@ -622,6 +661,7 @@
 - **Analytics**: Google Analytics + Custom
 
 ### 📝 Important Implementation Notes
+
 1. **Vendor Isolation**: Implement row-level security in PostgreSQL
 2. **Payment Security**: Always verify Razorpay webhooks
 3. **Location Services**: Use PostGIS for all geospatial queries
@@ -638,6 +678,7 @@
 ## Feature Flags
 
 Use feature flags for gradual rollout:
+
 ```javascript
 const FEATURE_FLAGS = {
   VENDOR_STORIES: true,
@@ -649,7 +690,7 @@ const FEATURE_FLAGS = {
   PWA_ENABLED: true,
   BIOMETRIC_AUTH: true,
   SOCIAL_LOGIN: true,
-  COD_ENABLED: true
+  COD_ENABLED: true,
 };
 ```
 
@@ -666,4 +707,4 @@ const FEATURE_FLAGS = {
 
 ---
 
-*This document is the single source of truth for all features. Any changes must be approved by the project manager and updated here before implementation.*
+_This document is the single source of truth for all features. Any changes must be approved by the project manager and updated here before implementation._

@@ -1,24 +1,37 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
-import { useForm, FormProvider } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { ChevronLeft, ChevronRight, Check, User, Building, MapPin, Users, Shield, Palette, Package, CheckCircle, Send } from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
-import { Form } from '@/components/ui/form'
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useForm, FormProvider } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Check,
+  User,
+  Building,
+  MapPin,
+  Users,
+  Shield,
+  Palette,
+  Package,
+  CheckCircle,
+  Send,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Form } from '@/components/ui/form';
 
 // Import step components
-import PersonalInfoStep from './steps/PersonalInfoStep'
-import BusinessDetailsStep from './steps/BusinessDetailsStep'
-import AddressLocationStep from './steps/AddressLocationStep'
-import AgentReferenceStep from './steps/AgentReferenceStep'
-import GSTDocumentStep from './steps/GSTDocumentStep'
-import LogoBrandingStep from './steps/LogoBrandingStep'
-import PackageSelectionStep from './steps/PackageSelectionStep'
-import ReviewConfirmStep from './steps/ReviewConfirmStep'
-import SubmissionStep from './steps/SubmissionStep'
+import PersonalInfoStep from './steps/PersonalInfoStep';
+import BusinessDetailsStep from './steps/BusinessDetailsStep';
+import AddressLocationStep from './steps/AddressLocationStep';
+import AgentReferenceStep from './steps/AgentReferenceStep';
+import GSTDocumentStep from './steps/GSTDocumentStep';
+import LogoBrandingStep from './steps/LogoBrandingStep';
+import PackageSelectionStep from './steps/PackageSelectionStep';
+import ReviewConfirmStep from './steps/ReviewConfirmStep';
+import SubmissionStep from './steps/SubmissionStep';
 
 // Import validation schemas
 import {
@@ -31,7 +44,7 @@ import {
   packageSelectionSchema,
   reviewConfirmSchema,
   vendorRegistrationSchema,
-} from '../lib/validationSchemas'
+} from '../lib/validationSchemas';
 
 const STEPS = [
   {
@@ -97,12 +110,12 @@ const STEPS = [
     component: SubmissionStep,
     schema: null, // Submission step handles its own validation
   },
-]
+];
 
 export default function RegistrationWizard() {
-  const [currentStep, setCurrentStep] = useState(1)
-  const [completedSteps, setCompletedSteps] = useState<number[]>([])
-  const [isNavigating, setIsNavigating] = useState(false)
+  const [currentStep, setCurrentStep] = useState(1);
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const methods = useForm({
     mode: 'onChange',
@@ -160,7 +173,7 @@ export default function RegistrationWizard() {
       termsAccepted: false,
       privacyAccepted: false,
     },
-  })
+  });
 
   // Form methods destructured (unused intentionally for future use)
   // const { trigger, formState: { errors } } = methods
@@ -168,50 +181,51 @@ export default function RegistrationWizard() {
   // Remove Razorpay script loading since we no longer need payment
 
   const validateCurrentStep = async () => {
-    const step = STEPS.find(s => s.id === currentStep)
-    if (!step?.schema) return true
+    const step = STEPS.find((s) => s.id === currentStep);
+    if (!step?.schema) return true;
 
     try {
-      const formData = methods.getValues()
-      await step.schema.parseAsync(formData)
-      return true
+      const formData = methods.getValues();
+      await step.schema.parseAsync(formData);
+      return true;
     } catch {
-      return false
+      return false;
     }
-  }
+  };
 
   const handleNext = async () => {
-    setIsNavigating(true)
+    setIsNavigating(true);
 
     // Add a small delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 500))
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
-    const isValid = await validateCurrentStep()
+    const isValid = await validateCurrentStep();
 
     if (isValid && currentStep < STEPS.length) {
-      setCompletedSteps(prev => {
-        const newSteps = [...prev, currentStep]
-        return Array.from(new Set(newSteps))
-      })
-      setCurrentStep(prev => prev + 1)
+      setCompletedSteps((prev) => {
+        const newSteps = [...prev, currentStep];
+        return Array.from(new Set(newSteps));
+      });
+      setCurrentStep((prev) => prev + 1);
     }
 
-    setIsNavigating(false)
-  }
+    setIsNavigating(false);
+  };
 
   const handlePrevious = () => {
     if (currentStep > 1) {
-      setCurrentStep(prev => prev - 1)
+      setCurrentStep((prev) => prev - 1);
     }
-  }
+  };
 
   const handleStepClick = async (stepId: number) => {
     if (stepId <= currentStep || completedSteps.includes(stepId)) {
-      setCurrentStep(stepId)
+      setCurrentStep(stepId);
     }
-  }
+  };
 
-  const CurrentStepComponent = STEPS.find(s => s.id === currentStep)?.component || PersonalInfoStep
+  const CurrentStepComponent =
+    STEPS.find((s) => s.id === currentStep)?.component || PersonalInfoStep;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8">
@@ -223,10 +237,12 @@ export default function RegistrationWizard() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-4xl font-bold" style={{color: '#db4a2b'}}>
+            <h1 className="text-4xl font-bold" style={{ color: '#db4a2b' }}>
               Become a GrabtoGo Vendor
             </h1>
-            <p className="text-gray-600 mt-2">Join India&apos;s fastest growing local marketplace</p>
+            <p className="text-gray-600 mt-2">
+              Join India&apos;s fastest growing local marketplace
+            </p>
           </motion.div>
         </div>
 
@@ -234,55 +250,59 @@ export default function RegistrationWizard() {
         <div className="mb-8">
           <div className="flex justify-between mb-4">
             {STEPS.map((step) => {
-              const isCompleted = completedSteps.includes(step.id)
-              const isCurrent = currentStep === step.id
-              const isAccessible = step.id <= currentStep || isCompleted
+              const isCompleted = completedSteps.includes(step.id);
+              const isCurrent = currentStep === step.id;
+              const isAccessible = step.id <= currentStep || isCompleted;
 
               return (
                 <motion.div
                   key={step.id}
                   className={cn(
-                    "flex flex-col items-center flex-1 cursor-pointer transition-all",
-                    isAccessible ? "opacity-100" : "opacity-50"
+                    'flex flex-col items-center flex-1 cursor-pointer transition-all',
+                    isAccessible ? 'opacity-100' : 'opacity-50'
                   )}
                   onClick={() => handleStepClick(step.id)}
                   whileHover={isAccessible ? { scale: 1.05 } : {}}
                   whileTap={isAccessible ? { scale: 0.95 } : {}}
                 >
-                  <div className={cn(
-                    "w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-300 transform",
-                    isCompleted
-                      ? "bg-green-600 border-green-600 text-white shadow-lg scale-105"
-                      : isCurrent
-                      ? "border-[#db4a2b] text-[#db4a2b] bg-white shadow-xl scale-110 ring-4 ring-[#db4a2b]/20"
-                      : isAccessible
-                      ? "border-gray-300 text-gray-400 bg-white hover:border-[#db4a2b] hover:scale-105"
-                      : "border-gray-200 text-gray-300 bg-gray-50"
-                  )}>
+                  <div
+                    className={cn(
+                      'w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-300 transform',
+                      isCompleted
+                        ? 'bg-green-600 border-green-600 text-white shadow-lg scale-105'
+                        : isCurrent
+                          ? 'border-[#db4a2b] text-[#db4a2b] bg-white shadow-xl scale-110 ring-4 ring-[#db4a2b]/20'
+                          : isAccessible
+                            ? 'border-gray-300 text-gray-400 bg-white hover:border-[#db4a2b] hover:scale-105'
+                            : 'border-gray-200 text-gray-300 bg-gray-50'
+                    )}
+                  >
                     {isCompleted ? (
                       <Check className="w-5 h-5" />
                     ) : (
                       <step.icon className="w-5 h-5" />
                     )}
                   </div>
-                  <span className={cn(
-                    "text-xs mt-2 text-center font-medium hidden sm:block",
-                    isCurrent ? "text-[#db4a2b]" : "text-gray-500"
-                  )}>
+                  <span
+                    className={cn(
+                      'text-xs mt-2 text-center font-medium hidden sm:block',
+                      isCurrent ? 'text-[#db4a2b]' : 'text-gray-500'
+                    )}
+                  >
                     {step.name}
                   </span>
                 </motion.div>
-              )
+              );
             })}
           </div>
           <div className="relative">
             <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
               <motion.div
                 className="h-2 rounded-full"
-                style={{backgroundColor: '#db4a2b'}}
+                style={{ backgroundColor: '#db4a2b' }}
                 initial={{ width: '0%' }}
                 animate={{ width: `${((currentStep - 1) / (STEPS.length - 1)) * 100}%` }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
               />
             </div>
           </div>
@@ -293,7 +313,7 @@ export default function RegistrationWizard() {
           className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+          transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
         >
           <FormProvider {...methods}>
             <Form {...methods}>
@@ -320,21 +340,20 @@ export default function RegistrationWizard() {
                     onClick={handlePrevious}
                     disabled={currentStep === 1 || isNavigating}
                     className={cn(
-                      "flex items-center gap-3 px-6 py-4 text-lg font-medium border-2 rounded-xl transition-all duration-300 hover:scale-105 disabled:scale-100 border-gray-300 hover:border-[#db4a2b] hover:text-[#db4a2b]",
-                      currentStep === 1 && "invisible"
+                      'flex items-center gap-3 px-6 py-4 text-lg font-medium border-2 rounded-xl transition-all duration-300 hover:scale-105 disabled:scale-100 border-gray-300 hover:border-[#db4a2b] hover:text-[#db4a2b]',
+                      currentStep === 1 && 'invisible'
                     )}
                   >
-                    <motion.div
-                      whileHover={{ x: -5 }}
-                      transition={{ duration: 0.2 }}
-                    >
+                    <motion.div whileHover={{ x: -5 }} transition={{ duration: 0.2 }}>
                       <ChevronLeft className="w-5 h-5" />
                     </motion.div>
                     <span>Previous</span>
                   </Button>
 
                   <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <span>Step {currentStep} of {STEPS.length}</span>
+                    <span>
+                      Step {currentStep} of {STEPS.length}
+                    </span>
                   </div>
 
                   {currentStep < STEPS.length ? (
@@ -343,15 +362,15 @@ export default function RegistrationWizard() {
                       onClick={handleNext}
                       disabled={isNavigating}
                       className="flex items-center gap-3 px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 disabled:scale-100"
-                      style={{backgroundColor: '#db4a2b'}}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c43e29'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#db4a2b'}
+                      style={{ backgroundColor: '#db4a2b' }}
+                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#c43e29')}
+                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#db4a2b')}
                     >
                       {isNavigating ? (
                         <>
                           <motion.div
                             animate={{ rotate: 360 }}
-                            transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                            transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
                             className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
                           />
                           <span>Validating...</span>
@@ -359,10 +378,7 @@ export default function RegistrationWizard() {
                       ) : (
                         <>
                           <span>Continue</span>
-                          <motion.div
-                            whileHover={{ x: 5 }}
-                            transition={{ duration: 0.2 }}
-                          >
+                          <motion.div whileHover={{ x: 5 }} transition={{ duration: 0.2 }}>
                             <ChevronRight className="w-5 h-5" />
                           </motion.div>
                         </>
@@ -386,12 +402,16 @@ export default function RegistrationWizard() {
         >
           <p className="text-sm text-gray-500">
             Need help? Contact us at{' '}
-            <a href="mailto:info@grabtogo.in" className="hover:underline" style={{color: '#db4a2b'}}>
+            <a
+              href="mailto:info@grabtogo.in"
+              className="hover:underline"
+              style={{ color: '#db4a2b' }}
+            >
               info@grabtogo.in
             </a>
           </p>
         </motion.div>
       </div>
     </div>
-  )
+  );
 }

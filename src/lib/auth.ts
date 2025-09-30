@@ -1,11 +1,11 @@
-import NextAuth from 'next-auth'
-import { PrismaAdapter } from '@auth/prisma-adapter'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import GoogleProvider from 'next-auth/providers/google'
-import Resend from 'next-auth/providers/resend'
-import { db } from './db'
-import { UserRole } from './prisma'
-import { comparePassword, signInSchema, normalizeEmail } from './password'
+import NextAuth from 'next-auth';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
+import Resend from 'next-auth/providers/resend';
+import { db } from './db';
+import { UserRole } from './prisma';
+import { comparePassword, signInSchema, normalizeEmail } from './password';
 import {
   isAccountLocked,
   recordFailedAttempt,
@@ -13,7 +13,7 @@ import {
   logSecurityEvent,
   checkRateLimit,
   detectSuspiciousActivity,
-} from './security'
+} from './security';
 
 const config = NextAuth({
   adapter: PrismaAdapter(db),
@@ -39,20 +39,19 @@ const config = NextAuth({
       async authorize(credentials, req) {
         try {
           // Validate input with enhanced schema
-          const { email, password } = signInSchema.parse(credentials)
+          const { email, password } = signInSchema.parse(credentials);
 
           // Get IP address for rate limiting and logging
-          const ipAddress = req?.headers?.get('x-forwarded-for') ||
-                           req?.headers?.get('x-real-ip') ||
-                           'unknown'
+          const ipAddress =
+            req?.headers?.get('x-forwarded-for') || req?.headers?.get('x-real-ip') || 'unknown';
 
           // Rate limiting check
-          const rateLimit = await checkRateLimit(ipAddress, 'login')
+          const rateLimit = await checkRateLimit(ipAddress, 'login');
           if (!rateLimit.allowed) {
-            throw new Error('Too many login attempts. Please try again later.')
+            throw new Error('Too many login attempts. Please try again later.');
           }
 
-          const normalizedEmail = normalizeEmail(email)
+          const normalizedEmail = normalizeEmail(email);
 
           // Find user with security fields
           const user = await db.user.findUnique({
@@ -70,7 +69,7 @@ const config = NextAuth({
               accountLockedUntil: true,
               failedAttempts: true,
             },
-          })
+          });
 
           if (!user) {
             // Log failed attempt with non-existent email
@@ -79,8 +78,8 @@ const config = NextAuth({
               details: JSON.stringify({ email: normalizedEmail }),
               ipAddress,
               userAgent: req?.headers?.get('user-agent') || 'unknown',
-            })
-            throw new Error('Invalid credentials')
+            });
+            throw new Error('Invalid credentials');
           }
 
           // Check if account is locked
@@ -91,8 +90,8 @@ const config = NextAuth({
               details: JSON.stringify({ email: normalizedEmail }),
               ipAddress,
               userAgent: req?.headers?.get('user-agent') || 'unknown',
-            })
-            throw new Error('Account is temporarily locked due to multiple failed login attempts.')
+            });
+            throw new Error('Account is temporarily locked due to multiple failed login attempts.');
           }
 
           // Check if email is verified
@@ -103,8 +102,8 @@ const config = NextAuth({
               details: JSON.stringify({ email: normalizedEmail }),
               ipAddress,
               userAgent: req?.headers?.get('user-agent') || 'unknown',
-            })
-            throw new Error('Please verify your email address before signing in.')
+            });
+            throw new Error('Please verify your email address before signing in.');
           }
 
           // Check if account is active
@@ -115,14 +114,14 @@ const config = NextAuth({
               details: JSON.stringify({ email: normalizedEmail }),
               ipAddress,
               userAgent: req?.headers?.get('user-agent') || 'unknown',
-            })
-            throw new Error('Account is inactive. Please contact support.')
+            });
+            throw new Error('Account is inactive. Please contact support.');
           }
 
           // Verify password
           if (!user.password || !(await comparePassword(password, user.password))) {
             // Record failed attempt
-            const shouldLock = await recordFailedAttempt(user.id)
+            const shouldLock = await recordFailedAttempt(user.id);
 
             await logSecurityEvent({
               userId: user.id,
@@ -134,20 +133,20 @@ const config = NextAuth({
               }),
               ipAddress,
               userAgent: req?.headers?.get('user-agent') || 'unknown',
-            })
+            });
 
             if (shouldLock) {
-              throw new Error('Account has been locked due to multiple failed login attempts.')
+              throw new Error('Account has been locked due to multiple failed login attempts.');
             }
 
-            throw new Error('Invalid credentials')
+            throw new Error('Invalid credentials');
           }
 
           // Detect suspicious activity
-          const suspiciousActivity = await detectSuspiciousActivity(user.id, ipAddress)
+          const suspiciousActivity = await detectSuspiciousActivity(user.id, ipAddress);
 
           // Reset failed attempts on successful login
-          await resetFailedAttempts(user.id)
+          await resetFailedAttempts(user.id);
 
           // Log successful login
           await logSecurityEvent({
@@ -160,7 +159,7 @@ const config = NextAuth({
             }),
             ipAddress,
             userAgent: req?.headers?.get('user-agent') || 'unknown',
-          })
+          });
 
           return {
             id: user.id,
@@ -169,13 +168,13 @@ const config = NextAuth({
             image: user.image,
             role: user.role,
             emailVerified: user.emailVerified,
-          }
+          };
         } catch (error) {
           // Ensure proper error handling
           if (error instanceof Error) {
-            throw error
+            throw error;
           }
-          throw new Error('Authentication failed')
+          throw new Error('Authentication failed');
         }
       },
     }),
@@ -183,28 +182,28 @@ const config = NextAuth({
   callbacks: {
     async jwt({ token, user, account: _account }) {
       if (user) {
-        token.role = (user as any).role
-        token.emailVerified = (user as any).emailVerified
+        token.role = (user as any).role;
+        token.emailVerified = (user as any).emailVerified;
       }
-      return token
+      return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.sub!
-        ;(session.user as any).role = token.role as UserRole
-        ;(session.user as any).emailVerified = token.emailVerified
+        session.user.id = token.sub!;
+        (session.user as any).role = token.role as UserRole;
+        (session.user as any).emailVerified = token.emailVerified;
       }
-      return session
+      return session;
     },
     async signIn({ user, account, profile: _profile }) {
       // Handle OAuth providers (Google, etc.)
       if (account?.provider === 'google') {
         try {
-          const normalizedEmail = normalizeEmail(user.email!)
+          const normalizedEmail = normalizeEmail(user.email!);
 
           const existingUser = await db.user.findUnique({
             where: { email: normalizedEmail },
-          })
+          });
 
           if (!existingUser) {
             // Create new user for OAuth
@@ -217,7 +216,7 @@ const config = NextAuth({
                 role: UserRole.CUSTOMER,
                 isActive: true,
               },
-            })
+            });
 
             await logSecurityEvent({
               userId: newUser.id,
@@ -226,7 +225,7 @@ const config = NextAuth({
                 provider: account.provider,
                 email: normalizedEmail,
               }),
-            })
+            });
           } else {
             // Update existing user with OAuth info
             await db.user.update({
@@ -236,7 +235,7 @@ const config = NextAuth({
                 image: user.image || existingUser.image,
                 emailVerified: existingUser.emailVerified || new Date(),
               },
-            })
+            });
 
             await logSecurityEvent({
               userId: existingUser.id,
@@ -245,27 +244,27 @@ const config = NextAuth({
                 provider: account.provider,
                 email: normalizedEmail,
               }),
-            })
+            });
           }
 
-          return true
+          return true;
         } catch (error) {
-          console.error('OAuth sign in error:', error)
-          return false
+          console.error('OAuth sign in error:', error);
+          return false;
         }
       }
 
       // Handle email provider (magic links)
       if (account?.provider === 'resend') {
-        return true
+        return true;
       }
 
       // Handle credentials provider
       if (account?.provider === 'credentials') {
-        return true
+        return true;
       }
 
-      return true
+      return true;
     },
   },
   pages: {
@@ -279,10 +278,10 @@ const config = NextAuth({
           userId: message.token.sub,
           event: 'logout',
           details: JSON.stringify({ sessionId: message.token.jti }),
-        })
+        });
       }
     },
   },
-})
+});
 
-export const { handlers, auth, signIn, signOut } = config
+export const { handlers, auth, signIn, signOut } = config;

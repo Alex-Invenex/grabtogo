@@ -1,21 +1,21 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { Search, MapPin } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import * as React from 'react';
+import { Search, MapPin } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export function SearchSection() {
-  const [searchQuery, setSearchQuery] = React.useState('')
-  const [location, setLocation] = React.useState('Kottayam')
-  const [category, setCategory] = React.useState('all')
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [location, setLocation] = React.useState('Kottayam');
+  const [category, setCategory] = React.useState('all');
 
   const handleSearch = () => {
-    const params = new URLSearchParams()
-    if (searchQuery.trim()) params.append('q', searchQuery)
-    params.append('location', location)
-    if (category !== 'all') params.append('category', category)
-    window.location.href = `/listings?${params.toString()}`
-  }
+    const params = new URLSearchParams();
+    if (searchQuery.trim()) params.append('q', searchQuery);
+    params.append('location', location);
+    if (category !== 'all') params.append('category', category);
+    window.location.href = `/listings?${params.toString()}`;
+  };
 
   return (
     <section className="py-16 bg-gray-50">
@@ -83,5 +83,5 @@ export function SearchSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

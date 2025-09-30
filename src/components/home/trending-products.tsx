@@ -1,66 +1,69 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Flame, Star, ShoppingBag, Eye } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
+import * as React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Flame, Star, ShoppingBag, Eye } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 
 interface Product {
-  id: string
-  name: string
-  slug: string
-  price: number
-  comparePrice: number | null
-  shortDesc: string | null
-  images: { url: string; altText: string | null }[]
+  id: string;
+  name: string;
+  slug: string;
+  price: number;
+  comparePrice: number | null;
+  shortDesc: string | null;
+  images: { url: string; altText: string | null }[];
   vendor: {
-    name: string
+    name: string;
     vendorProfile: {
-      storeName: string
-      storeSlug: string
-    }
-  }
-  viewCount: number
+      storeName: string;
+      storeSlug: string;
+    };
+  };
+  viewCount: number;
   _count: {
-    reviews: number
-  }
+    reviews: number;
+  };
 }
 
 interface TrendingProductsProps {
-  products?: Product[]
-  loading?: boolean
+  products?: Product[];
+  loading?: boolean;
 }
 
-export function TrendingProducts({ products: initialProducts, loading: initialLoading }: TrendingProductsProps) {
-  const [products, setProducts] = React.useState<Product[]>(initialProducts || [])
-  const [loading, setLoading] = React.useState(initialLoading || false)
+export function TrendingProducts({
+  products: initialProducts,
+  loading: initialLoading,
+}: TrendingProductsProps) {
+  const [products, setProducts] = React.useState<Product[]>(initialProducts || []);
+  const [loading, setLoading] = React.useState(initialLoading || false);
 
   // Fetch trending products
   React.useEffect(() => {
     if (!initialProducts) {
-      setLoading(true)
+      setLoading(true);
       fetch('/api/products?limit=8&sortBy=viewCount&sortOrder=desc')
-        .then(res => res.json())
-        .then(data => {
-          setProducts(data.data)
+        .then((res) => res.json())
+        .then((data) => {
+          setProducts(data.data);
         })
-        .catch(err => console.error('Failed to fetch trending products:', err))
-        .finally(() => setLoading(false))
+        .catch((err) => console.error('Failed to fetch trending products:', err))
+        .finally(() => setLoading(false));
     }
-  }, [initialProducts])
+  }, [initialProducts]);
 
   const calculateDiscount = (price: number, comparePrice: number | null) => {
-    if (!comparePrice || comparePrice <= price) return 0
-    return Math.round(((comparePrice - price) / comparePrice) * 100)
-  }
+    if (!comparePrice || comparePrice <= price) return 0;
+    return Math.round(((comparePrice - price) / comparePrice) * 100);
+  };
 
   if (products.length === 0 && !loading) {
-    return null
+    return null;
   }
 
   return (
@@ -72,9 +75,7 @@ export function TrendingProducts({ products: initialProducts, loading: initialLo
             <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center">
               <Flame className="w-7 h-7 text-white" />
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">
-              Trending Now
-            </h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">Trending Now</h2>
           </div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Most viewed and popular products that everyone's talking about
@@ -97,8 +98,8 @@ export function TrendingProducts({ products: initialProducts, loading: initialLo
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((product, index) => {
-              const discount = calculateDiscount(product.price, product.comparePrice)
-              const imageUrl = product.images[0]?.url || '/placeholder-product.jpg'
+              const discount = calculateDiscount(product.price, product.comparePrice);
+              const imageUrl = product.images[0]?.url || '/placeholder-product.jpg';
 
               return (
                 <HoverCard key={product.id} openDelay={200}>
@@ -146,7 +147,9 @@ export function TrendingProducts({ products: initialProducts, loading: initialLo
                           {/* View Count */}
                           <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-2">
                             <Eye className="w-4 h-4 text-white" />
-                            <span className="text-sm font-medium text-white">{product.viewCount}</span>
+                            <span className="text-sm font-medium text-white">
+                              {product.viewCount}
+                            </span>
                           </div>
                         </div>
 
@@ -206,7 +209,7 @@ export function TrendingProducts({ products: initialProducts, loading: initialLo
                     </div>
                   </HoverCardContent>
                 </HoverCard>
-              )
+              );
             })}
           </div>
         )}
@@ -217,12 +220,12 @@ export function TrendingProducts({ products: initialProducts, loading: initialLo
             size="lg"
             variant="outline"
             className="border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-bold text-lg px-10 py-7 rounded-2xl transition-all duration-300"
-            onClick={() => window.location.href = '/listings?sortBy=viewCount'}
+            onClick={() => (window.location.href = '/listings?sortBy=viewCount')}
           >
             Explore More Trending Products
           </Button>
         </div>
       </div>
     </section>
-  )
+  );
 }

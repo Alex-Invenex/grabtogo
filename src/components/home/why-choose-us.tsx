@@ -1,22 +1,32 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { ShieldCheck, BadgePercent, MapPin, Headphones, Award, Clock, Zap, Heart } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
+import * as React from 'react';
+import {
+  ShieldCheck,
+  BadgePercent,
+  MapPin,
+  Headphones,
+  Award,
+  Clock,
+  Zap,
+  Heart,
+} from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface Benefit {
-  icon: React.ElementType
-  title: string
-  description: string
-  color: string
-  bgColor: string
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  color: string;
+  bgColor: string;
 }
 
 const benefits: Benefit[] = [
   {
     icon: ShieldCheck,
     title: 'Verified Local Vendors',
-    description: 'Every business on our platform is verified and trusted by the community for quality and authenticity.',
+    description:
+      'Every business on our platform is verified and trusted by the community for quality and authenticity.',
     color: 'text-blue-600',
     bgColor: 'bg-blue-50',
   },
@@ -30,46 +40,52 @@ const benefits: Benefit[] = [
   {
     icon: MapPin,
     title: 'Location-Based Discovery',
-    description: 'Find amazing deals from businesses near you with our smart location-based search.',
+    description:
+      'Find amazing deals from businesses near you with our smart location-based search.',
     color: 'text-primary',
     bgColor: 'bg-primary/10',
   },
   {
     icon: Headphones,
     title: '24/7 Customer Support',
-    description: 'Our dedicated support team is always ready to help you with any questions or concerns.',
+    description:
+      'Our dedicated support team is always ready to help you with any questions or concerns.',
     color: 'text-purple-600',
     bgColor: 'bg-purple-50',
   },
   {
     icon: Award,
     title: 'Quality Assurance',
-    description: 'We ensure all vendors meet our high standards for product quality and customer service.',
+    description:
+      'We ensure all vendors meet our high standards for product quality and customer service.',
     color: 'text-yellow-600',
     bgColor: 'bg-yellow-50',
   },
   {
     icon: Clock,
     title: 'Real-Time Updates',
-    description: 'Get instant notifications about new deals, offers, and vendor stories in your area.',
+    description:
+      'Get instant notifications about new deals, offers, and vendor stories in your area.',
     color: 'text-pink-600',
     bgColor: 'bg-pink-50',
   },
   {
     icon: Zap,
     title: 'Fast & Easy Ordering',
-    description: 'Simple, seamless experience from browsing to visiting the store to make your purchase.',
+    description:
+      'Simple, seamless experience from browsing to visiting the store to make your purchase.',
     color: 'text-orange-600',
     bgColor: 'bg-orange-50',
   },
   {
     icon: Heart,
     title: 'Support Local Business',
-    description: 'Help grow your local economy by supporting neighborhood businesses and entrepreneurs.',
+    description:
+      'Help grow your local economy by supporting neighborhood businesses and entrepreneurs.',
     color: 'text-red-600',
     bgColor: 'bg-red-50',
   },
-]
+];
 
 export function WhyChooseUs() {
   return (
@@ -86,14 +102,15 @@ export function WhyChooseUs() {
             Your Trusted Local Marketplace
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Experience the best of local shopping with verified vendors, exclusive deals, and seamless service
+            Experience the best of local shopping with verified vendors, exclusive deals, and
+            seamless service
           </p>
         </div>
 
         {/* Benefits Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {benefits.map((benefit, index) => {
-            const Icon = benefit.icon
+            const Icon = benefit.icon;
             return (
               <Card
                 key={index}
@@ -101,7 +118,9 @@ export function WhyChooseUs() {
               >
                 <CardContent className="p-6">
                   {/* Icon */}
-                  <div className={`w-16 h-16 ${benefit.bgColor} rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
+                  <div
+                    className={`w-16 h-16 ${benefit.bgColor} rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}
+                  >
                     <Icon className={`w-8 h-8 ${benefit.color}`} />
                   </div>
 
@@ -111,15 +130,13 @@ export function WhyChooseUs() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-gray-600 leading-relaxed">
-                    {benefit.description}
-                  </p>
+                  <p className="text-gray-600 leading-relaxed">{benefit.description}</p>
 
                   {/* Hover Effect Line */}
                   <div className="mt-5 h-1 w-0 bg-primary rounded-full group-hover:w-full transition-all duration-500"></div>
                 </CardContent>
               </Card>
-            )
+            );
           })}
         </div>
 
@@ -146,5 +163,5 @@ export function WhyChooseUs() {
         </div>
       </div>
     </section>
-  )
+  );
 }

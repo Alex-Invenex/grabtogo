@@ -1,31 +1,41 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import Link from 'next/link'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
-import { Eye, EyeOff, Loader2, CheckCircle, Mail } from 'lucide-react'
+import * as React from 'react';
+import Link from 'next/link';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { Eye, EyeOff, Loader2, CheckCircle, Mail } from 'lucide-react';
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/components/ui/card'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Progress } from '@/components/ui/progress'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { useToast } from '@/hooks/use-toast'
-import { signUpSchema, calculatePasswordStrength } from '@/lib/password'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/components/ui/card';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Progress } from '@/components/ui/progress';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useToast } from '@/hooks/use-toast';
+import { signUpSchema, calculatePasswordStrength } from '@/lib/password';
 
-type RegisterFormValues = z.input<typeof signUpSchema>
+type RegisterFormValues = z.input<typeof signUpSchema>;
 
 export default function RegisterPage() {
-  const [showPassword, setShowPassword] = React.useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(false)
-  const [isSuccess, setIsSuccess] = React.useState(false)
-  const [userEmail, setUserEmail] = React.useState('')
-  const [passwordStrength, setPasswordStrength] = React.useState<{ score: number; feedback: string[] }>({ score: 0, feedback: [] })
-  const { toast } = useToast()
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+  const [userEmail, setUserEmail] = React.useState('');
+  const [passwordStrength, setPasswordStrength] = React.useState<{
+    score: number;
+    feedback: string[];
+  }>({ score: 0, feedback: [] });
+  const { toast } = useToast();
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(signUpSchema),
@@ -36,20 +46,20 @@ export default function RegisterPage() {
       confirmPassword: '',
       phone: '',
     },
-  })
+  });
 
-  const password = form.watch('password')
+  const password = form.watch('password');
 
   React.useEffect(() => {
     if (password) {
-      setPasswordStrength(calculatePasswordStrength(password))
+      setPasswordStrength(calculatePasswordStrength(password));
     } else {
-      setPasswordStrength({ score: 0, feedback: [] })
+      setPasswordStrength({ score: 0, feedback: [] });
     }
-  }, [password])
+  }, [password]);
 
   const onSubmit = async (data: RegisterFormValues) => {
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
       const response = await fetch('/api/auth/signup', {
@@ -64,9 +74,9 @@ export default function RegisterPage() {
           role: 'CUSTOMER',
           phone: data.phone || undefined,
         }),
-      })
+      });
 
-      const result = await response.json()
+      const result = await response.json();
 
       if (!response.ok) {
         if (response.status === 429) {
@@ -74,45 +84,43 @@ export default function RegisterPage() {
             title: 'Too Many Attempts',
             description: result.message || 'Please wait before trying again',
             variant: 'destructive',
-          })
+          });
         } else if (response.status === 400 && result.error?.includes('already exists')) {
           toast({
             title: 'Account Already Exists',
             description: 'An account with this email already exists. Try signing in instead.',
             variant: 'destructive',
-          })
+          });
         } else {
-          throw new Error(result.error || 'Registration failed')
+          throw new Error(result.error || 'Registration failed');
         }
-        return
+        return;
       }
 
-      setUserEmail(data.email)
-      setIsSuccess(true)
+      setUserEmail(data.email);
+      setIsSuccess(true);
 
       toast({
         title: 'Account Created!',
         description: 'Please check your email to verify your account.',
-      })
+      });
     } catch (error) {
       toast({
         title: 'Registration Failed',
         description: error instanceof Error ? error.message : 'Something went wrong',
         variant: 'destructive',
-      })
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   if (isSuccess) {
     return (
       <div className="container flex h-screen w-screen flex-col items-center justify-center">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
           <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">
-              Check Your Email
-            </h1>
+            <h1 className="text-2xl font-semibold tracking-tight">Check Your Email</h1>
             <p className="text-sm text-muted-foreground">
               Account created successfully! Verification required.
             </p>
@@ -135,8 +143,8 @@ export default function RegisterPage() {
                 <Alert className="mb-4">
                   <CheckCircle className="h-4 w-4" />
                   <AlertDescription>
-                    Please check your email and click the verification link to activate your account.
-                    The link will expire in 24 hours.
+                    Please check your email and click the verification link to activate your
+                    account. The link will expire in 24 hours.
                   </AlertDescription>
                 </Alert>
                 <div className="space-y-2">
@@ -146,8 +154,8 @@ export default function RegisterPage() {
                   <Button
                     variant="outline"
                     onClick={() => {
-                      setIsSuccess(false)
-                      form.reset()
+                      setIsSuccess(false);
+                      form.reset();
                     }}
                     className="w-full"
                   >
@@ -159,16 +167,14 @@ export default function RegisterPage() {
           </Card>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
         <div className="flex flex-col space-y-2 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight">
-            Create an account
-          </h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
           <p className="text-sm text-muted-foreground">
             Enter your details below to create your account
           </p>
@@ -177,9 +183,7 @@ export default function RegisterPage() {
         <Card>
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl text-center">Sign Up</CardTitle>
-            <CardDescription className="text-center">
-              Join GrabtoGo marketplace
-            </CardDescription>
+            <CardDescription className="text-center">Join GrabtoGo marketplace</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -279,16 +283,27 @@ export default function RegisterPage() {
                       {password && (
                         <div className="space-y-2">
                           <div className="flex items-center space-x-2">
-                            <span className="text-sm text-muted-foreground">Password strength:</span>
+                            <span className="text-sm text-muted-foreground">
+                              Password strength:
+                            </span>
                             <Progress
                               value={passwordStrength.score}
                               className="h-2 flex-1"
                               style={{
-                                backgroundColor: passwordStrength.score < 30 ? '#ef4444' : passwordStrength.score < 70 ? '#f59e0b' : '#10b981'
+                                backgroundColor:
+                                  passwordStrength.score < 30
+                                    ? '#ef4444'
+                                    : passwordStrength.score < 70
+                                      ? '#f59e0b'
+                                      : '#10b981',
                               }}
                             />
                             <span className="text-sm font-medium">
-                              {passwordStrength.score < 30 ? 'Weak' : passwordStrength.score < 70 ? 'Good' : 'Strong'}
+                              {passwordStrength.score < 30
+                                ? 'Weak'
+                                : passwordStrength.score < 70
+                                  ? 'Good'
+                                  : 'Strong'}
                             </span>
                           </div>
                           {passwordStrength.feedback.length > 0 && (
@@ -353,10 +368,7 @@ export default function RegisterPage() {
 
             <div className="mt-6 text-center text-sm">
               Already have an account?{' '}
-              <Link
-                href="/auth/login"
-                className="underline underline-offset-4 hover:text-primary"
-              >
+              <Link href="/auth/login" className="underline underline-offset-4 hover:text-primary">
                 Sign in
               </Link>
             </div>
@@ -364,5 +376,5 @@ export default function RegisterPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

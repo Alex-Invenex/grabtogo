@@ -1,18 +1,18 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { motion } from 'framer-motion'
-import { Store, CheckCircle, Clock, AlertTriangle } from 'lucide-react'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Store, CheckCircle, Clock, AlertTriangle, XCircle } from 'lucide-react';
+import { Card, CardContent, CardTitle, CardHeader } from '@/components/ui/card';
 
 interface VendorStatsProps {
   stats: {
-    total: number
-    active: number
-    pending: number
-    suspended: number
-    inactive: number
-  }
+    total: number;
+    active: number;
+    pending: number;
+    suspended: number;
+    inactive: number;
+  };
 }
 
 export default function VendorStats({ stats }: VendorStatsProps) {
@@ -22,37 +22,37 @@ export default function VendorStats({ stats }: VendorStatsProps) {
       value: stats.total.toLocaleString(),
       icon: Store,
       color: 'blue',
-      bgColor: 'bg-blue-500'
+      bgColor: 'bg-blue-500',
     },
     {
       title: 'Active',
       value: stats.active.toLocaleString(),
       icon: CheckCircle,
       color: 'green',
-      bgColor: 'bg-green-500'
+      bgColor: 'bg-green-500',
     },
     {
       title: 'Pending Approval',
       value: stats.pending.toLocaleString(),
       icon: Clock,
       color: 'orange',
-      bgColor: 'bg-orange-500'
+      bgColor: 'bg-orange-500',
     },
     {
       title: 'Suspended',
       value: stats.suspended.toLocaleString(),
       icon: XCircle,
       color: 'red',
-      bgColor: 'bg-red-500'
+      bgColor: 'bg-red-500',
     },
     {
       title: 'Inactive',
       value: stats.inactive.toLocaleString(),
       icon: AlertTriangle,
       color: 'gray',
-      bgColor: 'bg-gray-500'
-    }
-  ]
+      bgColor: 'bg-gray-500',
+    },
+  ];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -65,9 +65,7 @@ export default function VendorStats({ stats }: VendorStatsProps) {
         >
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                {card.title}
-              </CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{card.title}</CardTitle>
               <div className={`p-2 rounded-lg ${card.bgColor}`}>
                 <card.icon className="h-4 w-4 text-white" />
               </div>
@@ -79,5 +77,5 @@ export default function VendorStats({ stats }: VendorStatsProps) {
         </motion.div>
       ))}
     </div>
-  )
+  );
 }

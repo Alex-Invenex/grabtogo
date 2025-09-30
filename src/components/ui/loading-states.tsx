@@ -1,25 +1,43 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { Skeleton } from '@/components/ui/skeleton'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
+import * as React from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 // Basic loading spinner
-export function LoadingSpinner({ size = 'default', className }: { size?: 'sm' | 'default' | 'lg'; className?: string }) {
+export function LoadingSpinner({
+  size = 'default',
+  className,
+}: {
+  size?: 'sm' | 'default' | 'lg';
+  className?: string;
+}) {
   const sizeClasses = {
     sm: 'h-4 w-4',
     default: 'h-6 w-6',
-    lg: 'h-8 w-8'
-  }
+    lg: 'h-8 w-8',
+  };
 
   return (
-    <div className={cn('animate-spin rounded-full border-2 border-primary border-t-transparent', sizeClasses[size], className)} />
-  )
+    <div
+      className={cn(
+        'animate-spin rounded-full border-2 border-primary border-t-transparent',
+        sizeClasses[size],
+        className
+      )}
+    />
+  );
 }
 
 // Loading overlay
-export function LoadingOverlay({ children, loading }: { children: React.ReactNode; loading: boolean }) {
+export function LoadingOverlay({
+  children,
+  loading,
+}: {
+  children: React.ReactNode;
+  loading: boolean;
+}) {
   return (
     <div className="relative">
       {children}
@@ -29,7 +47,7 @@ export function LoadingOverlay({ children, loading }: { children: React.ReactNod
         </div>
       )}
     </div>
-  )
+  );
 }
 
 // Product card skeleton
@@ -48,7 +66,7 @@ export function ProductCardSkeleton() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 // Vendor card skeleton
@@ -69,7 +87,7 @@ export function VendorCardSkeleton() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 // Chat message skeleton
@@ -82,7 +100,7 @@ export function ChatMessageSkeleton() {
         <Skeleton className="h-10 w-3/4 rounded-lg" />
       </div>
     </div>
-  )
+  );
 }
 
 // Table skeleton
@@ -104,7 +122,7 @@ export function TableSkeleton({ rows = 5, cols = 4 }: { rows?: number; cols?: nu
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 // Analytics chart skeleton
@@ -119,7 +137,7 @@ export function ChartSkeleton() {
         <Skeleton className="h-64 w-full" />
       </CardContent>
     </Card>
-  )
+  );
 }
 
 // Story skeleton
@@ -129,7 +147,7 @@ export function StorySkeleton() {
       <Skeleton className="h-16 w-16 rounded-full" />
       <Skeleton className="h-3 w-12" />
     </div>
-  )
+  );
 }
 
 // Notification skeleton
@@ -143,5 +161,5 @@ export function NotificationSkeleton() {
       </div>
       <Skeleton className="h-3 w-12" />
     </div>
-  )
+  );
 }

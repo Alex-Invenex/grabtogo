@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   AreaChart,
   Area,
@@ -16,11 +16,11 @@ import {
   ResponsiveContainer,
   PieChart,
   Pie,
-  Cell
-} from 'recharts'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Badge } from '@/components/ui/badge'
+  Cell,
+} from 'recharts';
+import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
 
 // Mock data for charts
 const revenueData = [
@@ -31,15 +31,15 @@ const revenueData = [
   { month: 'May', revenue: 55000, orders: 1480, vendors: 240 },
   { month: 'Jun', revenue: 67000, orders: 1820, vendors: 255 },
   { month: 'Jul', revenue: 71000, orders: 1950, vendors: 270 },
-]
+];
 
 const vendorCategoryData = [
   { name: 'Food & Dining', value: 35, color: '#3B82F6' },
   { name: 'Grocery', value: 25, color: '#10B981' },
   { name: 'Fashion', value: 20, color: '#F59E0B' },
   { name: 'Electronics', value: 15, color: '#EF4444' },
-  { name: 'Others', value: 5, color: '#8B5CF6' }
-]
+  { name: 'Others', value: 5, color: '#8B5CF6' },
+];
 
 const dailyActivityData = [
   { hour: '00', orders: 12, users: 45 },
@@ -48,10 +48,10 @@ const dailyActivityData = [
   { hour: '12', orders: 78, users: 245 },
   { hour: '16', orders: 65, users: 198 },
   { hour: '20', orders: 45, users: 156 },
-]
+];
 
 export default function Charts() {
-  const [activeTab, setActiveTab] = useState('revenue')
+  const [activeTab, setActiveTab] = useState('revenue');
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -64,10 +64,10 @@ export default function Charts() {
             </p>
           ))}
         </div>
-      )
+      );
     }
-    return null
-  }
+    return null;
+  };
 
   return (
     <div className="space-y-6">
@@ -96,16 +96,12 @@ export default function Charts() {
                   <AreaChart data={revenueData}>
                     <defs>
                       <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#3B82F6" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#3B82F6" stopOpacity={0} />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                    <XAxis
-                      dataKey="month"
-                      stroke="#666"
-                      fontSize={12}
-                    />
+                    <XAxis dataKey="month" stroke="#666" fontSize={12} />
                     <YAxis
                       stroke="#666"
                       fontSize={12}
@@ -132,11 +128,7 @@ export default function Charts() {
                     <XAxis dataKey="month" stroke="#666" fontSize={12} />
                     <YAxis stroke="#666" fontSize={12} />
                     <Tooltip content={<CustomTooltip />} />
-                    <Bar
-                      dataKey="orders"
-                      fill="#10B981"
-                      radius={[4, 4, 0, 0]}
-                    />
+                    <Bar dataKey="orders" fill="#10B981" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -191,9 +183,7 @@ export default function Charts() {
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip
-                    formatter={(value) => [`${value}%`, 'Percentage']}
-                  />
+                  <Tooltip formatter={(value) => [`${value}%`, 'Percentage']} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -223,12 +213,12 @@ export default function Charts() {
                 <AreaChart data={dailyActivityData}>
                   <defs>
                     <linearGradient id="ordersGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#EF4444" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#EF4444" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#EF4444" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="#EF4444" stopOpacity={0} />
                     </linearGradient>
                     <linearGradient id="usersGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -239,10 +229,7 @@ export default function Charts() {
                     tickFormatter={(value) => `${value}:00`}
                   />
                   <YAxis stroke="#666" fontSize={12} />
-                  <Tooltip
-                    labelFormatter={(value) => `${value}:00`}
-                    content={<CustomTooltip />}
-                  />
+                  <Tooltip labelFormatter={(value) => `${value}:00`} content={<CustomTooltip />} />
                   <Area
                     type="monotone"
                     dataKey="users"
@@ -274,5 +261,5 @@ export default function Charts() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

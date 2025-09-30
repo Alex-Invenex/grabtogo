@@ -1,102 +1,118 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { ChevronLeft, ChevronRight, Heart, MessageCircle, Share, Eye, X } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import * as React from 'react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  MessageCircle,
+  Share,
+  Eye,
+  X,
+  MoreHorizontal,
+} from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
-import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Input } from '@/components/ui/input';
 
 interface Story {
-  id: string
-  vendorId: string
-  vendorName: string
-  vendorAvatar: string
-  title: string
+  id: string;
+  vendorId: string;
+  vendorName: string;
+  vendorAvatar: string;
+  title: string;
   content: {
-    type: 'image' | 'video' | 'text'
-    url?: string
-    text?: string
-    duration?: number
-  }[]
-  createdAt: string
-  expiresAt: string
-  views: number
-  likes: number
-  comments: number
-  isViewed: boolean
-  isLiked: boolean
+    type: 'image' | 'video' | 'text';
+    url?: string;
+    text?: string;
+    duration?: number;
+  }[];
+  createdAt: string;
+  expiresAt: string;
+  views: number;
+  likes: number;
+  comments: number;
+  isViewed: boolean;
+  isLiked: boolean;
 }
 
 interface StoryViewerProps {
-  stories: Story[]
-  currentStoryIndex: number
-  currentContentIndex: number
-  onClose: () => void
-  onNext: () => void
-  onPrevious: () => void
+  stories: Story[];
+  currentStoryIndex: number;
+  currentContentIndex: number;
+  onClose: () => void;
+  onNext: () => void;
+  onPrevious: () => void;
 }
 
-function StoryViewer({ stories, currentStoryIndex, currentContentIndex, onClose, onNext, onPrevious }: StoryViewerProps) {
-  const [progress, setProgress] = React.useState(0)
-  const [isPaused, setIsPaused] = React.useState(false)
-  const [showInput, setShowInput] = React.useState(false)
-  const [comment, setComment] = React.useState('')
+function StoryViewer({
+  stories,
+  currentStoryIndex,
+  currentContentIndex,
+  onClose,
+  onNext,
+  onPrevious,
+}: StoryViewerProps) {
+  const [progress, setProgress] = React.useState(0);
+  const [isPaused, setIsPaused] = React.useState(false);
+  const [showInput, setShowInput] = React.useState(false);
+  const [comment, setComment] = React.useState('');
 
-  const currentStory = stories[currentStoryIndex]
-  const currentContent = currentStory?.content[currentContentIndex]
-  const duration = currentContent?.duration || 5000
+  const currentStory = stories[currentStoryIndex];
+  const currentContent = currentStory?.content[currentContentIndex];
+  const duration = currentContent?.duration || 5000;
 
   React.useEffect(() => {
-    if (isPaused) return
+    if (isPaused) return;
 
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
-          onNext()
-          return 0
+          onNext();
+          return 0;
         }
-        return prev + (100 / (duration / 100))
-      })
-    }, 100)
+        return prev + 100 / (duration / 100);
+      });
+    }, 100);
 
-    return () => clearInterval(interval)
-  }, [duration, isPaused, onNext])
+    return () => clearInterval(interval);
+  }, [duration, isPaused, onNext]);
 
   React.useEffect(() => {
-    setProgress(0)
-  }, [currentStoryIndex, currentContentIndex])
+    setProgress(0);
+  }, [currentStoryIndex, currentContentIndex]);
 
   const handleLike = () => {
     // Implement like functionality
-    console.log('Liked story:', currentStory.id)
-  }
+    console.log('Liked story:', currentStory.id);
+  };
 
   const handleShare = () => {
     // Implement share functionality
-    console.log('Shared story:', currentStory.id)
-  }
+    console.log('Shared story:', currentStory.id);
+  };
 
   const handleComment = () => {
     if (comment.trim()) {
-      console.log('Comment on story:', currentStory.id, comment)
-      setComment('')
-      setShowInput(false)
+      console.log('Comment on story:', currentStory.id, comment);
+      setComment('');
+      setShowInput(false);
     }
-  }
+  };
 
   const formatTimeAgo = (timestamp: string) => {
-    const now = new Date()
-    const time = new Date(timestamp)
-    const diff = now.getTime() - time.getTime()
-    const hours = Math.floor(diff / (1000 * 60 * 60))
-    return hours < 1 ? 'now' : `${hours}h ago`
-  }
+    const now = new Date();
+    const time = new Date(timestamp);
+    const diff = now.getTime() - time.getTime();
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    return hours < 1 ? 'now' : `${hours}h ago`;
+  };
 
-  if (!currentStory) return null
+  if (!currentStory) return null;
 
   return (
     <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
@@ -108,7 +124,12 @@ function StoryViewer({ stories, currentStoryIndex, currentContentIndex, onClose,
               <div
                 className="h-full bg-white transition-all duration-100"
                 style={{
-                  width: index < currentContentIndex ? '100%' : index === currentContentIndex ? `${progress}%` : '0%'
+                  width:
+                    index < currentContentIndex
+                      ? '100%'
+                      : index === currentContentIndex
+                        ? `${progress}%`
+                        : '0%',
                 }}
               />
             </div>
@@ -132,7 +153,12 @@ function StoryViewer({ stories, currentStoryIndex, currentContentIndex, onClose,
           <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
             <MoreHorizontal className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" onClick={onClose} className="text-white hover:bg-white/20">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onClose}
+            className="text-white hover:bg-white/20"
+          >
             <X className="h-4 w-4" />
           </Button>
         </div>
@@ -250,15 +276,15 @@ function StoryViewer({ stories, currentStoryIndex, currentContentIndex, onClose,
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
 export default function StoriesPage() {
-  const router = useRouter()
-  const [stories, setStories] = React.useState<Story[]>([])
-  const [currentStoryIndex, setCurrentStoryIndex] = React.useState(0)
-  const [currentContentIndex, setCurrentContentIndex] = React.useState(0)
-  const [showViewer, setShowViewer] = React.useState(false)
+  const router = useRouter();
+  const [stories, setStories] = React.useState<Story[]>([]);
+  const [currentStoryIndex, setCurrentStoryIndex] = React.useState(0);
+  const [currentContentIndex, setCurrentContentIndex] = React.useState(0);
+  const [showViewer, setShowViewer] = React.useState(false);
 
   React.useEffect(() => {
     // Mock stories data
@@ -273,13 +299,13 @@ export default function StoriesPage() {
           {
             type: 'image',
             url: '/api/placeholder/400/600',
-            duration: 5000
+            duration: 5000,
           },
           {
             type: 'text',
             text: 'Sweet & Juicy Alphonso Mangoes 🥭\n\nFresh from our farm to your table!',
-            duration: 4000
-          }
+            duration: 4000,
+          },
         ],
         createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
         expiresAt: new Date(Date.now() + 22 * 60 * 60 * 1000).toISOString(),
@@ -287,7 +313,7 @@ export default function StoriesPage() {
         likes: 23,
         comments: 8,
         isViewed: false,
-        isLiked: false
+        isLiked: false,
       },
       {
         id: '2',
@@ -299,13 +325,13 @@ export default function StoriesPage() {
           {
             type: 'image',
             url: '/api/placeholder/400/600',
-            duration: 5000
+            duration: 5000,
           },
           {
             type: 'text',
             text: '🎧 Premium Wireless Earbuds\n\n✨ Noise Cancellation\n🔋 24Hr Battery\n💧 IPX7 Waterproof',
-            duration: 6000
-          }
+            duration: 6000,
+          },
         ],
         createdAt: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
         expiresAt: new Date(Date.now() + 20 * 60 * 60 * 1000).toISOString(),
@@ -313,7 +339,7 @@ export default function StoriesPage() {
         likes: 12,
         comments: 3,
         isViewed: true,
-        isLiked: true
+        isLiked: true,
       },
       {
         id: '3',
@@ -325,13 +351,13 @@ export default function StoriesPage() {
           {
             type: 'image',
             url: '/api/placeholder/400/600',
-            duration: 5000
+            duration: 5000,
           },
           {
             type: 'text',
             text: '🌱 100% Organic Cotton\n♻️ Eco-Friendly Dyes\n🌍 Sustainable Fashion',
-            duration: 5000
-          }
+            duration: 5000,
+          },
         ],
         createdAt: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
         expiresAt: new Date(Date.now() + 18 * 60 * 60 * 1000).toISOString(),
@@ -339,50 +365,50 @@ export default function StoriesPage() {
         likes: 45,
         comments: 12,
         isViewed: false,
-        isLiked: false
-      }
-    ]
-    setStories(mockStories)
-  }, [])
+        isLiked: false,
+      },
+    ];
+    setStories(mockStories);
+  }, []);
 
   const handleStoryClick = (index: number) => {
-    setCurrentStoryIndex(index)
-    setCurrentContentIndex(0)
-    setShowViewer(true)
-  }
+    setCurrentStoryIndex(index);
+    setCurrentContentIndex(0);
+    setShowViewer(true);
+  };
 
   const handleNext = () => {
-    const currentStory = stories[currentStoryIndex]
+    const currentStory = stories[currentStoryIndex];
     if (currentContentIndex < currentStory.content.length - 1) {
-      setCurrentContentIndex(currentContentIndex + 1)
+      setCurrentContentIndex(currentContentIndex + 1);
     } else if (currentStoryIndex < stories.length - 1) {
-      setCurrentStoryIndex(currentStoryIndex + 1)
-      setCurrentContentIndex(0)
+      setCurrentStoryIndex(currentStoryIndex + 1);
+      setCurrentContentIndex(0);
     } else {
-      setShowViewer(false)
+      setShowViewer(false);
     }
-  }
+  };
 
   const handlePrevious = () => {
     if (currentContentIndex > 0) {
-      setCurrentContentIndex(currentContentIndex - 1)
+      setCurrentContentIndex(currentContentIndex - 1);
     } else if (currentStoryIndex > 0) {
-      setCurrentStoryIndex(currentStoryIndex - 1)
-      setCurrentContentIndex(stories[currentStoryIndex - 1].content.length - 1)
+      setCurrentStoryIndex(currentStoryIndex - 1);
+      setCurrentContentIndex(stories[currentStoryIndex - 1].content.length - 1);
     }
-  }
+  };
 
   const handleClose = () => {
-    setShowViewer(false)
-  }
+    setShowViewer(false);
+  };
 
   const formatTimeAgo = (timestamp: string) => {
-    const now = new Date()
-    const time = new Date(timestamp)
-    const diff = now.getTime() - time.getTime()
-    const hours = Math.floor(diff / (1000 * 60 * 60))
-    return hours < 1 ? 'now' : `${hours}h`
-  }
+    const now = new Date();
+    const time = new Date(timestamp);
+    const diff = now.getTime() - time.getTime();
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    return hours < 1 ? 'now' : `${hours}h`;
+  };
 
   return (
     <div className="container mx-auto p-6">
@@ -400,9 +426,11 @@ export default function StoriesPage() {
               onClick={() => handleStoryClick(index)}
               className="relative group cursor-pointer"
             >
-              <div className={`relative rounded-lg overflow-hidden aspect-[3/4] ${
-                story.isViewed ? 'ring-2 ring-gray-300' : 'ring-2 ring-primary'
-              }`}>
+              <div
+                className={`relative rounded-lg overflow-hidden aspect-[3/4] ${
+                  story.isViewed ? 'ring-2 ring-gray-300' : 'ring-2 ring-primary'
+                }`}
+              >
                 {story.content[0]?.type === 'image' && (
                   <img
                     src={story.content[0].url}
@@ -412,7 +440,9 @@ export default function StoriesPage() {
                 )}
                 {story.content[0]?.type === 'text' && (
                   <div className="w-full h-full flex items-center justify-center p-4 bg-gradient-to-br from-purple-600 to-blue-600">
-                    <p className="text-white text-sm font-medium text-center">{story.content[0].text}</p>
+                    <p className="text-white text-sm font-medium text-center">
+                      {story.content[0].text}
+                    </p>
                   </div>
                 )}
 
@@ -451,7 +481,9 @@ export default function StoriesPage() {
               <Eye className="h-8 w-8 text-muted-foreground" />
             </div>
             <h3 className="text-lg font-semibold mb-2">No stories yet</h3>
-            <p className="text-muted-foreground">Check back later for updates from your favorite vendors</p>
+            <p className="text-muted-foreground">
+              Check back later for updates from your favorite vendors
+            </p>
           </div>
         )}
       </div>
@@ -468,5 +500,5 @@ export default function StoriesPage() {
         />
       )}
     </div>
-  )
+  );
 }

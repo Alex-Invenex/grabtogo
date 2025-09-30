@@ -1,24 +1,21 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { auth } from '@/lib/auth'
-import { db } from '@/lib/db'
-import { cache } from '@/lib/redis'
+import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
+import { db } from '@/lib/db';
+import { cache } from '@/lib/redis';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ storyId: string }> }
 ) {
   try {
-    const session = await auth()
+    const session = await auth();
     if (!session?.user) {
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      )
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
 
-    const { storyId } = await params
+    const { storyId } = await params;
 
     // Verify story exists and is active
     const story = await db.vendorStory.findUnique({
@@ -29,29 +26,23 @@ export async function POST(
         isActive: true,
         expiresAt: true,
         viewCount: true,
-      }
-    })
+      },
+    });
 
     if (!story) {
-      return NextResponse.json(
-        { error: 'Story not found' },
-        { status: 404 }
-      )
+      return NextResponse.json({ error: 'Story not found' }, { status: 404 });
     }
 
     if (!story.isActive || story.expiresAt < new Date()) {
-      return NextResponse.json(
-        { error: 'Story is no longer available' },
-        { status: 410 }
-      )
+      return NextResponse.json({ error: 'Story is no longer available' }, { status: 410 });
     }
 
     // Don't count views from the story owner
     if (story.vendorId === session.user.id!) {
       return NextResponse.json({
         message: 'View not counted for story owner',
-        viewCount: story.viewCount
-      })
+        viewCount: story.viewCount,
+      });
     }
 
     // Check if user already viewed this story
@@ -59,16 +50,16 @@ export async function POST(
       where: {
         storyId_userId: {
           storyId,
-          userId: session.user.id!
-        }
-      }
-    })
+          userId: session.user.id!,
+        },
+      },
+    });
 
     if (existingView) {
       return NextResponse.json({
         message: 'Story already viewed',
-        viewCount: story.viewCount
-      })
+        viewCount: story.viewCount,
+      });
     }
 
     // Create view record and increment count
@@ -76,52 +67,48 @@ export async function POST(
       db.storyView.create({
         data: {
           storyId,
-          userId: session.user.id!
-        }
+          userId: session.user.id!,
+        },
       }),
       db.vendorStory.update({
         where: { id: storyId },
         data: {
-          viewCount: { increment: 1 }
-        }
-      })
-    ])
+          viewCount: { increment: 1 },
+        },
+      }),
+    ]);
 
     // Clear story cache
-    await cache.del(`story:${storyId}`)
-    await cache.flushPattern(`stories:*`)
+    await cache.del(`story:${storyId}`);
+    await cache.flushPattern(`stories:*`);
 
     // Update analytics (if we want to track story views in vendor analytics)
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
     await db.vendorAnalytics.upsert({
       where: {
         vendorId_date: {
           vendorId: story.vendorId,
-          date: today
-        }
+          date: today,
+        },
       },
       update: {
-        storyViews: { increment: 1 }
+        storyViews: { increment: 1 },
       },
       create: {
         vendorId: story.vendorId,
         date: today,
-        storyViews: 1
-      }
-    })
+        storyViews: 1,
+      },
+    });
 
     return NextResponse.json({
       message: 'Story view recorded',
-      viewCount: story.viewCount + 1
-    })
-
+      viewCount: story.viewCount + 1,
+    });
   } catch (error) {
-    console.error('Record story view error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    console.error('Record story view error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

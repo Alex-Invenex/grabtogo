@@ -1,45 +1,45 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { WifiOff, RefreshCw, Home, Package } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import * as React from 'react';
+import { WifiOff, RefreshCw, Home, Package } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 
 export default function OfflinePage() {
-  const router = useRouter()
-  const [isRetrying, setIsRetrying] = React.useState(false)
+  const router = useRouter();
+  const [isRetrying, setIsRetrying] = React.useState(false);
 
   const handleRetry = async () => {
-    setIsRetrying(true)
+    setIsRetrying(true);
 
     try {
       // Check if we're back online by trying to fetch a simple resource
       const response = await fetch('/api/health', {
         method: 'HEAD',
-        cache: 'no-cache'
-      })
+        cache: 'no-cache',
+      });
 
       if (response.ok) {
         // We're back online, reload the page
-        window.location.reload()
+        window.location.reload();
       } else {
-        throw new Error('Still offline')
+        throw new Error('Still offline');
       }
     } catch (error) {
       // Still offline
-      setTimeout(() => setIsRetrying(false), 1000)
+      setTimeout(() => setIsRetrying(false), 1000);
     }
-  }
+  };
 
   const goHome = () => {
-    router.push('/')
-  }
+    router.push('/');
+  };
 
   const goToProducts = () => {
-    router.push('/products')
-  }
+    router.push('/products');
+  };
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
@@ -53,17 +53,13 @@ export default function OfflinePage() {
             <div className="space-y-2">
               <h1 className="text-2xl font-bold">You're Offline</h1>
               <p className="text-muted-foreground">
-                It looks like you're not connected to the internet.
-                Check your connection and try again.
+                It looks like you're not connected to the internet. Check your connection and try
+                again.
               </p>
             </div>
 
             <div className="space-y-3">
-              <Button
-                onClick={handleRetry}
-                disabled={isRetrying}
-                className="w-full"
-              >
+              <Button onClick={handleRetry} disabled={isRetrying} className="w-full">
                 {isRetrying ? (
                   <>
                     <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
@@ -101,13 +97,13 @@ export default function OfflinePage() {
 
             <div className="pt-4 border-t">
               <p className="text-xs text-muted-foreground">
-                GrabtoGo works offline thanks to Progressive Web App technology.
-                Some features may be limited without an internet connection.
+                GrabtoGo works offline thanks to Progressive Web App technology. Some features may
+                be limited without an internet connection.
               </p>
             </div>
           </div>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

@@ -1,12 +1,13 @@
-import { HeroSection } from '@/components/home/hero-section'
-import { SearchSection } from '@/components/home/search-section'
-import { OffersCarousel } from '@/components/home/offers-carousel'
-import { VendorStories } from '@/components/home/vendor-stories'
-import { FlashDeals } from '@/components/home/flash-deals'
-import { CategoriesSection } from '@/components/home/categories-section'
-import { TrendingProducts } from '@/components/home/trending-products'
-import { WhyChooseUs } from '@/components/home/why-choose-us'
-import { SocialProof } from '@/components/home/social-proof'
+import { HeroSection } from '@/components/home/hero-section';
+import { SearchSection } from '@/components/home/search-section';
+import { VendorStories } from '@/components/home/vendor-stories';
+import { InstantOffers } from '@/components/home/instant-offers';
+import { OffersCarousel } from '@/components/home/offers-carousel';
+import { FlashDeals } from '@/components/home/flash-deals';
+import { CategoriesSection } from '@/components/home/categories-section';
+import { TrendingProducts } from '@/components/home/trending-products';
+import { WhyChooseUs } from '@/components/home/why-choose-us';
+import { SocialProof } from '@/components/home/social-proof';
 
 export default function HomePage() {
   return (
@@ -17,11 +18,14 @@ export default function HomePage() {
       {/* Search Bar for Quick Discovery */}
       <SearchSection />
 
+      {/* Vendor Stories (Instagram-style) - Moved to Top */}
+      <VendorStories />
+
+      {/* Instant Offers - NEW Section */}
+      <InstantOffers />
+
       {/* Promotional Offers Carousel */}
       <OffersCarousel />
-
-      {/* Vendor Stories (Instagram-style) */}
-      <VendorStories />
 
       {/* Flash Deals with Countdown Timer */}
       <FlashDeals />
@@ -38,5 +42,5 @@ export default function HomePage() {
       {/* Customer Testimonials and Reviews */}
       <SocialProof />
     </main>
-  )
+  );
 }

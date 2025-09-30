@@ -1,44 +1,54 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { MapPin, Navigation, Phone, Star, Clock, Loader2, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import * as React from 'react';
+import {
+  MapPin,
+  Navigation,
+  Phone,
+  Star,
+  Clock,
+  Loader2,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 interface Business {
-  id: string
-  name: string
-  description: string
-  category: string
-  location: string
-  city: string
-  latitude: number
-  longitude: number
-  rating: number
-  reviewCount: number
-  image: string
-  isOpen: boolean
-  openHours: string
-  phoneNumber: string
-  dealTitle?: string
-  dealDiscount?: number
-  verified?: boolean
-  featured?: boolean
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  location: string;
+  city: string;
+  latitude: number;
+  longitude: number;
+  rating: number;
+  reviewCount: number;
+  image: string;
+  isOpen: boolean;
+  openHours: string;
+  phoneNumber: string;
+  dealTitle?: string;
+  dealDiscount?: number;
+  verified?: boolean;
+  featured?: boolean;
 }
 
 interface BusinessMapProps {
-  businesses: Business[]
-  center?: { lat: number; lng: number }
-  zoom?: number
-  selectedBusinessId?: string
-  onBusinessSelect?: (business: Business) => void
-  height?: string
-  showControls?: boolean
-  className?: string
+  businesses: Business[];
+  center?: { lat: number; lng: number };
+  zoom?: number;
+  selectedBusinessId?: string;
+  onBusinessSelect?: (business: Business) => void;
+  height?: string;
+  showControls?: boolean;
+  className?: string;
 }
 
 // Mock map data for Kerala locations
-const keralaCenter = { lat: 9.9312, lng: 76.2673 } // Kottayam coordinates
+const keralaCenter = { lat: 9.9312, lng: 76.2673 }; // Kottayam coordinates
 
 export function BusinessMap({
   businesses,
@@ -48,60 +58,60 @@ export function BusinessMap({
   onBusinessSelect,
   height = '400px',
   showControls = true,
-  className = ''
+  className = '',
 }: BusinessMapProps) {
-  const [isLoading, setIsLoading] = React.useState(true)
-  const [selectedBusiness, setSelectedBusiness] = React.useState<Business | null>(null)
-  const [mapCenter, setMapCenter] = React.useState(center)
-  const [mapZoom, setMapZoom] = React.useState(zoom)
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [selectedBusiness, setSelectedBusiness] = React.useState<Business | null>(null);
+  const [mapCenter, setMapCenter] = React.useState(center);
+  const [mapZoom, setMapZoom] = React.useState(zoom);
 
   React.useEffect(() => {
     // Simulate map loading
     const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 1500)
+      setIsLoading(false);
+    }, 1500);
 
-    return () => clearTimeout(timer)
-  }, [])
+    return () => clearTimeout(timer);
+  }, []);
 
   React.useEffect(() => {
     if (selectedBusinessId) {
-      const business = businesses.find(b => b.id === selectedBusinessId)
+      const business = businesses.find((b) => b.id === selectedBusinessId);
       if (business) {
-        setSelectedBusiness(business)
-        setMapCenter({ lat: business.latitude, lng: business.longitude })
+        setSelectedBusiness(business);
+        setMapCenter({ lat: business.latitude, lng: business.longitude });
       }
     }
-  }, [selectedBusinessId, businesses])
+  }, [selectedBusinessId, businesses]);
 
   const handleBusinessClick = (business: Business) => {
-    setSelectedBusiness(business)
-    setMapCenter({ lat: business.latitude, lng: business.longitude })
-    onBusinessSelect?.(business)
-  }
+    setSelectedBusiness(business);
+    setMapCenter({ lat: business.latitude, lng: business.longitude });
+    onBusinessSelect?.(business);
+  };
 
   const handleCall = (phoneNumber: string) => {
-    window.open(`tel:${phoneNumber}`, '_self')
-  }
+    window.open(`tel:${phoneNumber}`, '_self');
+  };
 
   const handleDirections = (business: Business) => {
-    const encodedLocation = encodeURIComponent(`${business.name}, ${business.location}`)
-    window.open(`https://maps.google.com/?q=${encodedLocation}`, '_blank')
-  }
+    const encodedLocation = encodeURIComponent(`${business.name}, ${business.location}`);
+    window.open(`https://maps.google.com/?q=${encodedLocation}`, '_blank');
+  };
 
   const zoomIn = () => {
-    setMapZoom(prev => Math.min(prev + 1, 18))
-  }
+    setMapZoom((prev) => Math.min(prev + 1, 18));
+  };
 
   const zoomOut = () => {
-    setMapZoom(prev => Math.max(prev - 1, 8))
-  }
+    setMapZoom((prev) => Math.max(prev - 1, 8));
+  };
 
   const resetView = () => {
-    setMapCenter(center)
-    setMapZoom(zoom)
-    setSelectedBusiness(null)
-  }
+    setMapCenter(center);
+    setMapZoom(zoom);
+    setSelectedBusiness(null);
+  };
 
   if (isLoading) {
     return (
@@ -114,11 +124,14 @@ export function BusinessMap({
           <p className="text-gray-600">Loading map...</p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
-    <div className={`relative bg-gray-100 rounded-2xl overflow-hidden ${className}`} style={{ height }}>
+    <div
+      className={`relative bg-gray-100 rounded-2xl overflow-hidden ${className}`}
+      style={{ height }}
+    >
       {/* Mock Map Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-blue-50 to-indigo-50">
         {/* Grid pattern to simulate map */}
@@ -126,7 +139,7 @@ export function BusinessMap({
           <svg width="100%" height="100%">
             <defs>
               <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#000" strokeWidth="1"/>
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#000" strokeWidth="1" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#grid)" />
@@ -175,9 +188,9 @@ export function BusinessMap({
       <div className="absolute inset-0 z-20">
         {businesses.map((business, index) => {
           // Simulate marker positions based on index
-          const left = 20 + (index % 5) * 15 + Math.random() * 10
-          const top = 20 + Math.floor(index / 5) * 20 + Math.random() * 10
-          const isSelected = selectedBusiness?.id === business.id
+          const left = 20 + (index % 5) * 15 + Math.random() * 10;
+          const top = 20 + Math.floor(index / 5) * 20 + Math.random() * 10;
+          const isSelected = selectedBusiness?.id === business.id;
 
           return (
             <div
@@ -185,21 +198,25 @@ export function BusinessMap({
               className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
               style={{
                 left: `${Math.min(left, 85)}%`,
-                top: `${Math.min(top, 80)}%`
+                top: `${Math.min(top, 80)}%`,
               }}
               onClick={() => handleBusinessClick(business)}
             >
               {/* Marker */}
-              <div className={`relative transition-all duration-300 ${
-                isSelected ? 'scale-125' : 'hover:scale-110'
-              }`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center shadow-lg border-2 ${
-                  business.featured
-                    ? 'bg-primary border-white text-white'
-                    : business.verified
-                    ? 'bg-green-500 border-white text-white'
-                    : 'bg-white border-gray-300 text-primary'
-                }`}>
+              <div
+                className={`relative transition-all duration-300 ${
+                  isSelected ? 'scale-125' : 'hover:scale-110'
+                }`}
+              >
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center shadow-lg border-2 ${
+                    business.featured
+                      ? 'bg-primary border-white text-white'
+                      : business.verified
+                        ? 'bg-green-500 border-white text-white'
+                        : 'bg-white border-gray-300 text-primary'
+                  }`}
+                >
                   <MapPin className="w-4 h-4" />
                 </div>
 
@@ -209,9 +226,11 @@ export function BusinessMap({
                 )}
 
                 {/* Business preview on hover */}
-                <div className={`absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 transition-all duration-300 ${
-                  isSelected ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
-                }`}>
+                <div
+                  className={`absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 transition-all duration-300 ${
+                    isSelected ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
+                  }`}
+                >
                   <div className="bg-white rounded-lg shadow-xl border p-3 w-64">
                     <div className="flex gap-3">
                       <img
@@ -255,8 +274,8 @@ export function BusinessMap({
                         size="sm"
                         variant="outline"
                         onClick={(e) => {
-                          e.stopPropagation()
-                          handleCall(business.phoneNumber)
+                          e.stopPropagation();
+                          handleCall(business.phoneNumber);
                         }}
                         className="flex-1 text-xs py-1 h-auto"
                       >
@@ -266,8 +285,8 @@ export function BusinessMap({
                       <Button
                         size="sm"
                         onClick={(e) => {
-                          e.stopPropagation()
-                          handleDirections(business)
+                          e.stopPropagation();
+                          handleDirections(business);
                         }}
                         className="flex-1 text-xs py-1 h-auto btn-gradient"
                       >
@@ -283,7 +302,7 @@ export function BusinessMap({
                 </div>
               </div>
             </div>
-          )
+          );
         })}
       </div>
 
@@ -308,15 +327,11 @@ export function BusinessMap({
 
       {/* Search within map area button */}
       <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30">
-        <Button
-          variant="outline"
-          size="sm"
-          className="bg-white/90 backdrop-blur-sm hover:bg-white"
-        >
+        <Button variant="outline" size="sm" className="bg-white/90 backdrop-blur-sm hover:bg-white">
           <MapPin className="w-4 h-4 mr-2" />
           Search this area
         </Button>
       </div>
     </div>
-  )
+  );
 }

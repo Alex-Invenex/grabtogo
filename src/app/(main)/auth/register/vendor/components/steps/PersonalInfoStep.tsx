@@ -1,35 +1,37 @@
-'use client'
+'use client';
 
-import { useFormContext } from 'react-hook-form'
-import { Eye, EyeOff, User, Mail, Phone, Lock } from 'lucide-react'
-import { useState } from 'react'
-import { Input } from '@/components/ui/input'
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form'
+import { useFormContext } from 'react-hook-form';
+import { Eye, EyeOff, User, Mail, Phone, Lock } from 'lucide-react';
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 
 export default function PersonalInfoStep() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const { control, watch } = useFormContext()
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { control, watch } = useFormContext();
 
-  const password = watch('password')
+  const password = watch('password');
 
   const calculatePasswordStrength = (password: string): number => {
-    let strength = 0
-    if (password.length >= 8) strength += 25
-    if (/[A-Z]/.test(password)) strength += 25
-    if (/[a-z]/.test(password)) strength += 25
-    if (/[0-9]/.test(password)) strength += 15
-    if (/[^A-Za-z0-9]/.test(password)) strength += 10
-    return strength
-  }
+    let strength = 0;
+    if (password.length >= 8) strength += 25;
+    if (/[A-Z]/.test(password)) strength += 25;
+    if (/[a-z]/.test(password)) strength += 25;
+    if (/[0-9]/.test(password)) strength += 15;
+    if (/[^A-Za-z0-9]/.test(password)) strength += 10;
+    return strength;
+  };
 
-  const passwordStrength = password ? calculatePasswordStrength(password) : 0
+  const passwordStrength = password ? calculatePasswordStrength(password) : 0;
 
   return (
     <div className="space-y-8">
       <div className="text-center">
         <h2 className="text-3xl font-bold text-gray-900 mb-2">Personal Information</h2>
-        <p className="text-gray-600 text-lg">Let&apos;s start with your basic details for your Kerala business</p>
+        <p className="text-gray-600 text-lg">
+          Let&apos;s start with your basic details for your Kerala business
+        </p>
         <div className="mt-4 w-24 h-1 bg-gradient-to-r from-[#db4a2b] to-[#c43e29] rounded-full mx-auto"></div>
       </div>
 
@@ -72,7 +74,9 @@ export default function PersonalInfoStep() {
                   className="h-14 text-lg border-2 border-gray-200 focus:border-[#db4a2b] focus:ring-2 focus:ring-[#db4a2b]/20 transition-all duration-200 hover:border-gray-300"
                 />
               </FormControl>
-              <p className="text-sm text-gray-500 mt-1">This will be your login email for the vendor dashboard</p>
+              <p className="text-sm text-gray-500 mt-1">
+                This will be your login email for the vendor dashboard
+              </p>
               <FormMessage />
             </FormItem>
           )}
@@ -95,7 +99,9 @@ export default function PersonalInfoStep() {
                   className="h-14 text-lg border-2 border-gray-200 focus:border-[#db4a2b] focus:ring-2 focus:ring-[#db4a2b]/20 transition-all duration-200 hover:border-gray-300"
                 />
               </FormControl>
-              <p className="text-sm text-gray-500 mt-1">Kerala customers will contact you on this number</p>
+              <p className="text-sm text-gray-500 mt-1">
+                Kerala customers will contact you on this number
+              </p>
               <FormMessage />
             </FormItem>
           )}
@@ -140,27 +146,27 @@ export default function PersonalInfoStep() {
                           passwordStrength < 30
                             ? 'bg-red-500'
                             : passwordStrength < 70
-                            ? 'bg-yellow-500'
-                            : 'bg-green-500'
+                              ? 'bg-yellow-500'
+                              : 'bg-green-500'
                         }`}
                         style={{ width: `${passwordStrength}%` }}
                       />
                     </div>
-                    <span className={`text-sm font-medium ${
-                      passwordStrength < 30
-                        ? 'text-red-600'
-                        : passwordStrength < 70
-                        ? 'text-yellow-600'
-                        : 'text-green-600'
-                    }`}>
-                      {passwordStrength < 30
-                        ? 'Weak'
-                        : passwordStrength < 70
-                        ? 'Medium'
-                        : 'Strong'}
+                    <span
+                      className={`text-sm font-medium ${
+                        passwordStrength < 30
+                          ? 'text-red-600'
+                          : passwordStrength < 70
+                            ? 'text-yellow-600'
+                            : 'text-green-600'
+                      }`}
+                    >
+                      {passwordStrength < 30 ? 'Weak' : passwordStrength < 70 ? 'Medium' : 'Strong'}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Use 8+ characters with uppercase, lowercase, numbers & symbols</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Use 8+ characters with uppercase, lowercase, numbers & symbols
+                  </p>
                 </div>
               )}
               <FormMessage />
@@ -204,5 +210,5 @@ export default function PersonalInfoStep() {
         />
       </div>
     </div>
-  )
+  );
 }

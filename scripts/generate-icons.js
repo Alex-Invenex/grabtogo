@@ -9,7 +9,9 @@ const fs = require('fs');
 const path = require('path');
 
 // Simple SVG icon template for GrabtoGo (food delivery theme)
-const createSVGIcon = (size) => `<svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
+const createSVGIcon = (
+  size
+) => `<svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
@@ -40,12 +42,9 @@ if (!fs.existsSync(iconsDir)) {
 
 // Generate SVG icons
 const sizes = [16, 32, 144, 192, 512];
-sizes.forEach(size => {
+sizes.forEach((size) => {
   const svgContent = createSVGIcon(size);
-  fs.writeFileSync(
-    path.join(iconsDir, `icon-${size}x${size}.svg`),
-    svgContent
-  );
+  fs.writeFileSync(path.join(iconsDir, `icon-${size}x${size}.svg`), svgContent);
   console.log(`✓ Generated icon-${size}x${size}.svg`);
 });
 

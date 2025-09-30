@@ -1,16 +1,14 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import Link from 'next/link'
-import { useRouter, usePathname } from 'next/navigation'
-import { signOut } from 'next-auth/react'
+import * as React from 'react';
+import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import {
   ShoppingBag,
-  Search,
   User,
   Menu,
   X,
-  MapPin,
   ChevronDown,
   Home,
   Grid3x3,
@@ -18,12 +16,12 @@ import {
   Package,
   Settings,
   LogOut,
-  Store
-} from 'lucide-react'
+  Store,
+} from 'lucide-react';
 
-import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,48 +29,37 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { SearchBar } from '@/components/ui/search-bar'
-import { useAuth } from '@/components/auth/protected-route'
-import { NotificationBell } from '@/components/notifications/notification-center'
+} from '@/components/ui/dropdown-menu';
+import { SearchBar } from '@/components/ui/search-bar';
+import { useAuth } from '@/components/auth/protected-route';
+import { NotificationBell } from '@/components/notifications/notification-center';
 
 export function Header() {
-  const router = useRouter()
-  const pathname = usePathname()
-  const { user, isAuthenticated, role } = useAuth()
-  const [isScrolled, setIsScrolled] = React.useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
-  const [isSearchOpen, setIsSearchOpen] = React.useState(false)
-
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  const router = useRouter();
+  const pathname = usePathname();
+  const { user, isAuthenticated, role } = useAuth();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
 
   const handleSearch = (query: string) => {
     if (query.trim()) {
-      router.push(`/search?q=${encodeURIComponent(query)}`)
-      setIsSearchOpen(false)
+      router.push(`/search?q=${encodeURIComponent(query)}`);
+      setIsSearchOpen(false);
     }
-  }
+  };
 
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: '/' })
-  }
+    await signOut({ callbackUrl: '/' });
+  };
 
   const getInitials = (name: string) => {
     return name
       .split(' ')
-      .map(word => word[0])
+      .map((word) => word[0])
       .join('')
       .toUpperCase()
-      .slice(0, 2)
-  }
-
-  const isHomePage = pathname === '/'
+      .slice(0, 2);
+  };
 
   return (
     <header className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 shadow-md">
@@ -81,40 +68,38 @@ export function Header() {
           {/* Left Section */}
           <div className="flex items-center space-x-10">
             {/* Logo */}
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="relative w-12 h-12 bg-primary rounded-2xl group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
-                <div className="relative flex items-center justify-center h-full">
-                  <span className="text-white font-extrabold text-2xl">G</span>
-                </div>
+            <Link href="/" className="flex items-center space-x-2.5 group">
+              <div className="relative w-10 h-10 group-hover:scale-105 transition-all duration-300">
+                <img src="/logo.svg" alt="GrabtoGo Logo" className="w-full h-full object-contain" />
               </div>
-              <span className="hidden md:inline-block font-extrabold text-2xl text-gray-900">
+              <span className="hidden md:inline-block font-display font-bold text-xl text-gray-900">
                 GrabtoGo
               </span>
             </Link>
 
             {/* Desktop Navigation - Simplified */}
-            <nav className="hidden lg:flex items-center space-x-8" aria-label="Main navigation">
+            <nav className="hidden lg:flex items-center space-x-6" aria-label="Main navigation">
               <Link
                 href="/"
-                className="font-bold text-base text-gray-700 hover:text-primary transition-all duration-300"
+                className="font-medium text-sm text-gray-700 hover:text-primary transition-colors duration-200"
               >
                 Home
               </Link>
               <Link
                 href="/profile"
-                className="font-bold text-base text-gray-700 hover:text-primary transition-all duration-300"
+                className="font-medium text-sm text-gray-700 hover:text-primary transition-colors duration-200"
               >
                 My Profile
               </Link>
               <Link
                 href="/listings"
-                className="font-bold text-base text-gray-700 hover:text-primary transition-all duration-300"
+                className="font-medium text-sm text-gray-700 hover:text-primary transition-colors duration-200"
               >
                 Listings
               </Link>
               <Link
                 href="/shop"
-                className="font-bold text-base text-gray-700 hover:text-primary transition-all duration-300"
+                className="font-medium text-sm text-gray-700 hover:text-primary transition-colors duration-200"
               >
                 Shop
               </Link>
@@ -153,7 +138,10 @@ export function Header() {
                   >
                     <Link href="/cart">
                       <ShoppingBag className="h-5 w-5" />
-                      <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-[10px] bg-primary text-white border-0" aria-label="0 items in cart">
+                      <Badge
+                        className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-[10px] bg-primary text-white border-0"
+                        aria-label="0 items in cart"
+                      >
                         0
                       </Badge>
                       <span className="sr-only">Shopping cart with 0 items</span>
@@ -178,7 +166,10 @@ export function Header() {
                           {user?.name ? getInitials(user.name) : 'U'}
                         </AvatarFallback>
                       </Avatar>
-                      <ChevronDown className="h-4 w-4 hidden md:block text-gray-700" aria-hidden="true" />
+                      <ChevronDown
+                        className="h-4 w-4 hidden md:block text-gray-700"
+                        aria-hidden="true"
+                      />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56 mt-2" align="end">
@@ -252,11 +243,11 @@ export function Header() {
                 <Button
                   variant="outline"
                   size="default"
-                  className="hidden md:flex border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold text-base px-6 py-6 rounded-2xl transition-all duration-300"
+                  className="hidden md:flex border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-all duration-200"
                   asChild
                 >
                   <Link href="/auth/register/vendor">
-                    <Store className="w-5 h-5 mr-2" />
+                    <Store className="w-4 h-4 mr-2" />
                     Become a Vendor
                   </Link>
                 </Button>
@@ -339,13 +330,18 @@ export function Header() {
                     </Link>
                   </div>
                   <Link href="/auth/register" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button className="w-full bg-primary text-white hover:bg-primary/90 font-bold text-base py-6 rounded-2xl shadow-lg">Get Started</Button>
+                    <Button className="w-full bg-primary text-white hover:bg-primary/90 font-bold text-base py-6 rounded-2xl shadow-lg">
+                      Get Started
+                    </Button>
                   </Link>
                 </>
               )}
               {(!isAuthenticated || role === 'CUSTOMER') && (
                 <Link href="/auth/register/vendor" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button variant="outline" className="w-full border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold text-base py-6 rounded-2xl">
+                  <Button
+                    variant="outline"
+                    className="w-full border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold text-base py-6 rounded-2xl"
+                  >
                     <Store className="w-5 h-5 mr-2" />
                     Become a Vendor
                   </Button>
@@ -356,5 +352,5 @@ export function Header() {
         )}
       </div>
     </header>
-  )
+  );
 }

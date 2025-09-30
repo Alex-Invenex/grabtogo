@@ -1,16 +1,16 @@
-'use client'
+'use client';
 
-import React from 'react'
-import Link from 'next/link'
-import { ChevronRight, Home } from 'lucide-react'
+import React from 'react';
+import Link from 'next/link';
+import { ChevronRight, Home } from 'lucide-react';
 
 interface BreadcrumbItem {
-  title: string
-  href?: string
+  title: string;
+  href?: string;
 }
 
 interface AdminBreadcrumbProps {
-  items: BreadcrumbItem[]
+  items: BreadcrumbItem[];
 }
 
 export default function AdminBreadcrumb({ items }: AdminBreadcrumbProps) {
@@ -23,14 +23,11 @@ export default function AdminBreadcrumb({ items }: AdminBreadcrumbProps) {
         <Home className="w-4 h-4" />
       </Link>
 
-      {items.map((item, _index) => (
+      {items.map((item, index) => (
         <React.Fragment key={index}>
           <ChevronRight className="w-4 h-4 text-gray-400" />
           {item.href && index < items.length - 1 ? (
-            <Link
-              href={item.href}
-              className="hover:text-gray-900 transition-colors"
-            >
+            <Link href={item.href} className="hover:text-gray-900 transition-colors">
               {item.title}
             </Link>
           ) : (
@@ -41,5 +38,5 @@ export default function AdminBreadcrumb({ items }: AdminBreadcrumbProps) {
         </React.Fragment>
       ))}
     </nav>
-  )
+  );
 }

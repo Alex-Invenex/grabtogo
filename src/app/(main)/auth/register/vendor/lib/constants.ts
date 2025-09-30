@@ -18,7 +18,7 @@ export const BUSINESS_CATEGORIES = [
   'Books & Stationery',
   'Beauty & Personal Care',
   'Other',
-]
+];
 
 // Kerala Cities and Districts
 export const KERALA_CITIES = [
@@ -91,10 +91,10 @@ export const KERALA_CITIES = [
   'Thiruvalla',
   'Ranni',
   'Kozhencherry',
-]
+];
 
 // Keep for backward compatibility if needed
-export const INDIAN_STATES = ['Kerala']
+export const INDIAN_STATES = ['Kerala'];
 
 export const PACKAGES = {
   basic: {
@@ -167,17 +167,17 @@ export const PACKAGES = {
       { included: true, text: 'Future Development Access' },
     ],
   },
-}
+};
 
 export const ADD_ONS = [
   { id: 'whatsapp_blast', name: 'WhatsApp/Email Blast', price: 49 },
   { id: 'social_media_ad', name: 'Custom Social Media Ads', price: 99, note: '1 per month' },
   { id: 'status_bar', name: 'Additional Status Bar', price: 9 },
   { id: 'festival_campaign', name: 'Festival Campaign', price: 199 },
-]
+];
 
-export const REGISTRATION_FEE = 299
-export const GST_RATE = 0.18
+export const REGISTRATION_FEE = 299;
+export const GST_RATE = 0.18;
 
 export const STEPS = [
   { id: 1, name: 'Personal Info', icon: 'User' },
@@ -190,4 +190,4 @@ export const STEPS = [
   { id: 8, name: 'Select Package', icon: 'Package' },
   { id: 9, name: 'Review', icon: 'CheckCircle' },
   { id: 10, name: 'Payment', icon: 'CreditCard' },
-]
+];

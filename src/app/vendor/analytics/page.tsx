@@ -1,78 +1,104 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { BarChart3, TrendingUp, Users, Package, Eye, Heart, MessageSquare, ShoppingCart, IndianRupee, Calendar, Download, Filter } from 'lucide-react'
+import * as React from 'react';
+import {
+  BarChart3,
+  TrendingUp,
+  Users,
+  Package,
+  Eye,
+  Heart,
+  MessageSquare,
+  ShoppingCart,
+  IndianRupee,
+  Calendar,
+  Download,
+  Filter,
+} from 'lucide-react';
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { useAuth } from '@/components/auth/protected-route'
-import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { useAuth } from '@/components/auth/protected-route';
+import { useRouter } from 'next/navigation';
 
 interface AnalyticsData {
   overview: {
-    totalRevenue: number
-    totalOrders: number
-    totalViews: number
-    totalCustomers: number
-    revenueGrowth: number
-    ordersGrowth: number
-    viewsGrowth: number
-    customersGrowth: number
-  }
+    totalRevenue: number;
+    totalOrders: number;
+    totalViews: number;
+    totalCustomers: number;
+    revenueGrowth: number;
+    ordersGrowth: number;
+    viewsGrowth: number;
+    customersGrowth: number;
+  };
   products: {
-    id: string
-    name: string
-    views: number
-    likes: number
-    orders: number
-    revenue: number
-    conversionRate: number
-    category: string
-  }[]
+    id: string;
+    name: string;
+    views: number;
+    likes: number;
+    orders: number;
+    revenue: number;
+    conversionRate: number;
+    category: string;
+  }[];
   stories: {
-    id: string
-    title: string
-    views: number
-    likes: number
-    comments: number
-    shares: number
-    createdAt: string
-  }[]
+    id: string;
+    title: string;
+    views: number;
+    likes: number;
+    comments: number;
+    shares: number;
+    createdAt: string;
+  }[];
   customers: {
     demographics: {
-      ageGroups: { group: string; percentage: number }[]
-      locations: { city: string; percentage: number }[]
-      devices: { device: string; percentage: number }[]
-    }
+      ageGroups: { group: string; percentage: number }[];
+      locations: { city: string; percentage: number }[];
+      devices: { device: string; percentage: number }[];
+    };
     behavior: {
-      avgOrderValue: number
-      repeatCustomers: number
-      topBuyingTimes: { hour: number; orders: number }[]
-    }
-  }
+      avgOrderValue: number;
+      repeatCustomers: number;
+      topBuyingTimes: { hour: number; orders: number }[];
+    };
+  };
   revenue: {
-    daily: { date: string; amount: number }[]
-    monthly: { month: string; amount: number }[]
-    byCategory: { category: string; amount: number; percentage: number }[]
-  }
+    daily: { date: string; amount: number }[];
+    monthly: { month: string; amount: number }[];
+    byCategory: { category: string; amount: number; percentage: number }[];
+  };
 }
 
 export default function VendorAnalyticsPage() {
-  const { user, role } = useAuth()
-  const router = useRouter()
-  const [timeRange, setTimeRange] = React.useState('7d')
-  const [selectedTab, setSelectedTab] = React.useState('overview')
+  const { user, role } = useAuth();
+  const router = useRouter();
+  const [timeRange, setTimeRange] = React.useState('7d');
+  const [selectedTab, setSelectedTab] = React.useState('overview');
 
   React.useEffect(() => {
     if (role !== 'VENDOR') {
-      router.push('/')
+      router.push('/');
     }
-  }, [role, router])
+  }, [role, router]);
 
   // Mock analytics data
   const analyticsData: AnalyticsData = {
@@ -84,7 +110,7 @@ export default function VendorAnalyticsPage() {
       revenueGrowth: 12.5,
       ordersGrowth: 8.3,
       viewsGrowth: 15.7,
-      customersGrowth: 6.9
+      customersGrowth: 6.9,
     },
     products: [
       {
@@ -95,7 +121,7 @@ export default function VendorAnalyticsPage() {
         orders: 45,
         revenue: 20250,
         conversionRate: 3.6,
-        category: 'Fruits'
+        category: 'Fruits',
       },
       {
         id: '2',
@@ -105,7 +131,7 @@ export default function VendorAnalyticsPage() {
         orders: 23,
         revenue: 68970,
         conversionRate: 2.6,
-        category: 'Electronics'
+        category: 'Electronics',
       },
       {
         id: '3',
@@ -115,8 +141,8 @@ export default function VendorAnalyticsPage() {
         orders: 18,
         revenue: 14382,
         conversionRate: 2.7,
-        category: 'Clothing'
-      }
+        category: 'Clothing',
+      },
     ],
     stories: [
       {
@@ -126,7 +152,7 @@ export default function VendorAnalyticsPage() {
         likes: 32,
         comments: 12,
         shares: 8,
-        createdAt: '2024-01-28T10:30:00Z'
+        createdAt: '2024-01-28T10:30:00Z',
       },
       {
         id: '2',
@@ -135,8 +161,8 @@ export default function VendorAnalyticsPage() {
         likes: 28,
         comments: 9,
         shares: 5,
-        createdAt: '2024-01-27T15:45:00Z'
-      }
+        createdAt: '2024-01-27T15:45:00Z',
+      },
     ],
     customers: {
       demographics: {
@@ -144,19 +170,19 @@ export default function VendorAnalyticsPage() {
           { group: '18-24', percentage: 25 },
           { group: '25-34', percentage: 40 },
           { group: '35-44', percentage: 20 },
-          { group: '45+', percentage: 15 }
+          { group: '45+', percentage: 15 },
         ],
         locations: [
           { city: 'Mumbai', percentage: 35 },
           { city: 'Delhi', percentage: 28 },
           { city: 'Bangalore', percentage: 22 },
-          { city: 'Others', percentage: 15 }
+          { city: 'Others', percentage: 15 },
         ],
         devices: [
           { device: 'Mobile', percentage: 65 },
           { device: 'Desktop', percentage: 25 },
-          { device: 'Tablet', percentage: 10 }
-        ]
+          { device: 'Tablet', percentage: 10 },
+        ],
       },
       behavior: {
         avgOrderValue: 1847,
@@ -165,9 +191,9 @@ export default function VendorAnalyticsPage() {
           { hour: 10, orders: 25 },
           { hour: 14, orders: 18 },
           { hour: 19, orders: 22 },
-          { hour: 21, orders: 15 }
-        ]
-      }
+          { hour: 21, orders: 15 },
+        ],
+      },
     },
     revenue: {
       daily: [
@@ -177,41 +203,41 @@ export default function VendorAnalyticsPage() {
         { date: '2024-01-25', amount: 4100 },
         { date: '2024-01-26', amount: 2900 },
         { date: '2024-01-27', amount: 3600 },
-        { date: '2024-01-28', amount: 2800 }
+        { date: '2024-01-28', amount: 2800 },
       ],
       monthly: [
         { month: 'Oct', amount: 25000 },
         { month: 'Nov', amount: 32000 },
         { month: 'Dec', amount: 38000 },
-        { month: 'Jan', amount: 45680 }
+        { month: 'Jan', amount: 45680 },
       ],
       byCategory: [
         { category: 'Electronics', amount: 25000, percentage: 55 },
         { category: 'Fruits', amount: 15000, percentage: 33 },
-        { category: 'Clothing', amount: 5680, percentage: 12 }
-      ]
-    }
-  }
+        { category: 'Clothing', amount: 5680, percentage: 12 },
+      ],
+    },
+  };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: 'INR',
-      maximumFractionDigits: 0
-    }).format(amount)
-  }
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
 
   const formatPercentage = (value: number) => {
-    const sign = value >= 0 ? '+' : ''
-    return `${sign}${value.toFixed(1)}%`
-  }
+    const sign = value >= 0 ? '+' : '';
+    return `${sign}${value.toFixed(1)}%`;
+  };
 
   const getGrowthColor = (growth: number) => {
-    return growth >= 0 ? 'text-green-600' : 'text-red-600'
-  }
+    return growth >= 0 ? 'text-green-600' : 'text-red-600';
+  };
 
   if (role !== 'VENDOR') {
-    return null
+    return null;
   }
 
   return (
@@ -258,7 +284,9 @@ export default function VendorAnalyticsPage() {
                 <IndianRupee className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{formatCurrency(analyticsData.overview.totalRevenue)}</div>
+                <div className="text-2xl font-bold">
+                  {formatCurrency(analyticsData.overview.totalRevenue)}
+                </div>
                 <p className={`text-xs ${getGrowthColor(analyticsData.overview.revenueGrowth)}`}>
                   {formatPercentage(analyticsData.overview.revenueGrowth)} from last period
                 </p>
@@ -284,7 +312,9 @@ export default function VendorAnalyticsPage() {
                 <Eye className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{analyticsData.overview.totalViews.toLocaleString()}</div>
+                <div className="text-2xl font-bold">
+                  {analyticsData.overview.totalViews.toLocaleString()}
+                </div>
                 <p className={`text-xs ${getGrowthColor(analyticsData.overview.viewsGrowth)}`}>
                   {formatPercentage(analyticsData.overview.viewsGrowth)} from last period
                 </p>
@@ -316,7 +346,9 @@ export default function VendorAnalyticsPage() {
                 <div className="text-center">
                   <BarChart3 className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
                   <p className="text-muted-foreground">Revenue chart would be displayed here</p>
-                  <p className="text-sm text-muted-foreground mt-1">Integration with charting library needed</p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Integration with charting library needed
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -347,7 +379,9 @@ export default function VendorAnalyticsPage() {
                       <TableCell>
                         <div>
                           <p className="font-medium">{product.name}</p>
-                          <Badge variant="secondary" className="text-xs">{product.category}</Badge>
+                          <Badge variant="secondary" className="text-xs">
+                            {product.category}
+                          </Badge>
                         </div>
                       </TableCell>
                       <TableCell>{product.views.toLocaleString()}</TableCell>
@@ -377,7 +411,10 @@ export default function VendorAnalyticsPage() {
             <CardContent>
               <div className="space-y-4">
                 {analyticsData.stories.map((story) => (
-                  <div key={story.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div
+                    key={story.id}
+                    className="flex items-center justify-between p-4 border rounded-lg"
+                  >
                     <div className="flex-1">
                       <h4 className="font-medium">{story.title}</h4>
                       <p className="text-sm text-muted-foreground">
@@ -485,11 +522,15 @@ export default function VendorAnalyticsPage() {
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-sm">Average Order Value</span>
-                  <span className="font-medium">{formatCurrency(analyticsData.customers.behavior.avgOrderValue)}</span>
+                  <span className="font-medium">
+                    {formatCurrency(analyticsData.customers.behavior.avgOrderValue)}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm">Repeat Customers</span>
-                  <span className="font-medium">{analyticsData.customers.behavior.repeatCustomers}%</span>
+                  <span className="font-medium">
+                    {analyticsData.customers.behavior.repeatCustomers}%
+                  </span>
                 </div>
               </CardContent>
             </Card>
@@ -536,5 +577,5 @@ export default function VendorAnalyticsPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

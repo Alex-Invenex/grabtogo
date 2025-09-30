@@ -1,23 +1,40 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { ArrowLeft, CreditCard, Wallet, Building, MapPin, Phone, Mail, Shield, CheckCircle } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
+import * as React from 'react';
+import {
+  ArrowLeft,
+  CreditCard,
+  Wallet,
+  Building,
+  MapPin,
+  Phone,
+  Mail,
+  Shield,
+  CheckCircle,
+} from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { Separator } from '@/components/ui/separator'
-import { Badge } from '@/components/ui/badge'
-import { Textarea } from '@/components/ui/textarea'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { useAuth } from '@/components/auth/protected-route'
-import { useToast } from '@/hooks/use-toast'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardTitle, CardHeader } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { useAuth } from '@/components/auth/protected-route';
+import { useToast } from '@/hooks/use-toast';
 
 const checkoutSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -29,33 +46,33 @@ const checkoutSchema = z.object({
   state: z.string().min(2, 'State must be at least 2 characters'),
   pincode: z.string().regex(/^\d{6}$/, 'Pincode must be 6 digits'),
   paymentMethod: z.enum(['razorpay', 'upi', 'netbanking', 'cod'], {
-    message: 'Please select a payment method'
+    message: 'Please select a payment method',
   }),
-  specialInstructions: z.string().optional()
-})
+  specialInstructions: z.string().optional(),
+});
 
-type CheckoutFormData = z.infer<typeof checkoutSchema>
+type CheckoutFormData = z.infer<typeof checkoutSchema>;
 
 interface OrderItem {
-  id: string
-  name: string
-  price: number
-  quantity: number
-  vendor: string
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  vendor: string;
 }
 
 declare global {
   interface Window {
-    Razorpay: any
+    Razorpay: any;
   }
 }
 
 export default function CheckoutPage() {
-  const { user, isAuthenticated } = useAuth()
-  const router = useRouter()
-  const { toast } = useToast()
-  const [isProcessing, setIsProcessing] = React.useState(false)
-  const [razorpayLoaded, setRazorpayLoaded] = React.useState(false)
+  const { user, isAuthenticated } = useAuth();
+  const router = useRouter();
+  const { toast } = useToast();
+  const [isProcessing, setIsProcessing] = React.useState(false);
+  const [razorpayLoaded, setRazorpayLoaded] = React.useState(false);
 
   const form = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
@@ -63,26 +80,26 @@ export default function CheckoutPage() {
       email: user?.email || '',
       firstName: user?.name?.split(' ')[0] || '',
       lastName: user?.name?.split(' ')[1] || '',
-      paymentMethod: 'razorpay'
-    }
-  })
+      paymentMethod: 'razorpay',
+    },
+  });
 
   React.useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/auth/login')
-      return
+      router.push('/auth/login');
+      return;
     }
 
     // Load Razorpay script
-    const script = document.createElement('script')
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js'
-    script.onload = () => setRazorpayLoaded(true)
-    document.body.appendChild(script)
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload = () => setRazorpayLoaded(true);
+    document.body.appendChild(script);
 
     return () => {
-      document.body.removeChild(script)
-    }
-  }, [isAuthenticated, router])
+      document.body.removeChild(script);
+    };
+  }, [isAuthenticated, router]);
 
   // Mock order data
   const orderItems: OrderItem[] = [
@@ -91,58 +108,58 @@ export default function CheckoutPage() {
       name: 'Fresh Organic Mangoes (2x)',
       price: 900,
       quantity: 2,
-      vendor: 'Fresh Fruits Co'
+      vendor: 'Fresh Fruits Co',
     },
     {
       id: '2',
       name: 'Wireless Bluetooth Earbuds (1x)',
       price: 2999,
       quantity: 1,
-      vendor: 'TechZone India'
+      vendor: 'TechZone India',
     },
     {
       id: '3',
       name: 'Organic Cotton T-Shirt (1x)',
       price: 799,
       quantity: 1,
-      vendor: 'EcoWear'
-    }
-  ]
+      vendor: 'EcoWear',
+    },
+  ];
 
-  const subtotal = 4698
-  const deliveryFee = 0
-  const promoDiscount = 470
-  const total = subtotal - promoDiscount + deliveryFee
+  const subtotal = 4698;
+  const deliveryFee = 0;
+  const promoDiscount = 470;
+  const total = subtotal - promoDiscount + deliveryFee;
 
   const onSubmit = async (data: CheckoutFormData) => {
-    setIsProcessing(true)
+    setIsProcessing(true);
 
     try {
       if (data.paymentMethod === 'cod') {
         // Handle Cash on Delivery
-        await simulateOrderCreation(data, 'cod')
+        await simulateOrderCreation(data, 'cod');
         toast({
           title: 'Order Placed Successfully!',
-          description: 'Your order will be delivered within 2-3 business days.'
-        })
-        router.push('/orders')
+          description: 'Your order will be delivered within 2-3 business days.',
+        });
+        router.push('/orders');
       } else if (data.paymentMethod === 'razorpay' && razorpayLoaded) {
         // Handle Razorpay payment
-        await handleRazorpayPayment(data)
+        await handleRazorpayPayment(data);
       } else {
         // Handle other payment methods
-        await handleOtherPayments(data)
+        await handleOtherPayments(data);
       }
     } catch (error) {
       toast({
         title: 'Payment Failed',
         description: 'There was an error processing your payment. Please try again.',
-        variant: 'destructive'
-      })
+        variant: 'destructive',
+      });
     } finally {
-      setIsProcessing(false)
+      setIsProcessing(false);
     }
-  }
+  };
 
   const handleRazorpayPayment = async (data: CheckoutFormData) => {
     // Create order on backend (simulated)
@@ -153,18 +170,19 @@ export default function CheckoutPage() {
         amount: total * 100, // Razorpay expects amount in paise
         currency: 'INR',
         items: orderItems,
-        customerInfo: data
-      })
+        customerInfo: data,
+      }),
     }).catch(() => ({
       ok: false,
-      json: () => Promise.resolve({
-        id: 'order_' + Math.random().toString(36).substr(2, 9),
-        amount: total * 100,
-        currency: 'INR'
-      })
-    }))
+      json: () =>
+        Promise.resolve({
+          id: 'order_' + Math.random().toString(36).substr(2, 9),
+          amount: total * 100,
+          currency: 'INR',
+        }),
+    }));
 
-    const orderData = await orderResponse.json()
+    const orderData = await orderResponse.json();
 
     const options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_test_sample_key',
@@ -175,58 +193,58 @@ export default function CheckoutPage() {
       order_id: orderData.id,
       handler: async (response: any) => {
         // Verify payment on backend (simulated)
-        await verifyPayment(response, data)
+        await verifyPayment(response, data);
         toast({
           title: 'Payment Successful!',
-          description: 'Your order has been placed successfully.'
-        })
-        router.push('/orders')
+          description: 'Your order has been placed successfully.',
+        });
+        router.push('/orders');
       },
       prefill: {
         name: `${data.firstName} ${data.lastName}`,
         email: data.email,
-        contact: data.phone
+        contact: data.phone,
       },
       theme: {
-        color: '#000000'
+        color: '#000000',
       },
       modal: {
         ondismiss: () => {
-          setIsProcessing(false)
-        }
-      }
-    }
+          setIsProcessing(false);
+        },
+      },
+    };
 
-    const razorpay = new window.Razorpay(options)
-    razorpay.open()
-  }
+    const razorpay = new window.Razorpay(options);
+    razorpay.open();
+  };
 
   const handleOtherPayments = async (data: CheckoutFormData) => {
     // Simulate payment processing for UPI/NetBanking
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    await simulateOrderCreation(data, data.paymentMethod)
+    await simulateOrderCreation(data, data.paymentMethod);
     toast({
       title: 'Payment Successful!',
-      description: 'Your order has been placed successfully.'
-    })
-    router.push('/orders')
-  }
+      description: 'Your order has been placed successfully.',
+    });
+    router.push('/orders');
+  };
 
   const simulateOrderCreation = async (data: CheckoutFormData, paymentMethod: string) => {
     // Simulate order creation API call
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    console.log('Order created:', { data, paymentMethod, total })
-  }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log('Order created:', { data, paymentMethod, total });
+  };
 
   const verifyPayment = async (paymentResponse: any, orderData: CheckoutFormData) => {
     // Simulate payment verification
-    await new Promise(resolve => setTimeout(resolve, 500))
-    console.log('Payment verified:', paymentResponse, orderData)
-  }
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    console.log('Payment verified:', paymentResponse, orderData);
+  };
 
   if (!isAuthenticated) {
-    return null
+    return null;
   }
 
   return (
@@ -383,7 +401,10 @@ export default function CheckoutPage() {
                         <FormItem>
                           <FormLabel>Special Instructions (Optional)</FormLabel>
                           <FormControl>
-                            <Textarea {...field} placeholder="Any special delivery instructions..." />
+                            <Textarea
+                              {...field}
+                              placeholder="Any special delivery instructions..."
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -414,32 +435,48 @@ export default function CheckoutPage() {
                             >
                               <div className="flex items-center space-x-3 p-3 border rounded-lg">
                                 <RadioGroupItem value="razorpay" id="razorpay" />
-                                <Label htmlFor="razorpay" className="flex items-center space-x-2 cursor-pointer flex-1">
+                                <Label
+                                  htmlFor="razorpay"
+                                  className="flex items-center space-x-2 cursor-pointer flex-1"
+                                >
                                   <CreditCard className="h-4 w-4" />
                                   <span>Credit/Debit Card</span>
-                                  <Badge variant="secondary" className="ml-auto">Recommended</Badge>
+                                  <Badge variant="secondary" className="ml-auto">
+                                    Recommended
+                                  </Badge>
                                 </Label>
                               </div>
                               <div className="flex items-center space-x-3 p-3 border rounded-lg">
                                 <RadioGroupItem value="upi" id="upi" />
-                                <Label htmlFor="upi" className="flex items-center space-x-2 cursor-pointer flex-1">
+                                <Label
+                                  htmlFor="upi"
+                                  className="flex items-center space-x-2 cursor-pointer flex-1"
+                                >
                                   <Wallet className="h-4 w-4" />
                                   <span>UPI</span>
                                 </Label>
                               </div>
                               <div className="flex items-center space-x-3 p-3 border rounded-lg">
                                 <RadioGroupItem value="netbanking" id="netbanking" />
-                                <Label htmlFor="netbanking" className="flex items-center space-x-2 cursor-pointer flex-1">
+                                <Label
+                                  htmlFor="netbanking"
+                                  className="flex items-center space-x-2 cursor-pointer flex-1"
+                                >
                                   <Building className="h-4 w-4" />
                                   <span>Net Banking</span>
                                 </Label>
                               </div>
                               <div className="flex items-center space-x-3 p-3 border rounded-lg">
                                 <RadioGroupItem value="cod" id="cod" />
-                                <Label htmlFor="cod" className="flex items-center space-x-2 cursor-pointer flex-1">
+                                <Label
+                                  htmlFor="cod"
+                                  className="flex items-center space-x-2 cursor-pointer flex-1"
+                                >
                                   <Phone className="h-4 w-4" />
                                   <span>Cash on Delivery</span>
-                                  <Badge variant="outline" className="ml-auto">₹40 extra</Badge>
+                                  <Badge variant="outline" className="ml-auto">
+                                    ₹40 extra
+                                  </Badge>
                                 </Label>
                               </div>
                             </RadioGroup>
@@ -451,12 +488,7 @@ export default function CheckoutPage() {
                   </CardContent>
                 </Card>
 
-                <Button
-                  type="submit"
-                  className="w-full"
-                  size="lg"
-                  disabled={isProcessing}
-                >
+                <Button type="submit" className="w-full" size="lg" disabled={isProcessing}>
                   {isProcessing ? 'Processing...' : `Place Order - ₹${total}`}
                 </Button>
               </form>
@@ -526,5 +558,5 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

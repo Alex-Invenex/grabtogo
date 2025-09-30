@@ -1,44 +1,44 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { useState } from 'react'
-import { Mail, ArrowLeft, Loader2 } from 'lucide-react'
-import Link from 'next/link'
+import * as React from 'react';
+import { useState } from 'react';
+import { Mail, ArrowLeft, Loader2 } from 'lucide-react';
+import Link from 'next/link';
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { useToast } from '@/hooks/use-toast'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useToast } from '@/hooks/use-toast';
 
 export default function ForgotPasswordPage() {
-  const [email, setEmail] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [errors, setErrors] = useState<{ email?: string }>({})
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string }>({});
 
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const validateEmail = (email: string): string | undefined => {
-    if (!email) return 'Email is required'
+    if (!email) return 'Email is required';
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return 'Please enter a valid email address'
+      return 'Please enter a valid email address';
     }
-    return undefined
-  }
+    return undefined;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const emailError = validateEmail(email)
+    const emailError = validateEmail(email);
     if (emailError) {
-      setErrors({ email: emailError })
-      return
+      setErrors({ email: emailError });
+      return;
     }
 
-    setErrors({})
-    setIsLoading(true)
+    setErrors({});
+    setIsLoading(true);
 
     try {
       const response = await fetch('/api/auth/forgot-password', {
@@ -47,29 +47,29 @@ export default function ForgotPasswordPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email: email.toLowerCase().trim() }),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (response.ok) {
-        setIsSubmitted(true)
+        setIsSubmitted(true);
         toast({
           title: 'Reset Email Sent',
           description: 'Please check your inbox for password reset instructions',
-        })
+        });
       } else {
         if (response.status === 429) {
           toast({
             title: 'Too Many Requests',
             description: data.message || 'Please wait before requesting another reset',
             variant: 'destructive',
-          })
+          });
         } else {
           toast({
             title: 'Error',
             description: data.error || 'Something went wrong. Please try again.',
             variant: 'destructive',
-          })
+          });
         }
       }
     } catch {
@@ -77,23 +77,19 @@ export default function ForgotPasswordPage() {
         title: 'Network Error',
         description: 'Please check your connection and try again.',
         variant: 'destructive',
-      })
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   if (isSubmitted) {
     return (
       <div className="container flex h-screen w-screen flex-col items-center justify-center">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
           <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">
-              Check Your Email
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Password reset instructions sent
-            </p>
+            <h1 className="text-2xl font-semibold tracking-tight">Check Your Email</h1>
+            <p className="text-sm text-muted-foreground">Password reset instructions sent</p>
           </div>
 
           <Card>
@@ -112,14 +108,15 @@ export default function ForgotPasswordPage() {
                 </p>
                 <Alert className="mb-4">
                   <AlertDescription>
-                    If you don&apos;t see the email, check your spam folder. The reset link will expire in 1 hour.
+                    If you don&apos;t see the email, check your spam folder. The reset link will
+                    expire in 1 hour.
                   </AlertDescription>
                 </Alert>
                 <div className="space-y-2">
                   <Button
                     onClick={() => {
-                      setIsSubmitted(false)
-                      setEmail('')
+                      setIsSubmitted(false);
+                      setEmail('');
                     }}
                     variant="outline"
                     className="w-full"
@@ -135,16 +132,14 @@ export default function ForgotPasswordPage() {
           </Card>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
         <div className="flex flex-col space-y-2 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight">
-            Reset Password
-          </h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Reset Password</h1>
           <p className="text-sm text-muted-foreground">
             Enter your email to receive reset instructions
           </p>
@@ -170,16 +165,10 @@ export default function ForgotPasswordPage() {
                   disabled={isLoading}
                   className={errors.email ? 'border-red-500' : ''}
                 />
-                {errors.email && (
-                  <p className="text-sm text-red-600">{errors.email}</p>
-                )}
+                {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
               </div>
 
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={isLoading}
-              >
+              <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Send Reset Instructions
               </Button>
@@ -197,15 +186,12 @@ export default function ForgotPasswordPage() {
           </Link>
           <div>
             Don&apos;t have an account?{' '}
-            <Link
-              href="/auth/register"
-              className="text-primary hover:underline"
-            >
+            <Link href="/auth/register" className="text-primary hover:underline">
               Sign up
             </Link>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

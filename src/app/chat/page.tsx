@@ -1,63 +1,65 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { useSession } from 'next-auth/react'
-import { formatDistanceToNow } from 'date-fns'
-import { Send, Search, Plus, MoreVertical, Phone, Video } from 'lucide-react'
+import * as React from 'react';
+import { useSession } from 'next-auth/react';
+import { formatDistanceToNow } from 'date-fns';
+import { Send, Search, Plus, MoreVertical, Phone, Video } from 'lucide-react';
 
-import { ProtectedRoute } from '@/components/auth/protected-route'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { Separator } from '@/components/ui/separator'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { useChat, useSocket } from '@/components/providers/socket-provider'
-import { ChatMessageSkeleton } from '@/components/ui/loading-states'
+import { ProtectedRoute } from '@/components/auth/protected-route';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardTitle, CardHeader } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useChat, useSocket } from '@/components/providers/socket-provider';
+import { ChatMessageSkeleton } from '@/components/ui/loading-states';
 
 interface Chat {
-  id: string
-  name: string
-  type: 'private' | 'group'
+  id: string;
+  name: string;
+  type: 'private' | 'group';
   participants: {
-    id: string
-    name: string
-    image?: string
-    role: string
-    isOnline: boolean
-    lastSeen?: string
-  }[]
+    id: string;
+    name: string;
+    image?: string;
+    role: string;
+    isOnline: boolean;
+    lastSeen?: string;
+  }[];
   lastMessage?: {
-    id: string
-    content: string
-    senderId: string
-    timestamp: string
-  }
-  unreadCount: number
+    id: string;
+    content: string;
+    senderId: string;
+    timestamp: string;
+  };
+  unreadCount: number;
 }
 
 interface Message {
-  id: string
-  content: string
-  senderId: string
-  senderName: string
-  senderImage?: string
-  timestamp: string
-  type: 'text' | 'image' | 'file'
+  id: string;
+  content: string;
+  senderId: string;
+  senderName: string;
+  senderImage?: string;
+  timestamp: string;
+  type: 'text' | 'image' | 'file';
 }
 
 export default function ChatPage() {
-  const { data: session } = useSession()
-  const { isConnected } = useSocket()
-  const [selectedChatId, setSelectedChatId] = React.useState<string | null>(null)
-  const [chats, setChats] = React.useState<Chat[]>([])
-  const [searchQuery, setSearchQuery] = React.useState('')
-  const [newMessage, setNewMessage] = React.useState('')
-  const [isLoading, setIsLoading] = React.useState(true)
+  const { data: session } = useSession();
+  const { isConnected } = useSocket();
+  const [selectedChatId, setSelectedChatId] = React.useState<string | null>(null);
+  const [chats, setChats] = React.useState<Chat[]>([]);
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [newMessage, setNewMessage] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(true);
 
-  const { messages, typing, sendMessage, startTyping, stopTyping } = useChat(selectedChatId || undefined)
+  const { messages, typing, sendMessage, startTyping, stopTyping } = useChat(
+    selectedChatId || undefined
+  );
 
   // Mock data for demonstration
   const mockChats: Chat[] = [
@@ -71,16 +73,16 @@ export default function ChatPage() {
           name: 'Rajesh Kumar',
           image: undefined,
           role: 'VENDOR',
-          isOnline: true
-        }
+          isOnline: true,
+        },
       ],
       lastMessage: {
         id: 'msg1',
         content: 'Your mango order is ready for pickup!',
         senderId: 'vendor1',
-        timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString()
+        timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
       },
-      unreadCount: 2
+      unreadCount: 2,
     },
     {
       id: 'chat2',
@@ -93,16 +95,16 @@ export default function ChatPage() {
           image: undefined,
           role: 'VENDOR',
           isOnline: false,
-          lastSeen: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
-        }
+          lastSeen: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+        },
       ],
       lastMessage: {
         id: 'msg2',
         content: 'The warranty replacement will arrive tomorrow',
         senderId: 'vendor2',
-        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
       },
-      unreadCount: 0
+      unreadCount: 0,
     },
     {
       id: 'chat3',
@@ -114,7 +116,7 @@ export default function ChatPage() {
           name: 'Fashion Hub',
           image: undefined,
           role: 'VENDOR',
-          isOnline: true
+          isOnline: true,
         },
         {
           id: 'customer1',
@@ -122,18 +124,18 @@ export default function ChatPage() {
           image: undefined,
           role: 'CUSTOMER',
           isOnline: false,
-          lastSeen: new Date(Date.now() - 5 * 60 * 1000).toISOString()
-        }
+          lastSeen: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+        },
       ],
       lastMessage: {
         id: 'msg3',
         content: 'Size exchange processed successfully',
         senderId: 'vendor3',
-        timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString()
+        timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
       },
-      unreadCount: 1
-    }
-  ]
+      unreadCount: 1,
+    },
+  ];
 
   const mockMessages: Message[] = [
     {
@@ -142,7 +144,7 @@ export default function ChatPage() {
       senderId: session?.user?.id || 'current-user',
       senderName: session?.user?.name || 'You',
       timestamp: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
-      type: 'text'
+      type: 'text',
     },
     {
       id: '2',
@@ -150,7 +152,7 @@ export default function ChatPage() {
       senderId: 'vendor1',
       senderName: 'Rajesh Kumar',
       timestamp: new Date(Date.now() - 40 * 60 * 1000).toISOString(),
-      type: 'text'
+      type: 'text',
     },
     {
       id: '3',
@@ -158,39 +160,40 @@ export default function ChatPage() {
       senderId: session?.user?.id || 'current-user',
       senderName: session?.user?.name || 'You',
       timestamp: new Date(Date.now() - 35 * 60 * 1000).toISOString(),
-      type: 'text'
+      type: 'text',
     },
     {
       id: '4',
-      content: 'You can pick them up anytime between 9 AM to 7 PM. We\'re located at Shop 15, Central Market.',
+      content:
+        "You can pick them up anytime between 9 AM to 7 PM. We're located at Shop 15, Central Market.",
       senderId: 'vendor1',
       senderName: 'Rajesh Kumar',
       timestamp: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
-      type: 'text'
-    }
-  ]
+      type: 'text',
+    },
+  ];
 
   React.useEffect(() => {
     // Simulate loading chats
     setTimeout(() => {
-      setChats(mockChats)
-      setIsLoading(false)
+      setChats(mockChats);
+      setIsLoading(false);
       if (mockChats.length > 0) {
-        setSelectedChatId(mockChats[0].id)
+        setSelectedChatId(mockChats[0].id);
       }
-    }, 1000)
-  }, [])
+    }, 1000);
+  }, []);
 
-  const selectedChat = chats.find(chat => chat.id === selectedChatId)
-  const filteredChats = chats.filter(chat =>
+  const selectedChat = chats.find((chat) => chat.id === selectedChatId);
+  const filteredChats = chats.filter((chat) =>
     chat.name.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  );
 
   const handleSendMessage = () => {
-    if (!newMessage.trim() || !selectedChatId) return
+    if (!newMessage.trim() || !selectedChatId) return;
 
     if (sendMessage) {
-      sendMessage(newMessage, selectedChatId)
+      sendMessage(newMessage, selectedChatId);
     }
 
     // Add to local state for immediate feedback
@@ -200,31 +203,31 @@ export default function ChatPage() {
       senderId: session?.user?.id || 'current-user',
       senderName: session?.user?.name || 'You',
       timestamp: new Date().toISOString(),
-      type: 'text'
-    }
+      type: 'text',
+    };
 
-    setNewMessage('')
-  }
+    setNewMessage('');
+  };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      handleSendMessage()
+      e.preventDefault();
+      handleSendMessage();
     }
-  }
+  };
 
   const getInitials = (name: string) => {
     return name
       .split(' ')
-      .map(word => word[0])
+      .map((word) => word[0])
       .join('')
       .toUpperCase()
-      .slice(0, 2)
-  }
+      .slice(0, 2);
+  };
 
   const getOtherParticipants = (chat: Chat) => {
-    return chat.participants.filter(p => p.id !== session?.user?.id)
-  }
+    return chat.participants.filter((p) => p.id !== session?.user?.id);
+  };
 
   const ChatSidebar = () => (
     <div className="h-full flex flex-col">
@@ -260,8 +263,8 @@ export default function ChatPage() {
             </div>
           ) : (
             filteredChats.map((chat) => {
-              const otherParticipants = getOtherParticipants(chat)
-              const isSelected = chat.id === selectedChatId
+              const otherParticipants = getOtherParticipants(chat);
+              const isSelected = chat.id === selectedChatId;
 
               return (
                 <div
@@ -274,9 +277,7 @@ export default function ChatPage() {
                   <div className="relative">
                     <Avatar className="h-10 w-10">
                       <AvatarImage src={otherParticipants[0]?.image} />
-                      <AvatarFallback>
-                        {getInitials(chat.name)}
-                      </AvatarFallback>
+                      <AvatarFallback>{getInitials(chat.name)}</AvatarFallback>
                     </Avatar>
                     {otherParticipants[0]?.isOnline && (
                       <div className="absolute bottom-0 right-0 h-3 w-3 bg-green-500 rounded-full border-2 border-background" />
@@ -288,7 +289,9 @@ export default function ChatPage() {
                       <h3 className="font-medium truncate">{chat.name}</h3>
                       {chat.lastMessage && (
                         <span className="text-xs text-muted-foreground">
-                          {formatDistanceToNow(new Date(chat.lastMessage.timestamp), { addSuffix: true })}
+                          {formatDistanceToNow(new Date(chat.lastMessage.timestamp), {
+                            addSuffix: true,
+                          })}
                         </span>
                       )}
                     </div>
@@ -297,20 +300,23 @@ export default function ChatPage() {
                         {chat.lastMessage?.content || 'No messages yet'}
                       </p>
                       {chat.unreadCount > 0 && (
-                        <Badge variant="destructive" className="ml-2 h-5 w-5 rounded-full p-0 text-xs">
+                        <Badge
+                          variant="destructive"
+                          className="ml-2 h-5 w-5 rounded-full p-0 text-xs"
+                        >
                           {chat.unreadCount}
                         </Badge>
                       )}
                     </div>
                   </div>
                 </div>
-              )
+              );
             })
           )}
         </div>
       </ScrollArea>
     </div>
-  )
+  );
 
   return (
     <ProtectedRoute allowedRoles={['CUSTOMER', 'VENDOR', 'ADMIN']}>
@@ -356,9 +362,14 @@ export default function ChatPage() {
                           {getOtherParticipants(selectedChat)[0]?.isOnline ? (
                             <span className="text-green-600">Online</span>
                           ) : (
-                            `Last seen ${getOtherParticipants(selectedChat)[0]?.lastSeen ?
-                              formatDistanceToNow(new Date(getOtherParticipants(selectedChat)[0].lastSeen!), { addSuffix: true }) :
-                              'recently'}`
+                            `Last seen ${
+                              getOtherParticipants(selectedChat)[0]?.lastSeen
+                                ? formatDistanceToNow(
+                                    new Date(getOtherParticipants(selectedChat)[0].lastSeen!),
+                                    { addSuffix: true }
+                                  )
+                                : 'recently'
+                            }`
                           )}
                         </p>
                       </div>
@@ -384,7 +395,7 @@ export default function ChatPage() {
                 <ScrollArea className="flex-1 p-4">
                   <div className="space-y-4">
                     {mockMessages.map((message) => {
-                      const isOwnMessage = message.senderId === session?.user?.id
+                      const isOwnMessage = message.senderId === session?.user?.id;
 
                       return (
                         <div
@@ -400,7 +411,9 @@ export default function ChatPage() {
                             </Avatar>
                           )}
 
-                          <div className={`max-w-[70%] ${isOwnMessage ? 'text-right' : 'text-left'}`}>
+                          <div
+                            className={`max-w-[70%] ${isOwnMessage ? 'text-right' : 'text-left'}`}
+                          >
                             {!isOwnMessage && (
                               <p className="text-xs text-muted-foreground mb-1">
                                 {message.senderName}
@@ -408,15 +421,15 @@ export default function ChatPage() {
                             )}
                             <div
                               className={`rounded-lg px-3 py-2 ${
-                                isOwnMessage
-                                  ? 'bg-primary text-primary-foreground'
-                                  : 'bg-muted'
+                                isOwnMessage ? 'bg-primary text-primary-foreground' : 'bg-muted'
                               }`}
                             >
                               <p className="text-sm">{message.content}</p>
                             </div>
                             <p className="text-xs text-muted-foreground mt-1">
-                              {formatDistanceToNow(new Date(message.timestamp), { addSuffix: true })}
+                              {formatDistanceToNow(new Date(message.timestamp), {
+                                addSuffix: true,
+                              })}
                             </p>
                           </div>
 
@@ -429,7 +442,7 @@ export default function ChatPage() {
                             </Avatar>
                           )}
                         </div>
-                      )
+                      );
                     })}
 
                     {/* Typing Indicator */}
@@ -443,8 +456,14 @@ export default function ChatPage() {
                         <div className="bg-muted rounded-lg px-3 py-2">
                           <div className="flex space-x-1">
                             <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" />
-                            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                            <div
+                              className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                              style={{ animationDelay: '0.1s' }}
+                            />
+                            <div
+                              className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                              style={{ animationDelay: '0.2s' }}
+                            />
                           </div>
                         </div>
                       </div>
@@ -491,5 +510,5 @@ export default function ChatPage() {
         </div>
       </div>
     </ProtectedRoute>
-  )
+  );
 }

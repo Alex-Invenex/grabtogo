@@ -1,11 +1,7 @@
-'use client'
+'use client';
 
-import React from 'react'
+import React from 'react';
 
 export default function AdminGroupLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="min-h-screen">
-      {children}
-    </div>
-  )
+  return <div className="min-h-screen">{children}</div>;
 }

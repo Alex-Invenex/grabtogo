@@ -1,56 +1,56 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { signIn } from 'next-auth/react'
-import { motion } from 'framer-motion'
-import { Mail, Lock, Loader2, Shield, AlertCircle, Eye, EyeOff } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import { motion } from 'framer-motion';
+import { Mail, Lock, Loader2, Shield, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/components/ui/card';
 
 export default function AdminLoginPage() {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
-  })
+    password: '',
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError('')
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
 
     try {
       const result = await signIn('credentials', {
         email: formData.email,
         password: formData.password,
         redirect: false,
-        callbackUrl: '/admin/dashboard'
-      })
+        callbackUrl: '/admin/dashboard',
+      });
 
       if (result?.error) {
-        setError('Invalid credentials. Please check your email and password.')
+        setError('Invalid credentials. Please check your email and password.');
       } else if (result?.ok) {
-        router.push('/admin/dashboard')
+        router.push('/admin/dashboard');
       }
     } catch (error) {
-      setError('An error occurred. Please try again.')
+      setError('An error occurred. Please try again.');
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   // Auto-fill for development
   const autoFillCredentials = () => {
     setFormData({
       email: 'admin@admin.com',
-      password: 'admin'
-    })
-  }
+      password: 'admin',
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
@@ -67,14 +67,12 @@ export default function AdminLoginPage() {
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring" }}
+              transition={{ delay: 0.2, type: 'spring' }}
               className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mx-auto"
             >
               <Shield className="w-10 h-10 text-white" />
             </motion.div>
-            <CardTitle className="text-3xl font-bold text-white">
-              Admin Portal
-            </CardTitle>
+            <CardTitle className="text-3xl font-bold text-white">Admin Portal</CardTitle>
             <CardDescription className="text-white/60">
               GrabtoGo Marketplace Management
             </CardDescription>
@@ -112,9 +110,7 @@ export default function AdminLoginPage() {
                 </div>
 
                 <div>
-                  <label className="block text-white/80 text-sm font-medium mb-2">
-                    Password
-                  </label>
+                  <label className="block text-white/80 text-sm font-medium mb-2">Password</label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/40" />
                     <Input
@@ -172,11 +168,9 @@ export default function AdminLoginPage() {
           transition={{ delay: 0.5 }}
           className="text-center mt-8"
         >
-          <p className="text-white/40 text-sm">
-            Secure access to GrabtoGo administration panel
-          </p>
+          <p className="text-white/40 text-sm">Secure access to GrabtoGo administration panel</p>
         </motion.div>
       </motion.div>
     </div>
-  )
+  );
 }

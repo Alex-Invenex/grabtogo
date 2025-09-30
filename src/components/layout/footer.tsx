@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import Link from 'next/link'
-import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
+import * as React from 'react';
+import Link from 'next/link';
+import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -12,15 +12,16 @@ export function Footer() {
           {/* Brand Section */}
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center">
-                <span className="text-white font-extrabold text-2xl">G</span>
+              <div className="w-12 h-12">
+                <img src="/logo.svg" alt="GrabtoGo Logo" className="w-full h-full object-contain" />
               </div>
-              <span className="font-extrabold text-2xl text-white">
-                GrabtoGo
-              </span>
+              <span className="font-extrabold text-2xl text-white">GrabtoGo</span>
             </div>
             <p className="text-gray-400 leading-relaxed">
-              We are a location-based platform where local businesses like restaurants, clothing stores, electronics shops, and more can showcase their latest offers, products, and store updates. Customers can explore nearby deals, but purchases are made in-store — not online.
+              We are a location-based platform where local businesses like restaurants, clothing
+              stores, electronics shops, and more can showcase their latest offers, products, and
+              store updates. Customers can explore nearby deals, but purchases are made in-store —
+              not online.
             </p>
             {/* Social Links */}
             <div className="flex items-center gap-3">
@@ -131,13 +132,19 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-primary flex-shrink-0" />
-                <a href="tel:+917736088152" className="text-gray-400 hover:text-primary transition-colors">
+                <a
+                  href="tel:+917736088152"
+                  className="text-gray-400 hover:text-primary transition-colors"
+                >
                   +91 7736088152
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                <a href="mailto:info@grabtogo.in" className="text-gray-400 hover:text-primary transition-colors">
+                <a
+                  href="mailto:info@grabtogo.in"
+                  className="text-gray-400 hover:text-primary transition-colors"
+                >
                   info@grabtogo.in
                 </a>
               </li>
@@ -165,5 +172,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

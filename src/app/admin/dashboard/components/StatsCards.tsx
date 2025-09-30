@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   Users,
   Store,
@@ -12,30 +12,30 @@ import {
   Clock,
   CheckCircle,
   AlertTriangle,
-  Activity
-} from 'lucide-react'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+  Activity,
+} from 'lucide-react';
+import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface StatCard {
-  title: string
-  value: string | number
-  change: number
-  changeType: 'increase' | 'decrease' | 'neutral'
-  icon: React.ComponentType<{ className?: string }>
-  description: string
-  color: string
+  title: string;
+  value: string | number;
+  change: number;
+  changeType: 'increase' | 'decrease' | 'neutral';
+  icon: React.ComponentType<{ className?: string }>;
+  description: string;
+  color: string;
 }
 
 export default function StatsCards() {
-  const [stats, setStats] = useState<StatCard[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [stats, setStats] = useState<StatCard[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Simulated API call - replace with real data
   useEffect(() => {
     const fetchStats = async () => {
       // Simulate loading
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       const mockStats: StatCard[] = [
         {
@@ -45,7 +45,7 @@ export default function StatsCards() {
           changeType: 'increase',
           icon: Users,
           description: 'Active customers',
-          color: 'blue'
+          color: 'blue',
         },
         {
           title: 'Vendors',
@@ -54,7 +54,7 @@ export default function StatsCards() {
           changeType: 'increase',
           icon: Store,
           description: 'Registered vendors',
-          color: 'green'
+          color: 'green',
         },
         {
           title: 'Orders Today',
@@ -63,7 +63,7 @@ export default function StatsCards() {
           changeType: 'decrease',
           icon: ShoppingCart,
           description: 'Orders processed',
-          color: 'orange'
+          color: 'orange',
         },
         {
           title: 'Revenue',
@@ -72,7 +72,7 @@ export default function StatsCards() {
           changeType: 'increase',
           icon: DollarSign,
           description: 'This month',
-          color: 'purple'
+          color: 'purple',
         },
         {
           title: 'Pending Approvals',
@@ -81,7 +81,7 @@ export default function StatsCards() {
           changeType: 'neutral',
           icon: Clock,
           description: 'Vendor applications',
-          color: 'yellow'
+          color: 'yellow',
         },
         {
           title: 'Active Subscriptions',
@@ -90,7 +90,7 @@ export default function StatsCards() {
           changeType: 'increase',
           icon: CheckCircle,
           description: 'Premium vendors',
-          color: 'teal'
+          color: 'teal',
         },
         {
           title: 'System Alerts',
@@ -99,7 +99,7 @@ export default function StatsCards() {
           changeType: 'decrease',
           icon: AlertTriangle,
           description: 'Requiring attention',
-          color: 'red'
+          color: 'red',
         },
         {
           title: 'Uptime',
@@ -108,16 +108,16 @@ export default function StatsCards() {
           changeType: 'increase',
           icon: Activity,
           description: 'Last 30 days',
-          color: 'emerald'
-        }
-      ]
+          color: 'emerald',
+        },
+      ];
 
-      setStats(mockStats)
-      setIsLoading(false)
-    }
+      setStats(mockStats);
+      setIsLoading(false);
+    };
 
-    fetchStats()
-  }, [])
+    fetchStats();
+  }, []);
 
   const getColorClasses = (color: string) => {
     const colorMap = {
@@ -128,10 +128,10 @@ export default function StatsCards() {
       yellow: 'from-yellow-500 to-yellow-600',
       teal: 'from-teal-500 to-teal-600',
       red: 'from-red-500 to-red-600',
-      emerald: 'from-emerald-500 to-emerald-600'
-    }
-    return colorMap[color as keyof typeof colorMap] || 'from-gray-500 to-gray-600'
-  }
+      emerald: 'from-emerald-500 to-emerald-600',
+    };
+    return colorMap[color as keyof typeof colorMap] || 'from-gray-500 to-gray-600';
+  };
 
   if (isLoading) {
     return (
@@ -151,7 +151,7 @@ export default function StatsCards() {
           </Card>
         ))}
       </div>
-    )
+    );
   }
 
   return (
@@ -165,21 +165,15 @@ export default function StatsCards() {
         >
           <Card className="hover:shadow-lg transition-shadow duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                {stat.title}
-              </CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">{stat.title}</CardTitle>
               <div className={`p-2 rounded-lg bg-gradient-to-br ${getColorClasses(stat.color)}`}>
                 <stat.icon className="h-4 w-4 text-white" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-900 mb-1">
-                {stat.value}
-              </div>
+              <div className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</div>
               <div className="flex items-center justify-between">
-                <CardDescription className="text-xs">
-                  {stat.description}
-                </CardDescription>
+                <CardDescription className="text-xs">{stat.description}</CardDescription>
                 {stat.changeType !== 'neutral' && (
                   <Badge
                     variant={stat.changeType === 'increase' ? 'default' : 'destructive'}
@@ -203,5 +197,5 @@ export default function StatsCards() {
         </motion.div>
       ))}
     </div>
-  )
+  );
 }

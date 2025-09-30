@@ -1,53 +1,53 @@
-'use client'
+'use client';
 
-import { useFormContext } from 'react-hook-form'
-import { useState } from 'react'
-import { Info, Shield, Loader2, CheckCircle, MapPin, Calendar } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form'
-import { verifyGST, getStateFromGST } from '../../lib/gstVerification'
-import { Alert, AlertDescription } from '@/components/ui/alert'
+import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
+import { Info, Shield, Loader2, CheckCircle, MapPin, Calendar, XCircle } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { verifyGST, getStateFromGST } from '../../lib/gstVerification';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export default function GSTVerificationStep() {
-  const { control, setValue, watch } = useFormContext()
-  const [isVerifying, setIsVerifying] = useState(false)
-  const [verificationError, setVerificationError] = useState('')
+  const { control, setValue, watch } = useFormContext();
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verificationError, setVerificationError] = useState('');
 
-  const gstNumber = watch('gstNumber')
-  const gstVerified = watch('gstVerified')
-  const gstDetails = watch('gstDetails')
+  const gstNumber = watch('gstNumber');
+  const gstVerified = watch('gstVerified');
+  const gstDetails = watch('gstDetails');
 
   const handleVerifyGST = async () => {
-    if (!gstNumber) return
+    if (!gstNumber) return;
 
-    setIsVerifying(true)
-    setVerificationError('')
+    setIsVerifying(true);
+    setVerificationError('');
 
     try {
-      const details = await verifyGST(gstNumber)
+      const details = await verifyGST(gstNumber);
 
       if (details) {
-        setValue('gstVerified', true)
-        setValue('gstDetails', details)
+        setValue('gstVerified', true);
+        setValue('gstDetails', details);
       } else {
-        setVerificationError('Unable to verify GST number. Please check and try again.')
-        setValue('gstVerified', false)
-        setValue('gstDetails', null)
+        setVerificationError('Unable to verify GST number. Please check and try again.');
+        setValue('gstVerified', false);
+        setValue('gstDetails', null);
       }
     } catch {
-      setVerificationError('Verification failed. Please try again later.')
-      setValue('gstVerified', false)
-      setValue('gstDetails', null)
+      setVerificationError('Verification failed. Please try again later.');
+      setValue('gstVerified', false);
+      setValue('gstDetails', null);
     } finally {
-      setIsVerifying(false)
+      setIsVerifying(false);
     }
-  }
+  };
 
   const formatGSTInput = (value: string) => {
     // Remove all non-alphanumeric characters and convert to uppercase
-    return value.replace(/[^A-Z0-9]/gi, '').toUpperCase()
-  }
+    return value.replace(/[^A-Z0-9]/gi, '').toUpperCase();
+  };
 
   return (
     <div className="space-y-6">
@@ -59,7 +59,8 @@ export default function GSTVerificationStep() {
       <Alert className="border-blue-200 bg-blue-50">
         <Info className="h-4 w-4 text-blue-600" />
         <AlertDescription className="text-blue-800">
-          GST verification is mandatory for vendor registration. Your GST number will be verified with government records.
+          GST verification is mandatory for vendor registration. Your GST number will be verified
+          with government records.
         </AlertDescription>
       </Alert>
 
@@ -106,13 +107,9 @@ export default function GSTVerificationStep() {
                 </div>
               </FormControl>
               <FormMessage />
-              <p className="text-sm text-gray-500">
-                Format: 22AAAAA0000A1Z5 (15 characters)
-              </p>
+              <p className="text-sm text-gray-500">Format: 22AAAAA0000A1Z5 (15 characters)</p>
               {gstNumber && gstNumber.length >= 2 && (
-                <p className="text-sm text-blue-600">
-                  State: {getStateFromGST(gstNumber)}
-                </p>
+                <p className="text-sm text-blue-600">State: {getStateFromGST(gstNumber)}</p>
               )}
             </FormItem>
           )}
@@ -121,9 +118,7 @@ export default function GSTVerificationStep() {
         {verificationError && (
           <Alert className="border-red-200 bg-red-50">
             <XCircle className="h-4 w-4 text-red-600" />
-            <AlertDescription className="text-red-800">
-              {verificationError}
-            </AlertDescription>
+            <AlertDescription className="text-red-800">{verificationError}</AlertDescription>
           </Alert>
         )}
 
@@ -131,7 +126,9 @@ export default function GSTVerificationStep() {
           <div className="p-6 bg-green-50 rounded-lg border border-green-200 space-y-4">
             <div className="flex items-center gap-2 mb-4">
               <CheckCircle className="w-6 h-6 text-green-600" />
-              <span className="font-semibold text-green-900 text-lg">GST Verified Successfully</span>
+              <span className="font-semibold text-green-900 text-lg">
+                GST Verified Successfully
+              </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -156,11 +153,13 @@ export default function GSTVerificationStep() {
               <div>
                 <label className="text-sm font-medium text-gray-600">GST Status</label>
                 <p className="mt-1">
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    gstDetails.gstStatus === 'Active'
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-red-100 text-red-800'
-                  }`}>
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      gstDetails.gstStatus === 'Active'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
                     {gstDetails.gstStatus}
                   </span>
                 </p>
@@ -187,5 +186,5 @@ export default function GSTVerificationStep() {
         )}
       </div>
     </div>
-  )
+  );
 }

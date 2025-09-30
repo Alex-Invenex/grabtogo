@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import React from 'react'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
+import React from 'react';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 import {
   Plus,
   UserPlus,
@@ -15,21 +15,21 @@ import {
   BarChart3,
   Bell,
   Globe,
-  Database
-} from 'lucide-react'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+  Database,
+} from 'lucide-react';
+import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 interface QuickAction {
-  title: string
-  description: string
-  icon: React.ComponentType<{ className?: string }>
-  href?: string
-  onClick?: () => void
-  color: string
-  badge?: string | number
-  disabled?: boolean
+  title: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+  href?: string;
+  onClick?: () => void;
+  color: string;
+  badge?: string | number;
+  disabled?: boolean;
 }
 
 const quickActions: QuickAction[] = [
@@ -38,7 +38,7 @@ const quickActions: QuickAction[] = [
     description: 'Manually create a vendor account',
     icon: Store,
     href: '/admin/vendors/new',
-    color: 'blue'
+    color: 'blue',
   },
   {
     title: 'Pending Approvals',
@@ -46,35 +46,35 @@ const quickActions: QuickAction[] = [
     icon: FileText,
     href: '/admin/vendors/pending',
     color: 'orange',
-    badge: 5
+    badge: 5,
   },
   {
     title: 'Create User',
     description: 'Add a new customer account',
     icon: UserPlus,
     href: '/admin/users/new',
-    color: 'green'
+    color: 'green',
   },
   {
     title: 'System Settings',
     description: 'Configure platform settings',
     icon: Settings,
     href: '/admin/settings',
-    color: 'gray'
+    color: 'gray',
   },
   {
     title: 'Export Reports',
     description: 'Download analytics and reports',
     icon: Download,
     onClick: () => console.log('Export reports'),
-    color: 'purple'
+    color: 'purple',
   },
   {
     title: 'Send Notifications',
     description: 'Broadcast messages to users',
     icon: Mail,
     href: '/admin/notifications/new',
-    color: 'teal'
+    color: 'teal',
   },
   {
     title: 'Security Audit',
@@ -82,44 +82,44 @@ const quickActions: QuickAction[] = [
     icon: Shield,
     href: '/admin/security',
     color: 'red',
-    badge: '!'
+    badge: '!',
   },
   {
     title: 'Analytics Dashboard',
     description: 'View detailed analytics',
     icon: BarChart3,
     href: '/admin/analytics',
-    color: 'indigo'
+    color: 'indigo',
   },
   {
     title: 'Manage Alerts',
     description: 'Configure system alerts',
     icon: Bell,
     href: '/admin/alerts',
-    color: 'yellow'
+    color: 'yellow',
   },
   {
     title: 'Visit Website',
     description: 'View the customer site',
     icon: Globe,
     href: '/',
-    color: 'emerald'
+    color: 'emerald',
   },
   {
     title: 'Backup System',
     description: 'Create system backup',
     icon: Database,
     onClick: () => console.log('Create backup'),
-    color: 'slate'
+    color: 'slate',
   },
   {
     title: 'Platform Stats',
     description: 'Quick overview metrics',
     icon: BarChart3,
     href: '/admin/stats',
-    color: 'rose'
-  }
-]
+    color: 'rose',
+  },
+];
 
 export default function QuickActions() {
   const getColorClasses = (color: string) => {
@@ -135,16 +135,16 @@ export default function QuickActions() {
       yellow: 'bg-yellow-500 hover:bg-yellow-600',
       emerald: 'bg-emerald-500 hover:bg-emerald-600',
       slate: 'bg-slate-500 hover:bg-slate-600',
-      rose: 'bg-rose-500 hover:bg-rose-600'
-    }
-    return colorMap[color as keyof typeof colorMap] || 'bg-gray-500 hover:bg-gray-600'
-  }
+      rose: 'bg-rose-500 hover:bg-rose-600',
+    };
+    return colorMap[color as keyof typeof colorMap] || 'bg-gray-500 hover:bg-gray-600';
+  };
 
   const handleAction = (action: QuickAction) => {
     if (action.onClick) {
-      action.onClick()
+      action.onClick();
     }
-  }
+  };
 
   return (
     <Card>
@@ -153,9 +153,7 @@ export default function QuickActions() {
           <Plus className="w-5 h-5" />
           Quick Actions
         </CardTitle>
-        <CardDescription>
-          Common administrative tasks and shortcuts
-        </CardDescription>
+        <CardDescription>Common administrative tasks and shortcuts</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -220,5 +218,5 @@ export default function QuickActions() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

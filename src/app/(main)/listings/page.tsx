@@ -1,41 +1,42 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { useSearchParams } from 'next/navigation'
-import { Search, MapPin, SlidersHorizontal, Grid3x3, List, Star, Clock } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { getBusinessImage } from '@/lib/images'
-import Link from 'next/link'
+import * as React from 'react';
+import { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { Search, MapPin, SlidersHorizontal, Grid3x3, List, Star } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { getBusinessImage } from '@/lib/images';
+import Link from 'next/link';
 
 interface Listing {
-  id: string
-  name: string
-  storeName: string
-  category: string
-  location: string
-  city: string
-  image: string
-  discount: string
-  priceRange: string
-  rating: number
-  distance: number
-  isOpen: boolean
-  description: string
+  id: string;
+  name: string;
+  storeName: string;
+  category: string;
+  location: string;
+  city: string;
+  image: string;
+  discount: string;
+  priceRange: string;
+  rating: number;
+  distance: number;
+  isOpen: boolean;
+  description: string;
 }
 
-export default function ListingsPage() {
-  const searchParams = useSearchParams()
-  const initialQuery = searchParams.get('q') || ''
-  const initialLocation = searchParams.get('location') || 'Kottayam'
-  const initialCategory = searchParams.get('category') || 'all'
+function ListingsContent() {
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams.get('q') || '';
+  const initialLocation = searchParams.get('location') || 'Kottayam';
+  const initialCategory = searchParams.get('category') || 'all';
 
-  const [searchQuery, setSearchQuery] = React.useState(initialQuery)
-  const [location, setLocation] = React.useState(initialLocation)
-  const [category, setCategory] = React.useState(initialCategory)
-  const [sortBy, setSortBy] = React.useState('featured')
-  const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid')
-  const [showFilters, setShowFilters] = React.useState(false)
+  const [searchQuery, setSearchQuery] = React.useState(initialQuery);
+  const [location, setLocation] = React.useState(initialLocation);
+  const [category, setCategory] = React.useState(initialCategory);
+  const [sortBy, setSortBy] = React.useState('featured');
+  const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid');
+  const [showFilters, setShowFilters] = React.useState(false);
 
   // Mock listings data
   const mockListings: Listing[] = [
@@ -52,7 +53,7 @@ export default function ListingsPage() {
       rating: 4.5,
       distance: 2.3,
       isOpen: true,
-      description: 'Quality home appliances and electronics at great prices'
+      description: 'Quality home appliances and electronics at great prices',
     },
     {
       id: '2',
@@ -67,7 +68,7 @@ export default function ListingsPage() {
       rating: 4.8,
       distance: 3.1,
       isOpen: true,
-      description: 'Delicious fried chicken and fast food'
+      description: 'Delicious fried chicken and fast food',
     },
     {
       id: '3',
@@ -82,7 +83,7 @@ export default function ListingsPage() {
       rating: 4.6,
       distance: 15.2,
       isOpen: true,
-      description: 'Latest fashion trends and apparel for all'
+      description: 'Latest fashion trends and apparel for all',
     },
     {
       id: '4',
@@ -97,7 +98,7 @@ export default function ListingsPage() {
       rating: 4.4,
       distance: 1.8,
       isOpen: false,
-      description: 'Fresh groceries and daily essentials'
+      description: 'Fresh groceries and daily essentials',
     },
     {
       id: '5',
@@ -112,9 +113,9 @@ export default function ListingsPage() {
       rating: 4.7,
       distance: 45.5,
       isOpen: false,
-      description: 'Multi-cuisine restaurant with great ambiance'
-    }
-  ]
+      description: 'Multi-cuisine restaurant with great ambiance',
+    },
+  ];
 
   const categories = [
     { id: 'all', name: 'All Categories' },
@@ -123,8 +124,8 @@ export default function ListingsPage() {
     { id: 'home-appliances-electronics', name: 'Home Appliances & Electronics' },
     { id: 'jewellery-watches', name: 'Jewellery & Watches' },
     { id: 'restaurants-cafes', name: 'Restaurants & Cafes' },
-    { id: 'supermarkets-grocery', name: 'Supermarkets & Grocery' }
-  ]
+    { id: 'supermarkets-grocery', name: 'Supermarkets & Grocery' },
+  ];
 
   const locations = [
     'All Locations',
@@ -133,13 +134,13 @@ export default function ListingsPage() {
     'Thrissur',
     'Thiruvananthapuram',
     'Kozhikode',
-    'Palakkad'
-  ]
+    'Palakkad',
+  ];
 
   const handleSearch = () => {
     // In a real app, this would trigger an API call
-    console.log('Searching...', { searchQuery, location, category, sortBy })
-  }
+    console.log('Searching...', { searchQuery, location, category, sortBy });
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -179,7 +180,9 @@ export default function ListingsPage() {
                 className="bg-transparent outline-none text-gray-700 font-medium flex-1 cursor-pointer"
               >
                 {locations.map((loc) => (
-                  <option key={loc} value={loc}>{loc}</option>
+                  <option key={loc} value={loc}>
+                    {loc}
+                  </option>
                 ))}
               </select>
             </div>
@@ -195,10 +198,7 @@ export default function ListingsPage() {
             </Button>
 
             {/* Search Button */}
-            <Button
-              onClick={handleSearch}
-              className="bg-primary hover:bg-primary/90 font-bold"
-            >
+            <Button onClick={handleSearch} className="bg-primary hover:bg-primary/90 font-bold">
               Search
             </Button>
           </div>
@@ -209,25 +209,23 @@ export default function ListingsPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Category Filter */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Category
-                  </label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     className="w-full h-10 px-3 rounded-lg bg-white border border-gray-200 outline-none focus:border-primary"
                   >
                     {categories.map((cat) => (
-                      <option key={cat.id} value={cat.id}>{cat.name}</option>
+                      <option key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </option>
                     ))}
                   </select>
                 </div>
 
                 {/* Sort Filter */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Sort By
-                  </label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Sort By</label>
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
@@ -275,15 +273,31 @@ export default function ListingsPage() {
 
       {/* Listings Grid */}
       <div className="container-custom py-8">
-        <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'flex flex-col gap-4'}>
+        <div
+          className={
+            viewMode === 'grid'
+              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
+              : 'flex flex-col gap-4'
+          }
+        >
           {mockListings.map((listing) => (
             <Link
               key={listing.id}
               href={`/listings/${listing.id}`}
-              className={viewMode === 'grid' ? 'business-card' : 'flex gap-4 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all p-4'}
+              className={
+                viewMode === 'grid'
+                  ? 'business-card'
+                  : 'flex gap-4 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all p-4'
+              }
             >
               {/* Image */}
-              <div className={viewMode === 'grid' ? 'relative h-64 overflow-hidden' : 'w-48 h-48 flex-shrink-0 rounded-xl overflow-hidden'}>
+              <div
+                className={
+                  viewMode === 'grid'
+                    ? 'relative h-64 overflow-hidden'
+                    : 'w-48 h-48 flex-shrink-0 rounded-xl overflow-hidden'
+                }
+              >
                 <img
                   src={listing.image}
                   alt={listing.storeName}
@@ -294,11 +308,11 @@ export default function ListingsPage() {
                   {listing.discount}
                 </div>
                 {/* Open/Closed Badge */}
-                <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold ${
-                  listing.isOpen
-                    ? 'bg-green-500 text-white'
-                    : 'bg-red-500 text-white'
-                }`}>
+                <div
+                  className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold ${
+                    listing.isOpen ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                  }`}
+                >
                   {listing.isOpen ? 'Open Now' : 'Closed'}
                 </div>
               </div>
@@ -346,5 +360,13 @@ export default function ListingsPage() {
         )}
       </div>
     </div>
-  )
+  );
+}
+
+export default function ListingsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <ListingsContent />
+    </Suspense>
+  );
 }

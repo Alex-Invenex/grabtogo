@@ -1,26 +1,26 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import Image from 'next/image'
-import { ChevronLeft, ChevronRight, Tag, Clock, ShoppingCart } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Card } from '@/components/ui/card'
-import { getBusinessImage } from '@/lib/images'
+import * as React from 'react';
+import Image from 'next/image';
+import { ChevronLeft, ChevronRight, Tag, Clock, ShoppingCart } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
+import { getBusinessImage } from '@/lib/images';
 
 interface Offer {
-  id: string
-  title: string
-  subtitle: string
-  description: string
-  discount: string
-  code?: string
-  imageUrl: string
-  ctaText: string
-  ctaLink: string
-  backgroundColor: string
-  textColor: string
-  endDate?: Date
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  discount: string;
+  code?: string;
+  imageUrl: string;
+  ctaText: string;
+  ctaLink: string;
+  backgroundColor: string;
+  textColor: string;
+  endDate?: Date;
 }
 
 const offers: Offer[] = [
@@ -89,33 +89,33 @@ const offers: Offer[] = [
     backgroundColor: 'from-yellow-600 to-amber-600',
     textColor: 'text-white',
   },
-]
+];
 
 export function OffersCarousel() {
-  const [currentIndex, setCurrentIndex] = React.useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = React.useState(true)
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = React.useState(true);
 
   const nextSlide = React.useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % offers.length)
-  }, [])
+    setCurrentIndex((prev) => (prev + 1) % offers.length);
+  }, []);
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + offers.length) % offers.length)
-  }
+    setCurrentIndex((prev) => (prev - 1 + offers.length) % offers.length);
+  };
 
   const goToSlide = (index: number) => {
-    setCurrentIndex(index)
-  }
+    setCurrentIndex(index);
+  };
 
   // Auto-play carousel
   React.useEffect(() => {
-    if (!isAutoPlaying) return
+    if (!isAutoPlaying) return;
 
-    const interval = setInterval(nextSlide, 5000)
-    return () => clearInterval(interval)
-  }, [isAutoPlaying, nextSlide])
+    const interval = setInterval(nextSlide, 5000);
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, nextSlide]);
 
-  const currentOffer = offers[currentIndex]
+  const currentOffer = offers[currentIndex];
 
   return (
     <section className="py-8 bg-gray-50">
@@ -126,7 +126,9 @@ export function OffersCarousel() {
           onMouseLeave={() => setIsAutoPlaying(true)}
         >
           {/* Carousel Content */}
-          <div className={`relative bg-gradient-to-r ${currentOffer.backgroundColor} overflow-hidden`}>
+          <div
+            className={`relative bg-gradient-to-r ${currentOffer.backgroundColor} overflow-hidden`}
+          >
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
               <div
@@ -215,7 +217,9 @@ export function OffersCarousel() {
                         <Clock className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <div className="text-xs font-semibold text-gray-500 uppercase">Limited Time</div>
+                        <div className="text-xs font-semibold text-gray-500 uppercase">
+                          Limited Time
+                        </div>
                         <div className="text-lg font-bold text-gray-900">Offer Ends Soon!</div>
                       </div>
                     </div>
@@ -257,5 +261,5 @@ export function OffersCarousel() {
         </Card>
       </div>
     </section>
-  )
+  );
 }

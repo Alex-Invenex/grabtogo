@@ -1,39 +1,39 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { CheckCircle, Loader2, Mail } from 'lucide-react'
-import { Suspense } from 'react'
-import Link from 'next/link'
+import * as React from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { CheckCircle, Loader2, Mail, XCircle } from 'lucide-react';
+import { Suspense } from 'react';
+import Link from 'next/link';
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { useToast } from '@/hooks/use-toast'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useToast } from '@/hooks/use-toast';
 
-type VerificationState = 'loading' | 'success' | 'error' | 'expired' | 'invalid'
+type VerificationState = 'loading' | 'success' | 'error' | 'expired' | 'invalid';
 
 function VerifyEmailForm() {
-  const [state, setState] = React.useState<VerificationState>('loading')
-  const [message, setMessage] = React.useState('')
-  const [isResending, setIsResending] = React.useState(false)
-  const [userEmail, setUserEmail] = React.useState('')
+  const [state, setState] = React.useState<VerificationState>('loading');
+  const [message, setMessage] = React.useState('');
+  const [isResending, setIsResending] = React.useState(false);
+  const [userEmail, setUserEmail] = React.useState('');
 
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const { toast } = useToast()
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const { toast } = useToast();
 
-  const token = searchParams.get('token')
+  const token = searchParams.get('token');
 
   React.useEffect(() => {
     if (!token) {
-      setState('invalid')
-      setMessage('No verification token provided')
-      return
+      setState('invalid');
+      setMessage('No verification token provided');
+      return;
     }
 
-    verifyToken(token)
-  }, [token])
+    verifyToken(token);
+  }, [token]);
 
   const verifyToken = async (verificationToken: string) => {
     try {
@@ -43,45 +43,45 @@ function VerifyEmailForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ token: verificationToken }),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (response.ok) {
-        setState('success')
-        setMessage('Your email has been verified successfully!')
-        setUserEmail(data.user?.email || '')
+        setState('success');
+        setMessage('Your email has been verified successfully!');
+        setUserEmail(data.user?.email || '');
 
         // Redirect to login after 3 seconds
         setTimeout(() => {
-          router.push('/auth/login?message=EmailVerified')
-        }, 3000)
+          router.push('/auth/login?message=EmailVerified');
+        }, 3000);
       } else {
         if (response.status === 400) {
           if (data.error.includes('expired')) {
-            setState('expired')
-            setMessage('The verification link has expired')
+            setState('expired');
+            setMessage('The verification link has expired');
           } else if (data.error.includes('already verified')) {
-            setState('success')
-            setMessage('Your email is already verified')
+            setState('success');
+            setMessage('Your email is already verified');
             setTimeout(() => {
-              router.push('/auth/login?message=AlreadyVerified')
-            }, 2000)
+              router.push('/auth/login?message=AlreadyVerified');
+            }, 2000);
           } else {
-            setState('invalid')
-            setMessage(data.error || 'Invalid verification token')
+            setState('invalid');
+            setMessage(data.error || 'Invalid verification token');
           }
         } else {
-          setState('error')
-          setMessage('Verification failed. Please try again.')
+          setState('error');
+          setMessage('Verification failed. Please try again.');
         }
       }
     } catch (error) {
-      console.error('Verification error:', error)
-      setState('error')
-      setMessage('Something went wrong. Please try again.')
+      console.error('Verification error:', error);
+      setState('error');
+      setMessage('Something went wrong. Please try again.');
     }
-  }
+  };
 
   const resendVerification = async () => {
     if (!userEmail) {
@@ -89,11 +89,11 @@ function VerifyEmailForm() {
         title: 'Email Required',
         description: 'Please provide your email address to resend verification',
         variant: 'destructive',
-      })
-      return
+      });
+      return;
     }
 
-    setIsResending(true)
+    setIsResending(true);
 
     try {
       const response = await fetch('/api/auth/resend-verification', {
@@ -102,34 +102,34 @@ function VerifyEmailForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email: userEmail }),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (response.ok) {
         toast({
           title: 'Verification Email Sent',
           description: 'Please check your inbox for a new verification link',
-        })
-        setState('loading')
-        setMessage('New verification email sent. Please check your inbox.')
+        });
+        setState('loading');
+        setMessage('New verification email sent. Please check your inbox.');
       } else {
         toast({
           title: 'Failed to Resend',
           description: data.error || 'Failed to send verification email',
           variant: 'destructive',
-        })
+        });
       }
     } catch {
       toast({
         title: 'Error',
         description: 'Something went wrong. Please try again.',
         variant: 'destructive',
-      })
+      });
     } finally {
-      setIsResending(false)
+      setIsResending(false);
     }
-  }
+  };
 
   const renderContent = () => {
     switch (state) {
@@ -138,11 +138,9 @@ function VerifyEmailForm() {
           <div className="text-center">
             <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4 text-primary" />
             <h2 className="text-xl font-semibold mb-2">Verifying your email...</h2>
-            <p className="text-muted-foreground">
-              Please wait while we verify your email address.
-            </p>
+            <p className="text-muted-foreground">Please wait while we verify your email address.</p>
           </div>
-        )
+        );
 
       case 'success':
         return (
@@ -159,7 +157,7 @@ function VerifyEmailForm() {
               <Link href="/auth/login">Continue to Login</Link>
             </Button>
           </div>
-        )
+        );
 
       case 'expired':
         return (
@@ -183,7 +181,7 @@ function VerifyEmailForm() {
               </Button>
             </div>
           </div>
-        )
+        );
 
       case 'invalid':
       case 'error':
@@ -209,20 +207,16 @@ function VerifyEmailForm() {
               </Button>
             </div>
           </div>
-        )
+        );
     }
-  }
+  };
 
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
         <div className="flex flex-col space-y-2 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight">
-            Email Verification
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Verifying your GrabtoGo account
-          </p>
+          <h1 className="text-2xl font-semibold tracking-tight">Email Verification</h1>
+          <p className="text-sm text-muted-foreground">Verifying your GrabtoGo account</p>
         </div>
 
         <Card>
@@ -254,34 +248,33 @@ function VerifyEmailForm() {
         </Card>
 
         <div className="text-center text-sm">
-          <Link
-            href="/auth/login"
-            className="text-muted-foreground hover:text-primary"
-          >
+          <Link href="/auth/login" className="text-muted-foreground hover:text-primary">
             Back to login
           </Link>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default function VerifyEmailPage() {
   return (
-    <Suspense fallback={
-      <div className="container flex h-screen w-screen flex-col items-center justify-center">
-        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-center">
-                <Loader2 className="h-6 w-6 animate-spin" />
-              </div>
-            </CardContent>
-          </Card>
+    <Suspense
+      fallback={
+        <div className="container flex h-screen w-screen flex-col items-center justify-center">
+          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-center">
+                  <Loader2 className="h-6 w-6 animate-spin" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </div>
-    }>
+      }
+    >
       <VerifyEmailForm />
     </Suspense>
-  )
+  );
 }

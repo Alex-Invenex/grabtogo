@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
-import { useSession, signOut } from 'next-auth/react'
-import { AnimatePresence } from 'framer-motion'
+import React, { useState } from 'react';
+import { useSession, signOut } from 'next-auth/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
   Search,
   Bell,
@@ -14,19 +14,19 @@ import {
   Moon,
   Sun,
   Globe,
-  Activity
-} from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+  Activity,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@/components/ui/dropdown-menu';
 
 const notifications = [
   {
@@ -35,7 +35,7 @@ const notifications = [
     message: 'Fresh Foods Market applied for approval',
     time: '2 minutes ago',
     unread: true,
-    type: 'vendor'
+    type: 'vendor',
   },
   {
     id: 2,
@@ -43,7 +43,7 @@ const notifications = [
     message: 'High memory usage detected on server-2',
     time: '10 minutes ago',
     unread: true,
-    type: 'system'
+    type: 'system',
   },
   {
     id: 3,
@@ -51,21 +51,21 @@ const notifications = [
     message: 'Vendor subscription renewed for ₹299',
     time: '1 hour ago',
     unread: false,
-    type: 'payment'
-  }
-]
+    type: 'payment',
+  },
+];
 
 export default function AdminHeader() {
-  const { data: session } = useSession()
-  const [searchQuery, setSearchQuery] = useState('')
-  const [showNotifications, setShowNotifications] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const { data: session } = useSession();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const unreadCount = notifications.filter(n => n.unread).length
+  const unreadCount = notifications.filter((n) => n.unread).length;
 
   const handleLogout = async () => {
-    await signOut({ callbackUrl: '/admin/login' })
-  }
+    await signOut({ callbackUrl: '/admin/login' });
+  };
 
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4">
@@ -105,7 +105,11 @@ export default function AdminHeader() {
           {/* Notifications */}
           <DropdownMenu open={showNotifications} onOpenChange={setShowNotifications}>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="relative text-gray-600 hover:text-gray-900">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="relative text-gray-600 hover:text-gray-900"
+              >
                 <Bell className="w-5 h-5" />
                 {unreadCount > 0 && (
                   <motion.div
@@ -161,7 +165,10 @@ export default function AdminHeader() {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="flex items-center gap-2 px-3">
                 <Avatar className="w-8 h-8">
-                  <AvatarImage src={session?.user?.image || ''} alt={session?.user?.name || 'Admin'} />
+                  <AvatarImage
+                    src={session?.user?.image || ''}
+                    alt={session?.user?.name || 'Admin'}
+                  />
                   <AvatarFallback className="bg-blue-600 text-white">
                     {session?.user?.name?.charAt(0) || 'A'}
                   </AvatarFallback>
@@ -205,5 +212,5 @@ export default function AdminHeader() {
         </div>
       </div>
     </header>
-  )
+  );
 }

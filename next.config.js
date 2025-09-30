@@ -1,21 +1,39 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Production optimization
+  output: 'standalone',
+
+  // Image optimization
   images: {
+    domains: ['res.cloudinary.com', 'localhost'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '**',
       },
     ],
+    formats: ['image/avif', 'image/webp'],
   },
+
+  // Environment variables
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
-  // PWA configuration
+
+  // PWA and performance
   experimental: {
-    webVitalsAttribution: ['CLS', 'LCP']
+    webVitalsAttribution: ['CLS', 'LCP'],
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
-  // Enable service worker
+
+  // Font optimization - disabled to avoid network timeout issues during build
+  // Fonts will still load correctly at runtime from Google Fonts CDN
+  optimizeFonts: false,
+  // Security and performance headers
   async headers() {
     return [
       {
@@ -40,7 +58,36 @@ const nextConfig = {
           },
         ],
       },
-    ]
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=(self)',
+          },
+        ],
+      },
+    ];
   },
   // Security headers for PWA
   async rewrites() {
@@ -49,8 +96,21 @@ const nextConfig = {
         source: '/service-worker.js',
         destination: '/sw.js',
       },
-    ]
+    ];
   },
-}
 
-module.exports = nextConfig
+  // Webpack optimization
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    return config;
+  },
+};
+
+module.exports = withBundleAnalyzer(nextConfig);

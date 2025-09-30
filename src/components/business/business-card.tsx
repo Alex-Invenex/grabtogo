@@ -1,58 +1,58 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import Link from 'next/link'
-import { Star, Heart, MapPin, Clock, Phone, Navigation, Store, Badge } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Badge as BadgeComponent } from '@/components/ui/badge'
+import * as React from 'react';
+import Link from 'next/link';
+import { Star, Heart, MapPin, Clock, Phone, Navigation, Store, Badge } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge as BadgeComponent } from '@/components/ui/badge';
 
 interface Business {
-  id: string
-  name: string
-  description: string
-  category: string
-  location: string
-  city: string
-  distance: string
-  rating: number
-  reviewCount: number
-  image: string
-  isOpen: boolean
-  openHours: string
-  phoneNumber: string
-  dealTitle?: string
-  dealDiscount?: number
-  originalPrice?: number
-  finalPrice?: number
-  verified?: boolean
-  featured?: boolean
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  location: string;
+  city: string;
+  distance: string;
+  rating: number;
+  reviewCount: number;
+  image: string;
+  isOpen: boolean;
+  openHours: string;
+  phoneNumber: string;
+  dealTitle?: string;
+  dealDiscount?: number;
+  originalPrice?: number;
+  finalPrice?: number;
+  verified?: boolean;
+  featured?: boolean;
 }
 
 interface BusinessCardProps {
-  business: Business
-  layout?: 'grid' | 'list'
-  showDeal?: boolean
-  className?: string
+  business: Business;
+  layout?: 'grid' | 'list';
+  showDeal?: boolean;
+  className?: string;
 }
 
 export function BusinessCard({
   business,
   layout = 'grid',
   showDeal = true,
-  className = ''
+  className = '',
 }: BusinessCardProps) {
-  const [isLiked, setIsLiked] = React.useState(false)
+  const [isLiked, setIsLiked] = React.useState(false);
 
   const handleCall = (e: React.MouseEvent) => {
-    e.preventDefault()
-    window.open(`tel:${business.phoneNumber}`, '_self')
-  }
+    e.preventDefault();
+    window.open(`tel:${business.phoneNumber}`, '_self');
+  };
 
   const handleDirections = (e: React.MouseEvent) => {
-    e.preventDefault()
-    const encodedLocation = encodeURIComponent(`${business.name}, ${business.location}`)
-    window.open(`https://maps.google.com/?q=${encodedLocation}`, '_blank')
-  }
+    e.preventDefault();
+    const encodedLocation = encodeURIComponent(`${business.name}, ${business.location}`);
+    window.open(`https://maps.google.com/?q=${encodedLocation}`, '_blank');
+  };
 
   if (layout === 'list') {
     return (
@@ -88,15 +88,13 @@ export function BusinessCard({
               </div>
               <button
                 onClick={(e) => {
-                  e.preventDefault()
-                  setIsLiked(!isLiked)
+                  e.preventDefault();
+                  setIsLiked(!isLiked);
                 }}
                 className="ml-2 p-2 rounded-full hover:bg-gray-100 transition-colors"
               >
                 <Heart
-                  className={`w-5 h-5 ${
-                    isLiked ? 'fill-red-500 text-red-500' : 'text-gray-400'
-                  }`}
+                  className={`w-5 h-5 ${isLiked ? 'fill-red-500 text-red-500' : 'text-gray-400'}`}
                 />
               </button>
             </div>
@@ -104,7 +102,9 @@ export function BusinessCard({
             <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
               <div className="flex items-center gap-1">
                 <MapPin className="w-4 h-4" />
-                <span>{business.location} • {business.distance}</span>
+                <span>
+                  {business.location} • {business.distance}
+                </span>
               </div>
               <div className="flex items-center gap-1">
                 <Star className="w-4 h-4 fill-current text-yellow-500" />
@@ -127,11 +127,11 @@ export function BusinessCard({
             )}
 
             <div className="flex items-center justify-between">
-              <div className={`flex items-center gap-1 text-sm px-2 py-1 rounded-full ${
-                business.isOpen
-                  ? 'store-status-open'
-                  : 'store-status-closed'
-              }`}>
+              <div
+                className={`flex items-center gap-1 text-sm px-2 py-1 rounded-full ${
+                  business.isOpen ? 'store-status-open' : 'store-status-closed'
+                }`}
+              >
                 <Clock className="w-4 h-4" />
                 <span>{business.isOpen ? 'Open' : 'Closed'}</span>
               </div>
@@ -145,11 +145,7 @@ export function BusinessCard({
                   <Phone className="w-4 h-4 mr-1" />
                   Call
                 </Button>
-                <Button
-                  size="sm"
-                  onClick={handleDirections}
-                  className="btn-gradient"
-                >
+                <Button size="sm" onClick={handleDirections} className="btn-gradient">
                   <Navigation className="w-4 h-4 mr-1" />
                   Directions
                 </Button>
@@ -158,7 +154,7 @@ export function BusinessCard({
           </div>
         </div>
       </Link>
-    )
+    );
   }
 
   // Grid Layout (default)
@@ -193,15 +189,13 @@ export function BusinessCard({
           {/* Like Button */}
           <button
             onClick={(e) => {
-              e.preventDefault()
-              setIsLiked(!isLiked)
+              e.preventDefault();
+              setIsLiked(!isLiked);
             }}
             className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform"
           >
             <Heart
-              className={`w-4 h-4 ${
-                isLiked ? 'fill-red-500 text-red-500' : 'text-gray-600'
-              }`}
+              className={`w-4 h-4 ${isLiked ? 'fill-red-500 text-red-500' : 'text-gray-600'}`}
             />
           </button>
 
@@ -245,14 +239,14 @@ export function BusinessCard({
           </div>
 
           {/* Business Name */}
-          <h3 className="font-bold text-lg text-gray-900 mb-2 line-clamp-1">
-            {business.name}
-          </h3>
+          <h3 className="font-bold text-lg text-gray-900 mb-2 line-clamp-1">{business.name}</h3>
 
           {/* Location */}
           <div className="flex items-center gap-1 text-sm text-gray-600 mb-2">
             <MapPin className="w-4 h-4" />
-            <span>{business.location} • {business.distance}</span>
+            <span>
+              {business.location} • {business.distance}
+            </span>
           </div>
 
           {/* Deal Section */}
@@ -280,17 +274,15 @@ export function BusinessCard({
           )}
 
           {/* Description */}
-          <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-            {business.description}
-          </p>
+          <p className="text-gray-600 text-sm mb-4 line-clamp-2">{business.description}</p>
 
           {/* Footer */}
           <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-            <div className={`flex items-center gap-1 text-sm px-2 py-1 rounded-full ${
-              business.isOpen
-                ? 'store-status-open'
-                : 'store-status-closed'
-            }`}>
+            <div
+              className={`flex items-center gap-1 text-sm px-2 py-1 rounded-full ${
+                business.isOpen ? 'store-status-open' : 'store-status-closed'
+              }`}
+            >
               <Clock className="w-4 h-4" />
               <span>{business.isOpen ? 'Open' : 'Closed'}</span>
             </div>
@@ -299,5 +291,5 @@ export function BusinessCard({
         </div>
       </div>
     </Link>
-  )
+  );
 }

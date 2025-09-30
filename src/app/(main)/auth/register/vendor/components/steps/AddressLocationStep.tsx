@@ -1,31 +1,37 @@
-'use client'
+'use client';
 
-import { useFormContext } from 'react-hook-form'
-import { useState, useEffect } from 'react'
-import { MapPin, Navigation, Home, Building2, Map, Milestone } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form'
-import { Slider } from '@/components/ui/slider'
-import { KERALA_CITIES } from '../../lib/constants'
+import { useFormContext } from 'react-hook-form';
+import { useState, useEffect } from 'react';
+import { MapPin, Navigation, Home, Building2, Map, Milestone } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { Slider } from '@/components/ui/slider';
+import { KERALA_CITIES } from '../../lib/constants';
 
 export default function AddressLocationStep() {
-  const { control, setValue, watch } = useFormContext()
-  const [isLocating, setIsLocating] = useState(false)
-  const [mapError, setMapError] = useState('')
+  const { control, setValue, watch } = useFormContext();
+  const [isLocating, setIsLocating] = useState(false);
+  const [mapError, setMapError] = useState('');
 
-  const coordinates = watch('coordinates')
-  const deliveryRadius = watch('deliveryRadius') || 5
+  const coordinates = watch('coordinates');
+  const deliveryRadius = watch('deliveryRadius') || 5;
 
   // Automatically set state to Kerala since we only operate there
   useEffect(() => {
-    setValue('state', 'Kerala')
-  }, [setValue])
+    setValue('state', 'Kerala');
+  }, [setValue]);
 
   const handleUseCurrentLocation = () => {
-    setIsLocating(true)
-    setMapError('')
+    setIsLocating(true);
+    setMapError('');
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -33,28 +39,28 @@ export default function AddressLocationStep() {
           setValue('coordinates', {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
-          })
-          setValue('useCurrentLocation', true)
-          setIsLocating(false)
+          });
+          setValue('useCurrentLocation', true);
+          setIsLocating(false);
 
           // Reverse geocoding would go here in production
           // For now, we&apos;ll just set a success message
         },
         () => {
-          setMapError('Unable to get your location. Please enter manually.')
-          setIsLocating(false)
+          setMapError('Unable to get your location. Please enter manually.');
+          setIsLocating(false);
         },
         {
           enableHighAccuracy: true,
           timeout: 5000,
           maximumAge: 0,
         }
-      )
+      );
     } else {
-      setMapError('Geolocation is not supported by your browser')
-      setIsLocating(false)
+      setMapError('Geolocation is not supported by your browser');
+      setIsLocating(false);
     }
-  }
+  };
 
   return (
     <div className="space-y-6">
@@ -129,11 +135,7 @@ export default function AddressLocationStep() {
                   Address Line 1
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Street address, building name"
-                    {...field}
-                    className="h-12"
-                  />
+                  <Input placeholder="Street address, building name" {...field} className="h-12" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -150,11 +152,7 @@ export default function AddressLocationStep() {
                   Address Line 2 (Optional)
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Apartment, suite, floor"
-                    {...field}
-                    className="h-12"
-                  />
+                  <Input placeholder="Apartment, suite, floor" {...field} className="h-12" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -186,7 +184,6 @@ export default function AddressLocationStep() {
             )}
           />
 
-
           <FormField
             control={control}
             name="pinCode"
@@ -194,12 +191,7 @@ export default function AddressLocationStep() {
               <FormItem>
                 <FormLabel>PIN Code</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="6-digit PIN"
-                    maxLength={6}
-                    {...field}
-                    className="h-12"
-                  />
+                  <Input placeholder="6-digit PIN" maxLength={6} {...field} className="h-12" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -216,11 +208,7 @@ export default function AddressLocationStep() {
                   Landmark (Optional)
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Near..."
-                    {...field}
-                    className="h-12"
-                  />
+                  <Input placeholder="Near..." {...field} className="h-12" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -256,5 +244,5 @@ export default function AddressLocationStep() {
         />
       </div>
     </div>
-  )
+  );
 }

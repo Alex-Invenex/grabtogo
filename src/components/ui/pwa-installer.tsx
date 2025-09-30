@@ -1,78 +1,79 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { Download, X, Smartphone, Monitor } from 'lucide-react'
+import * as React from 'react';
+import { Download, X, Smartphone, Monitor } from 'lucide-react';
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface BeforeInstallPromptEvent extends Event {
-  readonly platforms: string[]
+  readonly platforms: string[];
   readonly userChoice: Promise<{
-    outcome: 'accepted' | 'dismissed'
-    platform: string
-  }>
-  prompt(): Promise<void>
+    outcome: 'accepted' | 'dismissed';
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
 }
 
 declare global {
   interface WindowEventMap {
-    beforeinstallprompt: BeforeInstallPromptEvent
+    beforeinstallprompt: BeforeInstallPromptEvent;
   }
 }
 
 export function PWAInstaller() {
-  const [deferredPrompt, setDeferredPrompt] = React.useState<BeforeInstallPromptEvent | null>(null)
-  const [showInstallPrompt, setShowInstallPrompt] = React.useState(false)
-  const [isIOS, setIsIOS] = React.useState(false)
-  const [isStandalone, setIsStandalone] = React.useState(false)
-  const [showIOSInstructions, setShowIOSInstructions] = React.useState(false)
-  const [isRecentlyDismissed, setIsRecentlyDismissed] = React.useState(false)
+  const [deferredPrompt, setDeferredPrompt] = React.useState<BeforeInstallPromptEvent | null>(null);
+  const [showInstallPrompt, setShowInstallPrompt] = React.useState(false);
+  const [isIOS, setIsIOS] = React.useState(false);
+  const [isStandalone, setIsStandalone] = React.useState(false);
+  const [showIOSInstructions, setShowIOSInstructions] = React.useState(false);
+  const [isRecentlyDismissed, setIsRecentlyDismissed] = React.useState(false);
 
   React.useEffect(() => {
     // Check if it's iOS
-    const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-    setIsIOS(iOS)
+    const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    setIsIOS(iOS);
 
     // Check if already installed (running in standalone mode)
-    const standalone = window.matchMedia('(display-mode: standalone)').matches ||
-                     (window.navigator as any).standalone === true
+    const standalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      (window.navigator as any).standalone === true;
 
-    setIsStandalone(standalone)
+    setIsStandalone(standalone);
 
     // Check if recently dismissed
-    const dismissedTime = localStorage.getItem('pwa-install-dismissed')
+    const dismissedTime = localStorage.getItem('pwa-install-dismissed');
     if (dismissedTime && Date.now() - parseInt(dismissedTime) < 7 * 24 * 60 * 60 * 1000) {
-      setIsRecentlyDismissed(true)
+      setIsRecentlyDismissed(true);
     }
 
     // Handle the beforeinstallprompt event
     const handleBeforeInstallPrompt = (e: BeforeInstallPromptEvent) => {
-      e.preventDefault()
-      setDeferredPrompt(e)
+      e.preventDefault();
+      setDeferredPrompt(e);
 
       // Show the install prompt after a short delay
       setTimeout(() => {
-        setShowInstallPrompt(true)
-      }, 3000)
-    }
+        setShowInstallPrompt(true);
+      }, 3000);
+    };
 
     // Handle app installed event
     const handleAppInstalled = () => {
-      console.log('PWA was installed')
-      setShowInstallPrompt(false)
-      setDeferredPrompt(null)
-    }
+      console.log('PWA was installed');
+      setShowInstallPrompt(false);
+      setDeferredPrompt(null);
+    };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
-    window.addEventListener('appinstalled', handleAppInstalled)
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
-      window.removeEventListener('appinstalled', handleAppInstalled)
-    }
-  }, [])
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, []);
 
   React.useEffect(() => {
     // Register service worker
@@ -80,67 +81,69 @@ export function PWAInstaller() {
       navigator.serviceWorker
         .register('/sw.js')
         .then((registration) => {
-          console.log('Service Worker registered successfully:', registration.scope)
+          console.log('Service Worker registered successfully:', registration.scope);
 
           // Listen for updates
           registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing
+            const newWorker = registration.installing;
             if (newWorker) {
               newWorker.addEventListener('statechange', () => {
                 if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                   // New update available
-                  console.log('New content is available and will be used when all tabs for this page are closed.')
+                  console.log(
+                    'New content is available and will be used when all tabs for this page are closed.'
+                  );
                 }
-              })
+              });
             }
-          })
+          });
         })
         .catch((error) => {
-          console.log('Service Worker registration failed:', error)
-        })
+          console.log('Service Worker registration failed:', error);
+        });
     }
-  }, [])
+  }, []);
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
       if (isIOS) {
-        setShowIOSInstructions(true)
-        return
+        setShowIOSInstructions(true);
+        return;
       }
-      return
+      return;
     }
 
     try {
-      await deferredPrompt.prompt()
-      const { outcome } = await deferredPrompt.userChoice
+      await deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
 
       if (outcome === 'accepted') {
-        console.log('User accepted the install prompt')
+        console.log('User accepted the install prompt');
       } else {
-        console.log('User dismissed the install prompt')
+        console.log('User dismissed the install prompt');
       }
 
-      setDeferredPrompt(null)
-      setShowInstallPrompt(false)
+      setDeferredPrompt(null);
+      setShowInstallPrompt(false);
     } catch (error) {
-      console.error('Error during installation:', error)
+      console.error('Error during installation:', error);
     }
-  }
+  };
 
   const dismissPrompt = () => {
-    setShowInstallPrompt(false)
+    setShowInstallPrompt(false);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('pwa-install-dismissed', Date.now().toString())
+      localStorage.setItem('pwa-install-dismissed', Date.now().toString());
     }
-  }
+  };
 
   const dismissIOSInstructions = () => {
-    setShowIOSInstructions(false)
-  }
+    setShowIOSInstructions(false);
+  };
 
   // Don't show if already installed or dismissed recently
   if (isStandalone || isRecentlyDismissed) {
-    return null
+    return null;
   }
 
   // iOS installation instructions
@@ -182,16 +185,13 @@ export function PWAInstaller() {
               </div>
             </div>
 
-            <Button
-              onClick={dismissIOSInstructions}
-              className="w-full mt-4"
-            >
+            <Button onClick={dismissIOSInstructions} className="w-full mt-4">
               Got it!
             </Button>
           </CardContent>
         </Card>
       </div>
-    )
+    );
   }
 
   // Main install prompt
@@ -236,52 +236,49 @@ export function PWAInstaller() {
               </div>
             </div>
 
-            <Button
-              onClick={handleInstallClick}
-              className="w-full mt-3"
-              size="sm"
-            >
+            <Button onClick={handleInstallClick} className="w-full mt-3" size="sm">
               <Download className="h-4 w-4 mr-2" />
               {isIOS ? 'Install Instructions' : 'Install App'}
             </Button>
           </CardContent>
         </Card>
       </div>
-    )
+    );
   }
 
-  return null
+  return null;
 }
 
 // Hook to check PWA installation status
 export function usePWAInstallation() {
-  const [isInstallable, setIsInstallable] = React.useState(false)
-  const [isInstalled, setIsInstalled] = React.useState(false)
+  const [isInstallable, setIsInstallable] = React.useState(false);
+  const [isInstalled, setIsInstalled] = React.useState(false);
 
   React.useEffect(() => {
     // Check if already installed
-    const standalone = window.matchMedia('(display-mode: standalone)').matches ||
-                     (window.navigator as any).standalone === true
-    setIsInstalled(standalone)
+    const standalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      (window.navigator as any).standalone === true;
+    setIsInstalled(standalone);
 
     // Check if installable
     const handleBeforeInstallPrompt = () => {
-      setIsInstallable(true)
-    }
+      setIsInstallable(true);
+    };
 
     const handleAppInstalled = () => {
-      setIsInstalled(true)
-      setIsInstallable(false)
-    }
+      setIsInstalled(true);
+      setIsInstallable(false);
+    };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
-    window.addEventListener('appinstalled', handleAppInstalled)
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
-      window.removeEventListener('appinstalled', handleAppInstalled)
-    }
-  }, [])
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, []);
 
-  return { isInstallable, isInstalled }
+  return { isInstallable, isInstalled };
 }

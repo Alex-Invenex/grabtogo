@@ -1,46 +1,48 @@
-'use client'
+'use client';
 
-import { useFormContext } from 'react-hook-form'
-import { useState } from 'react'
-import { CreditCard, Loader2, CheckCircle, Shield, AlertCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { PACKAGES, REGISTRATION_FEE, GST_RATE } from '../../lib/constants'
+import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
+import { CreditCard, Loader2, CheckCircle, Shield, AlertCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { PACKAGES, REGISTRATION_FEE, GST_RATE } from '../../lib/constants';
 
 declare global {
   interface Window {
-    Razorpay: any
+    Razorpay: any;
   }
 }
 
 export default function PaymentStep() {
-  const { watch } = useFormContext()
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [paymentStatus, setPaymentStatus] = useState<'pending' | 'processing' | 'success' | 'failed'>('pending')
-  const [paymentError, setPaymentError] = useState('')
+  const { watch } = useFormContext();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState<
+    'pending' | 'processing' | 'success' | 'failed'
+  >('pending');
+  const [paymentError, setPaymentError] = useState('');
 
-  const formData = watch()
+  const formData = watch();
 
   const calculateTotals = () => {
-    const registrationFee = REGISTRATION_FEE
-    const gst = registrationFee * GST_RATE
+    const registrationFee = REGISTRATION_FEE;
+    const gst = registrationFee * GST_RATE;
     const packagePrice = formData.selectedPackage
-      ? (formData.billingCycle === 'yearly'
-          ? PACKAGES[formData.selectedPackage as keyof typeof PACKAGES].yearly
-          : PACKAGES[formData.selectedPackage as keyof typeof PACKAGES].monthly)
-      : 0
+      ? formData.billingCycle === 'yearly'
+        ? PACKAGES[formData.selectedPackage as keyof typeof PACKAGES].yearly
+        : PACKAGES[formData.selectedPackage as keyof typeof PACKAGES].monthly
+      : 0;
 
-    const total = registrationFee + gst + packagePrice
+    const total = registrationFee + gst + packagePrice;
 
-    return { registrationFee, gst, packagePrice, total }
-  }
+    return { registrationFee, gst, packagePrice, total };
+  };
 
-  const { registrationFee, gst, packagePrice, total } = calculateTotals()
+  const { registrationFee, gst, packagePrice, total } = calculateTotals();
 
   const handlePayment = async () => {
-    setIsProcessing(true)
-    setPaymentStatus('processing')
-    setPaymentError('')
+    setIsProcessing(true);
+    setPaymentStatus('processing');
+    setPaymentError('');
 
     try {
       // Create order on backend
@@ -54,12 +56,12 @@ export default function PaymentStep() {
           currency: 'INR',
           vendorData: formData,
         }),
-      })
+      });
 
-      const orderData = await orderResponse.json()
+      const orderData = await orderResponse.json();
 
       if (!orderResponse.ok) {
-        throw new Error(orderData.error || 'Failed to create order')
+        throw new Error(orderData.error || 'Failed to create order');
       }
 
       // Initialize Razorpay
@@ -84,26 +86,26 @@ export default function PaymentStep() {
                 razorpay_signature: response.razorpay_signature,
                 vendorData: formData,
               }),
-            })
+            });
 
-            const verifyData = await verifyResponse.json()
+            const verifyData = await verifyResponse.json();
 
             if (verifyResponse.ok) {
-              setPaymentStatus('success')
+              setPaymentStatus('success');
               // Trigger confetti animation
               if (typeof window !== 'undefined' && window.confetti) {
                 window.confetti({
                   particleCount: 100,
                   spread: 70,
-                  origin: { y: 0.6 }
-                })
+                  origin: { y: 0.6 },
+                });
               }
             } else {
-              throw new Error(verifyData.error || 'Payment verification failed')
+              throw new Error(verifyData.error || 'Payment verification failed');
             }
           } catch (error) {
-            setPaymentStatus('failed')
-            setPaymentError(error instanceof Error ? error.message : 'Payment verification failed')
+            setPaymentStatus('failed');
+            setPaymentError(error instanceof Error ? error.message : 'Payment verification failed');
           }
         },
         prefill: {
@@ -121,20 +123,20 @@ export default function PaymentStep() {
         },
         modal: {
           ondismiss: () => {
-            setIsProcessing(false)
-            setPaymentStatus('pending')
+            setIsProcessing(false);
+            setPaymentStatus('pending');
           },
         },
-      }
+      };
 
-      const rzp = new window.Razorpay(options)
-      rzp.open()
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     } catch (error) {
-      setPaymentStatus('failed')
-      setPaymentError(error instanceof Error ? error.message : 'Payment failed')
-      setIsProcessing(false)
+      setPaymentStatus('failed');
+      setPaymentError(error instanceof Error ? error.message : 'Payment failed');
+      setIsProcessing(false);
     }
-  }
+  };
 
   if (paymentStatus === 'success') {
     return (
@@ -144,7 +146,9 @@ export default function PaymentStep() {
         </div>
         <div>
           <h2 className="text-2xl font-bold text-green-900">Payment Successful!</h2>
-          <p className="text-gray-600 mt-2">Your vendor registration has been completed successfully.</p>
+          <p className="text-gray-600 mt-2">
+            Your vendor registration has been completed successfully.
+          </p>
         </div>
         <div className="p-6 bg-green-50 rounded-lg border border-green-200">
           <h3 className="font-semibold text-green-900 mb-3">What's Next?</h3>
@@ -155,14 +159,11 @@ export default function PaymentStep() {
             <p>• Admin team has been notified at info@grabtogo.in</p>
           </div>
         </div>
-        <Button
-          onClick={() => window.location.href = '/vendor/dashboard'}
-          className="w-full"
-        >
+        <Button onClick={() => (window.location.href = '/vendor/dashboard')} className="w-full">
           Go to Vendor Dashboard
         </Button>
       </div>
-    )
+    );
   }
 
   return (
@@ -188,8 +189,8 @@ export default function PaymentStep() {
           {packagePrice > 0 && (
             <div className="flex justify-between">
               <span>
-                {PACKAGES[formData.selectedPackage as keyof typeof PACKAGES]?.name} Package
-                ({formData.billingCycle === 'yearly' ? 'Yearly' : 'Monthly'})
+                {PACKAGES[formData.selectedPackage as keyof typeof PACKAGES]?.name} Package (
+                {formData.billingCycle === 'yearly' ? 'Yearly' : 'Monthly'})
               </span>
               <span>₹{packagePrice}</span>
             </div>
@@ -205,7 +206,8 @@ export default function PaymentStep() {
       <Alert className="border-blue-200 bg-blue-50">
         <Shield className="h-4 w-4 text-blue-600" />
         <AlertDescription className="text-blue-800">
-          Your payment is secured by Razorpay with 256-bit SSL encryption. We do not store your card details.
+          Your payment is secured by Razorpay with 256-bit SSL encryption. We do not store your card
+          details.
         </AlertDescription>
       </Alert>
 
@@ -213,9 +215,7 @@ export default function PaymentStep() {
       {paymentStatus === 'failed' && paymentError && (
         <Alert className="border-red-200 bg-red-50">
           <AlertCircle className="h-4 w-4 text-red-600" />
-          <AlertDescription className="text-red-800">
-            {paymentError}
-          </AlertDescription>
+          <AlertDescription className="text-red-800">{paymentError}</AlertDescription>
         </Alert>
       )}
 
@@ -223,10 +223,18 @@ export default function PaymentStep() {
       <div className="p-4 bg-blue-50 rounded-lg">
         <h4 className="font-medium text-blue-900 mb-2">Vendor Information</h4>
         <div className="text-sm text-blue-800 space-y-1">
-          <p><strong>Name:</strong> {formData.fullName}</p>
-          <p><strong>Business:</strong> {formData.companyName}</p>
-          <p><strong>Email:</strong> {formData.email}</p>
-          <p><strong>Phone:</strong> {formData.phone}</p>
+          <p>
+            <strong>Name:</strong> {formData.fullName}
+          </p>
+          <p>
+            <strong>Business:</strong> {formData.companyName}
+          </p>
+          <p>
+            <strong>Email:</strong> {formData.email}
+          </p>
+          <p>
+            <strong>Phone:</strong> {formData.phone}
+          </p>
         </div>
       </div>
 
@@ -263,8 +271,9 @@ export default function PaymentStep() {
       </Button>
 
       <p className="text-xs text-gray-500 text-center">
-        By clicking "Pay Securely", you agree to our Terms of Service and acknowledge that you have read our Privacy Policy.
+        By clicking "Pay Securely", you agree to our Terms of Service and acknowledge that you have
+        read our Privacy Policy.
       </p>
     </div>
-  )
+  );
 }

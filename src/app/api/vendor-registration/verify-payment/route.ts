@@ -1,36 +1,29 @@
-import { NextRequest, NextResponse } from 'next/server'
-import crypto from 'crypto'
-import { hash } from 'bcryptjs'
-import { db } from '@/lib/db'
-import { sendEmail } from '@/lib/email'
+import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'crypto';
+import { hash } from 'bcryptjs';
+import { db } from '@/lib/db';
+import { sendEmail } from '@/lib/email';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   try {
-    const {
-      razorpay_payment_id,
-      razorpay_order_id,
-      razorpay_signature,
-      vendorData,
-    } = await request.json()
+    const { razorpay_payment_id, razorpay_order_id, razorpay_signature, vendorData } =
+      await request.json();
 
     // Verify Razorpay signature
-    const body = razorpay_order_id + '|' + razorpay_payment_id
+    const body = razorpay_order_id + '|' + razorpay_payment_id;
     const expectedSignature = crypto
       .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
       .update(body.toString())
-      .digest('hex')
+      .digest('hex');
 
     if (expectedSignature !== razorpay_signature) {
-      return NextResponse.json(
-        { error: 'Payment verification failed' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Payment verification failed' }, { status: 400 });
     }
 
     // Hash password
-    const hashedPassword = await hash(vendorData.password, 12)
+    const hashedPassword = await hash(vendorData.password, 12);
 
     // Create user and vendor profile in database
     const user = await db.user.create({
@@ -42,7 +35,7 @@ export async function POST(request: NextRequest) {
         role: 'VENDOR',
         emailVerified: new Date(), // Auto-verify for paid registrations
       },
-    })
+    });
 
     // Create vendor profile
     const vendorProfile = await db.vendorProfile.create({
@@ -60,7 +53,7 @@ export async function POST(request: NextRequest) {
         longitude: vendorData.coordinates?.lng,
         businessLicense: vendorData.gstNumber,
       },
-    })
+    });
 
     // For now, we'll skip creating order/payment records in the database
     // since the schema requires complex relationships. In production,
@@ -72,9 +65,9 @@ export async function POST(request: NextRequest) {
       vendorId: vendorProfile.id,
       razorpayOrderId: razorpay_order_id,
       razorpayPaymentId: razorpay_payment_id,
-      amount: 299 + (299 * 0.18),
+      amount: 299 + 299 * 0.18,
       type: 'vendor_registration',
-    })
+    });
 
     // Create subscription if package selected
     if (vendorData.selectedPackage) {
@@ -82,10 +75,10 @@ export async function POST(request: NextRequest) {
         basic: { monthly: 99, yearly: 999 },
         standard: { monthly: 199, yearly: 1999 },
         premium: { monthly: 299, yearly: 2999 },
-      }
+      };
 
-      const price = packagePrices[vendorData.selectedPackage as keyof typeof packagePrices]
-      const amount = vendorData.billingCycle === 'yearly' ? price.yearly : price.monthly
+      const price = packagePrices[vendorData.selectedPackage as keyof typeof packagePrices];
+      const amount = vendorData.billingCycle === 'yearly' ? price.yearly : price.monthly;
 
       await db.vendorSubscription.create({
         data: {
@@ -94,14 +87,13 @@ export async function POST(request: NextRequest) {
           status: 'active',
           startDate: new Date(),
           endDate: new Date(
-            Date.now() +
-              (vendorData.billingCycle === 'yearly' ? 365 : 30) * 24 * 60 * 60 * 1000
+            Date.now() + (vendorData.billingCycle === 'yearly' ? 365 : 30) * 24 * 60 * 60 * 1000
           ),
           amount,
           billingCycle: vendorData.billingCycle,
           autoRenew: true,
         },
-      })
+      });
     }
 
     // Send confirmation email to vendor
@@ -139,9 +131,9 @@ export async function POST(request: NextRequest) {
             <p><strong>The GrabtoGo Team</strong></p>
           </div>
         `,
-      })
+      });
     } catch (emailError) {
-      console.error('Failed to send confirmation email:', emailError)
+      console.error('Failed to send confirmation email:', emailError);
     }
 
     // Send notification to admin
@@ -169,9 +161,9 @@ export async function POST(request: NextRequest) {
             <p><strong>Action Required:</strong> Please review and approve this vendor registration in the admin dashboard.</p>
           </div>
         `,
-      })
+      });
     } catch (emailError) {
-      console.error('Failed to send admin notification:', emailError)
+      console.error('Failed to send admin notification:', emailError);
     }
 
     return NextResponse.json({
@@ -179,12 +171,9 @@ export async function POST(request: NextRequest) {
       message: 'Payment verified and vendor registered successfully',
       vendorId: vendorProfile.id,
       userId: user.id,
-    })
+    });
   } catch (error) {
-    console.error('Error verifying payment:', error)
-    return NextResponse.json(
-      { error: 'Payment verification failed' },
-      { status: 500 }
-    )
+    console.error('Error verifying payment:', error);
+    return NextResponse.json({ error: 'Payment verification failed' }, { status: 500 });
   }
 }

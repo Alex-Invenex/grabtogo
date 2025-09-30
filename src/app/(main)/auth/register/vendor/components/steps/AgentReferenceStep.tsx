@@ -1,35 +1,35 @@
-'use client'
+'use client';
 
-import { useFormContext } from 'react-hook-form'
-import { useState } from 'react'
-import { Users, Hash, Phone, Calendar, FileText, CheckCircle, Loader2 } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form'
-import { Textarea } from '@/components/ui/textarea'
+import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
+import { Users, Hash, Phone, Calendar, FileText, CheckCircle, Loader2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
 
 export default function AgentReferenceStep() {
-  const { control, setValue, watch } = useFormContext()
-  const [isVerifying, setIsVerifying] = useState(false)
-  const [agentVerified, setAgentVerified] = useState(false)
+  const { control, setValue, watch } = useFormContext();
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [agentVerified, setAgentVerified] = useState(false);
 
-  const agentCode = watch('agentCode')
+  const agentCode = watch('agentCode');
 
   const handleVerifyAgent = async () => {
     if (!agentCode || !/^AG-[0-9]{4}$/.test(agentCode)) {
-      return
+      return;
     }
 
-    setIsVerifying(true)
+    setIsVerifying(true);
 
     // Simulate API call to verify agent
     setTimeout(() => {
-      setValue('agentName', 'Rajesh Kumar')
-      setValue('agentPhone', '+91 9876543210')
-      setAgentVerified(true)
-      setIsVerifying(false)
-    }, 1500)
-  }
+      setValue('agentName', 'Rajesh Kumar');
+      setValue('agentPhone', '+91 9876543210');
+      setAgentVerified(true);
+      setIsVerifying(false);
+    }, 1500);
+  };
 
   return (
     <div className="space-y-6">
@@ -105,11 +105,7 @@ export default function AgentReferenceStep() {
                       Agent Name
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        className="h-12 bg-white"
-                        disabled
-                      />
+                      <Input {...field} className="h-12 bg-white" disabled />
                     </FormControl>
                   </FormItem>
                 )}
@@ -125,11 +121,7 @@ export default function AgentReferenceStep() {
                       Agent Phone
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        className="h-12 bg-white"
-                        disabled
-                      />
+                      <Input {...field} className="h-12 bg-white" disabled />
                     </FormControl>
                   </FormItem>
                 )}
@@ -156,9 +148,7 @@ export default function AgentReferenceStep() {
                 />
               </FormControl>
               <FormMessage />
-              <p className="text-sm text-gray-500">
-                When did the agent visit your business?
-              </p>
+              <p className="text-sm text-gray-500">When did the agent visit your business?</p>
             </FormItem>
           )}
         />
@@ -190,5 +180,5 @@ export default function AgentReferenceStep() {
         />
       </div>
     </div>
-  )
+  );
 }

@@ -1,50 +1,46 @@
-'use client'
+'use client';
 
-import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { Plus, Search, Filter, Download, MoreHorizontal } from 'lucide-react'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Plus, Search, Filter, Download, MoreHorizontal } from 'lucide-react';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import VendorsTable from './components/VendorsTable'
-import VendorFilters from './components/VendorFilters'
-import VendorStats from './components/VendorStats'
-import AdminBreadcrumb from '../components/AdminBreadcrumb'
+} from '@/components/ui/dropdown-menu';
+import VendorsTable from './components/VendorsTable';
+import VendorFilters from './components/VendorFilters';
+import VendorStats from './components/VendorStats';
+import AdminBreadcrumb from '../components/AdminBreadcrumb';
 
 export default function VendorsPage() {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedTab, setSelectedTab] = useState('all')
-  const [showFilters, setShowFilters] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedTab, setSelectedTab] = useState('all');
+  const [showFilters, setShowFilters] = useState(false);
   const [vendorStats, setVendorStats] = useState({
     total: 2341,
     active: 2198,
     pending: 23,
     suspended: 45,
-    inactive: 75
-  })
+    inactive: 75,
+  });
 
   const handleExport = () => {
-    console.log('Exporting vendor data...')
+    console.log('Exporting vendor data...');
     // Implement export functionality
-  }
+  };
 
   return (
     <div className="space-y-6">
       {/* Breadcrumb */}
-      <AdminBreadcrumb
-        items={[
-          { title: 'Vendors', href: '/admin/vendors' }
-        ]}
-      />
+      <AdminBreadcrumb items={[{ title: 'Vendors', href: '/admin/vendors' }]} />
 
       {/* Header */}
       <div className="flex items-center justify-between">
@@ -141,37 +137,22 @@ export default function VendorsPage() {
 
         <div className="mt-6">
           <TabsContent value="all">
-            <VendorsTable
-              status="all"
-              searchQuery={searchQuery}
-            />
+            <VendorsTable status="all" searchQuery={searchQuery} />
           </TabsContent>
           <TabsContent value="active">
-            <VendorsTable
-              status="ACTIVE"
-              searchQuery={searchQuery}
-            />
+            <VendorsTable status="ACTIVE" searchQuery={searchQuery} />
           </TabsContent>
           <TabsContent value="pending">
-            <VendorsTable
-              status="PENDING"
-              searchQuery={searchQuery}
-            />
+            <VendorsTable status="PENDING" searchQuery={searchQuery} />
           </TabsContent>
           <TabsContent value="suspended">
-            <VendorsTable
-              status="SUSPENDED"
-              searchQuery={searchQuery}
-            />
+            <VendorsTable status="SUSPENDED" searchQuery={searchQuery} />
           </TabsContent>
           <TabsContent value="inactive">
-            <VendorsTable
-              status="INACTIVE"
-              searchQuery={searchQuery}
-            />
+            <VendorsTable status="INACTIVE" searchQuery={searchQuery} />
           </TabsContent>
         </div>
       </Tabs>
     </div>
-  )
+  );
 }

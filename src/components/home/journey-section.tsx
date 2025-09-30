@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { Button } from '@/components/ui/button'
-import { Search, MapPin, Shield } from 'lucide-react'
+import * as React from 'react';
+import { Button } from '@/components/ui/button';
+import { Search, MapPin, Shield } from 'lucide-react';
 
 export function JourneySection() {
   return (
@@ -13,8 +13,8 @@ export function JourneySection() {
             Order Food Made Simple!
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Browse Menus, Order Easily: Enjoy delicious food delivered to your doorstep
-            with our seamless ordering experience from search to delivery
+            Browse Menus, Order Easily: Enjoy delicious food delivered to your doorstep with our
+            seamless ordering experience from search to delivery
           </p>
         </div>
 
@@ -28,7 +28,8 @@ export function JourneySection() {
                 </div>
                 <h3 className="text-2xl font-bold mb-3">Browse Restaurants</h3>
                 <p className="text-white/90 leading-relaxed mb-6">
-                  Discover thousands of local restaurants, cuisines, and exclusive food deals right at your fingertips.
+                  Discover thousands of local restaurants, cuisines, and exclusive food deals right
+                  at your fingertips.
                 </p>
                 <Button
                   variant="outline"
@@ -60,8 +61,14 @@ export function JourneySection() {
 
                 {/* Floating Points */}
                 <div className="absolute top-12 right-12 w-4 h-4 bg-primary rounded-full animate-pulse"></div>
-                <div className="absolute bottom-20 left-16 w-3 h-3 bg-primary/60 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                <div className="absolute top-24 left-12 w-3 h-3 bg-primary/40 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <div
+                  className="absolute bottom-20 left-16 w-3 h-3 bg-primary/60 rounded-full animate-pulse"
+                  style={{ animationDelay: '0.5s' }}
+                ></div>
+                <div
+                  className="absolute top-24 left-12 w-3 h-3 bg-primary/40 rounded-full animate-pulse"
+                  style={{ animationDelay: '1s' }}
+                ></div>
               </div>
             </div>
           </div>
@@ -75,11 +82,10 @@ export function JourneySection() {
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3">Place Your Order</h3>
                 <p className="text-gray-600 leading-relaxed mb-6">
-                  Safe and secure ordering experience with verified restaurants, real-time tracking, and customer protection.
+                  Safe and secure ordering experience with verified restaurants, real-time tracking,
+                  and customer protection.
                 </p>
-                <Button
-                  className="bg-primary hover:bg-primary/90 text-white font-bold rounded-xl shadow-lg transition-all"
-                >
+                <Button className="bg-primary hover:bg-primary/90 text-white font-bold rounded-xl shadow-lg transition-all">
                   Get Started
                 </Button>
               </div>
@@ -88,5 +94,5 @@ export function JourneySection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

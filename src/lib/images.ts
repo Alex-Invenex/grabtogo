@@ -11,14 +11,20 @@ export const imageConfig = {
     pattern: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=1920&h=1080&q=30', // Shopping background
   },
   categories: {
-    'fashion-apparel': 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=400&h=400&q=80',
-    'home-appliances-electronics': 'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=400&h=400&q=80',
-    'restaurants-cafes': 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=400&q=80',
-    'supermarkets-grocery': 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=400&q=80',
-    'jewellery-watches': 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&q=80',
-    'furniture-home-decor': 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&q=80',
+    'fashion-apparel':
+      'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=400&h=400&q=80',
+    'home-appliances-electronics':
+      'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=400&h=400&q=80',
+    'restaurants-cafes':
+      'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=400&q=80',
+    'supermarkets-grocery':
+      'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=400&q=80',
+    'jewellery-watches':
+      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=400&q=80',
+    'furniture-home-decor':
+      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&q=80',
     'beauty-wellness': 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=400&q=80',
-    'automotive': 'https://images.unsplash.com/photo-1543268664-76bc20155b81?w=400&h=400&q=80',
+    automotive: 'https://images.unsplash.com/photo-1543268664-76bc20155b81?w=400&h=400&q=80',
   },
   businesses: {
     storefronts: [
@@ -86,35 +92,41 @@ export const imageConfig = {
     handshake: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&h=400&q=80',
     growth: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&q=80',
   },
-}
+};
 
 export const getRandomImage = (category: keyof typeof imageConfig): string => {
-  const images = imageConfig[category]
+  const images = imageConfig[category];
   if (Array.isArray(images)) {
-    return images[Math.floor(Math.random() * images.length)]
+    return images[Math.floor(Math.random() * images.length)];
   }
   if (typeof images === 'object') {
-    const values = Object.values(images).flat()
-    return values[Math.floor(Math.random() * values.length)] as string
+    const values = Object.values(images).flat();
+    return values[Math.floor(Math.random() * values.length)] as string;
   }
-  return images
-}
+  return images;
+};
 
-export const getBusinessImage = (index: number, type: 'storefront' | 'category' = 'storefront'): string => {
+export const getBusinessImage = (
+  index: number,
+  type: 'storefront' | 'category' = 'storefront'
+): string => {
   if (type === 'storefront') {
-    const images = imageConfig.businesses.storefronts
-    return images[index % images.length]
+    const images = imageConfig.businesses.storefronts;
+    return images[index % images.length];
   }
   // For category-specific images, cycle through all business images
-  const allBusinessImages = Object.values(imageConfig.businesses).flat()
-  return allBusinessImages[index % allBusinessImages.length]
-}
+  const allBusinessImages = Object.values(imageConfig.businesses).flat();
+  return allBusinessImages[index % allBusinessImages.length];
+};
 
 export const getCategoryImage = (categoryId: string): string => {
-  return imageConfig.categories[categoryId as keyof typeof imageConfig.categories] || imageConfig.businesses.storefronts[0]
-}
+  return (
+    imageConfig.categories[categoryId as keyof typeof imageConfig.categories] ||
+    imageConfig.businesses.storefronts[0]
+  );
+};
 
 export const getDealImage = (index: number): string => {
-  const images = imageConfig.deals.promotional
-  return images[index % images.length]
-}
+  const images = imageConfig.deals.promotional;
+  return images[index % images.length];
+};

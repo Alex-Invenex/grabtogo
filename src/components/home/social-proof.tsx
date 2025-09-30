@@ -1,19 +1,19 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { Star, Quote } from 'lucide-react'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import * as React from 'react';
+import { Star, Quote } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface Testimonial {
-  id: string
-  name: string
-  role: string
-  avatar?: string
-  rating: number
-  comment: string
-  location: string
+  id: string;
+  name: string;
+  role: string;
+  avatar?: string;
+  rating: number;
+  comment: string;
+  location: string;
 }
 
 const testimonials: Testimonial[] = [
@@ -22,7 +22,8 @@ const testimonials: Testimonial[] = [
     name: 'Priya Menon',
     role: 'Regular Customer',
     rating: 5,
-    comment: 'GrabtoGo has completely changed how I discover local businesses. The deals are amazing and the vendors are all verified and trustworthy!',
+    comment:
+      'GrabtoGo has completely changed how I discover local businesses. The deals are amazing and the vendors are all verified and trustworthy!',
     location: 'Kottayam',
   },
   {
@@ -30,7 +31,8 @@ const testimonials: Testimonial[] = [
     name: 'Rajesh Kumar',
     role: 'Business Owner',
     rating: 5,
-    comment: 'As a vendor, this platform has helped me reach so many new customers. The subscription plans are affordable and the results are incredible.',
+    comment:
+      'As a vendor, this platform has helped me reach so many new customers. The subscription plans are affordable and the results are incredible.',
     location: 'Kochi',
   },
   {
@@ -38,7 +40,8 @@ const testimonials: Testimonial[] = [
     name: 'Anjali Nair',
     role: 'Food Enthusiast',
     rating: 5,
-    comment: 'I love finding new restaurants and cafes through GrabtoGo. The offers are real and the vendor stories keep me updated on what\'s new!',
+    comment:
+      "I love finding new restaurants and cafes through GrabtoGo. The offers are real and the vendor stories keep me updated on what's new!",
     location: 'Thrissur',
   },
   {
@@ -46,7 +49,8 @@ const testimonials: Testimonial[] = [
     name: 'Arun Prakash',
     role: 'Shopping Lover',
     rating: 5,
-    comment: 'Best platform for local shopping! I saved so much money using the flash deals and exclusive offers. Highly recommended!',
+    comment:
+      'Best platform for local shopping! I saved so much money using the flash deals and exclusive offers. Highly recommended!',
     location: 'Thiruvananthapuram',
   },
   {
@@ -54,7 +58,8 @@ const testimonials: Testimonial[] = [
     name: 'Sreeja Thomas',
     role: 'Fashion Blogger',
     rating: 5,
-    comment: 'GrabtoGo connects me with the best local fashion boutiques. The trending products section always has something new and exciting!',
+    comment:
+      'GrabtoGo connects me with the best local fashion boutiques. The trending products section always has something new and exciting!',
     location: 'Kozhikode',
   },
   {
@@ -62,20 +67,21 @@ const testimonials: Testimonial[] = [
     name: 'Vishnu Mohan',
     role: 'Tech Enthusiast',
     rating: 5,
-    comment: 'Great platform for finding electronics deals. The product listings are detailed and the prices are unbeatable.',
+    comment:
+      'Great platform for finding electronics deals. The product listings are detailed and the prices are unbeatable.',
     location: 'Palakkad',
   },
-]
+];
 
 export function SocialProof() {
   const getInitials = (name: string) => {
     return name
       .split(' ')
-      .map(word => word[0])
+      .map((word) => word[0])
       .join('')
       .toUpperCase()
-      .slice(0, 2)
-  }
+      .slice(0, 2);
+  };
 
   return (
     <section className="section-padding bg-gradient-to-br from-primary/5 via-white to-primary/5">
@@ -91,7 +97,8 @@ export function SocialProof() {
             Loved by Thousands
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Don't just take our word for it - hear what our community has to say about their experience
+            Don't just take our word for it - hear what our community has to say about their
+            experience
           </p>
         </div>
 
@@ -208,7 +215,9 @@ export function SocialProof() {
                   </div>
                   <div>
                     <div className="font-bold text-gray-900 mb-1">Verified Vendors</div>
-                    <div className="text-sm text-gray-600">95% of customers appreciate our vendor verification process</div>
+                    <div className="text-sm text-gray-600">
+                      95% of customers appreciate our vendor verification process
+                    </div>
                   </div>
                 </div>
 
@@ -218,7 +227,9 @@ export function SocialProof() {
                   </div>
                   <div>
                     <div className="font-bold text-gray-900 mb-1">Great Deals</div>
-                    <div className="text-sm text-gray-600">Average savings of 35% on every purchase through our platform</div>
+                    <div className="text-sm text-gray-600">
+                      Average savings of 35% on every purchase through our platform
+                    </div>
                   </div>
                 </div>
 
@@ -228,7 +239,9 @@ export function SocialProof() {
                   </div>
                   <div>
                     <div className="font-bold text-gray-900 mb-1">Easy to Use</div>
-                    <div className="text-sm text-gray-600">Intuitive interface that makes discovery and ordering a breeze</div>
+                    <div className="text-sm text-gray-600">
+                      Intuitive interface that makes discovery and ordering a breeze
+                    </div>
                   </div>
                 </div>
 
@@ -238,7 +251,9 @@ export function SocialProof() {
                   </div>
                   <div>
                     <div className="font-bold text-gray-900 mb-1">Support Local</div>
-                    <div className="text-sm text-gray-600">Help your community thrive while getting the best deals</div>
+                    <div className="text-sm text-gray-600">
+                      Help your community thrive while getting the best deals
+                    </div>
                   </div>
                 </div>
               </div>
@@ -247,5 +262,5 @@ export function SocialProof() {
         </div>
       </div>
     </section>
-  )
+  );
 }

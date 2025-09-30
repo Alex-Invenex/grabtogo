@@ -1,22 +1,22 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
-import { cache } from '@/lib/redis'
+import { NextRequest, NextResponse } from 'next/server';
+import { db } from '@/lib/db';
+import { cache } from '@/lib/redis';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '20')
-    const category = searchParams.get('category')
-    const search = searchParams.get('search')
-    const sortBy = searchParams.get('sortBy') || 'createdAt'
-    const sortOrder = searchParams.get('sortOrder') || 'desc'
-    const minPrice = searchParams.get('minPrice')
-    const maxPrice = searchParams.get('maxPrice')
+    const searchParams = request.nextUrl.searchParams;
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '20');
+    const category = searchParams.get('category');
+    const search = searchParams.get('search');
+    const sortBy = searchParams.get('sortBy') || 'createdAt';
+    const sortOrder = searchParams.get('sortOrder') || 'desc';
+    const minPrice = searchParams.get('minPrice');
+    const maxPrice = searchParams.get('maxPrice');
 
-    const skip = (page - 1) * limit
+    const skip = (page - 1) * limit;
 
     // Create cache key
     const cacheKey = `products:${JSON.stringify({
@@ -28,12 +28,12 @@ export async function GET(request: NextRequest) {
       sortOrder,
       minPrice,
       maxPrice,
-    })}`
+    })}`;
 
     // Try to get from cache first
-    const cached = await cache.get(cacheKey)
+    const cached = await cache.get(cacheKey);
     if (cached) {
-      return NextResponse.json(cached)
+      return NextResponse.json(cached);
     }
 
     // Build where clause
@@ -42,10 +42,10 @@ export async function GET(request: NextRequest) {
       publishedAt: {
         lte: new Date(),
       },
-    }
+    };
 
     if (category) {
-      where.categoryId = category
+      where.categoryId = category;
     }
 
     if (search) {
@@ -53,23 +53,23 @@ export async function GET(request: NextRequest) {
         { name: { contains: search, mode: 'insensitive' } },
         { description: { contains: search, mode: 'insensitive' } },
         { shortDesc: { contains: search, mode: 'insensitive' } },
-      ]
+      ];
     }
 
     if (minPrice || maxPrice) {
-      where.price = {}
-      if (minPrice) where.price.gte = parseFloat(minPrice)
-      if (maxPrice) where.price.lte = parseFloat(maxPrice)
+      where.price = {};
+      if (minPrice) where.price.gte = parseFloat(minPrice);
+      if (maxPrice) where.price.lte = parseFloat(maxPrice);
     }
 
     // Build orderBy
-    const orderBy: any = {}
+    const orderBy: any = {};
     if (sortBy === 'price') {
-      orderBy.price = sortOrder
+      orderBy.price = sortOrder;
     } else if (sortBy === 'name') {
-      orderBy.name = sortOrder
+      orderBy.name = sortOrder;
     } else {
-      orderBy.createdAt = sortOrder
+      orderBy.createdAt = sortOrder;
     }
 
     // Get products with pagination
@@ -118,11 +118,11 @@ export async function GET(request: NextRequest) {
         take: limit,
       }),
       db.product.count({ where }),
-    ])
+    ]);
 
-    const totalPages = Math.ceil(total / limit)
-    const hasNext = page < totalPages
-    const hasPrev = page > 1
+    const totalPages = Math.ceil(total / limit);
+    const hasNext = page < totalPages;
+    const hasPrev = page > 1;
 
     const result = {
       data: products,
@@ -134,17 +134,14 @@ export async function GET(request: NextRequest) {
         hasNext,
         hasPrev,
       },
-    }
+    };
 
     // Cache for 5 minutes
-    await cache.set(cacheKey, result, 300)
+    await cache.set(cacheKey, result, 300);
 
-    return NextResponse.json(result)
+    return NextResponse.json(result);
   } catch (error) {
-    console.error('Products API error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    console.error('Products API error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

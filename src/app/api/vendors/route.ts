@@ -1,23 +1,23 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
-import { cache } from '@/lib/redis'
+import { NextRequest, NextResponse } from 'next/server';
+import { db } from '@/lib/db';
+import { cache } from '@/lib/redis';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '20')
-    const search = searchParams.get('search')
-    const city = searchParams.get('city')
-    const location = searchParams.get('location') // Alias for city
-    const verified = searchParams.get('verified')
+    const searchParams = request.nextUrl.searchParams;
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '20');
+    const search = searchParams.get('search');
+    const city = searchParams.get('city');
+    const location = searchParams.get('location'); // Alias for city
+    const verified = searchParams.get('verified');
 
-    const skip = (page - 1) * limit
+    const skip = (page - 1) * limit;
 
     // Use location parameter if city not provided
-    const cityFilter = city || location
+    const cityFilter = city || location;
 
     // Create cache key
     const cacheKey = `vendors:${JSON.stringify({
@@ -26,32 +26,32 @@ export async function GET(request: NextRequest) {
       search,
       city: cityFilter,
       verified,
-    })}`
+    })}`;
 
     // Try to get from cache first
-    const cached = await cache.get(cacheKey)
+    const cached = await cache.get(cacheKey);
     if (cached) {
-      return NextResponse.json(cached)
+      return NextResponse.json(cached);
     }
 
     // Build where clause
     const where: any = {
       isActive: true,
-    }
+    };
 
     if (verified === 'true') {
-      where.isVerified = true
+      where.isVerified = true;
     }
 
     if (cityFilter && cityFilter !== 'All Locations') {
-      where.city = { contains: cityFilter, mode: 'insensitive' }
+      where.city = { contains: cityFilter, mode: 'insensitive' };
     }
 
     if (search) {
       where.OR = [
         { storeName: { contains: search, mode: 'insensitive' } },
         { description: { contains: search, mode: 'insensitive' } },
-      ]
+      ];
     }
 
     // Get vendor profiles with pagination
@@ -75,11 +75,11 @@ export async function GET(request: NextRequest) {
         take: limit,
       }),
       db.vendorProfile.count({ where }),
-    ])
+    ]);
 
-    const totalPages = Math.ceil(total / limit)
-    const hasNext = page < totalPages
-    const hasPrev = page > 1
+    const totalPages = Math.ceil(total / limit);
+    const hasNext = page < totalPages;
+    const hasPrev = page > 1;
 
     const result = {
       data: vendors,
@@ -91,17 +91,14 @@ export async function GET(request: NextRequest) {
         hasNext,
         hasPrev,
       },
-    }
+    };
 
     // Cache for 10 minutes
-    await cache.set(cacheKey, result, 600)
+    await cache.set(cacheKey, result, 600);
 
-    return NextResponse.json(result)
+    return NextResponse.json(result);
   } catch (error) {
-    console.error('Vendors API error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    console.error('Vendors API error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

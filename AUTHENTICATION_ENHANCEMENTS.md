@@ -3,6 +3,7 @@
 ## ✅ Implemented Features
 
 ### 1. **Cryptographically Secure Token Generation**
+
 - **Files Modified:**
   - `src/lib/security.ts`
   - `src/lib/password.ts`
@@ -10,6 +11,7 @@
 - **Impact:** Eliminates predictable token attacks
 
 ### 2. **Two-Factor Authentication (2FA/TOTP)**
+
 - **New Files Created:**
   - `src/lib/two-factor.ts` - Core 2FA utilities
   - `src/app/api/auth/2fa/setup/route.ts` - Generate QR code
@@ -31,6 +33,7 @@
   ```
 
 ### 3. **SMS Verification (OTP)**
+
 - **New Files Created:**
   - `src/lib/sms.ts` - SMS utilities with Twilio
   - `src/app/api/auth/send-sms-otp/route.ts` - Send OTP
@@ -51,6 +54,7 @@
   ```
 
 ### 4. **Google reCAPTCHA v3**
+
 - **New File Created:**
   - `src/lib/recaptcha.ts` - reCAPTCHA verification
 
@@ -62,8 +66,10 @@
   - Integrated with SMS OTP endpoint
 
 ### 5. **Environment Variables**
+
 - **File Modified:** `.env.example`
 - **New Variables:**
+
   ```env
   # SMS Provider (Twilio)
   TWILIO_ACCOUNT_SID="your-twilio-account-sid"
@@ -76,6 +82,7 @@
   ```
 
 ### 6. **NPM Packages Installed**
+
 ```json
 "speakeasy": "^2.0.0",
 "qrcode": "^1.5.4",
@@ -92,7 +99,9 @@
 ### **Frontend Integration Required**
 
 #### 1. **Login Page Enhancements** (`src/app/(main)/auth/login/page.tsx`)
+
 **TODO:**
+
 - [ ] Add reCAPTCHA provider wrapper
 - [ ] Add reCAPTCHA token generation on form submit
 - [ ] Add 2FA verification step after password success
@@ -101,7 +110,9 @@
 - [ ] Handle 2FA errors and retry logic
 
 #### 2. **Register Page Enhancements** (`src/app/(main)/auth/register/page.tsx`)
+
 **TODO:**
+
 - [ ] Add reCAPTCHA provider wrapper
 - [ ] Add reCAPTCHA token generation on form submit
 - [ ] Add optional phone verification step
@@ -112,8 +123,10 @@
 - [ ] Show verification success/failure messages
 
 #### 3. **2FA Setup Page** (NEW FILE NEEDED)
+
 **Create:** `src/app/(main)/settings/2fa/page.tsx`
 **TODO:**
+
 - [ ] Fetch 2FA setup data from `/api/auth/2fa/setup`
 - [ ] Display QR code for scanning
 - [ ] Show backup codes (with copy button)
@@ -122,7 +135,9 @@
 - [ ] Show success message and redirect
 
 #### 4. **Settings/Security Page Enhancement**
+
 **TODO:**
+
 - [ ] Add 2FA enable/disable toggle
 - [ ] Add phone verification section
 - [ ] Add "Manage 2FA" button linking to setup page
@@ -130,7 +145,9 @@
 - [ ] Add "Change Phone Number" feature
 
 #### 5. **ReCAPTCHA Provider Setup**
+
 **TODO:**
+
 - [ ] Wrap app in `GoogleReCaptchaProvider` in `src/app/layout.tsx`
 - [ ] Add site key from environment variable
 - [ ] Use `useGoogleReCaptcha` hook in forms
@@ -140,6 +157,7 @@
 ## 🔧 Configuration Requirements
 
 ### **1. Twilio Setup** (for SMS)
+
 1. Create account at https://www.twilio.com
 2. Get Account SID and Auth Token
 3. Purchase a phone number (supports +91 India)
@@ -151,10 +169,12 @@
    ```
 
 **Alternative for India:** Use MSG91 or AWS SNS
+
 - MSG91: Better pricing for Indian SMS (~₹0.10/SMS)
 - Would require code changes in `src/lib/sms.ts`
 
 ### **2. Google reCAPTCHA v3 Setup**
+
 1. Visit https://www.google.com/recaptcha/admin/create
 2. Select reCAPTCHA v3
 3. Add your domains (localhost for dev)
@@ -166,17 +186,21 @@
    ```
 
 ### **3. Redis Requirement**
+
 - **Required for:** OTP storage, rate limiting
 - **Setup:** Ensure Redis is running and configured in `.env`
 - **Test:** Run `redis-cli ping` (should return PONG)
 
 ### **4. Database Migration**
+
 **IMPORTANT:** Run this when database is available:
+
 ```bash
 npx prisma migrate dev --name add_2fa_phone_verification
 ```
 
 This adds the new fields:
+
 - `twoFactorEnabled`
 - `twoFactorSecret`
 - `phoneVerified`
@@ -186,17 +210,17 @@ This adds the new fields:
 
 ## 🔒 Security Features Summary
 
-| Feature | Status | Protection Against |
-|---------|--------|-------------------|
-| Secure Token Generation | ✅ Implemented | Token prediction attacks |
-| 2FA/TOTP | ✅ Backend Ready | Password compromise |
-| SMS OTP | ✅ Backend Ready | Unauthorized access |
-| reCAPTCHA v3 | ✅ Backend Ready | Bot attacks, automation |
-| Rate Limiting (SMS) | ✅ Implemented | SMS abuse, cost attacks |
-| OTP Expiry (10 min) | ✅ Implemented | Replay attacks |
-| One-time OTP Use | ✅ Implemented | Reuse attacks |
-| 2FA Backup Codes | ✅ Generated | Device loss |
-| Time-drift Tolerance | ✅ Implemented | Clock sync issues |
+| Feature                 | Status           | Protection Against       |
+| ----------------------- | ---------------- | ------------------------ |
+| Secure Token Generation | ✅ Implemented   | Token prediction attacks |
+| 2FA/TOTP                | ✅ Backend Ready | Password compromise      |
+| SMS OTP                 | ✅ Backend Ready | Unauthorized access      |
+| reCAPTCHA v3            | ✅ Backend Ready | Bot attacks, automation  |
+| Rate Limiting (SMS)     | ✅ Implemented   | SMS abuse, cost attacks  |
+| OTP Expiry (10 min)     | ✅ Implemented   | Replay attacks           |
+| One-time OTP Use        | ✅ Implemented   | Reuse attacks            |
+| 2FA Backup Codes        | ✅ Generated     | Device loss              |
+| Time-drift Tolerance    | ✅ Implemented   | Clock sync issues        |
 
 ---
 
@@ -205,6 +229,7 @@ This adds the new fields:
 ### **Backend Testing** (Can test now with Postman/curl)
 
 #### 1. **SMS OTP Flow**
+
 ```bash
 # Send OTP
 curl -X POST http://localhost:3003/api/auth/send-sms-otp \
@@ -218,6 +243,7 @@ curl -X POST http://localhost:3003/api/auth/verify-sms-otp \
 ```
 
 #### 2. **2FA Flow** (Requires authentication)
+
 ```bash
 # Setup 2FA
 curl -X GET http://localhost:3003/api/auth/2fa/setup \
@@ -236,6 +262,7 @@ curl -X POST http://localhost:3003/api/auth/2fa/verify \
 ```
 
 ### **Frontend Testing** (After UI implementation)
+
 - [ ] Login with 2FA enabled user
 - [ ] Register with phone verification
 - [ ] Enable 2FA from settings
@@ -251,15 +278,18 @@ curl -X POST http://localhost:3003/api/auth/2fa/verify \
 ## 🚀 Performance & Cost Estimates
 
 ### **SMS Costs** (Twilio - India)
+
 - **Per SMS:** ~₹0.60 ($0.0074 USD)
 - **1000 OTPs/month:** ~₹600/month
 - **Alternative (MSG91):** ~₹0.10/SMS = ₹100/month
 
 ### **reCAPTCHA v3**
+
 - **Free tier:** 10,000 requests/month
 - **Paid:** $1 per 1,000 requests after free tier
 
 ### **Redis Usage**
+
 - **OTP storage:** ~1KB per OTP
 - **10,000 OTPs:** ~10MB Redis memory
 - **Negligible** impact
@@ -286,9 +316,11 @@ curl -X POST http://localhost:3003/api/auth/2fa/verify \
 ### **SMS OTP Endpoints**
 
 #### `POST /api/auth/send-sms-otp`
+
 Sends OTP to phone number.
 
 **Request:**
+
 ```json
 {
   "phoneNumber": "+919876543210",
@@ -297,6 +329,7 @@ Sends OTP to phone number.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -305,15 +338,18 @@ Sends OTP to phone number.
 ```
 
 **Errors:**
+
 - `400` - Invalid phone number or reCAPTCHA
 - `429` - Too many requests (rate limited)
 
 ---
 
 #### `POST /api/auth/verify-sms-otp`
+
 Verifies OTP for phone number.
 
 **Request:**
+
 ```json
 {
   "phoneNumber": "+919876543210",
@@ -322,6 +358,7 @@ Verifies OTP for phone number.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -330,6 +367,7 @@ Verifies OTP for phone number.
 ```
 
 **Errors:**
+
 - `400` - Invalid or expired OTP
 
 ---
@@ -337,9 +375,11 @@ Verifies OTP for phone number.
 ### **2FA Endpoints**
 
 #### `GET /api/auth/2fa/setup`
+
 Generates 2FA secret and QR code. **Requires authentication.**
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -352,9 +392,11 @@ Generates 2FA secret and QR code. **Requires authentication.**
 ---
 
 #### `POST /api/auth/2fa/enable`
+
 Enables 2FA after verifying token. **Requires authentication.**
 
 **Request:**
+
 ```json
 {
   "secret": "JBSWY3DPEHPK3PXP",
@@ -363,6 +405,7 @@ Enables 2FA after verifying token. **Requires authentication.**
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -373,9 +416,11 @@ Enables 2FA after verifying token. **Requires authentication.**
 ---
 
 #### `POST /api/auth/2fa/disable`
+
 Disables 2FA after verifying token. **Requires authentication.**
 
 **Request:**
+
 ```json
 {
   "token": "123456"
@@ -383,6 +428,7 @@ Disables 2FA after verifying token. **Requires authentication.**
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -393,9 +439,11 @@ Disables 2FA after verifying token. **Requires authentication.**
 ---
 
 #### `POST /api/auth/2fa/verify`
+
 Verifies 2FA token during login.
 
 **Request:**
+
 ```json
 {
   "userId": "user-id-here",
@@ -404,6 +452,7 @@ Verifies 2FA token during login.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -416,6 +465,7 @@ Verifies 2FA token during login.
 ## 🎯 Implementation Priority
 
 ### **Immediate (This Session)**
+
 - [x] Secure token generation
 - [x] 2FA backend utilities
 - [x] SMS OTP backend utilities
@@ -425,6 +475,7 @@ Verifies 2FA token during login.
 - [x] Environment variables
 
 ### **Next Session** (Frontend)
+
 - [ ] Update login page with 2FA and reCAPTCHA
 - [ ] Update register page with phone verification
 - [ ] Create 2FA setup page
@@ -432,6 +483,7 @@ Verifies 2FA token during login.
 - [ ] Create settings/security page
 
 ### **Future** (Phase 2 & 3)
+
 - [ ] Passkeys/WebAuthn
 - [ ] Session management UI
 - [ ] Device fingerprinting

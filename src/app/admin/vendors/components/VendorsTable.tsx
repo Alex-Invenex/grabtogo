@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
 import {
   Eye,
   MoreHorizontal,
@@ -14,12 +14,12 @@ import {
   MapPin,
   Calendar,
   Store,
-  Crown
-} from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+  Crown,
+} from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Table,
   TableBody,
@@ -27,38 +27,38 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
+} from '@/components/ui/table';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import VendorStatusBadge from './VendorStatusBadge'
+} from '@/components/ui/dropdown-menu';
+import VendorStatusBadge from './VendorStatusBadge';
 
 interface Vendor {
-  id: string
-  companyName: string
-  ownerName: string
-  email: string
-  phone: string
-  city: string
-  businessType: string
-  status: 'ACTIVE' | 'PENDING' | 'SUSPENDED' | 'INACTIVE'
-  subscriptionPlan: 'BASIC' | 'PREMIUM' | 'ENTERPRISE'
-  registrationDate: string
-  lastActive: string
-  totalOrders: number
-  monthlyRevenue: number
-  rating: number
-  logo?: string
-  gstVerified: boolean
+  id: string;
+  companyName: string;
+  ownerName: string;
+  email: string;
+  phone: string;
+  city: string;
+  businessType: string;
+  status: 'ACTIVE' | 'PENDING' | 'SUSPENDED' | 'INACTIVE';
+  subscriptionPlan: 'BASIC' | 'PREMIUM' | 'ENTERPRISE';
+  registrationDate: string;
+  lastActive: string;
+  totalOrders: number;
+  monthlyRevenue: number;
+  rating: number;
+  logo?: string;
+  gstVerified: boolean;
 }
 
 interface VendorsTableProps {
-  status: string
-  searchQuery: string
+  status: string;
+  searchQuery: string;
 }
 
 // Mock data - replace with actual API call
@@ -79,7 +79,7 @@ const mockVendors: Vendor[] = [
     monthlyRevenue: 125000,
     rating: 4.8,
     logo: '/vendors/fresh-foods.jpg',
-    gstVerified: true
+    gstVerified: true,
   },
   {
     id: '2',
@@ -96,7 +96,7 @@ const mockVendors: Vendor[] = [
     totalOrders: 892,
     monthlyRevenue: 75000,
     rating: 4.6,
-    gstVerified: true
+    gstVerified: true,
   },
   {
     id: '3',
@@ -113,64 +113,65 @@ const mockVendors: Vendor[] = [
     totalOrders: 0,
     monthlyRevenue: 0,
     rating: 0,
-    gstVerified: false
-  }
-]
+    gstVerified: false,
+  },
+];
 
 export default function VendorsTable({ status, searchQuery }: VendorsTableProps) {
-  const [vendors, setVendors] = useState<Vendor[]>([])
-  const [loading, setLoading] = useState(true)
-  const [currentPage, setCurrentPage] = useState(1)
-  const _itemsPerPage = 10
+  const [vendors, setVendors] = useState<Vendor[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const _itemsPerPage = 10;
 
   useEffect(() => {
     const fetchVendors = async () => {
-      setLoading(true)
+      setLoading(true);
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 500))
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      let filteredVendors = mockVendors
+      let filteredVendors = mockVendors;
 
       // Filter by status
       if (status !== 'all') {
-        filteredVendors = filteredVendors.filter(vendor => vendor.status === status)
+        filteredVendors = filteredVendors.filter((vendor) => vendor.status === status);
       }
 
       // Filter by search query
       if (searchQuery) {
-        filteredVendors = filteredVendors.filter(vendor =>
-          vendor.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          vendor.ownerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          vendor.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          vendor.phone.includes(searchQuery) ||
-          vendor.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          vendor.businessType.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+        filteredVendors = filteredVendors.filter(
+          (vendor) =>
+            vendor.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            vendor.ownerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            vendor.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            vendor.phone.includes(searchQuery) ||
+            vendor.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            vendor.businessType.toLowerCase().includes(searchQuery.toLowerCase())
+        );
       }
 
-      setVendors(filteredVendors)
-      setLoading(false)
-    }
+      setVendors(filteredVendors);
+      setLoading(false);
+    };
 
-    fetchVendors()
-  }, [status, searchQuery])
+    fetchVendors();
+  }, [status, searchQuery]);
 
   const handleVendorAction = (vendorId: string, action: string) => {
-    console.log(`${action} vendor:`, vendorId)
+    console.log(`${action} vendor:`, vendorId);
     // Implement vendor actions
-  }
+  };
 
   const formatCurrency = (amount: number) => {
-    return `₹${amount.toLocaleString()}`
-  }
+    return `₹${amount.toLocaleString()}`;
+  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-IN', {
       day: '2-digit',
       month: 'short',
-      year: 'numeric'
-    })
-  }
+      year: 'numeric',
+    });
+  };
 
   if (loading) {
     return (
@@ -189,7 +190,7 @@ export default function VendorsTable({ status, searchQuery }: VendorsTableProps)
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   if (vendors.length === 0) {
@@ -201,12 +202,11 @@ export default function VendorsTable({ status, searchQuery }: VendorsTableProps)
           <p className="text-gray-600">
             {searchQuery
               ? `No vendors match your search "${searchQuery}"`
-              : `No ${status.toLowerCase()} vendors available`
-            }
+              : `No ${status.toLowerCase()} vendors available`}
           </p>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
@@ -239,21 +239,15 @@ export default function VendorsTable({ status, searchQuery }: VendorsTableProps)
                   <div className="flex items-center space-x-3">
                     <Avatar className="w-10 h-10">
                       <AvatarImage src={vendor.logo} alt={vendor.companyName} />
-                      <AvatarFallback>
-                        {vendor.companyName.substring(0, 2)}
-                      </AvatarFallback>
+                      <AvatarFallback>{vendor.companyName.substring(0, 2)}</AvatarFallback>
                     </Avatar>
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="font-medium text-gray-900">
-                          {vendor.companyName}
-                        </p>
+                        <p className="font-medium text-gray-900">{vendor.companyName}</p>
                         {vendor.subscriptionPlan === 'PREMIUM' && (
                           <Crown className="w-4 h-4 text-yellow-500" />
                         )}
-                        {vendor.gstVerified && (
-                          <CheckCircle className="w-4 h-4 text-green-500" />
-                        )}
+                        {vendor.gstVerified && <CheckCircle className="w-4 h-4 text-green-500" />}
                       </div>
                       <p className="text-sm text-gray-600">{vendor.ownerName}</p>
                     </div>
@@ -293,7 +287,11 @@ export default function VendorsTable({ status, searchQuery }: VendorsTableProps)
                 <TableCell>
                   <Badge
                     variant={vendor.subscriptionPlan === 'PREMIUM' ? 'default' : 'secondary'}
-                    className={vendor.subscriptionPlan === 'PREMIUM' ? 'bg-yellow-500 hover:bg-yellow-600' : ''}
+                    className={
+                      vendor.subscriptionPlan === 'PREMIUM'
+                        ? 'bg-yellow-500 hover:bg-yellow-600'
+                        : ''
+                    }
                   >
                     {vendor.subscriptionPlan}
                   </Badge>
@@ -301,16 +299,12 @@ export default function VendorsTable({ status, searchQuery }: VendorsTableProps)
 
                 <TableCell>
                   <div className="space-y-1">
-                    <div className="text-sm font-medium">
-                      {vendor.totalOrders} orders
-                    </div>
+                    <div className="text-sm font-medium">{vendor.totalOrders} orders</div>
                     <div className="text-xs text-gray-600">
                       {formatCurrency(vendor.monthlyRevenue)}/month
                     </div>
                     {vendor.rating > 0 && (
-                      <div className="text-xs text-gray-600">
-                        ⭐ {vendor.rating.toFixed(1)}
-                      </div>
+                      <div className="text-xs text-gray-600">⭐ {vendor.rating.toFixed(1)}</div>
                     )}
                   </div>
                 </TableCell>
@@ -346,24 +340,32 @@ export default function VendorsTable({ status, searchQuery }: VendorsTableProps)
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         {vendor.status === 'ACTIVE' && (
-                          <DropdownMenuItem onClick={() => handleVendorAction(vendor.id, 'suspend')}>
+                          <DropdownMenuItem
+                            onClick={() => handleVendorAction(vendor.id, 'suspend')}
+                          >
                             <Pause className="mr-2 h-4 w-4" />
                             Suspend
                           </DropdownMenuItem>
                         )}
                         {vendor.status === 'SUSPENDED' && (
-                          <DropdownMenuItem onClick={() => handleVendorAction(vendor.id, 'activate')}>
+                          <DropdownMenuItem
+                            onClick={() => handleVendorAction(vendor.id, 'activate')}
+                          >
                             <CheckCircle className="mr-2 h-4 w-4" />
                             Activate
                           </DropdownMenuItem>
                         )}
                         {vendor.status === 'PENDING' && (
                           <>
-                            <DropdownMenuItem onClick={() => handleVendorAction(vendor.id, 'approve')}>
+                            <DropdownMenuItem
+                              onClick={() => handleVendorAction(vendor.id, 'approve')}
+                            >
                               <CheckCircle className="mr-2 h-4 w-4" />
                               Approve
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => handleVendorAction(vendor.id, 'reject')}>
+                            <DropdownMenuItem
+                              onClick={() => handleVendorAction(vendor.id, 'reject')}
+                            >
                               <XCircle className="mr-2 h-4 w-4" />
                               Reject
                             </DropdownMenuItem>
@@ -387,5 +389,5 @@ export default function VendorsTable({ status, searchQuery }: VendorsTableProps)
         </Table>
       </CardContent>
     </Card>
-  )
+  );
 }

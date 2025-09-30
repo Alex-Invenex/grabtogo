@@ -1,12 +1,12 @@
-import { Resend } from 'resend'
+import { Resend } from 'resend';
 
-const resend = new Resend(process.env.AUTH_RESEND_KEY)
+const resend = new Resend(process.env.AUTH_RESEND_KEY);
 
 interface EmailTemplate {
-  to: string
-  subject: string
-  html: string
-  text: string
+  to: string;
+  subject: string;
+  html: string;
+  text: string;
 }
 
 /**
@@ -17,13 +17,13 @@ export async function sendVerificationEmail(
   token: string,
   name?: string
 ): Promise<boolean> {
-  const verificationUrl = `${process.env.NEXTAUTH_URL}/auth/verify-email?token=${token}`
+  const verificationUrl = `${process.env.NEXTAUTH_URL}/auth/verify-email?token=${token}`;
 
   const template = createVerificationEmailTemplate({
     to: email,
     verificationUrl,
     name: name || 'User',
-  })
+  });
 
   try {
     await resend.emails.send({
@@ -32,11 +32,11 @@ export async function sendVerificationEmail(
       subject: template.subject,
       html: template.html,
       text: template.text,
-    })
-    return true
+    });
+    return true;
   } catch (error) {
-    console.error('Failed to send verification email:', error)
-    return false
+    console.error('Failed to send verification email:', error);
+    return false;
   }
 }
 
@@ -48,13 +48,13 @@ export async function sendPasswordResetEmail(
   token: string,
   name?: string
 ): Promise<boolean> {
-  const resetUrl = `${process.env.NEXTAUTH_URL}/auth/reset-password?token=${token}`
+  const resetUrl = `${process.env.NEXTAUTH_URL}/auth/reset-password?token=${token}`;
 
   const template = createPasswordResetEmailTemplate({
     to: email,
     resetUrl,
     name: name || 'User',
-  })
+  });
 
   try {
     await resend.emails.send({
@@ -63,11 +63,11 @@ export async function sendPasswordResetEmail(
       subject: template.subject,
       html: template.html,
       text: template.text,
-    })
-    return true
+    });
+    return true;
   } catch (error) {
-    console.error('Failed to send password reset email:', error)
-    return false
+    console.error('Failed to send password reset email:', error);
+    return false;
   }
 }
 
@@ -83,7 +83,7 @@ export async function sendWelcomeEmail(
     to: email,
     name,
     role,
-  })
+  });
 
   try {
     await resend.emails.send({
@@ -92,11 +92,11 @@ export async function sendWelcomeEmail(
       subject: template.subject,
       html: template.html,
       text: template.text,
-    })
-    return true
+    });
+    return true;
   } catch (error) {
-    console.error('Failed to send welcome email:', error)
-    return false
+    console.error('Failed to send welcome email:', error);
+    return false;
   }
 }
 
@@ -109,10 +109,10 @@ export async function sendEmail({
   html,
   text,
 }: {
-  to: string
-  subject: string
-  html: string
-  text?: string
+  to: string;
+  subject: string;
+  html: string;
+  text?: string;
 }): Promise<boolean> {
   try {
     await resend.emails.send({
@@ -121,11 +121,11 @@ export async function sendEmail({
       subject,
       html,
       text: text || html.replace(/<[^>]*>/g, ''), // Strip HTML tags if no text provided
-    })
-    return true
+    });
+    return true;
   } catch (error) {
-    console.error('Failed to send email:', error)
-    return false
+    console.error('Failed to send email:', error);
+    return false;
   }
 }
 
@@ -137,11 +137,11 @@ function createVerificationEmailTemplate({
   verificationUrl,
   name,
 }: {
-  to: string
-  verificationUrl: string
-  name: string
+  to: string;
+  verificationUrl: string;
+  name: string;
 }): EmailTemplate {
-  const subject = 'Verify your GrabtoGo account'
+  const subject = 'Verify your GrabtoGo account';
 
   const html = `
 <!DOCTYPE html>
@@ -193,7 +193,7 @@ function createVerificationEmailTemplate({
     </div>
   </div>
 </body>
-</html>`
+</html>`;
 
   const text = `
 Welcome to GrabtoGo, ${name}!
@@ -208,9 +208,9 @@ If you didn't create an account with GrabtoGo, you can safely ignore this email.
 
 © ${new Date().getFullYear()} GrabtoGo. All rights reserved.
 This email was sent to ${to}
-`
+`;
 
-  return { to, subject, html, text }
+  return { to, subject, html, text };
 }
 
 /**
@@ -221,11 +221,11 @@ function createPasswordResetEmailTemplate({
   resetUrl,
   name,
 }: {
-  to: string
-  resetUrl: string
-  name: string
+  to: string;
+  resetUrl: string;
+  name: string;
 }): EmailTemplate {
-  const subject = 'Reset your GrabtoGo password'
+  const subject = 'Reset your GrabtoGo password';
 
   const html = `
 <!DOCTYPE html>
@@ -282,7 +282,7 @@ function createPasswordResetEmailTemplate({
     </div>
   </div>
 </body>
-</html>`
+</html>`;
 
   const text = `
 Password Reset Request
@@ -299,9 +299,9 @@ If you didn't request a password reset, you can safely ignore this email. Your p
 
 © ${new Date().getFullYear()} GrabtoGo. All rights reserved.
 This email was sent to ${to}
-`
+`;
 
-  return { to, subject, html, text }
+  return { to, subject, html, text };
 }
 
 /**
@@ -312,12 +312,15 @@ function createWelcomeEmailTemplate({
   name,
   role,
 }: {
-  to: string
-  name: string
-  role: string
+  to: string;
+  name: string;
+  role: string;
 }): EmailTemplate {
-  const subject = `Welcome to GrabtoGo, ${name}!`
-  const dashboardUrl = role === 'VENDOR' ? `${process.env.NEXTAUTH_URL}/vendor/dashboard` : `${process.env.NEXTAUTH_URL}`
+  const subject = `Welcome to GrabtoGo, ${name}!`;
+  const dashboardUrl =
+    role === 'VENDOR'
+      ? `${process.env.NEXTAUTH_URL}/vendor/dashboard`
+      : `${process.env.NEXTAUTH_URL}`;
 
   const html = `
 <!DOCTYPE html>
@@ -353,7 +356,9 @@ function createWelcomeEmailTemplate({
 
       <p>Congratulations! Your email has been verified and your GrabtoGo account is now active.</p>
 
-      ${role === 'VENDOR' ? `
+      ${
+        role === 'VENDOR'
+          ? `
       <p>As a vendor, you can now:</p>
       <ul>
         <li>Set up your store profile</li>
@@ -361,7 +366,8 @@ function createWelcomeEmailTemplate({
         <li>Manage orders and inventory</li>
         <li>Access analytics and insights</li>
       </ul>
-      ` : `
+      `
+          : `
       <p>As a customer, you can now:</p>
       <ul>
         <li>Browse thousands of products</li>
@@ -369,7 +375,8 @@ function createWelcomeEmailTemplate({
         <li>Track your deliveries</li>
         <li>Leave reviews and ratings</li>
       </ul>
-      `}
+      `
+      }
 
       <p style="text-align: center; margin: 30px 0;">
         <a href="${dashboardUrl}" class="button">Get Started</a>
@@ -386,7 +393,7 @@ function createWelcomeEmailTemplate({
     </div>
   </div>
 </body>
-</html>`
+</html>`;
 
   const text = `
 Welcome to GrabtoGo!
@@ -395,19 +402,23 @@ Hi ${name},
 
 Congratulations! Your email has been verified and your GrabtoGo account is now active.
 
-${role === 'VENDOR' ? `
+${
+  role === 'VENDOR'
+    ? `
 As a vendor, you can now:
 - Set up your store profile
 - Add your products to the marketplace
 - Manage orders and inventory
 - Access analytics and insights
-` : `
+`
+    : `
 As a customer, you can now:
 - Browse thousands of products
 - Place orders from multiple vendors
 - Track your deliveries
 - Leave reviews and ratings
-`}
+`
+}
 
 Get started: ${dashboardUrl}
 
@@ -417,7 +428,7 @@ Thank you for joining GrabtoGo!
 
 © ${new Date().getFullYear()} GrabtoGo. All rights reserved.
 This email was sent to ${to}
-`
+`;
 
-  return { to, subject, html, text }
+  return { to, subject, html, text };
 }

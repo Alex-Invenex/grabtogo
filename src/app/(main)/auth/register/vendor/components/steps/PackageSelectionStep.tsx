@@ -1,49 +1,50 @@
-'use client'
+'use client';
 
-import { useFormContext } from 'react-hook-form'
-import { useState } from 'react'
-import { Star, Check, X, Plus } from 'lucide-react'
-import { FormField, FormItem, FormControl, FormMessage } from '@/components/ui/form'
-import { Button } from '@/components/ui/button'
-import { Switch } from '@/components/ui/switch'
-import { Badge } from '@/components/ui/badge'
-import { Checkbox } from '@/components/ui/checkbox'
-import { PACKAGES, ADD_ONS } from '../../lib/constants'
+import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
+import { Star, Check, X, Plus } from 'lucide-react';
+import { FormField, FormItem, FormControl, FormMessage } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import { PACKAGES, ADD_ONS } from '../../lib/constants';
 
 export default function PackageSelectionStep() {
-  const { control, setValue, watch } = useFormContext()
-  const [billingCycle, setBillingCycle] = useState('monthly')
+  const { control, setValue, watch } = useFormContext();
+  const [billingCycle, setBillingCycle] = useState('monthly');
 
-  const selectedPackage = watch('selectedPackage')
-  const addOns = watch('addOns') || []
+  const selectedPackage = watch('selectedPackage');
+  const addOns = watch('addOns') || [];
 
   const handlePackageSelect = (packageId: string) => {
-    setValue('selectedPackage', packageId)
-    setValue('billingCycle', billingCycle)
-  }
+    setValue('selectedPackage', packageId);
+    setValue('billingCycle', billingCycle);
+  };
 
   const handleAddOnToggle = (addOnId: string, checked: boolean) => {
-    const currentAddOns = addOns || []
+    const currentAddOns = addOns || [];
     const newAddOns = checked
       ? [...currentAddOns, addOnId]
-      : currentAddOns.filter((id: string) => id !== addOnId)
-    setValue('addOns', newAddOns)
-  }
+      : currentAddOns.filter((id: string) => id !== addOnId);
+    setValue('addOns', newAddOns);
+  };
 
   const calculateTotal = () => {
-    if (!selectedPackage) return 0
+    if (!selectedPackage) return 0;
 
-    const packagePrice = billingCycle === 'yearly'
-      ? PACKAGES[selectedPackage as keyof typeof PACKAGES].yearly
-      : PACKAGES[selectedPackage as keyof typeof PACKAGES].monthly
+    const packagePrice =
+      billingCycle === 'yearly'
+        ? PACKAGES[selectedPackage as keyof typeof PACKAGES].yearly
+        : PACKAGES[selectedPackage as keyof typeof PACKAGES].monthly;
 
     const addOnTotal = addOns.reduce((total: number, addOnId: string) => {
-      const addOn = ADD_ONS.find(a => a.id === addOnId)
-      return total + (addOn?.price || 0)
-    }, 0)
+      const addOn = ADD_ONS.find((a) => a.id === addOnId);
+      return total + (addOn?.price || 0);
+    }, 0);
 
-    return packagePrice + addOnTotal
-  }
+    return packagePrice + addOnTotal;
+  };
 
   return (
     <div className="space-y-6">
@@ -54,14 +55,18 @@ export default function PackageSelectionStep() {
 
       {/* Billing Toggle */}
       <div className="flex items-center justify-center gap-4">
-        <span className={`text-sm ${billingCycle === 'monthly' ? 'font-semibold' : 'text-gray-500'}`}>
+        <span
+          className={`text-sm ${billingCycle === 'monthly' ? 'font-semibold' : 'text-gray-500'}`}
+        >
           Monthly
         </span>
         <Switch
           checked={billingCycle === 'yearly'}
           onCheckedChange={(checked) => setBillingCycle(checked ? 'yearly' : 'monthly')}
         />
-        <span className={`text-sm ${billingCycle === 'yearly' ? 'font-semibold' : 'text-gray-500'}`}>
+        <span
+          className={`text-sm ${billingCycle === 'yearly' ? 'font-semibold' : 'text-gray-500'}`}
+        >
           Yearly
         </span>
         {billingCycle === 'yearly' && (
@@ -95,13 +100,15 @@ export default function PackageSelectionStep() {
             <div className="text-center mb-4">
               <h3 className="text-xl font-bold">{pkg.name}</h3>
               <div className="mt-2">
-                <span className="text-3xl font-bold">₹{billingCycle === 'yearly' ? pkg.yearly : pkg.monthly}</span>
-                <span className="text-gray-500">/{billingCycle === 'yearly' ? 'year' : 'month'}</span>
+                <span className="text-3xl font-bold">
+                  ₹{billingCycle === 'yearly' ? pkg.yearly : pkg.monthly}
+                </span>
+                <span className="text-gray-500">
+                  /{billingCycle === 'yearly' ? 'year' : 'month'}
+                </span>
               </div>
               {billingCycle === 'yearly' && pkg.savings && (
-                <p className="text-green-600 text-sm font-medium mt-1">
-                  Save ₹{pkg.savings}!
-                </p>
+                <p className="text-green-600 text-sm font-medium mt-1">Save ₹{pkg.savings}!</p>
               )}
             </div>
 
@@ -113,7 +120,9 @@ export default function PackageSelectionStep() {
                   ) : (
                     <X className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
                   )}
-                  <span className={`text-sm ${feature.included ? 'text-gray-900' : 'text-gray-400'}`}>
+                  <span
+                    className={`text-sm ${feature.included ? 'text-gray-900' : 'text-gray-400'}`}
+                  >
                     {feature.text}
                   </span>
                 </div>
@@ -166,21 +175,24 @@ export default function PackageSelectionStep() {
           <h3 className="font-semibold text-blue-900 mb-3">Package Summary</h3>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <span>{PACKAGES[selectedPackage as keyof typeof PACKAGES].name} Package ({billingCycle})</span>
+              <span>
+                {PACKAGES[selectedPackage as keyof typeof PACKAGES].name} Package ({billingCycle})
+              </span>
               <span className="font-medium">
-                ₹{billingCycle === 'yearly'
+                ₹
+                {billingCycle === 'yearly'
                   ? PACKAGES[selectedPackage as keyof typeof PACKAGES].yearly
                   : PACKAGES[selectedPackage as keyof typeof PACKAGES].monthly}
               </span>
             </div>
             {addOns.map((addOnId: string) => {
-              const addOn = ADD_ONS.find(a => a.id === addOnId)
+              const addOn = ADD_ONS.find((a) => a.id === addOnId);
               return addOn ? (
                 <div key={addOnId} className="flex justify-between text-sm">
                   <span>{addOn.name}</span>
                   <span>₹{addOn.price}</span>
                 </div>
-              ) : null
+              ) : null;
             })}
             <div className="border-t pt-2 flex justify-between font-bold text-lg">
               <span>Total</span>
@@ -203,5 +215,5 @@ export default function PackageSelectionStep() {
         )}
       />
     </div>
-  )
+  );
 }

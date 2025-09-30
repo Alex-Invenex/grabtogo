@@ -1,56 +1,44 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { hash } from 'bcryptjs'
-import { db } from '@/lib/db'
-import { auth } from '@/lib/auth'
-import { sendEmail } from '@/lib/email'
+import { NextRequest, NextResponse } from 'next/server';
+import { hash } from 'bcryptjs';
+import { db } from '@/lib/db';
+import { auth } from '@/lib/auth';
+import { sendEmail } from '@/lib/email';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     // Check if user is admin
-    const session = await auth()
+    const session = await auth();
     if (!session?.user || session.user.role !== 'ADMIN') {
-      return NextResponse.json(
-        { error: 'Unauthorized. Admin access required.' },
-        { status: 403 }
-      )
+      return NextResponse.json({ error: 'Unauthorized. Admin access required.' }, { status: 403 });
     }
 
-    const requestId = params.id
+    const requestId = params.id;
 
     // Get the registration request
     const registrationRequest = await db.vendorRegistrationRequest.findUnique({
-      where: { id: requestId }
-    })
+      where: { id: requestId },
+    });
 
     if (!registrationRequest) {
-      return NextResponse.json(
-        { error: 'Registration request not found' },
-        { status: 404 }
-      )
+      return NextResponse.json({ error: 'Registration request not found' }, { status: 404 });
     }
 
     if (registrationRequest.status !== 'pending') {
       return NextResponse.json(
         { error: 'Registration request has already been processed' },
         { status: 400 }
-      )
+      );
     }
 
     // Check if user with this email already exists
     const existingUser = await db.user.findUnique({
-      where: { email: registrationRequest.email }
-    })
+      where: { email: registrationRequest.email },
+    });
 
     if (existingUser) {
-      return NextResponse.json(
-        { error: 'A user with this email already exists' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'A user with this email already exists' }, { status: 400 });
     }
 
     // Create user and vendor profile in a transaction
@@ -65,7 +53,7 @@ export async function POST(
           role: 'VENDOR',
           emailVerified: new Date(), // Auto-verify approved vendors
         },
-      })
+      });
 
       // Create vendor profile
       const vendorProfile = await tx.vendorProfile.create({
@@ -86,11 +74,11 @@ export async function POST(
           bannerUrl: registrationRequest.banner,
           isVerified: true, // Auto-verify approved vendors
         },
-      })
+      });
 
       // Create 20-day premium trial subscription
-      const trialEndDate = new Date()
-      trialEndDate.setDate(trialEndDate.getDate() + 20)
+      const trialEndDate = new Date();
+      trialEndDate.setDate(trialEndDate.getDate() + 20);
 
       const subscription = await tx.vendorSubscription.create({
         data: {
@@ -115,7 +103,7 @@ export async function POST(
           currency: 'INR',
           billingCycle: 'monthly',
         },
-      })
+      });
 
       // Update registration request status
       await tx.vendorRegistrationRequest.update({
@@ -125,10 +113,10 @@ export async function POST(
           reviewedBy: session.user.id,
           reviewedAt: new Date(),
         },
-      })
+      });
 
-      return { user, vendorProfile, subscription }
-    })
+      return { user, vendorProfile, subscription };
+    });
 
     // Send approval email to vendor
     try {
@@ -198,9 +186,9 @@ export async function POST(
             </div>
           </div>
         `,
-      })
+      });
     } catch (emailError) {
-      console.error('Failed to send approval email:', emailError)
+      console.error('Failed to send approval email:', emailError);
     }
 
     // Send notification to admin
@@ -229,9 +217,9 @@ export async function POST(
             <p><strong>Subscription ID:</strong> ${result.subscription.id}</p>
           </div>
         `,
-      })
+      });
     } catch (emailError) {
-      console.error('Failed to send admin notification:', emailError)
+      console.error('Failed to send admin notification:', emailError);
     }
 
     return NextResponse.json({
@@ -240,12 +228,9 @@ export async function POST(
       userId: result.user.id,
       vendorId: result.vendorProfile.id,
       subscriptionId: result.subscription.id,
-    })
+    });
   } catch (error) {
-    console.error('Error approving vendor registration:', error)
-    return NextResponse.json(
-      { error: 'Failed to approve vendor registration' },
-      { status: 500 }
-    )
+    console.error('Error approving vendor registration:', error);
+    return NextResponse.json({ error: 'Failed to approve vendor registration' }, { status: 500 });
   }
 }

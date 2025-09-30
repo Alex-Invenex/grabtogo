@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { BusinessCard } from './business-card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Loader2, Grid, List, Filter, SlidersHorizontal, MapPin } from 'lucide-react'
+import * as React from 'react';
+import { BusinessCard } from './business-card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Loader2, Grid, List, Filter, SlidersHorizontal, MapPin } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,42 +12,42 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@/components/ui/dropdown-menu';
 
 interface Business {
-  id: string
-  name: string
-  description: string
-  category: string
-  location: string
-  city: string
-  distance: string
-  rating: number
-  reviewCount: number
-  image: string
-  isOpen: boolean
-  openHours: string
-  phoneNumber: string
-  dealTitle?: string
-  dealDiscount?: number
-  originalPrice?: number
-  finalPrice?: number
-  verified?: boolean
-  featured?: boolean
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  location: string;
+  city: string;
+  distance: string;
+  rating: number;
+  reviewCount: number;
+  image: string;
+  isOpen: boolean;
+  openHours: string;
+  phoneNumber: string;
+  dealTitle?: string;
+  dealDiscount?: number;
+  originalPrice?: number;
+  finalPrice?: number;
+  verified?: boolean;
+  featured?: boolean;
 }
 
 interface BusinessListProps {
-  businesses: Business[]
-  loading?: boolean
-  layout?: 'grid' | 'list'
-  onLayoutChange?: (layout: 'grid' | 'list') => void
-  showFilters?: boolean
-  showSort?: boolean
-  showDeal?: boolean
-  title?: string
-  subtitle?: string
-  emptyMessage?: string
-  className?: string
+  businesses: Business[];
+  loading?: boolean;
+  layout?: 'grid' | 'list';
+  onLayoutChange?: (layout: 'grid' | 'list') => void;
+  showFilters?: boolean;
+  showSort?: boolean;
+  showDeal?: boolean;
+  title?: string;
+  subtitle?: string;
+  emptyMessage?: string;
+  className?: string;
 }
 
 const sortOptions = [
@@ -56,7 +56,7 @@ const sortOptions = [
   { label: 'Rating', value: 'rating' },
   { label: 'Most Popular', value: 'popular' },
   { label: 'Newest', value: 'newest' },
-]
+];
 
 const filterOptions = {
   categories: [
@@ -87,7 +87,7 @@ const filterOptions = {
     { label: 'Verified', value: 'verified' },
     { label: 'Featured', value: 'featured' },
   ],
-}
+};
 
 export function BusinessList({
   businesses,
@@ -100,18 +100,18 @@ export function BusinessList({
   title,
   subtitle,
   emptyMessage = 'No businesses found in this area.',
-  className = ''
+  className = '',
 }: BusinessListProps) {
-  const [sortBy, setSortBy] = React.useState('relevance')
+  const [sortBy, setSortBy] = React.useState('relevance');
   const [selectedFilters, setSelectedFilters] = React.useState<Record<string, string[]>>({
     categories: [],
     ratings: [],
     distance: [],
     features: [],
-  })
+  });
 
-  const featuredBusinesses = businesses.filter(business => business.featured)
-  const regularBusinesses = businesses.filter(business => !business.featured)
+  const featuredBusinesses = businesses.filter((business) => business.featured);
+  const regularBusinesses = businesses.filter((business) => !business.featured);
 
   if (loading) {
     return (
@@ -130,7 +130,7 @@ export function BusinessList({
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   if (businesses.length === 0) {
@@ -151,7 +151,7 @@ export function BusinessList({
           <p className="text-gray-600 max-w-md mx-auto">{emptyMessage}</p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -170,12 +170,11 @@ export function BusinessList({
           {/* Results Count */}
           <div className="flex items-center gap-4">
             <p className="text-gray-600">
-              <span className="font-semibold text-gray-900">{businesses.length}</span> businesses found
+              <span className="font-semibold text-gray-900">{businesses.length}</span> businesses
+              found
             </p>
             {featuredBusinesses.length > 0 && (
-              <Badge className="bg-primary text-white">
-                {featuredBusinesses.length} Featured
-              </Badge>
+              <Badge className="bg-primary text-white">{featuredBusinesses.length} Featured</Badge>
             )}
           </div>
 
@@ -187,7 +186,7 @@ export function BusinessList({
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm">
                     <SlidersHorizontal className="w-4 h-4 mr-2" />
-                    Sort: {sortOptions.find(opt => opt.value === sortBy)?.label}
+                    Sort: {sortOptions.find((opt) => opt.value === sortBy)?.label}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
@@ -230,12 +229,12 @@ export function BusinessList({
                             className="rounded border-gray-300"
                             checked={selectedFilters.categories.includes(category)}
                             onChange={(e) => {
-                              setSelectedFilters(prev => ({
+                              setSelectedFilters((prev) => ({
                                 ...prev,
                                 categories: e.target.checked
                                   ? [...prev.categories, category]
-                                  : prev.categories.filter(c => c !== category)
-                              }))
+                                  : prev.categories.filter((c) => c !== category),
+                              }));
                             }}
                           />
                           {category}
@@ -257,12 +256,12 @@ export function BusinessList({
                             className="rounded border-gray-300"
                             checked={selectedFilters.features.includes(feature.value)}
                             onChange={(e) => {
-                              setSelectedFilters(prev => ({
+                              setSelectedFilters((prev) => ({
                                 ...prev,
                                 features: e.target.checked
                                   ? [...prev.features, feature.value]
-                                  : prev.features.filter(f => f !== feature.value)
-                              }))
+                                  : prev.features.filter((f) => f !== feature.value),
+                              }));
                             }}
                           />
                           {feature.label}
@@ -310,11 +309,13 @@ export function BusinessList({
             <h3 className="text-xl font-bold text-gray-900">Featured Businesses</h3>
             <Badge className="bg-primary text-white">Promoted</Badge>
           </div>
-          <div className={
-            layout === 'grid'
-              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
-              : 'space-y-4'
-          }>
+          <div
+            className={
+              layout === 'grid'
+                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+                : 'space-y-4'
+            }
+          >
             {featuredBusinesses.map((business) => (
               <BusinessCard
                 key={business.id}
@@ -333,11 +334,13 @@ export function BusinessList({
           {featuredBusinesses.length > 0 && (
             <h3 className="text-xl font-bold text-gray-900">All Businesses</h3>
           )}
-          <div className={
-            layout === 'grid'
-              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
-              : 'space-y-4'
-          }>
+          <div
+            className={
+              layout === 'grid'
+                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+                : 'space-y-4'
+            }
+          >
             {regularBusinesses.map((business) => (
               <BusinessCard
                 key={business.id}
@@ -350,5 +353,5 @@ export function BusinessList({
         </div>
       )}
     </div>
-  )
+  );
 }

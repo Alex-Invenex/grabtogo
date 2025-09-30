@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { Search, MapPin, Filter, X, SlidersHorizontal } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { SearchBar } from '@/components/ui/search-bar'
+import * as React from 'react';
+import { Search, MapPin, Filter, X, SlidersHorizontal } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { SearchBar } from '@/components/ui/search-bar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,23 +12,23 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@/components/ui/dropdown-menu';
 
 interface SearchFilters {
-  query: string
-  location: string
-  category: string
-  rating: string
-  distance: string
-  features: string[]
-  sortBy: string
+  query: string;
+  location: string;
+  category: string;
+  rating: string;
+  distance: string;
+  features: string[];
+  sortBy: string;
 }
 
 interface BusinessSearchProps {
-  filters: SearchFilters
-  onFiltersChange: (filters: SearchFilters) => void
-  onSearch: (query: string) => void
-  className?: string
+  filters: SearchFilters;
+  onFiltersChange: (filters: SearchFilters) => void;
+  onSearch: (query: string) => void;
+  className?: string;
 }
 
 const keralaCities = [
@@ -45,8 +45,8 @@ const keralaCities = [
   'Malappuram',
   'Kasaragod',
   'Pathanamthitta',
-  'Idukki'
-]
+  'Idukki',
+];
 
 const categories = [
   'All Categories',
@@ -61,16 +61,16 @@ const categories = [
   'Healthcare',
   'Education',
   'Real Estate',
-  'Travel & Tourism'
-]
+  'Travel & Tourism',
+];
 
 const ratings = [
   { label: 'Any Rating', value: '' },
   { label: '4.5+ Stars', value: '4.5' },
   { label: '4.0+ Stars', value: '4.0' },
   { label: '3.5+ Stars', value: '3.5' },
-  { label: '3.0+ Stars', value: '3.0' }
-]
+  { label: '3.0+ Stars', value: '3.0' },
+];
 
 const distances = [
   { label: 'Any Distance', value: '' },
@@ -78,8 +78,8 @@ const distances = [
   { label: 'Within 2 km', value: '2' },
   { label: 'Within 5 km', value: '5' },
   { label: 'Within 10 km', value: '10' },
-  { label: 'Within 25 km', value: '25' }
-]
+  { label: 'Within 25 km', value: '25' },
+];
 
 const features = [
   { label: 'Open Now', value: 'open' },
@@ -87,8 +87,8 @@ const features = [
   { label: 'Verified Business', value: 'verified' },
   { label: 'Featured', value: 'featured' },
   { label: 'Accepts Cards', value: 'cards' },
-  { label: 'Home Delivery', value: 'delivery' }
-]
+  { label: 'Home Delivery', value: 'delivery' },
+];
 
 const sortOptions = [
   { label: 'Relevance', value: 'relevance' },
@@ -97,31 +97,31 @@ const sortOptions = [
   { label: 'Most Popular', value: 'popular' },
   { label: 'Newest', value: 'newest' },
   { label: 'Price: Low to High', value: 'price_asc' },
-  { label: 'Price: High to Low', value: 'price_desc' }
-]
+  { label: 'Price: High to Low', value: 'price_desc' },
+];
 
 export function BusinessSearch({
   filters,
   onFiltersChange,
   onSearch,
-  className = ''
+  className = '',
 }: BusinessSearchProps) {
-  const [showAdvancedFilters, setShowAdvancedFilters] = React.useState(false)
+  const [showAdvancedFilters, setShowAdvancedFilters] = React.useState(false);
 
   const updateFilter = (key: keyof SearchFilters, value: any) => {
     onFiltersChange({
       ...filters,
-      [key]: value
-    })
-  }
+      [key]: value,
+    });
+  };
 
   const toggleFeature = (feature: string) => {
     const newFeatures = filters.features.includes(feature)
-      ? filters.features.filter(f => f !== feature)
-      : [...filters.features, feature]
+      ? filters.features.filter((f) => f !== feature)
+      : [...filters.features, feature];
 
-    updateFilter('features', newFeatures)
-  }
+    updateFilter('features', newFeatures);
+  };
 
   const clearAllFilters = () => {
     onFiltersChange({
@@ -131,20 +131,20 @@ export function BusinessSearch({
       rating: '',
       distance: '',
       features: [],
-      sortBy: 'relevance'
-    })
-  }
+      sortBy: 'relevance',
+    });
+  };
 
   const getActiveFiltersCount = () => {
-    let count = 0
-    if (filters.category !== 'All Categories') count++
-    if (filters.rating) count++
-    if (filters.distance) count++
-    if (filters.features.length > 0) count += filters.features.length
-    return count
-  }
+    let count = 0;
+    if (filters.category !== 'All Categories') count++;
+    if (filters.rating) count++;
+    if (filters.distance) count++;
+    if (filters.features.length > 0) count += filters.features.length;
+    return count;
+  };
 
-  const activeFiltersCount = getActiveFiltersCount()
+  const activeFiltersCount = getActiveFiltersCount();
 
   return (
     <div className={`space-y-4 ${className}`}>
@@ -265,7 +265,7 @@ export function BusinessSearch({
                     className="w-full justify-between text-left font-normal"
                   >
                     <span className="truncate">
-                      {ratings.find(r => r.value === filters.rating)?.label || 'Any Rating'}
+                      {ratings.find((r) => r.value === filters.rating)?.label || 'Any Rating'}
                     </span>
                   </Button>
                 </DropdownMenuTrigger>
@@ -295,7 +295,7 @@ export function BusinessSearch({
                     className="w-full justify-between text-left font-normal"
                   >
                     <span className="truncate">
-                      {distances.find(d => d.value === filters.distance)?.label || 'Any Distance'}
+                      {distances.find((d) => d.value === filters.distance)?.label || 'Any Distance'}
                     </span>
                   </Button>
                 </DropdownMenuTrigger>
@@ -325,7 +325,7 @@ export function BusinessSearch({
                     className="w-full justify-between text-left font-normal"
                   >
                     <span className="truncate">
-                      {sortOptions.find(s => s.value === filters.sortBy)?.label || 'Relevance'}
+                      {sortOptions.find((s) => s.value === filters.sortBy)?.label || 'Relevance'}
                     </span>
                   </Button>
                 </DropdownMenuTrigger>
@@ -351,18 +351,18 @@ export function BusinessSearch({
             <label className="text-sm font-medium text-gray-700">Features</label>
             <div className="flex flex-wrap gap-2">
               {features.map((feature) => {
-                const isSelected = filters.features.includes(feature.value)
+                const isSelected = filters.features.includes(feature.value);
                 return (
                   <Button
                     key={feature.value}
-                    variant={isSelected ? "default" : "outline"}
+                    variant={isSelected ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => toggleFeature(feature.value)}
-                    className={isSelected ? "bg-primary text-white" : ""}
+                    className={isSelected ? 'bg-primary text-white' : ''}
                   >
                     {feature.label}
                   </Button>
-                )
+                );
               })}
             </div>
           </div>
@@ -385,7 +385,7 @@ export function BusinessSearch({
                 )}
                 {filters.rating && (
                   <Badge variant="secondary" className="gap-1">
-                    {ratings.find(r => r.value === filters.rating)?.label}
+                    {ratings.find((r) => r.value === filters.rating)?.label}
                     <button
                       onClick={() => updateFilter('rating', '')}
                       className="ml-1 hover:bg-gray-300 rounded-full p-0.5"
@@ -396,7 +396,7 @@ export function BusinessSearch({
                 )}
                 {filters.distance && (
                   <Badge variant="secondary" className="gap-1">
-                    {distances.find(d => d.value === filters.distance)?.label}
+                    {distances.find((d) => d.value === filters.distance)?.label}
                     <button
                       onClick={() => updateFilter('distance', '')}
                       className="ml-1 hover:bg-gray-300 rounded-full p-0.5"
@@ -407,7 +407,7 @@ export function BusinessSearch({
                 )}
                 {filters.features.map((feature) => (
                   <Badge key={feature} variant="secondary" className="gap-1">
-                    {features.find(f => f.value === feature)?.label}
+                    {features.find((f) => f.value === feature)?.label}
                     <button
                       onClick={() => toggleFeature(feature)}
                       className="ml-1 hover:bg-gray-300 rounded-full p-0.5"
@@ -422,5 +422,5 @@ export function BusinessSearch({
         </div>
       )}
     </div>
-  )
+  );
 }

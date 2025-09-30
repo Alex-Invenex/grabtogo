@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { AnimatePresence } from 'framer-motion'
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
   LayoutDashboard,
   Users,
@@ -19,18 +19,18 @@ import {
   Clock,
   CheckCircle,
   XCircle,
-  AlertTriangle
-} from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+  AlertTriangle,
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface MenuItem {
-  title: string
-  href: string
-  icon: React.ComponentType<{ className?: string }>
-  badge?: number | string
-  children?: MenuItem[]
+  title: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+  badge?: number | string;
+  children?: MenuItem[];
 }
 
 const menuItems: MenuItem[] = [
@@ -99,32 +99,30 @@ const menuItems: MenuItem[] = [
     href: '/admin/settings',
     icon: Settings,
   },
-]
+];
 
 export default function AdminSidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false)
-  const [expandedItems, setExpandedItems] = useState<string[]>([])
-  const pathname = usePathname()
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const pathname = usePathname();
 
   const toggleExpanded = (title: string) => {
-    setExpandedItems(prev =>
-      prev.includes(title)
-        ? prev.filter(item => item !== title)
-        : [...prev, title]
-    )
-  }
+    setExpandedItems((prev) =>
+      prev.includes(title) ? prev.filter((item) => item !== title) : [...prev, title]
+    );
+  };
 
   const isActiveRoute = (href: string) => {
     if (href === '/admin/dashboard') {
-      return pathname === '/admin/dashboard' || pathname === '/admin'
+      return pathname === '/admin/dashboard' || pathname === '/admin';
     }
-    return pathname.startsWith(href)
-  }
+    return pathname.startsWith(href);
+  };
 
   return (
     <motion.div
       animate={{ width: isCollapsed ? 80 : 280 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
       className="bg-gray-900 border-r border-gray-800 flex flex-col relative"
     >
       {/* Logo Section */}
@@ -138,8 +136,12 @@ export default function AdminSidebar() {
                 exit={{ opacity: 0 }}
                 className="flex items-center gap-3"
               >
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <Shield className="w-6 h-6 text-white" />
+                <div className="w-10 h-10">
+                  <img
+                    src="/logo.svg"
+                    alt="GrabtoGo Logo"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div>
                   <h2 className="text-lg font-bold text-white">GrabtoGo</h2>
@@ -173,10 +175,10 @@ export default function AdminSidebar() {
                 <button
                   onClick={() => toggleExpanded(item.title)}
                   className={cn(
-                    "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors",
+                    'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors',
                     isActiveRoute(item.href)
-                      ? "bg-blue-600 text-white"
-                      : "text-gray-300 hover:text-white hover:bg-gray-800"
+                      ? 'bg-blue-600 text-white'
+                      : 'text-gray-300 hover:text-white hover:bg-gray-800'
                   )}
                 >
                   <item.icon className="w-5 h-5 flex-shrink-0" />
@@ -220,10 +222,10 @@ export default function AdminSidebar() {
                           key={child.href}
                           href={child.href}
                           className={cn(
-                            "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors",
+                            'flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors',
                             isActiveRoute(child.href)
-                              ? "bg-blue-600 text-white"
-                              : "text-gray-400 hover:text-white hover:bg-gray-800"
+                              ? 'bg-blue-600 text-white'
+                              : 'text-gray-400 hover:text-white hover:bg-gray-800'
                           )}
                         >
                           <child.icon className="w-4 h-4 flex-shrink-0" />
@@ -243,10 +245,10 @@ export default function AdminSidebar() {
               <Link
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors",
+                  'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors',
                   isActiveRoute(item.href)
-                    ? "bg-blue-600 text-white"
-                    : "text-gray-300 hover:text-white hover:bg-gray-800"
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
                 )}
               >
                 <item.icon className="w-5 h-5 flex-shrink-0" />
@@ -293,5 +295,5 @@ export default function AdminSidebar() {
         </AnimatePresence>
       </div>
     </motion.div>
-  )
+  );
 }

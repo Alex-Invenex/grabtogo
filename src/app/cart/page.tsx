@@ -1,54 +1,54 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { Minus, Plus, X, ShoppingBag, ArrowRight, Truck, Shield, CreditCard } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import * as React from 'react';
+import { Minus, Plus, X, ShoppingBag, ArrowRight, Truck, Shield, CreditCard } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
-import { Separator } from '@/components/ui/separator'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { useAuth } from '@/components/auth/protected-route'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardTitle, CardHeader } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useAuth } from '@/components/auth/protected-route';
 
 interface CartItem {
-  id: string
-  productId: string
-  name: string
-  description: string
-  price: number
-  originalPrice?: number
-  image: string
+  id: string;
+  productId: string;
+  name: string;
+  description: string;
+  price: number;
+  originalPrice?: number;
+  image: string;
   vendor: {
-    id: string
-    name: string
-    avatar?: string
-  }
-  quantity: number
-  maxQuantity: number
-  category: string
+    id: string;
+    name: string;
+    avatar?: string;
+  };
+  quantity: number;
+  maxQuantity: number;
+  category: string;
 }
 
 interface PromoCode {
-  code: string
-  discount: number
-  type: 'percentage' | 'fixed'
-  minOrder?: number
+  code: string;
+  discount: number;
+  type: 'percentage' | 'fixed';
+  minOrder?: number;
 }
 
 export default function CartPage() {
-  const { user, isAuthenticated } = useAuth()
-  const router = useRouter()
-  const [cartItems, setCartItems] = React.useState<CartItem[]>([])
-  const [promoCode, setPromoCode] = React.useState('')
-  const [appliedPromo, setAppliedPromo] = React.useState<PromoCode | null>(null)
-  const [isLoading, setIsLoading] = React.useState(false)
+  const { user, isAuthenticated } = useAuth();
+  const router = useRouter();
+  const [cartItems, setCartItems] = React.useState<CartItem[]>([]);
+  const [promoCode, setPromoCode] = React.useState('');
+  const [appliedPromo, setAppliedPromo] = React.useState<PromoCode | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/auth/login')
-      return
+      router.push('/auth/login');
+      return;
     }
 
     // Mock cart data
@@ -64,11 +64,11 @@ export default function CartPage() {
         vendor: {
           id: 'vendor1',
           name: 'Fresh Fruits Co',
-          avatar: '/api/placeholder/32/32'
+          avatar: '/api/placeholder/32/32',
         },
         quantity: 2,
         maxQuantity: 10,
-        category: 'Fruits'
+        category: 'Fruits',
       },
       {
         id: '2',
@@ -81,11 +81,11 @@ export default function CartPage() {
         vendor: {
           id: 'vendor2',
           name: 'TechZone India',
-          avatar: '/api/placeholder/32/32'
+          avatar: '/api/placeholder/32/32',
         },
         quantity: 1,
         maxQuantity: 5,
-        category: 'Electronics'
+        category: 'Electronics',
       },
       {
         id: '3',
@@ -97,82 +97,82 @@ export default function CartPage() {
         vendor: {
           id: 'vendor3',
           name: 'EcoWear',
-          avatar: '/api/placeholder/32/32'
+          avatar: '/api/placeholder/32/32',
         },
         quantity: 1,
         maxQuantity: 8,
-        category: 'Clothing'
-      }
-    ]
-    setCartItems(mockCartItems)
-  }, [isAuthenticated, router])
+        category: 'Clothing',
+      },
+    ];
+    setCartItems(mockCartItems);
+  }, [isAuthenticated, router]);
 
   const availablePromoCodes: PromoCode[] = [
     {
       code: 'WELCOME10',
       discount: 10,
       type: 'percentage',
-      minOrder: 500
+      minOrder: 500,
     },
     {
       code: 'SAVE100',
       discount: 100,
       type: 'fixed',
-      minOrder: 1000
-    }
-  ]
+      minOrder: 1000,
+    },
+  ];
 
   const updateQuantity = (itemId: string, newQuantity: number) => {
-    setCartItems(items =>
-      items.map(item =>
+    setCartItems((items) =>
+      items.map((item) =>
         item.id === itemId
           ? { ...item, quantity: Math.max(1, Math.min(newQuantity, item.maxQuantity)) }
           : item
       )
-    )
-  }
+    );
+  };
 
   const removeItem = (itemId: string) => {
-    setCartItems(items => items.filter(item => item.id !== itemId))
-  }
+    setCartItems((items) => items.filter((item) => item.id !== itemId));
+  };
 
   const applyPromoCode = () => {
-    const promo = availablePromoCodes.find(p => p.code === promoCode.toUpperCase())
+    const promo = availablePromoCodes.find((p) => p.code === promoCode.toUpperCase());
     if (promo && (!promo.minOrder || subtotal >= promo.minOrder)) {
-      setAppliedPromo(promo)
-      setPromoCode('')
+      setAppliedPromo(promo);
+      setPromoCode('');
     }
-  }
+  };
 
   const removePromoCode = () => {
-    setAppliedPromo(null)
-  }
+    setAppliedPromo(null);
+  };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const savings = cartItems.reduce((sum, item) => {
-    const originalPrice = item.originalPrice || item.price
-    return sum + ((originalPrice - item.price) * item.quantity)
-  }, 0)
+    const originalPrice = item.originalPrice || item.price;
+    return sum + (originalPrice - item.price) * item.quantity;
+  }, 0);
 
   const promoDiscount = appliedPromo
     ? appliedPromo.type === 'percentage'
       ? (subtotal * appliedPromo.discount) / 100
       : appliedPromo.discount
-    : 0
+    : 0;
 
-  const deliveryFee = subtotal > 500 ? 0 : 40
-  const total = subtotal - promoDiscount + deliveryFee
+  const deliveryFee = subtotal > 500 ? 0 : 40;
+  const total = subtotal - promoDiscount + deliveryFee;
 
   const handleCheckout = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     // Simulate processing
     setTimeout(() => {
-      router.push('/checkout')
-    }, 1000)
-  }
+      router.push('/checkout');
+    }, 1000);
+  };
 
   if (!isAuthenticated) {
-    return null
+    return null;
   }
 
   if (cartItems.length === 0) {
@@ -190,7 +190,7 @@ export default function CartPage() {
           </Button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -223,10 +223,15 @@ export default function CartPage() {
                             <Avatar className="h-6 w-6">
                               <AvatarImage src={item.vendor.avatar} alt={item.vendor.name} />
                               <AvatarFallback className="text-xs">
-                                {item.vendor.name.split(' ').map(n => n[0]).join('')}
+                                {item.vendor.name
+                                  .split(' ')
+                                  .map((n) => n[0])
+                                  .join('')}
                               </AvatarFallback>
                             </Avatar>
-                            <span className="text-sm text-muted-foreground">{item.vendor.name}</span>
+                            <span className="text-sm text-muted-foreground">
+                              {item.vendor.name}
+                            </span>
                           </div>
                         </div>
 
@@ -352,12 +357,7 @@ export default function CartPage() {
                 <span>₹{total}</span>
               </div>
 
-              <Button
-                className="w-full"
-                size="lg"
-                onClick={handleCheckout}
-                disabled={isLoading}
-              >
+              <Button className="w-full" size="lg" onClick={handleCheckout} disabled={isLoading}>
                 {isLoading ? 'Processing...' : 'Proceed to Checkout'}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -395,5 +395,5 @@ export default function CartPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

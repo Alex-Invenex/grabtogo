@@ -1,20 +1,20 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { useRouter, usePathname } from 'next/navigation'
-import { useSession } from 'next-auth/react'
-import AdminSidebar from './components/AdminSidebar'
-import AdminHeader from './components/AdminHeader'
-import { Loader2 } from 'lucide-react'
+import React from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import AdminSidebar from './components/AdminSidebar';
+import AdminHeader from './components/AdminHeader';
+import { Loader2 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { data: session, status } = useSession()
-  const router = useRouter()
-  const pathname = usePathname()
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const pathname = usePathname();
 
   // Don't apply auth checks to login page
   if (pathname === '/admin/login') {
-    return <>{children}</>
+    return <>{children}</>;
   }
 
   // Show loading while checking session
@@ -26,19 +26,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <p className="text-gray-400">Loading admin panel...</p>
         </div>
       </div>
-    )
+    );
   }
 
   // Redirect to login if not authenticated or not admin
   if (status === 'unauthenticated' || !session?.user) {
-    router.push('/admin/login')
-    return null
+    router.push('/admin/login');
+    return null;
   }
 
   // Check if user is admin
   if ((session.user as any)?.role !== 'ADMIN') {
-    router.push('/')
-    return null
+    router.push('/');
+    return null;
   }
 
   return (
@@ -49,10 +49,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         <AdminHeader />
-        <main className="flex-1 p-6 overflow-y-auto">
-          {children}
-        </main>
+        <main className="flex-1 p-6 overflow-y-auto">{children}</main>
       </div>
     </div>
-  )
+  );
 }

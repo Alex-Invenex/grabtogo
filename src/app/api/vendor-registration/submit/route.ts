@@ -1,48 +1,48 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { hash } from 'bcryptjs'
-import { db } from '@/lib/db'
-import { sendEmail } from '@/lib/email'
+import { NextRequest, NextResponse } from 'next/server';
+import { hash } from 'bcryptjs';
+import { db } from '@/lib/db';
+import { sendEmail } from '@/lib/email';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   try {
-    const formData = await request.json()
+    const formData = await request.json();
 
     // Validate required fields
-    if (!formData.fullName || !formData.email || !formData.phone || !formData.password || !formData.companyName) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      )
+    if (
+      !formData.fullName ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.password ||
+      !formData.companyName
+    ) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
     // Check if email already exists in registration requests
     const existingRequest = await db.vendorRegistrationRequest.findFirst({
-      where: { email: formData.email }
-    })
+      where: { email: formData.email },
+    });
 
     if (existingRequest) {
       return NextResponse.json(
         { error: 'A registration request with this email already exists' },
         { status: 400 }
-      )
+      );
     }
 
     // Check if user already exists
     const existingUser = await db.user.findUnique({
-      where: { email: formData.email }
-    })
+      where: { email: formData.email },
+    });
 
     if (existingUser) {
-      return NextResponse.json(
-        { error: 'A user with this email already exists' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'A user with this email already exists' }, { status: 400 });
     }
 
     // Hash password
-    const hashedPassword = await hash(formData.password, 12)
+    const hashedPassword = await hash(formData.password, 12);
 
     // Create vendor registration request
     const registrationRequest = await db.vendorRegistrationRequest.create({
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
         termsAccepted: formData.termsAccepted || false,
         privacyAccepted: formData.privacyAccepted || false,
       },
-    })
+    });
 
     // Send confirmation email to vendor
     try {
@@ -157,9 +157,9 @@ export async function POST(request: NextRequest) {
             </div>
           </div>
         `,
-      })
+      });
     } catch (emailError) {
-      console.error('Failed to send confirmation email:', emailError)
+      console.error('Failed to send confirmation email:', emailError);
     }
 
     // Send notification to admin
@@ -210,7 +210,9 @@ export async function POST(request: NextRequest) {
                   </ul>
                 </div>
 
-                ${formData.agentCode ? `
+                ${
+                  formData.agentCode
+                    ? `
                 <div style="margin-top: 20px;">
                   <h3 style="color: #4a5568; margin-bottom: 10px;">Agent Reference</h3>
                   <ul style="list-style: none; padding: 0; margin: 0;">
@@ -219,7 +221,9 @@ export async function POST(request: NextRequest) {
                     <li style="margin: 8px 0;"><strong>Agent Phone:</strong> ${formData.agentPhone || 'Not provided'}</li>
                   </ul>
                 </div>
-                ` : ''}
+                `
+                    : ''
+                }
               </div>
 
               <div style="background: #fef3c7; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b;">
@@ -240,21 +244,18 @@ export async function POST(request: NextRequest) {
             </div>
           </div>
         `,
-      })
+      });
     } catch (emailError) {
-      console.error('Failed to send admin notification:', emailError)
+      console.error('Failed to send admin notification:', emailError);
     }
 
     return NextResponse.json({
       success: true,
       message: 'Vendor registration submitted successfully',
       requestId: registrationRequest.id,
-    })
+    });
   } catch (error) {
-    console.error('Error submitting vendor registration:', error)
-    return NextResponse.json(
-      { error: 'Failed to submit registration' },
-      { status: 500 }
-    )
+    console.error('Error submitting vendor registration:', error);
+    return NextResponse.json({ error: 'Failed to submit registration' }, { status: 500 });
   }
 }

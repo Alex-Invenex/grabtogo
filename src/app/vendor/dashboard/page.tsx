@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { useSession } from 'next-auth/react'
-import { formatDistanceToNow } from 'date-fns'
+import * as React from 'react';
+import { useSession } from 'next-auth/react';
+import { formatDistanceToNow } from 'date-fns';
 import {
   Package,
   ShoppingCart,
@@ -15,55 +15,55 @@ import {
   Calendar,
   Clock,
   AlertCircle,
-  CheckCircle2
-} from 'lucide-react'
+  CheckCircle2,
+} from 'lucide-react';
 
-import { ProtectedRoute } from '@/components/auth/protected-route'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { formatPrice } from '@/lib/utils'
-import { ChartSkeleton, TableSkeleton } from '@/components/ui/loading-states'
+import { ProtectedRoute } from '@/components/auth/protected-route';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { formatPrice } from '@/lib/utils';
+import { ChartSkeleton, TableSkeleton } from '@/components/ui/loading-states';
 
 interface DashboardStats {
-  totalProducts: number
-  totalOrders: number
-  totalRevenue: number
-  totalCustomers: number
-  averageRating: number
-  totalReviews: number
-  storyViews: number
-  newMessages: number
+  totalProducts: number;
+  totalOrders: number;
+  totalRevenue: number;
+  totalCustomers: number;
+  averageRating: number;
+  totalReviews: number;
+  storyViews: number;
+  newMessages: number;
 }
 
 interface RecentOrder {
-  id: string
-  customerName: string
-  items: string[]
-  total: number
-  status: 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled'
-  createdAt: string
+  id: string;
+  customerName: string;
+  items: string[];
+  total: number;
+  status: 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
+  createdAt: string;
 }
 
 interface SubscriptionInfo {
-  planType: 'basic' | 'premium' | 'enterprise'
-  status: 'active' | 'expired' | 'cancelled'
-  currentPeriodEnd: string
-  maxProducts: number
-  maxOrders: number
-  usedProducts: number
-  usedOrders: number
+  planType: 'basic' | 'premium' | 'enterprise';
+  status: 'active' | 'expired' | 'cancelled';
+  currentPeriodEnd: string;
+  maxProducts: number;
+  maxOrders: number;
+  usedProducts: number;
+  usedOrders: number;
 }
 
 export default function VendorDashboardPage() {
-  const { data: session } = useSession()
-  const [loading, setLoading] = React.useState(true)
-  const [stats, setStats] = React.useState<DashboardStats | null>(null)
-  const [recentOrders, setRecentOrders] = React.useState<RecentOrder[]>([])
-  const [subscription, setSubscription] = React.useState<SubscriptionInfo | null>(null)
+  const { data: session } = useSession();
+  const [loading, setLoading] = React.useState(true);
+  const [stats, setStats] = React.useState<DashboardStats | null>(null);
+  const [recentOrders, setRecentOrders] = React.useState<RecentOrder[]>([]);
+  const [subscription, setSubscription] = React.useState<SubscriptionInfo | null>(null);
 
   // Mock data for demonstration
   const mockStats: DashboardStats = {
@@ -74,8 +74,8 @@ export default function VendorDashboardPage() {
     averageRating: 4.7,
     totalReviews: 142,
     storyViews: 2340,
-    newMessages: 7
-  }
+    newMessages: 7,
+  };
 
   const mockOrders: RecentOrder[] = [
     {
@@ -84,7 +84,7 @@ export default function VendorDashboardPage() {
       items: ['Fresh Mangoes (2kg)', 'Organic Apples (1kg)'],
       total: 450,
       status: 'pending',
-      createdAt: new Date(Date.now() - 30 * 60 * 1000).toISOString()
+      createdAt: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
     },
     {
       id: 'ORD-002',
@@ -92,7 +92,7 @@ export default function VendorDashboardPage() {
       items: ['Mixed Fruit Box'],
       total: 299,
       status: 'confirmed',
-      createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+      createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
     },
     {
       id: 'ORD-003',
@@ -100,7 +100,7 @@ export default function VendorDashboardPage() {
       items: ['Seasonal Fruits (5kg)', 'Coconut Water (6 bottles)'],
       total: 850,
       status: 'shipped',
-      createdAt: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString()
+      createdAt: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
     },
     {
       id: 'ORD-004',
@@ -108,9 +108,9 @@ export default function VendorDashboardPage() {
       items: ['Dragon Fruit (500g)'],
       total: 180,
       status: 'delivered',
-      createdAt: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString()
-    }
-  ]
+      createdAt: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
+    },
+  ];
 
   const mockSubscription: SubscriptionInfo = {
     planType: 'premium',
@@ -119,18 +119,18 @@ export default function VendorDashboardPage() {
     maxProducts: 50,
     maxOrders: 500,
     usedProducts: 24,
-    usedOrders: 156
-  }
+    usedOrders: 156,
+  };
 
   React.useEffect(() => {
     // Simulate API call
     setTimeout(() => {
-      setStats(mockStats)
-      setRecentOrders(mockOrders)
-      setSubscription(mockSubscription)
-      setLoading(false)
-    }, 1000)
-  }, [])
+      setStats(mockStats);
+      setRecentOrders(mockOrders);
+      setSubscription(mockSubscription);
+      setLoading(false);
+    }, 1000);
+  }, []);
 
   const getStatusBadge = (status: string) => {
     const variants = {
@@ -138,41 +138,41 @@ export default function VendorDashboardPage() {
       confirmed: 'secondary',
       shipped: 'outline',
       delivered: 'success',
-      cancelled: 'destructive'
-    } as const
+      cancelled: 'destructive',
+    } as const;
 
     const colors = {
       pending: 'bg-yellow-100 text-yellow-800',
       confirmed: 'bg-blue-100 text-blue-800',
       shipped: 'bg-purple-100 text-purple-800',
       delivered: 'bg-green-100 text-green-800',
-      cancelled: 'bg-red-100 text-red-800'
-    } as const
+      cancelled: 'bg-red-100 text-red-800',
+    } as const;
 
     return (
       <Badge className={colors[status as keyof typeof colors] || colors.pending}>
         {status.charAt(0).toUpperCase() + status.slice(1)}
       </Badge>
-    )
-  }
+    );
+  };
 
   const getPlanBadge = (planType: string) => {
     const colors = {
       basic: 'bg-gray-100 text-gray-800',
       premium: 'bg-blue-100 text-blue-800',
-      enterprise: 'bg-purple-100 text-purple-800'
-    } as const
+      enterprise: 'bg-purple-100 text-purple-800',
+    } as const;
 
     return (
       <Badge className={colors[planType as keyof typeof colors] || colors.basic}>
         {planType.charAt(0).toUpperCase() + planType.slice(1)}
       </Badge>
-    )
-  }
+    );
+  };
 
   const getUsagePercentage = (used: number, max: number) => {
-    return max === -1 ? 0 : Math.round((used / max) * 100)
-  }
+    return max === -1 ? 0 : Math.round((used / max) * 100);
+  };
 
   if (loading) {
     return (
@@ -208,7 +208,7 @@ export default function VendorDashboardPage() {
           </div>
         </div>
       </ProtectedRoute>
-    )
+    );
   }
 
   return (
@@ -252,11 +252,15 @@ export default function VendorDashboardPage() {
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm text-muted-foreground">Products</span>
                       <span className="text-sm font-medium">
-                        {subscription.usedProducts} / {subscription.maxProducts === -1 ? '∞' : subscription.maxProducts}
+                        {subscription.usedProducts} /{' '}
+                        {subscription.maxProducts === -1 ? '∞' : subscription.maxProducts}
                       </span>
                     </div>
                     <Progress
-                      value={getUsagePercentage(subscription.usedProducts, subscription.maxProducts)}
+                      value={getUsagePercentage(
+                        subscription.usedProducts,
+                        subscription.maxProducts
+                      )}
                       className="h-2"
                     />
                   </div>
@@ -264,7 +268,8 @@ export default function VendorDashboardPage() {
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm text-muted-foreground">Orders</span>
                       <span className="text-sm font-medium">
-                        {subscription.usedOrders} / {subscription.maxOrders === -1 ? '∞' : subscription.maxOrders}
+                        {subscription.usedOrders} /{' '}
+                        {subscription.maxOrders === -1 ? '∞' : subscription.maxOrders}
                       </span>
                     </div>
                     <Progress
@@ -274,7 +279,10 @@ export default function VendorDashboardPage() {
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground mt-4">
-                  Plan renews {formatDistanceToNow(new Date(subscription.currentPeriodEnd), { addSuffix: true })}
+                  Plan renews{' '}
+                  {formatDistanceToNow(new Date(subscription.currentPeriodEnd), {
+                    addSuffix: true,
+                  })}
                 </p>
               </CardContent>
             </Card>
@@ -290,9 +298,7 @@ export default function VendorDashboardPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">{stats.totalProducts}</div>
-                  <p className="text-xs text-muted-foreground">
-                    +2 from last month
-                  </p>
+                  <p className="text-xs text-muted-foreground">+2 from last month</p>
                 </CardContent>
               </Card>
 
@@ -303,9 +309,7 @@ export default function VendorDashboardPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">{stats.totalOrders}</div>
-                  <p className="text-xs text-muted-foreground">
-                    +12% from last month
-                  </p>
+                  <p className="text-xs text-muted-foreground">+12% from last month</p>
                 </CardContent>
               </Card>
 
@@ -316,9 +320,7 @@ export default function VendorDashboardPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">{formatPrice(stats.totalRevenue)}</div>
-                  <p className="text-xs text-muted-foreground">
-                    +8% from last month
-                  </p>
+                  <p className="text-xs text-muted-foreground">+8% from last month</p>
                 </CardContent>
               </Card>
 
@@ -329,9 +331,7 @@ export default function VendorDashboardPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">{stats.totalCustomers}</div>
-                  <p className="text-xs text-muted-foreground">
-                    +5 new this month
-                  </p>
+                  <p className="text-xs text-muted-foreground">+5 new this month</p>
                 </CardContent>
               </Card>
 
@@ -342,9 +342,7 @@ export default function VendorDashboardPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">{stats.averageRating}</div>
-                  <p className="text-xs text-muted-foreground">
-                    From {stats.totalReviews} reviews
-                  </p>
+                  <p className="text-xs text-muted-foreground">From {stats.totalReviews} reviews</p>
                 </CardContent>
               </Card>
 
@@ -355,9 +353,7 @@ export default function VendorDashboardPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">{stats.storyViews.toLocaleString()}</div>
-                  <p className="text-xs text-muted-foreground">
-                    This week
-                  </p>
+                  <p className="text-xs text-muted-foreground">This week</p>
                 </CardContent>
               </Card>
 
@@ -368,9 +364,7 @@ export default function VendorDashboardPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">{stats.newMessages}</div>
-                  <p className="text-xs text-muted-foreground">
-                    Unread messages
-                  </p>
+                  <p className="text-xs text-muted-foreground">Unread messages</p>
                 </CardContent>
               </Card>
 
@@ -381,9 +375,7 @@ export default function VendorDashboardPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">+12%</div>
-                  <p className="text-xs text-muted-foreground">
-                    vs last month
-                  </p>
+                  <p className="text-xs text-muted-foreground">vs last month</p>
                 </CardContent>
               </Card>
             </div>
@@ -401,9 +393,7 @@ export default function VendorDashboardPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Recent Orders</CardTitle>
-                  <CardDescription>
-                    Latest orders from your customers
-                  </CardDescription>
+                  <CardDescription>Latest orders from your customers</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -417,9 +407,7 @@ export default function VendorDashboardPage() {
                           <p className="text-sm text-muted-foreground mb-2">
                             Customer: {order.customerName}
                           </p>
-                          <p className="text-sm">
-                            Items: {order.items.join(', ')}
-                          </p>
+                          <p className="text-sm">Items: {order.items.join(', ')}</p>
                         </div>
                         <div className="text-right">
                           <p className="font-semibold">{formatPrice(order.total)}</p>
@@ -456,12 +444,14 @@ export default function VendorDashboardPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
-                      {['Fresh Mangoes', 'Organic Apples', 'Mixed Fruit Box', 'Dragon Fruit'].map((product, i) => (
-                        <div key={product} className="flex items-center justify-between">
-                          <span className="text-sm">{product}</span>
-                          <span className="text-sm font-medium">{45 - i * 8} orders</span>
-                        </div>
-                      ))}
+                      {['Fresh Mangoes', 'Organic Apples', 'Mixed Fruit Box', 'Dragon Fruit'].map(
+                        (product, i) => (
+                          <div key={product} className="flex items-center justify-between">
+                            <span className="text-sm">{product}</span>
+                            <span className="text-sm font-medium">{45 - i * 8} orders</span>
+                          </div>
+                        )
+                      )}
                     </div>
                   </CardContent>
                 </Card>
@@ -480,9 +470,7 @@ export default function VendorDashboardPage() {
                   <div className="text-center py-8 text-muted-foreground">
                     <Eye className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>No stories yet</p>
-                    <Button className="mt-4">
-                      Create Your First Story
-                    </Button>
+                    <Button className="mt-4">Create Your First Story</Button>
                   </div>
                 </CardContent>
               </Card>
@@ -491,5 +479,5 @@ export default function VendorDashboardPage() {
         </div>
       </div>
     </ProtectedRoute>
-  )
+  );
 }

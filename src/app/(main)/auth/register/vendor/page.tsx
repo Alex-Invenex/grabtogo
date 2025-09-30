@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import RegistrationWizard from './components/RegistrationWizard'
+import RegistrationWizard from './components/RegistrationWizard';
 
 export default function VendorRegistrationPage() {
-  return <RegistrationWizard />
+  return <RegistrationWizard />;
 }

@@ -16,6 +16,7 @@ A production-grade multi-vendor marketplace built with Next.js 14, PostgreSQL, R
 ## 🛠️ Tech Stack
 
 ### Backend
+
 - **Next.js 14** with App Router
 - **TypeScript** for type safety
 - **Prisma ORM** with PostgreSQL
@@ -24,6 +25,7 @@ A production-grade multi-vendor marketplace built with Next.js 14, PostgreSQL, R
 - **Razorpay** for payment processing
 
 ### Frontend
+
 - **React 18** with Server Components
 - **Tailwind CSS** for styling
 - **shadcn/ui** components
@@ -31,6 +33,7 @@ A production-grade multi-vendor marketplace built with Next.js 14, PostgreSQL, R
 - **React Hook Form** with Zod validation
 
 ### Database
+
 - **PostgreSQL** with PostGIS extension
 - **Redis** for caching and sessions
 
@@ -66,23 +69,28 @@ src/
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/Alex-Invenex/grabtogo.git
    cd grabtogo
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
+
    ```bash
    cp .env.example .env
    ```
+
    Fill in your environment variables in `.env`
 
 4. **Set up the database**
+
    ```bash
    # Generate Prisma client
    npx prisma generate
@@ -115,27 +123,32 @@ The application includes comprehensive models for:
 ## 🔧 API Endpoints
 
 ### Authentication
+
 - `POST /api/auth/signup` - User registration
 - `POST /api/auth/signin` - User login
 - `POST /api/auth/signout` - User logout
 
 ### Products
+
 - `GET /api/products` - List products with filtering
 - `GET /api/products/[id]` - Get product details
 - `POST /api/products` - Create product (vendor only)
 
 ### Vendors
+
 - `GET /api/vendors` - List vendors
 - `GET /api/vendors/[id]` - Get vendor details
 - `POST /api/vendors` - Vendor registration
 
 ### Payments
+
 - `POST /api/payments/create-order` - Create Razorpay order
 - `POST /api/payments/verify` - Verify payment
 
 ## 🔐 Authentication
 
 The app uses NextAuth.js v5 with support for:
+
 - Email/Password authentication
 - Google OAuth
 - JWT sessions with role-based access control
@@ -143,6 +156,7 @@ The app uses NextAuth.js v5 with support for:
 ## 💳 Payment Integration
 
 Razorpay integration supports:
+
 - Order creation and payment processing
 - Payment verification and capture
 - Refund processing

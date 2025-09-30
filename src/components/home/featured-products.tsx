@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { Button } from '@/components/ui/button'
-import { getBusinessImage } from '@/lib/images'
-import { ArrowRight } from 'lucide-react'
+import * as React from 'react';
+import { Button } from '@/components/ui/button';
+import { getBusinessImage } from '@/lib/images';
+import { ArrowRight } from 'lucide-react';
 
 export function FeaturedProducts() {
   return (
@@ -38,34 +38,67 @@ export function FeaturedProducts() {
 
             {/* Description */}
             <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
-              Explore incredible deals from local businesses in Kerala. Discover unique products, exclusive offers, and unforgettable experiences right in your neighborhood.
+              Explore incredible deals from local businesses in Kerala. Discover unique products,
+              exclusive offers, and unforgettable experiences right in your neighborhood.
             </p>
 
             {/* Features List */}
             <div className="space-y-4 mb-10">
               <div className="flex items-center gap-3">
                 <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-4 h-4 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={3}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </div>
                 <span className="text-lg font-medium text-gray-700">Verified Local Businesses</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-4 h-4 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={3}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </div>
                 <span className="text-lg font-medium text-gray-700">Exclusive Deals & Offers</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-4 h-4 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={3}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                 </div>
-                <span className="text-lg font-medium text-gray-700">Visit In-Store to Purchase</span>
+                <span className="text-lg font-medium text-gray-700">
+                  Visit In-Store to Purchase
+                </span>
               </div>
             </div>
 
@@ -74,7 +107,7 @@ export function FeaturedProducts() {
               <Button
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-white font-bold text-lg px-10 py-7 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-                onClick={() => window.location.href = '/listings'}
+                onClick={() => (window.location.href = '/listings')}
               >
                 Explore All Listings
                 <ArrowRight className="w-5 h-5 ml-2" />
@@ -83,7 +116,7 @@ export function FeaturedProducts() {
                 size="lg"
                 variant="outline"
                 className="border-2 border-gray-300 text-gray-700 hover:border-primary hover:text-primary font-bold px-10 py-7 rounded-2xl transition-all duration-300"
-                onClick={() => window.location.href = '/listings?sort=discount'}
+                onClick={() => (window.location.href = '/listings?sort=discount')}
               >
                 View Top Deals
               </Button>
@@ -92,5 +125,5 @@ export function FeaturedProducts() {
         </div>
       </div>
     </section>
-  )
+  );
 }

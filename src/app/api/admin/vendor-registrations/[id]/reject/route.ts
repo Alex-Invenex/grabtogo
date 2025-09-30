@@ -1,51 +1,39 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
-import { auth } from '@/lib/auth'
-import { sendEmail } from '@/lib/email'
+import { NextRequest, NextResponse } from 'next/server';
+import { db } from '@/lib/db';
+import { auth } from '@/lib/auth';
+import { sendEmail } from '@/lib/email';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     // Check if user is admin
-    const session = await auth()
+    const session = await auth();
     if (!session?.user || session.user.role !== 'ADMIN') {
-      return NextResponse.json(
-        { error: 'Unauthorized. Admin access required.' },
-        { status: 403 }
-      )
+      return NextResponse.json({ error: 'Unauthorized. Admin access required.' }, { status: 403 });
     }
 
-    const requestId = params.id
-    const { reason } = await request.json()
+    const requestId = params.id;
+    const { reason } = await request.json();
 
     if (!reason || reason.trim().length === 0) {
-      return NextResponse.json(
-        { error: 'Rejection reason is required' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Rejection reason is required' }, { status: 400 });
     }
 
     // Get the registration request
     const registrationRequest = await db.vendorRegistrationRequest.findUnique({
-      where: { id: requestId }
-    })
+      where: { id: requestId },
+    });
 
     if (!registrationRequest) {
-      return NextResponse.json(
-        { error: 'Registration request not found' },
-        { status: 404 }
-      )
+      return NextResponse.json({ error: 'Registration request not found' }, { status: 404 });
     }
 
     if (registrationRequest.status !== 'pending') {
       return NextResponse.json(
         { error: 'Registration request has already been processed' },
         { status: 400 }
-      )
+      );
     }
 
     // Update registration request status
@@ -57,7 +45,7 @@ export async function POST(
         reviewedAt: new Date(),
         rejectionReason: reason,
       },
-    })
+    });
 
     // Send rejection email to vendor
     try {
@@ -120,9 +108,9 @@ export async function POST(
             </div>
           </div>
         `,
-      })
+      });
     } catch (emailError) {
-      console.error('Failed to send rejection email:', emailError)
+      console.error('Failed to send rejection email:', emailError);
     }
 
     // Send notification to admin
@@ -150,21 +138,18 @@ export async function POST(
             <p><strong>Original Submission:</strong> ${new Date(registrationRequest.createdAt).toLocaleString()}</p>
           </div>
         `,
-      })
+      });
     } catch (emailError) {
-      console.error('Failed to send admin notification:', emailError)
+      console.error('Failed to send admin notification:', emailError);
     }
 
     return NextResponse.json({
       success: true,
       message: 'Vendor registration rejected',
       requestId: updatedRequest.id,
-    })
+    });
   } catch (error) {
-    console.error('Error rejecting vendor registration:', error)
-    return NextResponse.json(
-      { error: 'Failed to reject vendor registration' },
-      { status: 500 }
-    )
+    console.error('Error rejecting vendor registration:', error);
+    return NextResponse.json({ error: 'Failed to reject vendor registration' }, { status: 500 });
   }
 }

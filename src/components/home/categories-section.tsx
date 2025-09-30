@@ -1,16 +1,16 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import Link from 'next/link'
-import { Star, ChevronLeft, ChevronRight } from 'lucide-react'
-import { getCategoryImage } from '@/lib/images'
+import * as React from 'react';
+import Link from 'next/link';
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { getCategoryImage } from '@/lib/images';
 
 interface Category {
-  id: string
-  name: string
-  image: string
-  price: string
-  rating: number
+  id: string;
+  name: string;
+  image: string;
+  price: string;
+  rating: number;
 }
 
 const categories: Category[] = [
@@ -19,82 +19,82 @@ const categories: Category[] = [
     name: 'Fashion & Apparel',
     image: getCategoryImage('fashion-apparel'),
     price: '0 Listings',
-    rating: 4.8
+    rating: 4.8,
   },
   {
     id: 'furniture-home-decor',
     name: 'Furniture & Home Decor',
     image: getCategoryImage('furniture-home-decor'),
     price: '0 Listings',
-    rating: 4.7
+    rating: 4.7,
   },
   {
     id: 'home-appliances-electronics',
     name: 'Home Appliances & Electronics',
     image: getCategoryImage('home-appliances-electronics'),
     price: '1 Listing',
-    rating: 4.9
+    rating: 4.9,
   },
   {
     id: 'jewellery-watches',
     name: 'Jewellery & Watches',
     image: getCategoryImage('jewellery-watches'),
     price: '0 Listings',
-    rating: 4.9
+    rating: 4.9,
   },
   {
     id: 'restaurants-cafes',
     name: 'Restaurants & Cafes',
     image: getCategoryImage('restaurants-cafes'),
     price: '2 Listings',
-    rating: 4.8
+    rating: 4.8,
   },
   {
     id: 'supermarkets-grocery',
     name: 'Supermarkets & Grocery Stores',
     image: getCategoryImage('supermarkets-grocery'),
     price: '1 Listing',
-    rating: 4.6
-  }
-]
+    rating: 4.6,
+  },
+];
 
 export function CategoriesSection() {
-  const scrollContainerRef = React.useRef<HTMLDivElement>(null)
-  const [canScrollLeft, setCanScrollLeft] = React.useState(false)
-  const [canScrollRight, setCanScrollRight] = React.useState(true)
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
+  const [canScrollRight, setCanScrollRight] = React.useState(true);
 
   const checkScrollButtons = () => {
     if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
-      setCanScrollLeft(scrollLeft > 0)
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10)
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
     }
-  }
+  };
 
   React.useEffect(() => {
-    checkScrollButtons()
-    const container = scrollContainerRef.current
+    checkScrollButtons();
+    const container = scrollContainerRef.current;
     if (container) {
-      container.addEventListener('scroll', checkScrollButtons)
-      window.addEventListener('resize', checkScrollButtons)
+      container.addEventListener('scroll', checkScrollButtons);
+      window.addEventListener('resize', checkScrollButtons);
     }
     return () => {
       if (container) {
-        container.removeEventListener('scroll', checkScrollButtons)
+        container.removeEventListener('scroll', checkScrollButtons);
       }
-      window.removeEventListener('resize', checkScrollButtons)
-    }
-  }, [])
+      window.removeEventListener('resize', checkScrollButtons);
+    };
+  }, []);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
-      const scrollAmount = 320
+      const scrollAmount = 320;
       scrollContainerRef.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      })
+        behavior: 'smooth',
+      });
     }
-  }
+  };
 
   return (
     <section className="section-padding bg-white">
@@ -105,9 +105,7 @@ export function CategoriesSection() {
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-3">
               Popular Categories
             </h2>
-            <p className="text-lg text-gray-600">
-              Explore businesses and deals by category
-            </p>
+            <p className="text-lg text-gray-600">Explore businesses and deals by category</p>
           </div>
 
           {/* Navigation Arrows - Desktop Only */}
@@ -148,9 +146,7 @@ export function CategoriesSection() {
                 <div className="destination-card h-96">
                   {/* Price Badge - Circular */}
                   <div className="price-badge-circle">
-                    <span className="leading-tight">
-                      {category.price}
-                    </span>
+                    <span className="leading-tight">{category.price}</span>
                   </div>
 
                   {/* Image */}
@@ -213,5 +209,5 @@ export function CategoriesSection() {
         }
       `}</style>
     </section>
-  )
+  );
 }

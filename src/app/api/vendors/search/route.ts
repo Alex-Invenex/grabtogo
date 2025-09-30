@@ -1,31 +1,31 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
-import { cache } from '@/lib/redis'
-import { Prisma } from '@/lib/prisma'
+import { NextRequest, NextResponse } from 'next/server';
+import { db } from '@/lib/db';
+import { cache } from '@/lib/redis';
+import { Prisma } from '@/lib/prisma';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams
-    const lat = parseFloat(searchParams.get('lat') || '0')
-    const lng = parseFloat(searchParams.get('lng') || '0')
-    const radius = parseFloat(searchParams.get('radius') || '10') // kilometers
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '20')
-    const search = searchParams.get('search')
-    const category = searchParams.get('category')
-    const verified = searchParams.get('verified')
+    const searchParams = request.nextUrl.searchParams;
+    const lat = parseFloat(searchParams.get('lat') || '0');
+    const lng = parseFloat(searchParams.get('lng') || '0');
+    const radius = parseFloat(searchParams.get('radius') || '10'); // kilometers
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '20');
+    const search = searchParams.get('search');
+    const category = searchParams.get('category');
+    const verified = searchParams.get('verified');
 
     // Validate coordinates
     if (!lat || !lng || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
       return NextResponse.json(
         { error: 'Valid latitude and longitude are required' },
         { status: 400 }
-      )
+      );
     }
 
-    const skip = (page - 1) * limit
+    const skip = (page - 1) * limit;
 
     // Create cache key
     const cacheKey = `vendors:search:${JSON.stringify({
@@ -37,12 +37,12 @@ export async function GET(request: NextRequest) {
       search,
       category,
       verified,
-    })}`
+    })}`;
 
     // Try to get from cache first (cache for 5 minutes)
-    const cached = await cache.get(cacheKey)
+    const cached = await cache.get(cacheKey);
     if (cached) {
-      return NextResponse.json(cached)
+      return NextResponse.json(cached);
     }
 
     // Build base where clause
@@ -50,10 +50,10 @@ export async function GET(request: NextRequest) {
       isActive: true,
       latitude: { not: null },
       longitude: { not: null },
-    }
+    };
 
     if (verified === 'true') {
-      where.isVerified = true
+      where.isVerified = true;
     }
 
     if (search) {
@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
         { storeName: { contains: search, mode: 'insensitive' } },
         { description: { contains: search, mode: 'insensitive' } },
         { city: { contains: search, mode: 'insensitive' } },
-      ]
+      ];
     }
 
     // Raw SQL query for geospatial search using PostGIS
@@ -87,14 +87,18 @@ export async function GET(request: NextRequest) {
           $3 * 1000
         )
         ${verified === 'true' ? 'AND vp."isVerified" = true' : ''}
-        ${search ? `AND (
+        ${
+          search
+            ? `AND (
           vp."storeName" ILIKE '%${search}%' OR
           vp.description ILIKE '%${search}%' OR
           vp.city ILIKE '%${search}%'
-        )` : ''}
+        )`
+            : ''
+        }
       ORDER BY distance_km ASC
       LIMIT $4 OFFSET $5
-    `
+    `;
 
     const countQuery = `
       SELECT COUNT(*) as total
@@ -109,12 +113,16 @@ export async function GET(request: NextRequest) {
           $3 * 1000
         )
         ${verified === 'true' ? 'AND vp."isVerified" = true' : ''}
-        ${search ? `AND (
+        ${
+          search
+            ? `AND (
           vp."storeName" ILIKE '%${search}%' OR
           vp.description ILIKE '%${search}%' OR
           vp.city ILIKE '%${search}%'
-        )` : ''}
-    `
+        )`
+            : ''
+        }
+    `;
 
     // Execute queries
     const [vendors, totalResult] = await Promise.all([
@@ -156,16 +164,16 @@ export async function GET(request: NextRequest) {
             ${radius * 1000}
           )
           ${verified === 'true' ? Prisma.sql`AND vp."isVerified" = true` : Prisma.empty}
-      `
-    ])
+      `,
+    ]);
 
-    const total = Number((totalResult as any)[0]?.total || 0)
-    const totalPages = Math.ceil(total / limit)
-    const hasNext = page < totalPages
-    const hasPrev = page > 1
+    const total = Number((totalResult as any)[0]?.total || 0);
+    const totalPages = Math.ceil(total / limit);
+    const hasNext = page < totalPages;
+    const hasPrev = page > 1;
 
     // Format vendors data
-    const formattedVendors = (vendors as any[]).map(vendor => ({
+    const formattedVendors = (vendors as any[]).map((vendor) => ({
       id: vendor.id,
       storeName: vendor.storeName,
       storeSlug: vendor.storeSlug,
@@ -188,8 +196,8 @@ export async function GET(request: NextRequest) {
         name: vendor.user_name,
         email: vendor.user_email,
         createdAt: vendor.user_created_at,
-      }
-    }))
+      },
+    }));
 
     const result = {
       data: formattedVendors,
@@ -205,18 +213,15 @@ export async function GET(request: NextRequest) {
         latitude: lat,
         longitude: lng,
         radius: radius,
-      }
-    }
+      },
+    };
 
     // Cache for 5 minutes
-    await cache.set(cacheKey, result, 300)
+    await cache.set(cacheKey, result, 300);
 
-    return NextResponse.json(result)
+    return NextResponse.json(result);
   } catch (error) {
-    console.error('Vendor geospatial search error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    console.error('Vendor geospatial search error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

@@ -1,92 +1,95 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Clock, Star, TrendingUp } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
+import * as React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Clock, TrendingUp } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Product {
-  id: string
-  name: string
-  slug: string
-  price: number
-  comparePrice: number | null
-  images: { url: string; altText: string | null }[]
+  id: string;
+  name: string;
+  slug: string;
+  price: number;
+  comparePrice: number | null;
+  images: { url: string; altText: string | null }[];
   vendor: {
     vendorProfile: {
-      storeName: string
-      storeSlug: string
-    }
-  }
+      storeName: string;
+      storeSlug: string;
+    };
+  };
 }
 
 interface FlashDealsProps {
-  products?: Product[]
-  loading?: boolean
+  products?: Product[];
+  loading?: boolean;
 }
 
-export function FlashDeals({ products: initialProducts, loading: initialLoading }: FlashDealsProps) {
-  const [products, setProducts] = React.useState<Product[]>(initialProducts || [])
-  const [loading, setLoading] = React.useState(initialLoading || false)
+export function FlashDeals({
+  products: initialProducts,
+  loading: initialLoading,
+}: FlashDealsProps) {
+  const [products, setProducts] = React.useState<Product[]>(initialProducts || []);
+  const [loading, setLoading] = React.useState(initialLoading || false);
   const [timeLeft, setTimeLeft] = React.useState({
     hours: 0,
     minutes: 0,
-    seconds: 0
-  })
+    seconds: 0,
+  });
 
   // Fetch products with discounts
   React.useEffect(() => {
     if (!initialProducts) {
-      setLoading(true)
+      setLoading(true);
       fetch('/api/products?limit=6&sortBy=createdAt&sortOrder=desc')
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           // Filter products with discounts
-          const discountedProducts = data.data.filter((p: Product) =>
-            p.comparePrice && p.comparePrice > p.price
-          )
-          setProducts(discountedProducts.slice(0, 6))
+          const discountedProducts = data.data.filter(
+            (p: Product) => p.comparePrice && p.comparePrice > p.price
+          );
+          setProducts(discountedProducts.slice(0, 6));
         })
-        .catch(err => console.error('Failed to fetch flash deals:', err))
-        .finally(() => setLoading(false))
+        .catch((err) => console.error('Failed to fetch flash deals:', err))
+        .finally(() => setLoading(false));
     }
-  }, [initialProducts])
+  }, [initialProducts]);
 
   // Countdown timer to end of day
   React.useEffect(() => {
     const calculateTimeLeft = () => {
-      const now = new Date()
-      const endOfDay = new Date()
-      endOfDay.setHours(23, 59, 59, 999)
+      const now = new Date();
+      const endOfDay = new Date();
+      endOfDay.setHours(23, 59, 59, 999);
 
-      const difference = endOfDay.getTime() - now.getTime()
+      const difference = endOfDay.getTime() - now.getTime();
 
       return {
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
         minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60)
-      }
-    }
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    };
 
-    setTimeLeft(calculateTimeLeft())
+    setTimeLeft(calculateTimeLeft());
     const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft())
-    }, 1000)
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
 
-    return () => clearInterval(timer)
-  }, [])
+    return () => clearInterval(timer);
+  }, []);
 
   const calculateDiscount = (price: number, comparePrice: number | null) => {
-    if (!comparePrice || comparePrice <= price) return 0
-    return Math.round(((comparePrice - price) / comparePrice) * 100)
-  }
+    if (!comparePrice || comparePrice <= price) return 0;
+    return Math.round(((comparePrice - price) / comparePrice) * 100);
+  };
 
   if (products.length === 0 && !loading) {
-    return null
+    return null;
   }
 
   return (
@@ -100,9 +103,7 @@ export function FlashDeals({ products: initialProducts, loading: initialLoading 
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">
-                  Flash Deals
-                </h2>
+                <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">Flash Deals</h2>
                 <p className="text-lg text-gray-600 mt-1">
                   Limited time offers - Grab them before they're gone!
                 </p>
@@ -115,17 +116,23 @@ export function FlashDeals({ products: initialProducts, loading: initialLoading 
             <Clock className="w-6 h-6 text-primary" />
             <div className="flex items-center gap-2">
               <div className="text-center">
-                <div className="text-3xl font-bold text-gray-900">{String(timeLeft.hours).padStart(2, '0')}</div>
+                <div className="text-3xl font-bold text-gray-900">
+                  {String(timeLeft.hours).padStart(2, '0')}
+                </div>
                 <div className="text-xs text-gray-500 font-medium">Hours</div>
               </div>
               <div className="text-2xl font-bold text-gray-400">:</div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-gray-900">{String(timeLeft.minutes).padStart(2, '0')}</div>
+                <div className="text-3xl font-bold text-gray-900">
+                  {String(timeLeft.minutes).padStart(2, '0')}
+                </div>
                 <div className="text-xs text-gray-500 font-medium">Mins</div>
               </div>
               <div className="text-2xl font-bold text-gray-400">:</div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-gray-900">{String(timeLeft.seconds).padStart(2, '0')}</div>
+                <div className="text-3xl font-bold text-gray-900">
+                  {String(timeLeft.seconds).padStart(2, '0')}
+                </div>
                 <div className="text-xs text-gray-500 font-medium">Secs</div>
               </div>
             </div>
@@ -148,15 +155,11 @@ export function FlashDeals({ products: initialProducts, loading: initialLoading 
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((product) => {
-              const discount = calculateDiscount(product.price, product.comparePrice)
-              const imageUrl = product.images[0]?.url || '/placeholder-product.jpg'
+              const discount = calculateDiscount(product.price, product.comparePrice);
+              const imageUrl = product.images[0]?.url || '/placeholder-product.jpg';
 
               return (
-                <Link
-                  key={product.id}
-                  href={`/products/${product.slug}`}
-                  className="group"
-                >
+                <Link key={product.id} href={`/products/${product.slug}`} className="group">
                   <Card className="overflow-hidden border-2 hover:border-primary transition-all duration-300 hover:shadow-2xl h-full">
                     {/* Product Image */}
                     <div className="relative aspect-square overflow-hidden bg-gray-100">
@@ -218,7 +221,7 @@ export function FlashDeals({ products: initialProducts, loading: initialLoading 
                     </CardContent>
                   </Card>
                 </Link>
-              )
+              );
             })}
           </div>
         )}
@@ -229,12 +232,12 @@ export function FlashDeals({ products: initialProducts, loading: initialLoading 
             size="lg"
             variant="outline"
             className="border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold text-lg px-10 py-7 rounded-2xl transition-all duration-300"
-            onClick={() => window.location.href = '/listings?sortBy=discount'}
+            onClick={() => (window.location.href = '/listings?sortBy=discount')}
           >
             View All Deals
           </Button>
         </div>
       </div>
     </section>
-  )
+  );
 }

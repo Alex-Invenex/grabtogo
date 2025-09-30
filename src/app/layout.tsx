@@ -1,15 +1,43 @@
-import type { Metadata } from 'next'
-import { Toaster } from '@/components/ui/toaster'
-import { ErrorBoundary } from '@/components/ui/error-boundary'
-import { AuthProvider } from '@/components/providers/session-provider'
-import { SocketProvider } from '@/components/providers/socket-provider'
-import './globals.css'
+import type { Metadata } from 'next';
+import { Toaster } from '@/components/ui/toaster';
+import { ErrorBoundary } from '@/components/ui/error-boundary';
+import { AuthProvider } from '@/components/providers/session-provider';
+import { SocketProvider } from '@/components/providers/socket-provider';
+import './globals.css';
+
+// Note: Google Fonts temporarily disabled due to network connectivity issues during build
+// Using system fonts as fallback. To re-enable, uncomment the imports below and update the html className
+// import { Inter, Poppins } from 'next/font/google';
+//
+// const inter = Inter({
+//   subsets: ['latin'],
+//   variable: '--font-inter',
+//   display: 'swap',
+//   weight: ['400', '500', '600', '700'],
+// });
+//
+// const poppins = Poppins({
+//   subsets: ['latin'],
+//   variable: '--font-poppins',
+//   display: 'swap',
+//   weight: ['600', '700', '800'],
+// });
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXTAUTH_URL || 'http://localhost:3000'),
   title: 'GrabtoGo - Deals & Offers to Grab',
-  description: 'A curated selection of offers and deals in your area with amazing discounts from local businesses in Kerala',
-  keywords: ['deals', 'offers', 'local businesses', 'Kerala', 'discounts', 'shopping', 'marketplace', 'Kottayam'],
+  description:
+    'A curated selection of offers and deals in your area with amazing discounts from local businesses in Kerala',
+  keywords: [
+    'deals',
+    'offers',
+    'local businesses',
+    'Kerala',
+    'discounts',
+    'shopping',
+    'marketplace',
+    'Kottayam',
+  ],
   authors: [{ name: 'GrabtoGo Team' }],
   creator: 'GrabtoGo',
   publisher: 'GrabtoGo',
@@ -25,9 +53,7 @@ export const metadata: Metadata = {
       { url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
       { url: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' },
     ],
-    apple: [
-      { url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
+    apple: [{ url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   manifest: '/manifest.json',
   appleWebApp: {
@@ -55,7 +81,7 @@ export const metadata: Metadata = {
     description: 'A curated selection of offers and deals in your area with amazing discounts',
     images: ['/twitter-image.png'],
   },
-}
+};
 
 export const viewport = {
   width: 'device-width',
@@ -67,18 +93,12 @@ export const viewport = {
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#000000' },
   ],
-}
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -99,5 +119,5 @@ export default function RootLayout({
         </AuthProvider>
       </body>
     </html>
-  )
+  );
 }

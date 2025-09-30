@@ -1,60 +1,69 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { Package, Truck, CheckCircle, Clock, X, ArrowRight, Star, MessageSquare } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import * as React from 'react';
+import {
+  Package,
+  Truck,
+  CheckCircle,
+  Clock,
+  X,
+  ArrowRight,
+  Star,
+  MessageSquare,
+} from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Separator } from '@/components/ui/separator'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { useAuth } from '@/components/auth/protected-route'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardTitle, CardHeader } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Separator } from '@/components/ui/separator';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useAuth } from '@/components/auth/protected-route';
 
 interface OrderItem {
-  id: string
-  name: string
-  price: number
-  quantity: number
-  image: string
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
   vendor: {
-    id: string
-    name: string
-    avatar?: string
-  }
+    id: string;
+    name: string;
+    avatar?: string;
+  };
 }
 
 interface Order {
-  id: string
-  orderNumber: string
-  status: 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled'
-  items: OrderItem[]
-  total: number
-  createdAt: string
-  estimatedDelivery?: string
-  deliveredAt?: string
-  trackingNumber?: string
-  paymentMethod: 'razorpay' | 'upi' | 'netbanking' | 'cod'
+  id: string;
+  orderNumber: string;
+  status: 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
+  items: OrderItem[];
+  total: number;
+  createdAt: string;
+  estimatedDelivery?: string;
+  deliveredAt?: string;
+  trackingNumber?: string;
+  paymentMethod: 'razorpay' | 'upi' | 'netbanking' | 'cod';
   shippingAddress: {
-    name: string
-    address: string
-    city: string
-    state: string
-    pincode: string
-  }
+    name: string;
+    address: string;
+    city: string;
+    state: string;
+    pincode: string;
+  };
 }
 
 export default function OrdersPage() {
-  const { user, isAuthenticated } = useAuth()
-  const router = useRouter()
-  const [activeTab, setActiveTab] = React.useState('all')
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+  const [activeTab, setActiveTab] = React.useState('all');
 
   React.useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/auth/login')
+      router.push('/auth/login');
     }
-  }, [isAuthenticated, router])
+  }, [isAuthenticated, router]);
 
   const mockOrders: Order[] = [
     {
@@ -71,9 +80,9 @@ export default function OrdersPage() {
           vendor: {
             id: 'vendor1',
             name: 'Fresh Fruits Co',
-            avatar: '/api/placeholder/32/32'
-          }
-        }
+            avatar: '/api/placeholder/32/32',
+          },
+        },
       ],
       total: 900,
       createdAt: '2024-01-25T10:30:00Z',
@@ -85,8 +94,8 @@ export default function OrdersPage() {
         address: '123 Main St, Apartment 4B',
         city: 'Mumbai',
         state: 'Maharashtra',
-        pincode: '400001'
-      }
+        pincode: '400001',
+      },
     },
     {
       id: '2',
@@ -102,9 +111,9 @@ export default function OrdersPage() {
           vendor: {
             id: 'vendor2',
             name: 'TechZone India',
-            avatar: '/api/placeholder/32/32'
-          }
-        }
+            avatar: '/api/placeholder/32/32',
+          },
+        },
       ],
       total: 2999,
       createdAt: '2024-01-27T15:45:00Z',
@@ -116,8 +125,8 @@ export default function OrdersPage() {
         address: '123 Main St, Apartment 4B',
         city: 'Mumbai',
         state: 'Maharashtra',
-        pincode: '400001'
-      }
+        pincode: '400001',
+      },
     },
     {
       id: '3',
@@ -133,9 +142,9 @@ export default function OrdersPage() {
           vendor: {
             id: 'vendor3',
             name: 'EcoWear',
-            avatar: '/api/placeholder/32/32'
-          }
-        }
+            avatar: '/api/placeholder/32/32',
+          },
+        },
       ],
       total: 799,
       createdAt: '2024-01-28T09:15:00Z',
@@ -146,8 +155,8 @@ export default function OrdersPage() {
         address: '123 Main St, Apartment 4B',
         city: 'Mumbai',
         state: 'Maharashtra',
-        pincode: '400001'
-      }
+        pincode: '400001',
+      },
     },
     {
       id: '4',
@@ -163,9 +172,9 @@ export default function OrdersPage() {
           vendor: {
             id: 'vendor4',
             name: 'Brew Masters',
-            avatar: '/api/placeholder/32/32'
-          }
-        }
+            avatar: '/api/placeholder/32/32',
+          },
+        },
       ],
       total: 1300,
       createdAt: '2024-01-20T12:00:00Z',
@@ -175,51 +184,66 @@ export default function OrdersPage() {
         address: '123 Main St, Apartment 4B',
         city: 'Mumbai',
         state: 'Maharashtra',
-        pincode: '400001'
-      }
-    }
-  ]
+        pincode: '400001',
+      },
+    },
+  ];
 
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'pending':
-        return <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">Pending</Badge>
+        return (
+          <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
+            Pending
+          </Badge>
+        );
       case 'confirmed':
-        return <Badge variant="secondary" className="bg-blue-100 text-blue-800">Confirmed</Badge>
+        return (
+          <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+            Confirmed
+          </Badge>
+        );
       case 'shipped':
-        return <Badge variant="secondary" className="bg-purple-100 text-purple-800">Shipped</Badge>
+        return (
+          <Badge variant="secondary" className="bg-purple-100 text-purple-800">
+            Shipped
+          </Badge>
+        );
       case 'delivered':
-        return <Badge variant="secondary" className="bg-green-100 text-green-800">Delivered</Badge>
+        return (
+          <Badge variant="secondary" className="bg-green-100 text-green-800">
+            Delivered
+          </Badge>
+        );
       case 'cancelled':
-        return <Badge variant="destructive">Cancelled</Badge>
+        return <Badge variant="destructive">Cancelled</Badge>;
       default:
-        return <Badge variant="outline">{status}</Badge>
+        return <Badge variant="outline">{status}</Badge>;
     }
-  }
+  };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'pending':
-        return <Clock className="h-4 w-4" />
+        return <Clock className="h-4 w-4" />;
       case 'confirmed':
-        return <CheckCircle className="h-4 w-4" />
+        return <CheckCircle className="h-4 w-4" />;
       case 'shipped':
-        return <Truck className="h-4 w-4" />
+        return <Truck className="h-4 w-4" />;
       case 'delivered':
-        return <Package className="h-4 w-4" />
+        return <Package className="h-4 w-4" />;
       case 'cancelled':
-        return <X className="h-4 w-4" />
+        return <X className="h-4 w-4" />;
       default:
-        return <Package className="h-4 w-4" />
+        return <Package className="h-4 w-4" />;
     }
-  }
+  };
 
-  const filteredOrders = activeTab === 'all'
-    ? mockOrders
-    : mockOrders.filter(order => order.status === activeTab)
+  const filteredOrders =
+    activeTab === 'all' ? mockOrders : mockOrders.filter((order) => order.status === activeTab);
 
   if (!isAuthenticated) {
-    return null
+    return null;
   }
 
   if (mockOrders.length === 0) {
@@ -237,7 +261,7 @@ export default function OrdersPage() {
           </Button>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -274,10 +298,11 @@ export default function OrdersPage() {
                           <span>Order {order.orderNumber}</span>
                         </CardTitle>
                         <p className="text-sm text-muted-foreground mt-1">
-                          Placed on {new Date(order.createdAt).toLocaleDateString('en-IN', {
+                          Placed on{' '}
+                          {new Date(order.createdAt).toLocaleDateString('en-IN', {
                             year: 'numeric',
                             month: 'long',
-                            day: 'numeric'
+                            day: 'numeric',
                           })}
                         </p>
                       </div>
@@ -304,10 +329,15 @@ export default function OrdersPage() {
                               <Avatar className="h-5 w-5">
                                 <AvatarImage src={item.vendor.avatar} alt={item.vendor.name} />
                                 <AvatarFallback className="text-xs">
-                                  {item.vendor.name.split(' ').map(n => n[0]).join('')}
+                                  {item.vendor.name
+                                    .split(' ')
+                                    .map((n) => n[0])
+                                    .join('')}
                                 </AvatarFallback>
                               </Avatar>
-                              <span className="text-sm text-muted-foreground">{item.vendor.name}</span>
+                              <span className="text-sm text-muted-foreground">
+                                {item.vendor.name}
+                              </span>
                             </div>
                           </div>
                           <div className="text-right">
@@ -325,7 +355,8 @@ export default function OrdersPage() {
                       <div className="space-y-1">
                         {order.status === 'shipped' && order.estimatedDelivery && (
                           <p className="text-sm text-muted-foreground">
-                            Expected delivery: {new Date(order.estimatedDelivery).toLocaleDateString('en-IN')}
+                            Expected delivery:{' '}
+                            {new Date(order.estimatedDelivery).toLocaleDateString('en-IN')}
                           </p>
                         )}
                         {order.status === 'delivered' && order.deliveredAt && (
@@ -333,11 +364,12 @@ export default function OrdersPage() {
                             Delivered on {new Date(order.deliveredAt).toLocaleDateString('en-IN')}
                           </p>
                         )}
-                        {order.trackingNumber && (order.status === 'shipped' || order.status === 'delivered') && (
-                          <p className="text-sm text-muted-foreground">
-                            Tracking: {order.trackingNumber}
-                          </p>
-                        )}
+                        {order.trackingNumber &&
+                          (order.status === 'shipped' || order.status === 'delivered') && (
+                            <p className="text-sm text-muted-foreground">
+                              Tracking: {order.trackingNumber}
+                            </p>
+                          )}
                       </div>
 
                       <div className="flex items-center space-x-2">
@@ -377,5 +409,5 @@ export default function OrdersPage() {
         </Tabs>
       </div>
     </div>
-  )
+  );
 }

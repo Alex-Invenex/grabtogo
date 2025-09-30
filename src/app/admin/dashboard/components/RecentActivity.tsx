@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { motion } from 'framer-motion'
+import React from 'react';
+import { motion } from 'framer-motion';
 import {
   Store,
   User,
@@ -12,24 +12,24 @@ import {
   XCircle,
   Clock,
   Bell,
-  Settings
-} from 'lucide-react'
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { ScrollArea } from '@/components/ui/scroll-area'
+  Settings,
+} from 'lucide-react';
+import { Card, CardContent, CardTitle, CardHeader, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface ActivityItem {
-  id: string
-  type: 'vendor' | 'user' | 'order' | 'payment' | 'system' | 'security'
-  title: string
-  description: string
-  timestamp: string
-  icon: React.ComponentType<{ className?: string }>
-  color: string
-  priority?: 'low' | 'medium' | 'high'
-  avatar?: string
-  username?: string
+  id: string;
+  type: 'vendor' | 'user' | 'order' | 'payment' | 'system' | 'security';
+  title: string;
+  description: string;
+  timestamp: string;
+  icon: React.ComponentType<{ className?: string }>;
+  color: string;
+  priority?: 'low' | 'medium' | 'high';
+  avatar?: string;
+  username?: string;
 }
 
 const recentActivities: ActivityItem[] = [
@@ -42,7 +42,7 @@ const recentActivities: ActivityItem[] = [
     icon: Store,
     color: 'blue',
     priority: 'high',
-    username: 'Fresh Foods Market'
+    username: 'Fresh Foods Market',
   },
   {
     id: '2',
@@ -52,7 +52,7 @@ const recentActivities: ActivityItem[] = [
     timestamp: '5 minutes ago',
     icon: ShoppingCart,
     color: 'green',
-    priority: 'medium'
+    priority: 'medium',
   },
   {
     id: '3',
@@ -63,7 +63,7 @@ const recentActivities: ActivityItem[] = [
     icon: DollarSign,
     color: 'purple',
     priority: 'low',
-    username: 'Spice Paradise'
+    username: 'Spice Paradise',
   },
   {
     id: '4',
@@ -73,7 +73,7 @@ const recentActivities: ActivityItem[] = [
     timestamp: '18 minutes ago',
     icon: CheckCircle,
     color: 'green',
-    priority: 'medium'
+    priority: 'medium',
   },
   {
     id: '5',
@@ -85,7 +85,7 @@ const recentActivities: ActivityItem[] = [
     color: 'teal',
     priority: 'low',
     username: 'Priya Sharma',
-    avatar: '/avatars/priya.jpg'
+    avatar: '/avatars/priya.jpg',
   },
   {
     id: '6',
@@ -96,7 +96,7 @@ const recentActivities: ActivityItem[] = [
     icon: CheckCircle,
     color: 'green',
     priority: 'medium',
-    username: 'Urban Kitchen'
+    username: 'Urban Kitchen',
   },
   {
     id: '7',
@@ -106,7 +106,7 @@ const recentActivities: ActivityItem[] = [
     timestamp: '45 minutes ago',
     icon: AlertTriangle,
     color: 'red',
-    priority: 'high'
+    priority: 'high',
   },
   {
     id: '8',
@@ -116,9 +116,9 @@ const recentActivities: ActivityItem[] = [
     timestamp: '1 hour ago',
     icon: Settings,
     color: 'gray',
-    priority: 'low'
-  }
-]
+    priority: 'low',
+  },
+];
 
 export default function RecentActivity() {
   const getColorClasses = (color: string, priority?: string) => {
@@ -128,36 +128,38 @@ export default function RecentActivity() {
       purple: 'bg-purple-100 text-purple-600',
       red: 'bg-red-100 text-red-600',
       teal: 'bg-teal-100 text-teal-600',
-      gray: 'bg-gray-100 text-gray-600'
-    }
+      gray: 'bg-gray-100 text-gray-600',
+    };
 
     const priorityBorder = {
       high: 'border-l-red-500',
       medium: 'border-l-yellow-500',
-      low: 'border-l-green-500'
-    }
+      low: 'border-l-green-500',
+    };
 
     return {
       icon: baseColors[color as keyof typeof baseColors] || 'bg-gray-100 text-gray-600',
-      border: priority ? priorityBorder[priority as keyof typeof priorityBorder] : 'border-l-gray-300'
-    }
-  }
+      border: priority
+        ? priorityBorder[priority as keyof typeof priorityBorder]
+        : 'border-l-gray-300',
+    };
+  };
 
   const getPriorityBadge = (priority?: string) => {
-    if (!priority) return null
+    if (!priority) return null;
 
     const variants = {
       high: 'destructive',
       medium: 'default',
-      low: 'secondary'
-    } as const
+      low: 'secondary',
+    } as const;
 
     return (
       <Badge variant={variants[priority as keyof typeof variants]} className="text-xs">
         {priority}
       </Badge>
-    )
-  }
+    );
+  };
 
   return (
     <Card className="h-fit">
@@ -177,7 +179,7 @@ export default function RecentActivity() {
         <ScrollArea className="h-96">
           <div className="space-y-1 px-6 pb-6">
             {recentActivities.map((activity, index) => {
-              const colorClasses = getColorClasses(activity.color, activity.priority)
+              const colorClasses = getColorClasses(activity.color, activity.priority);
 
               return (
                 <motion.div
@@ -192,9 +194,7 @@ export default function RecentActivity() {
                     {activity.avatar ? (
                       <Avatar className="w-8 h-8">
                         <AvatarImage src={activity.avatar} alt={activity.username} />
-                        <AvatarFallback>
-                          {activity.username?.charAt(0) || 'U'}
-                        </AvatarFallback>
+                        <AvatarFallback>{activity.username?.charAt(0) || 'U'}</AvatarFallback>
                       </Avatar>
                     ) : (
                       <div className={`p-2 rounded-full ${colorClasses.icon}`}>
@@ -211,23 +211,19 @@ export default function RecentActivity() {
                       </h4>
                       {getPriorityBadge(activity.priority)}
                     </div>
-                    <p className="text-sm text-gray-600 mb-1">
-                      {activity.description}
-                    </p>
+                    <p className="text-sm text-gray-600 mb-1">{activity.description}</p>
                     <div className="flex items-center gap-2">
                       <span className="text-xs text-gray-400 flex items-center gap-1">
                         <Clock className="w-3 h-3" />
                         {activity.timestamp}
                       </span>
                       {activity.username && (
-                        <span className="text-xs text-gray-500">
-                          by {activity.username}
-                        </span>
+                        <span className="text-xs text-gray-500">by {activity.username}</span>
                       )}
                     </div>
                   </div>
                 </motion.div>
-              )
+              );
             })}
           </div>
         </ScrollArea>
@@ -240,5 +236,5 @@ export default function RecentActivity() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

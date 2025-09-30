@@ -1,32 +1,26 @@
-import { NextRequest, NextResponse } from 'next/server'
-import Razorpay from 'razorpay'
-import crypto from 'crypto'
+import { NextRequest, NextResponse } from 'next/server';
+import Razorpay from 'razorpay';
+import crypto from 'crypto';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 // Initialize Razorpay
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID!,
   key_secret: process.env.RAZORPAY_KEY_SECRET!,
-})
+});
 
 export async function POST(request: NextRequest) {
   try {
-    const { amount, currency = 'INR', vendorData } = await request.json()
+    const { amount, currency = 'INR', vendorData } = await request.json();
 
     // Validate required fields
     if (!amount || amount <= 0) {
-      return NextResponse.json(
-        { error: 'Invalid amount' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Invalid amount' }, { status: 400 });
     }
 
     if (!vendorData) {
-      return NextResponse.json(
-        { error: 'Vendor data is required' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Vendor data is required' }, { status: 400 });
     }
 
     // Create Razorpay order
@@ -42,19 +36,16 @@ export async function POST(request: NextRequest) {
         selected_package: vendorData.selectedPackage,
         billing_cycle: vendorData.billingCycle,
       },
-    })
+    });
 
     return NextResponse.json({
       id: order.id,
       amount: order.amount,
       currency: order.currency,
       receipt: order.receipt,
-    })
+    });
   } catch (error) {
-    console.error('Error creating Razorpay order:', error)
-    return NextResponse.json(
-      { error: 'Failed to create payment order' },
-      { status: 500 }
-    )
+    console.error('Error creating Razorpay order:', error);
+    return NextResponse.json({ error: 'Failed to create payment order' }, { status: 500 });
   }
 }
