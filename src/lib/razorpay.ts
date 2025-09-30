@@ -1,21 +1,23 @@
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
 
-// Only initialize Razorpay if credentials are available
-const hasCredentials = process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET;
+// Lazy initialization of Razorpay client
+let razorpayInstance: Razorpay | null = null;
 
-export const razorpay = hasCredentials
-  ? new Razorpay({
+function getRazorpayClient() {
+  if (!razorpayInstance) {
+    const hasCredentials = process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET;
+
+    if (!hasCredentials) {
+      throw new Error('Razorpay credentials not found in environment variables');
+    }
+
+    razorpayInstance = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID!,
       key_secret: process.env.RAZORPAY_KEY_SECRET!,
-    })
-  : null;
-
-function ensureRazorpay() {
-  if (!razorpay) {
-    throw new Error('Razorpay credentials not found in environment variables');
+    });
   }
-  return razorpay;
+  return razorpayInstance;
 }
 
 export interface CreateOrderOptions {
@@ -34,7 +36,7 @@ export interface VerifyPaymentOptions {
 export class RazorpayService {
   static async createOrder(options: CreateOrderOptions) {
     try {
-      const razorpayInstance = ensureRazorpay();
+      const razorpayInstance = getRazorpayClient();
       const order = await razorpayInstance.orders.create({
         amount: options.amount,
         currency: options.currency || 'INR',
@@ -60,7 +62,7 @@ export class RazorpayService {
       const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = options;
 
       const body = razorpay_order_id + '|' + razorpay_payment_id;
-      ensureRazorpay(); // Ensure credentials are available
+      getRazorpayClient(); // Ensure credentials are available
       const expectedSignature = crypto
         .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
         .update(body.toString())
@@ -75,7 +77,7 @@ export class RazorpayService {
 
   static async capturePayment(paymentId: string, amount: number) {
     try {
-      const razorpayInstance = ensureRazorpay();
+      const razorpayInstance = getRazorpayClient();
       const payment = await razorpayInstance.payments.capture(paymentId, amount, 'INR');
       return {
         success: true,
@@ -92,7 +94,7 @@ export class RazorpayService {
 
   static async getPayment(paymentId: string) {
     try {
-      const razorpayInstance = ensureRazorpay();
+      const razorpayInstance = getRazorpayClient();
       const payment = await razorpayInstance.payments.fetch(paymentId);
       return {
         success: true,
@@ -109,7 +111,7 @@ export class RazorpayService {
 
   static async refundPayment(paymentId: string, amount?: number) {
     try {
-      const razorpayInstance = ensureRazorpay();
+      const razorpayInstance = getRazorpayClient();
       const refund = await razorpayInstance.payments.refund(paymentId, {
         amount: amount,
       });

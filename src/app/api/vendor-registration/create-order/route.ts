@@ -4,11 +4,18 @@ import crypto from 'crypto';
 
 export const dynamic = 'force-dynamic';
 
-// Initialize Razorpay
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-});
+// Lazy initialization of Razorpay client
+let razorpayInstance: Razorpay | null = null;
+
+function getRazorpayClient() {
+  if (!razorpayInstance) {
+    razorpayInstance = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID!,
+      key_secret: process.env.RAZORPAY_KEY_SECRET!,
+    });
+  }
+  return razorpayInstance;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,6 +31,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create Razorpay order
+    const razorpay = getRazorpayClient();
     const order = await razorpay.orders.create({
       amount: Math.round(amount * 100), // Amount in paisa
       currency,
