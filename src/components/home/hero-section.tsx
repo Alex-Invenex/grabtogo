@@ -23,19 +23,19 @@ export function HeroSection() {
             {/* Small Badge */}
             <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-md">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-              <span className="text-sm font-semibold text-gray-700">CRAVING SOMETHING DELICIOUS?</span>
+              <span className="text-sm font-semibold text-gray-700">DISCOVER LOCAL DEALS & OFFERS</span>
             </div>
 
             {/* Main Heading */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-[1.1]">
-              Experience
-              <span className="block mt-2">The Joy Of</span>
-              <span className="block text-primary mt-2">Fresh Food!</span>
+              Find the
+              <span className="block mt-2">Ultimate</span>
+              <span className="block text-primary mt-2">Offers Now!</span>
             </h1>
 
             {/* Description */}
             <p className="text-xl md:text-2xl text-gray-600 max-w-xl leading-relaxed">
-              Discover delicious meals from local restaurants and vendors. Order now and enjoy fast delivery to your doorstep.
+              A curated selection of offers and deals in your area with amazing discounts from local businesses.
             </p>
 
             {/* CTA Button */}
@@ -44,7 +44,7 @@ export function HeroSection() {
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-white font-bold text-lg px-10 py-7 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
               >
-                Explore Now →
+                Discover Places →
               </Button>
             </div>
 
@@ -54,19 +54,19 @@ export function HeroSection() {
                 <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
                   <MapPin className="w-5 h-5 text-primary" />
                 </div>
-                <span className="text-sm font-medium text-gray-700">Fast Delivery</span>
+                <span className="text-sm font-medium text-gray-700">Location-Based</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
                   <Users className="w-5 h-5 text-primary" />
                 </div>
-                <span className="text-sm font-medium text-gray-700">1000+ Restaurants</span>
+                <span className="text-sm font-medium text-gray-700">Verified Vendors</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
                   <Calendar className="w-5 h-5 text-primary" />
                 </div>
-                <span className="text-sm font-medium text-gray-700">Order Anytime</span>
+                <span className="text-sm font-medium text-gray-700">Amazing Discounts</span>
               </div>
             </div>
           </div>
@@ -76,7 +76,7 @@ export function HeroSection() {
             <div className="relative corner-cut-large overflow-hidden rounded-3xl shadow-2xl">
               <img
                 src={getBusinessImage(0, 'storefront')}
-                alt="Discover delicious food from local restaurants"
+                alt="Discover amazing deals and offers from local businesses"
                 className="w-full h-[600px] object-cover"
               />
             </div>
@@ -88,8 +88,8 @@ export function HeroSection() {
                   <MapPin className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-gray-500 uppercase">Popular Cuisines</div>
-                  <div className="text-lg font-bold text-gray-900">Kerala Delicacies</div>
+                  <div className="text-xs font-semibold text-gray-500 uppercase">Featured Deals</div>
+                  <div className="text-lg font-bold text-gray-900">Kerala Businesses</div>
                 </div>
               </div>
             </div>

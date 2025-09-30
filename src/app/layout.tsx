@@ -7,9 +7,9 @@ import './globals.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXTAUTH_URL || 'http://localhost:3000'),
-  title: 'GrabtoGo - Multi-Vendor Marketplace',
-  description: 'Discover local vendors and products in your neighborhood with real-time features',
-  keywords: ['marketplace', 'local vendors', 'e-commerce', 'shopping', 'real-time'],
+  title: 'GrabtoGo - Deals & Offers to Grab',
+  description: 'A curated selection of offers and deals in your area with amazing discounts from local businesses in Kerala',
+  keywords: ['deals', 'offers', 'local businesses', 'Kerala', 'discounts', 'shopping', 'marketplace', 'Kottayam'],
   authors: [{ name: 'GrabtoGo Team' }],
   creator: 'GrabtoGo',
   publisher: 'GrabtoGo',
@@ -38,21 +38,21 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'GrabtoGo',
-    title: 'GrabtoGo - Local Marketplace',
-    description: 'Discover local vendors and products in your neighborhood',
+    title: 'GrabtoGo - Deals & Offers to Grab',
+    description: 'A curated selection of offers and deals in your area with amazing discounts',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'GrabtoGo - Local Marketplace',
+        alt: 'GrabtoGo - Deals & Offers to Grab',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GrabtoGo - Local Marketplace',
-    description: 'Discover local vendors and products in your neighborhood',
+    title: 'GrabtoGo - Deals & Offers to Grab',
+    description: 'A curated selection of offers and deals in your area with amazing discounts',
     images: ['/twitter-image.png'],
   },
 }

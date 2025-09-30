@@ -18,43 +18,43 @@ const categories: Category[] = [
     id: 'fashion-apparel',
     name: 'Fashion & Apparel',
     image: getCategoryImage('fashion-apparel'),
-    price: '$7K-Lux',
+    price: '0 Listings',
     rating: 4.8
   },
   {
-    id: 'home-appliances-electronics',
-    name: 'Electronics',
-    image: getCategoryImage('home-appliances-electronics'),
-    price: '$5K-Pro',
+    id: 'furniture-home-decor',
+    name: 'Furniture & Home Decor',
+    image: getCategoryImage('furniture-home-decor'),
+    price: '0 Listings',
     rating: 4.7
   },
   {
-    id: 'restaurants-cafes',
-    name: 'Restaurants',
-    image: getCategoryImage('restaurants-cafes'),
-    price: '$2K-Dlx',
+    id: 'home-appliances-electronics',
+    name: 'Home Appliances & Electronics',
+    image: getCategoryImage('home-appliances-electronics'),
+    price: '1 Listing',
     rating: 4.9
-  },
-  {
-    id: 'supermarkets-grocery',
-    name: 'Grocery',
-    image: getCategoryImage('supermarkets-grocery'),
-    price: '$1K-Eco',
-    rating: 4.6
   },
   {
     id: 'jewellery-watches',
-    name: 'Jewelry',
+    name: 'Jewellery & Watches',
     image: getCategoryImage('jewellery-watches'),
-    price: '$10K-Lux',
+    price: '0 Listings',
     rating: 4.9
   },
   {
-    id: 'furniture-home-decor',
-    name: 'Furniture',
-    image: getCategoryImage('furniture-home-decor'),
-    price: '$3K-Com',
-    rating: 4.7
+    id: 'restaurants-cafes',
+    name: 'Restaurants & Cafes',
+    image: getCategoryImage('restaurants-cafes'),
+    price: '2 Listings',
+    rating: 4.8
+  },
+  {
+    id: 'supermarkets-grocery',
+    name: 'Supermarkets & Grocery Stores',
+    image: getCategoryImage('supermarkets-grocery'),
+    price: '1 Listing',
+    rating: 4.6
   }
 ]
 
@@ -103,10 +103,10 @@ export function CategoriesSection() {
         <div className="flex items-center justify-between mb-12">
           <div>
             <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-3">
-              Popular Destination
+              Popular Categories
             </h2>
             <p className="text-lg text-gray-600">
-              Explore trending categories and deals
+              Explore businesses and deals by category
             </p>
           </div>
 

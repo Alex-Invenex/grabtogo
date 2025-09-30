@@ -11,16 +11,20 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '20')
     const search = searchParams.get('search')
     const city = searchParams.get('city')
+    const location = searchParams.get('location') // Alias for city
     const verified = searchParams.get('verified')
 
     const skip = (page - 1) * limit
+
+    // Use location parameter if city not provided
+    const cityFilter = city || location
 
     // Create cache key
     const cacheKey = `vendors:${JSON.stringify({
       page,
       limit,
       search,
-      city,
+      city: cityFilter,
       verified,
     })}`
 
@@ -39,8 +43,8 @@ export async function GET(request: NextRequest) {
       where.isVerified = true
     }
 
-    if (city) {
-      where.city = { contains: city, mode: 'insensitive' }
+    if (cityFilter && cityFilter !== 'All Locations') {
+      where.city = { contains: cityFilter, mode: 'insensitive' }
     }
 
     if (search) {

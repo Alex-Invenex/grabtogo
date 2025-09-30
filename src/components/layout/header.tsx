@@ -98,25 +98,25 @@ export function Header() {
                 href="/"
                 className="font-bold text-base text-gray-700 hover:text-primary transition-all duration-300"
               >
-                HOME
+                Home
               </Link>
               <Link
-                href="/categories"
+                href="/profile"
                 className="font-bold text-base text-gray-700 hover:text-primary transition-all duration-300"
               >
-                CUISINES
+                My Profile
               </Link>
               <Link
-                href="/businesses"
+                href="/listings"
                 className="font-bold text-base text-gray-700 hover:text-primary transition-all duration-300"
               >
-                RESTAURANTS
+                Listings
               </Link>
               <Link
-                href="/contact"
+                href="/shop"
                 className="font-bold text-base text-gray-700 hover:text-primary transition-all duration-300"
               >
-                CONTACT
+                Shop
               </Link>
             </nav>
           </div>
@@ -250,11 +250,15 @@ export function Header() {
             ) : (
               <>
                 <Button
+                  variant="outline"
                   size="default"
-                  className="hidden md:flex bg-primary text-white hover:bg-primary/90 shadow-lg font-bold text-base px-8 py-6 rounded-2xl hover:shadow-xl transition-all duration-300"
+                  className="hidden md:flex border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold text-base px-6 py-6 rounded-2xl transition-all duration-300"
                   asChild
                 >
-                  <Link href="/auth/register">Sign Up</Link>
+                  <Link href="/auth/register/vendor">
+                    <Store className="w-5 h-5 mr-2" />
+                    Become a Vendor
+                  </Link>
                 </Button>
               </>
             )}
@@ -299,20 +303,28 @@ export function Header() {
                 Home
               </Link>
               <Link
-                href="/categories"
+                href="/profile"
+                className="flex items-center gap-2 px-2 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <User className="w-4 h-4" />
+                My Profile
+              </Link>
+              <Link
+                href="/listings"
                 className="flex items-center gap-2 px-2 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <Grid3x3 className="w-4 h-4" />
-                Categories
+                Listings
               </Link>
               <Link
-                href="/businesses"
+                href="/shop"
                 className="flex items-center gap-2 px-2 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <Store className="w-4 h-4" />
-                Businesses
+                Shop
               </Link>
               {!isAuthenticated && (
                 <>

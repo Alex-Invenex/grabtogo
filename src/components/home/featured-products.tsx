@@ -15,7 +15,7 @@ export function FeaturedProducts() {
           <div className="relative overflow-hidden">
             <img
               src={getBusinessImage(2, 'storefront')}
-              alt="Special Offer"
+              alt="Featured Local Business Deals"
               className="promo-banner-image"
             />
             {/* Image Overlay */}
@@ -27,18 +27,18 @@ export function FeaturedProducts() {
             {/* Discount Badge */}
             <div className="inline-block mb-6">
               <div className="corner-cut-small bg-primary text-white px-8 py-3 rounded-2xl">
-                <span className="text-3xl font-extrabold">20% OFF</span>
+                <span className="text-3xl font-extrabold">UP TO 50% OFF</span>
               </div>
             </div>
 
             {/* Heading */}
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
-              UNLEASH WANDERLUST WITH SKYWINGS
+              DISCOVER AMAZING LOCAL DEALS
             </h2>
 
             {/* Description */}
             <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-xl">
-              Explore incredible deals from local businesses. Discover unique products, exclusive offers, and unforgettable experiences right in your neighborhood.
+              Explore incredible deals from local businesses in Kerala. Discover unique products, exclusive offers, and unforgettable experiences right in your neighborhood.
             </p>
 
             {/* Features List */}
@@ -65,7 +65,7 @@ export function FeaturedProducts() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-lg font-medium text-gray-700">Secure Shopping Experience</span>
+                <span className="text-lg font-medium text-gray-700">Visit In-Store to Purchase</span>
               </div>
             </div>
 
@@ -74,16 +74,18 @@ export function FeaturedProducts() {
               <Button
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-white font-bold text-lg px-10 py-7 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                onClick={() => window.location.href = '/listings'}
               >
-                Book A Flight Now
+                Explore All Listings
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 className="border-2 border-gray-300 text-gray-700 hover:border-primary hover:text-primary font-bold px-10 py-7 rounded-2xl transition-all duration-300"
+                onClick={() => window.location.href = '/listings?sort=discount'}
               >
-                View All Deals
+                View Top Deals
               </Button>
             </div>
           </div>
