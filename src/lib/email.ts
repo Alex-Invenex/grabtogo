@@ -1,6 +1,19 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.AUTH_RESEND_KEY);
+let resendClient: Resend | null = null;
+
+function getResendClient(): Resend {
+  if (!resendClient) {
+    const apiKey = process.env.AUTH_RESEND_KEY || process.env.RESEND_API_KEY;
+
+    if (!apiKey) {
+      throw new Error('RESEND_API_KEY or AUTH_RESEND_KEY environment variable is not set');
+    }
+
+    resendClient = new Resend(apiKey);
+  }
+  return resendClient;
+}
 
 interface EmailTemplate {
   to: string;
@@ -26,7 +39,7 @@ export async function sendVerificationEmail(
   });
 
   try {
-    await resend.emails.send({
+    await getResendClient().emails.send({
       from: process.env.EMAIL_FROM || 'noreply@grabtogo.com',
       to: email,
       subject: template.subject,
@@ -57,7 +70,7 @@ export async function sendPasswordResetEmail(
   });
 
   try {
-    await resend.emails.send({
+    await getResendClient().emails.send({
       from: process.env.EMAIL_FROM || 'noreply@grabtogo.com',
       to: email,
       subject: template.subject,
@@ -86,7 +99,7 @@ export async function sendWelcomeEmail(
   });
 
   try {
-    await resend.emails.send({
+    await getResendClient().emails.send({
       from: process.env.EMAIL_FROM || 'noreply@grabtogo.com',
       to: email,
       subject: template.subject,
@@ -115,7 +128,7 @@ export async function sendEmail({
   text?: string;
 }): Promise<boolean> {
   try {
-    await resend.emails.send({
+    await getResendClient().emails.send({
       from: process.env.EMAIL_FROM || 'noreply@grabtogo.com',
       to,
       subject,
