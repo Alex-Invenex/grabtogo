@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { cache } from '@/lib/redis';
-import { razorpay } from '@/lib/razorpay';
+import { RazorpayService } from '@/lib/razorpay';
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
@@ -92,14 +92,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Create Razorpay order for subscription payment
-    if (!razorpay) {
-      return NextResponse.json({ error: 'Payment service not available' }, { status: 500 });
-    }
-
-    const orderResult = await razorpay.orders.create({
+    const orderResult = await RazorpayService.createOrder({
       amount: plan.amount,
       currency: 'INR',
-      receipt: `subscription_${session.user.id}_${Date.now()}`,
+      receipt: RazorpayService.generateReceiptId('subscription'),
       notes: {
         planType: validatedData.planType,
         billingCycle: validatedData.billingCycle,
@@ -107,7 +103,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    if (!orderResult) {
+    if (!orderResult.success || !orderResult.order) {
       return NextResponse.json({ error: 'Failed to create payment order' }, { status: 500 });
     }
 
@@ -135,7 +131,7 @@ export async function POST(request: NextRequest) {
         subscriptionId: subscription.id,
         amount: plan.amount / 100,
         status: 'pending',
-        razorpayOrderId: orderResult.id,
+        razorpayOrderId: orderResult.order.id,
         billingPeriodStart: startDate,
         billingPeriodEnd: endDate,
       },
@@ -148,7 +144,7 @@ export async function POST(request: NextRequest) {
       {
         message: 'Subscription created successfully',
         subscription,
-        paymentOrder: orderResult,
+        paymentOrder: orderResult.order,
       },
       { status: 201 }
     );

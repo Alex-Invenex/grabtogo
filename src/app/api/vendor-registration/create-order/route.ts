@@ -1,21 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Razorpay from 'razorpay';
-import crypto from 'crypto';
+import { RazorpayService } from '@/lib/razorpay';
 
 export const dynamic = 'force-dynamic';
-
-// Lazy initialization of Razorpay client
-let razorpayInstance: Razorpay | null = null;
-
-function getRazorpayClient() {
-  if (!razorpayInstance) {
-    razorpayInstance = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID!,
-      key_secret: process.env.RAZORPAY_KEY_SECRET!,
-    });
-  }
-  return razorpayInstance;
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -30,12 +16,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Vendor data is required' }, { status: 400 });
     }
 
-    // Create Razorpay order
-    const razorpay = getRazorpayClient();
-    const order = await razorpay.orders.create({
-      amount: Math.round(amount * 100), // Amount in paisa
+    // Create Razorpay order using centralized service
+    const razorpayAmount = RazorpayService.convertToRazorpayAmount(amount);
+    const razorpayOrder = await RazorpayService.createOrder({
+      amount: razorpayAmount,
       currency,
-      receipt: `vendor_reg_${Date.now()}`,
+      receipt: RazorpayService.generateReceiptId('vendor_reg'),
       notes: {
         type: 'vendor_registration',
         vendor_email: vendorData.email,
@@ -46,11 +32,15 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    if (!razorpayOrder.success) {
+      return NextResponse.json({ error: 'Failed to create payment order' }, { status: 500 });
+    }
+
     return NextResponse.json({
-      id: order.id,
-      amount: order.amount,
-      currency: order.currency,
-      receipt: order.receipt,
+      id: razorpayOrder.order!.id,
+      amount: razorpayOrder.order!.amount,
+      currency: razorpayOrder.order!.currency,
+      receipt: razorpayOrder.order!.receipt,
     });
   } catch (error) {
     console.error('Error creating Razorpay order:', error);
