@@ -171,38 +171,39 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="container flex h-screen w-screen flex-col items-center justify-center">
-      <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
-        <div className="flex flex-col space-y-2 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
+    <div className="container flex min-h-screen w-screen flex-col items-center justify-center py-8 px-4">
+      <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[420px]">
+        <div className="flex flex-col space-y-2 text-center px-2">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight">Create an account</h1>
           <p className="text-sm text-muted-foreground">
             Enter your details below to create your account
           </p>
         </div>
 
-        <Card>
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl text-center">Sign Up</CardTitle>
-            <CardDescription className="text-center">Join GrabtoGo marketplace</CardDescription>
+        <Card className="border-0 sm:border shadow-none sm:shadow">
+          <CardHeader className="space-y-1 px-4 sm:px-6">
+            <CardTitle className="text-xl sm:text-2xl text-center">Sign Up</CardTitle>
+            <CardDescription className="text-center text-sm">Join GrabtoGo marketplace</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 sm:px-6">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5">
                 <FormField
                   control={form.control}
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Full Name</FormLabel>
+                      <FormLabel className="text-sm sm:text-base">Full Name</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="John Doe"
                           autoComplete="name"
                           disabled={isLoading}
+                          className="h-11 sm:h-12 text-base"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs sm:text-sm" />
                     </FormItem>
                   )}
                 />
@@ -212,7 +213,7 @@ export default function RegisterPage() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel className="text-sm sm:text-base">Email</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="john@example.com"
@@ -221,10 +222,11 @@ export default function RegisterPage() {
                           autoComplete="email"
                           autoCorrect="off"
                           disabled={isLoading}
+                          className="h-11 sm:h-12 text-base"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs sm:text-sm" />
                     </FormItem>
                   )}
                 />
@@ -234,17 +236,18 @@ export default function RegisterPage() {
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone (Optional)</FormLabel>
+                      <FormLabel className="text-sm sm:text-base">Phone (Optional)</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="+91 9876543210"
                           type="tel"
                           autoComplete="tel"
                           disabled={isLoading}
+                          className="h-11 sm:h-12 text-base"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs sm:text-sm" />
                     </FormItem>
                   )}
                 />
@@ -254,7 +257,7 @@ export default function RegisterPage() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel className="text-sm sm:text-base">Password</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
@@ -262,20 +265,21 @@ export default function RegisterPage() {
                             type={showPassword ? 'text' : 'password'}
                             autoComplete="new-password"
                             disabled={isLoading}
+                            className="h-11 sm:h-12 text-base pr-12"
                             {...field}
                           />
                           <Button
                             type="button"
                             variant="ghost"
                             size="sm"
-                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                            className="absolute right-0 top-0 h-11 sm:h-12 px-3 hover:bg-transparent"
                             onClick={() => setShowPassword(!showPassword)}
                             disabled={isLoading}
                           >
                             {showPassword ? (
-                              <EyeOff className="h-4 w-4" />
+                              <EyeOff className="h-5 w-5" />
                             ) : (
-                              <Eye className="h-4 w-4" />
+                              <Eye className="h-5 w-5" />
                             )}
                           </Button>
                         </div>
@@ -328,7 +332,7 @@ export default function RegisterPage() {
                   name="confirmPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Confirm Password</FormLabel>
+                      <FormLabel className="text-sm sm:text-base">Confirm Password</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
@@ -336,31 +340,32 @@ export default function RegisterPage() {
                             type={showConfirmPassword ? 'text' : 'password'}
                             autoComplete="new-password"
                             disabled={isLoading}
+                            className="h-11 sm:h-12 text-base pr-12"
                             {...field}
                           />
                           <Button
                             type="button"
                             variant="ghost"
                             size="sm"
-                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                            className="absolute right-0 top-0 h-11 sm:h-12 px-3 hover:bg-transparent"
                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                             disabled={isLoading}
                           >
                             {showConfirmPassword ? (
-                              <EyeOff className="h-4 w-4" />
+                              <EyeOff className="h-5 w-5" />
                             ) : (
-                              <Eye className="h-4 w-4" />
+                              <Eye className="h-5 w-5" />
                             )}
                           </Button>
                         </div>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-xs sm:text-sm" />
                     </FormItem>
                   )}
                 />
 
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                <Button type="submit" className="w-full h-12 sm:h-13 text-base font-semibold" disabled={isLoading}>
+                  {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
                   Create Account
                 </Button>
               </form>

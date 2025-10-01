@@ -39,7 +39,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative bg-gradient-to-br from-gray-50 via-white to-primary/5 pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-gray-50 via-white to-primary/5 pt-24 pb-12 md:pt-40 md:pb-32 overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -52,10 +52,10 @@ export function HeroSection() {
         />
       </div>
 
-      <div className="relative container-custom">
+      <div className="relative container-custom px-4">
         <div className="split-60-40">
           {/* Left Side - Content */}
-          <div className="space-y-8">
+          <div className="space-y-6 md:space-y-8">
             {/* Small Badge */}
             <div className="inline-flex items-center gap-2 bg-white px-4 py-2.5 rounded-full shadow-md border border-primary/20">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
@@ -66,19 +66,19 @@ export function HeroSection() {
 
             {/* Main Heading */}
             <h1 className="font-display">
-              <span className="block text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+              <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                 Find the
               </span>
-              <span className="block text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mt-1">
+              <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mt-1">
                 Ultimate
               </span>
-              <span className="block text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight mt-1 bg-gradient-to-r from-primary to-orange-600 bg-clip-text text-transparent">
+              <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight mt-1 bg-gradient-to-r from-primary to-orange-600 bg-clip-text text-transparent">
                 Offers Now!
               </span>
             </h1>
 
             {/* Description */}
-            <p className="text-lg md:text-xl text-gray-600 max-w-xl leading-relaxed">
+            <p className="text-base md:text-lg lg:text-xl text-gray-600 max-w-xl leading-relaxed">
               A curated selection of offers and deals in your area with{' '}
               <span className="font-semibold text-primary">up to 50% discounts</span> from verified
               local businesses.
@@ -101,53 +101,53 @@ export function HeroSection() {
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
               <Button
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-white font-semibold text-base px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 group"
+                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-semibold text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 group"
                 onClick={() => (window.location.href = '/listings')}
               >
                 Discover Places
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="border-2 border-gray-300 text-gray-700 hover:border-primary hover:bg-primary hover:text-white font-semibold text-base px-8 py-6 rounded-xl transition-all duration-300"
+                className="w-full sm:w-auto border-2 border-gray-300 text-gray-700 hover:border-primary hover:bg-primary hover:text-white font-semibold text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 rounded-xl transition-all duration-300"
                 onClick={() => (window.location.href = '/listings?sortBy=discount')}
               >
-                <TrendingUp className="w-5 h-5 mr-2" />
+                <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 View Flash Deals
               </Button>
             </div>
 
             {/* Feature Icons with Enhanced Design */}
-            <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-gray-200">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
-                  <MapPin className="w-6 h-6 text-white" />
+            <div className="flex flex-wrap items-center gap-4 md:gap-6 pt-4 md:pt-6 border-t border-gray-200">
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-primary to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <MapPin className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
                 <div>
                   <div className="text-xs text-gray-500 font-medium">Search</div>
-                  <div className="text-sm font-bold text-gray-900">Location-Based</div>
+                  <div className="text-xs md:text-sm font-bold text-gray-900">Location-Based</div>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
-                  <Shield className="w-6 h-6 text-white" />
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <Shield className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
                 <div>
                   <div className="text-xs text-gray-500 font-medium">Trust</div>
-                  <div className="text-sm font-bold text-gray-900">Verified Vendors</div>
+                  <div className="text-xs md:text-sm font-bold text-gray-900">Verified Vendors</div>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
-                  <Zap className="w-6 h-6 text-white" />
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <Zap className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
                 <div>
                   <div className="text-xs text-gray-500 font-medium">Savings</div>
-                  <div className="text-sm font-bold text-gray-900">Amazing Discounts</div>
+                  <div className="text-xs md:text-sm font-bold text-gray-900">Amazing Discounts</div>
                 </div>
               </div>
             </div>
