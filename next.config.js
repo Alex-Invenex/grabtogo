@@ -9,11 +9,18 @@ const nextConfig = {
 
   // Image optimization
   images: {
-    domains: ['res.cloudinary.com', 'localhost'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
       },
     ],
     formats: ['image/avif', 'image/webp'],

@@ -49,12 +49,16 @@ export function FlashDeals({
         .then((res) => res.json())
         .then((data) => {
           // Filter products with discounts
-          const discountedProducts = data.data.filter(
+          const productsList = data?.data || [];
+          const discountedProducts = productsList.filter(
             (p: Product) => p.comparePrice && p.comparePrice > p.price
           );
           setProducts(discountedProducts.slice(0, 6));
         })
-        .catch((err) => console.error('Failed to fetch flash deals:', err))
+        .catch((err) => {
+          console.error('Failed to fetch flash deals:', err);
+          setProducts([]);
+        })
         .finally(() => setLoading(false));
     }
   }, [initialProducts]);

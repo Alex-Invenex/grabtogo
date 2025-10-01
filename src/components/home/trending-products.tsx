@@ -50,9 +50,12 @@ export function TrendingProducts({
       fetch('/api/products?limit=8&sortBy=viewCount&sortOrder=desc')
         .then((res) => res.json())
         .then((data) => {
-          setProducts(data.data);
+          setProducts(data?.data || []);
         })
-        .catch((err) => console.error('Failed to fetch trending products:', err))
+        .catch((err) => {
+          console.error('Failed to fetch trending products:', err);
+          setProducts([]);
+        })
         .finally(() => setLoading(false));
     }
   }, [initialProducts]);

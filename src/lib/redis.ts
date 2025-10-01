@@ -17,18 +17,18 @@ if (!isBuildTime) {
       host: process.env.REDIS_HOST || 'localhost',
       port: parseInt(process.env.REDIS_PORT || '6379'),
       password: process.env.REDIS_PASSWORD,
-      maxRetriesPerRequest: 1,
+      maxRetriesPerRequest: 0, // Don't retry, fail fast
       enableReadyCheck: false,
       lazyConnect: true,
+      retryStrategy: () => null, // Don't retry connections
       // Suppress connection errors during development
-      showFriendlyErrorStack: process.env.NODE_ENV === 'development',
+      showFriendlyErrorStack: false,
     });
 
-  // Handle connection errors gracefully
-  redis.on('error', (err) => {
-    if (process.env.NODE_ENV === 'development') {
-      console.warn('Redis connection failed:', err.message);
-    }
+  // Handle connection errors gracefully and silently
+  redis.on('error', () => {
+    // Silently ignore Redis errors in development
+    // The cache functions already handle failures gracefully
   });
 
   if (process.env.NODE_ENV !== 'production') globalForRedis.redis = redis;
@@ -44,9 +44,7 @@ export const cache = {
       const cached = await redis.get(key);
       return cached ? JSON.parse(cached) : null;
     } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('Redis get error:', error);
-      }
+      // Silently fail, cache is optional
       return null;
     }
   },
@@ -62,9 +60,7 @@ export const cache = {
       }
       return true;
     } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('Redis set error:', error);
-      }
+      // Silently fail, cache is optional
       return false;
     }
   },
@@ -75,9 +71,7 @@ export const cache = {
       await redis.del(key);
       return true;
     } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('Redis del error:', error);
-      }
+      // Silently fail, cache is optional
       return false;
     }
   },
@@ -88,9 +82,7 @@ export const cache = {
       const result = await redis.exists(key);
       return result === 1;
     } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('Redis exists error:', error);
-      }
+      // Silently fail, cache is optional
       return false;
     }
   },
@@ -104,9 +96,7 @@ export const cache = {
       }
       return true;
     } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('Redis flush pattern error:', error);
-      }
+      // Silently fail, cache is optional
       return false;
     }
   },

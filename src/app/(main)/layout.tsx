@@ -1,5 +1,3 @@
-'use client';
-
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { PWAInstaller } from '@/components/ui/pwa-installer';

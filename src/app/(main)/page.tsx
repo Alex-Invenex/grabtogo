@@ -4,7 +4,6 @@ import { VendorStories } from '@/components/home/vendor-stories';
 import { OffersCarousel } from '@/components/home/offers-carousel';
 import { FlashDeals } from '@/components/home/flash-deals';
 import { CategoriesSection } from '@/components/home/categories-section';
-import { TrendingProducts } from '@/components/home/trending-products';
 import { WhyChooseUs } from '@/components/home/why-choose-us';
 import { SocialProof } from '@/components/home/social-proof';
 
@@ -28,9 +27,6 @@ export default function HomePage() {
 
       {/* Popular Categories */}
       <CategoriesSection />
-
-      {/* Trending Products Section */}
-      <TrendingProducts />
 
       {/* Why Choose Us - Benefits */}
       <WhyChooseUs />
