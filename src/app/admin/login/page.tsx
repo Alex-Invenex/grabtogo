@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
   // Auto-fill for development
   const autoFillCredentials = () => {
     setFormData({
-      email: 'admin@admin.com',
+      email: 'info@grabtogo.in',
       password: 'admin',
     });
   };
@@ -104,7 +104,7 @@ export default function AdminLoginPage() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="bg-white/10 border-white/20 pl-10 text-white placeholder-white/40 focus:border-purple-400 focus:ring-purple-400"
-                      placeholder="admin@admin.com"
+                      placeholder="info@grabtogo.in"
                     />
                   </div>
                 </div>
