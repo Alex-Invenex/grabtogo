@@ -168,6 +168,21 @@ export type VendorAnalytics = $Result.DefaultSelection<Prisma.$VendorAnalyticsPa
  * 
  */
 export type SecurityEvent = $Result.DefaultSelection<Prisma.$SecurityEventPayload>
+/**
+ * Model SupportTicket
+ * 
+ */
+export type SupportTicket = $Result.DefaultSelection<Prisma.$SupportTicketPayload>
+/**
+ * Model TicketResponse
+ * 
+ */
+export type TicketResponse = $Result.DefaultSelection<Prisma.$TicketResponsePayload>
+/**
+ * Model AdServiceRequest
+ * 
+ */
+export type AdServiceRequest = $Result.DefaultSelection<Prisma.$AdServiceRequestPayload>
 
 /**
  * Enums
@@ -204,6 +219,47 @@ export const PaymentStatus: {
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
 
+
+export const TicketStatus: {
+  OPEN: 'OPEN',
+  IN_PROGRESS: 'IN_PROGRESS',
+  RESOLVED: 'RESOLVED',
+  CLOSED: 'CLOSED'
+};
+
+export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus]
+
+
+export const TicketPriority: {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
+};
+
+export type TicketPriority = (typeof TicketPriority)[keyof typeof TicketPriority]
+
+
+export const ServiceRequestStatus: {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  REJECTED: 'REJECTED'
+};
+
+export type ServiceRequestStatus = (typeof ServiceRequestStatus)[keyof typeof ServiceRequestStatus]
+
+
+export const ServiceRequestType: {
+  BANNER: 'BANNER',
+  FEATURED: 'FEATURED',
+  PROMOTION: 'PROMOTION',
+  PREMIUM_LISTING: 'PREMIUM_LISTING'
+};
+
+export type ServiceRequestType = (typeof ServiceRequestType)[keyof typeof ServiceRequestType]
+
 }
 
 export type UserRole = $Enums.UserRole
@@ -217,6 +273,22 @@ export const OrderStatus: typeof $Enums.OrderStatus
 export type PaymentStatus = $Enums.PaymentStatus
 
 export const PaymentStatus: typeof $Enums.PaymentStatus
+
+export type TicketStatus = $Enums.TicketStatus
+
+export const TicketStatus: typeof $Enums.TicketStatus
+
+export type TicketPriority = $Enums.TicketPriority
+
+export const TicketPriority: typeof $Enums.TicketPriority
+
+export type ServiceRequestStatus = $Enums.ServiceRequestStatus
+
+export const ServiceRequestStatus: typeof $Enums.ServiceRequestStatus
+
+export type ServiceRequestType = $Enums.ServiceRequestType
+
+export const ServiceRequestType: typeof $Enums.ServiceRequestType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -645,6 +717,36 @@ export class PrismaClient<
     * ```
     */
   get securityEvent(): Prisma.SecurityEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.supportTicket`: Exposes CRUD operations for the **SupportTicket** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SupportTickets
+    * const supportTickets = await prisma.supportTicket.findMany()
+    * ```
+    */
+  get supportTicket(): Prisma.SupportTicketDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.ticketResponse`: Exposes CRUD operations for the **TicketResponse** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TicketResponses
+    * const ticketResponses = await prisma.ticketResponse.findMany()
+    * ```
+    */
+  get ticketResponse(): Prisma.TicketResponseDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.adServiceRequest`: Exposes CRUD operations for the **AdServiceRequest** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AdServiceRequests
+    * const adServiceRequests = await prisma.adServiceRequest.findMany()
+    * ```
+    */
+  get adServiceRequest(): Prisma.AdServiceRequestDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1115,7 +1217,10 @@ export namespace Prisma {
     VendorStory: 'VendorStory',
     StoryView: 'StoryView',
     VendorAnalytics: 'VendorAnalytics',
-    SecurityEvent: 'SecurityEvent'
+    SecurityEvent: 'SecurityEvent',
+    SupportTicket: 'SupportTicket',
+    TicketResponse: 'TicketResponse',
+    AdServiceRequest: 'AdServiceRequest'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1134,7 +1239,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "vendorProfile" | "category" | "product" | "productImage" | "productVariant" | "address" | "cartItem" | "favorite" | "order" | "orderItem" | "payment" | "review" | "reviewImage" | "reviewHelpfulVote" | "searchHistory" | "trendingSearch" | "chat" | "chatParticipant" | "chatMessage" | "notification" | "vendorRegistrationRequest" | "vendorSubscription" | "subscriptionPayment" | "vendorStory" | "storyView" | "vendorAnalytics" | "securityEvent"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "vendorProfile" | "category" | "product" | "productImage" | "productVariant" | "address" | "cartItem" | "favorite" | "order" | "orderItem" | "payment" | "review" | "reviewImage" | "reviewHelpfulVote" | "searchHistory" | "trendingSearch" | "chat" | "chatParticipant" | "chatMessage" | "notification" | "vendorRegistrationRequest" | "vendorSubscription" | "subscriptionPayment" | "vendorStory" | "storyView" | "vendorAnalytics" | "securityEvent" | "supportTicket" | "ticketResponse" | "adServiceRequest"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3432,6 +3537,228 @@ export namespace Prisma {
           }
         }
       }
+      SupportTicket: {
+        payload: Prisma.$SupportTicketPayload<ExtArgs>
+        fields: Prisma.SupportTicketFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SupportTicketFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportTicketPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SupportTicketFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportTicketPayload>
+          }
+          findFirst: {
+            args: Prisma.SupportTicketFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportTicketPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SupportTicketFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportTicketPayload>
+          }
+          findMany: {
+            args: Prisma.SupportTicketFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportTicketPayload>[]
+          }
+          create: {
+            args: Prisma.SupportTicketCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportTicketPayload>
+          }
+          createMany: {
+            args: Prisma.SupportTicketCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SupportTicketCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportTicketPayload>[]
+          }
+          delete: {
+            args: Prisma.SupportTicketDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportTicketPayload>
+          }
+          update: {
+            args: Prisma.SupportTicketUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportTicketPayload>
+          }
+          deleteMany: {
+            args: Prisma.SupportTicketDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SupportTicketUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SupportTicketUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportTicketPayload>[]
+          }
+          upsert: {
+            args: Prisma.SupportTicketUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SupportTicketPayload>
+          }
+          aggregate: {
+            args: Prisma.SupportTicketAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSupportTicket>
+          }
+          groupBy: {
+            args: Prisma.SupportTicketGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SupportTicketGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SupportTicketCountArgs<ExtArgs>
+            result: $Utils.Optional<SupportTicketCountAggregateOutputType> | number
+          }
+        }
+      }
+      TicketResponse: {
+        payload: Prisma.$TicketResponsePayload<ExtArgs>
+        fields: Prisma.TicketResponseFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TicketResponseFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TicketResponsePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TicketResponseFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TicketResponsePayload>
+          }
+          findFirst: {
+            args: Prisma.TicketResponseFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TicketResponsePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TicketResponseFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TicketResponsePayload>
+          }
+          findMany: {
+            args: Prisma.TicketResponseFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TicketResponsePayload>[]
+          }
+          create: {
+            args: Prisma.TicketResponseCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TicketResponsePayload>
+          }
+          createMany: {
+            args: Prisma.TicketResponseCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TicketResponseCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TicketResponsePayload>[]
+          }
+          delete: {
+            args: Prisma.TicketResponseDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TicketResponsePayload>
+          }
+          update: {
+            args: Prisma.TicketResponseUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TicketResponsePayload>
+          }
+          deleteMany: {
+            args: Prisma.TicketResponseDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TicketResponseUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TicketResponseUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TicketResponsePayload>[]
+          }
+          upsert: {
+            args: Prisma.TicketResponseUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TicketResponsePayload>
+          }
+          aggregate: {
+            args: Prisma.TicketResponseAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTicketResponse>
+          }
+          groupBy: {
+            args: Prisma.TicketResponseGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TicketResponseGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TicketResponseCountArgs<ExtArgs>
+            result: $Utils.Optional<TicketResponseCountAggregateOutputType> | number
+          }
+        }
+      }
+      AdServiceRequest: {
+        payload: Prisma.$AdServiceRequestPayload<ExtArgs>
+        fields: Prisma.AdServiceRequestFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AdServiceRequestFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdServiceRequestPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AdServiceRequestFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdServiceRequestPayload>
+          }
+          findFirst: {
+            args: Prisma.AdServiceRequestFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdServiceRequestPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AdServiceRequestFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdServiceRequestPayload>
+          }
+          findMany: {
+            args: Prisma.AdServiceRequestFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdServiceRequestPayload>[]
+          }
+          create: {
+            args: Prisma.AdServiceRequestCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdServiceRequestPayload>
+          }
+          createMany: {
+            args: Prisma.AdServiceRequestCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AdServiceRequestCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdServiceRequestPayload>[]
+          }
+          delete: {
+            args: Prisma.AdServiceRequestDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdServiceRequestPayload>
+          }
+          update: {
+            args: Prisma.AdServiceRequestUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdServiceRequestPayload>
+          }
+          deleteMany: {
+            args: Prisma.AdServiceRequestDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AdServiceRequestUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AdServiceRequestUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdServiceRequestPayload>[]
+          }
+          upsert: {
+            args: Prisma.AdServiceRequestUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AdServiceRequestPayload>
+          }
+          aggregate: {
+            args: Prisma.AdServiceRequestAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAdServiceRequest>
+          }
+          groupBy: {
+            args: Prisma.AdServiceRequestGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AdServiceRequestGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AdServiceRequestCountArgs<ExtArgs>
+            result: $Utils.Optional<AdServiceRequestCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3559,6 +3886,9 @@ export namespace Prisma {
     storyView?: StoryViewOmit
     vendorAnalytics?: VendorAnalyticsOmit
     securityEvent?: SecurityEventOmit
+    supportTicket?: SupportTicketOmit
+    ticketResponse?: TicketResponseOmit
+    adServiceRequest?: AdServiceRequestOmit
   }
 
   /* Types for Logging */
@@ -3658,6 +3988,12 @@ export namespace Prisma {
     vendorStories: number
     vendorAnalytics: number
     securityEvents: number
+    createdTickets: number
+    vendorTickets: number
+    assignedTickets: number
+    ticketResponses: number
+    serviceRequests: number
+    reviewedServiceRequests: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3680,6 +4016,12 @@ export namespace Prisma {
     vendorStories?: boolean | UserCountOutputTypeCountVendorStoriesArgs
     vendorAnalytics?: boolean | UserCountOutputTypeCountVendorAnalyticsArgs
     securityEvents?: boolean | UserCountOutputTypeCountSecurityEventsArgs
+    createdTickets?: boolean | UserCountOutputTypeCountCreatedTicketsArgs
+    vendorTickets?: boolean | UserCountOutputTypeCountVendorTicketsArgs
+    assignedTickets?: boolean | UserCountOutputTypeCountAssignedTicketsArgs
+    ticketResponses?: boolean | UserCountOutputTypeCountTicketResponsesArgs
+    serviceRequests?: boolean | UserCountOutputTypeCountServiceRequestsArgs
+    reviewedServiceRequests?: boolean | UserCountOutputTypeCountReviewedServiceRequestsArgs
   }
 
   // Custom InputTypes
@@ -3824,6 +4166,48 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSecurityEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SecurityEventWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCreatedTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportTicketWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountVendorTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportTicketWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAssignedTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportTicketWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTicketResponsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TicketResponseWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountServiceRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdServiceRequestWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReviewedServiceRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdServiceRequestWhereInput
   }
 
 
@@ -4162,6 +4546,37 @@ export namespace Prisma {
    */
   export type VendorStoryCountOutputTypeCountViewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: StoryViewWhereInput
+  }
+
+
+  /**
+   * Count Type SupportTicketCountOutputType
+   */
+
+  export type SupportTicketCountOutputType = {
+    responses: number
+  }
+
+  export type SupportTicketCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    responses?: boolean | SupportTicketCountOutputTypeCountResponsesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SupportTicketCountOutputType without action
+   */
+  export type SupportTicketCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicketCountOutputType
+     */
+    select?: SupportTicketCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SupportTicketCountOutputType without action
+   */
+  export type SupportTicketCountOutputTypeCountResponsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TicketResponseWhereInput
   }
 
 
@@ -4508,6 +4923,12 @@ export namespace Prisma {
     vendorStories?: boolean | User$vendorStoriesArgs<ExtArgs>
     vendorAnalytics?: boolean | User$vendorAnalyticsArgs<ExtArgs>
     securityEvents?: boolean | User$securityEventsArgs<ExtArgs>
+    createdTickets?: boolean | User$createdTicketsArgs<ExtArgs>
+    vendorTickets?: boolean | User$vendorTicketsArgs<ExtArgs>
+    assignedTickets?: boolean | User$assignedTicketsArgs<ExtArgs>
+    ticketResponses?: boolean | User$ticketResponsesArgs<ExtArgs>
+    serviceRequests?: boolean | User$serviceRequestsArgs<ExtArgs>
+    reviewedServiceRequests?: boolean | User$reviewedServiceRequestsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4603,6 +5024,12 @@ export namespace Prisma {
     vendorStories?: boolean | User$vendorStoriesArgs<ExtArgs>
     vendorAnalytics?: boolean | User$vendorAnalyticsArgs<ExtArgs>
     securityEvents?: boolean | User$securityEventsArgs<ExtArgs>
+    createdTickets?: boolean | User$createdTicketsArgs<ExtArgs>
+    vendorTickets?: boolean | User$vendorTicketsArgs<ExtArgs>
+    assignedTickets?: boolean | User$assignedTicketsArgs<ExtArgs>
+    ticketResponses?: boolean | User$ticketResponsesArgs<ExtArgs>
+    serviceRequests?: boolean | User$serviceRequestsArgs<ExtArgs>
+    reviewedServiceRequests?: boolean | User$reviewedServiceRequestsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4632,6 +5059,12 @@ export namespace Prisma {
       vendorStories: Prisma.$VendorStoryPayload<ExtArgs>[]
       vendorAnalytics: Prisma.$VendorAnalyticsPayload<ExtArgs>[]
       securityEvents: Prisma.$SecurityEventPayload<ExtArgs>[]
+      createdTickets: Prisma.$SupportTicketPayload<ExtArgs>[]
+      vendorTickets: Prisma.$SupportTicketPayload<ExtArgs>[]
+      assignedTickets: Prisma.$SupportTicketPayload<ExtArgs>[]
+      ticketResponses: Prisma.$TicketResponsePayload<ExtArgs>[]
+      serviceRequests: Prisma.$AdServiceRequestPayload<ExtArgs>[]
+      reviewedServiceRequests: Prisma.$AdServiceRequestPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5069,6 +5502,12 @@ export namespace Prisma {
     vendorStories<T extends User$vendorStoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$vendorStoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorStoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     vendorAnalytics<T extends User$vendorAnalyticsArgs<ExtArgs> = {}>(args?: Subset<T, User$vendorAnalyticsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VendorAnalyticsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     securityEvents<T extends User$securityEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$securityEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SecurityEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    createdTickets<T extends User$createdTicketsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    vendorTickets<T extends User$vendorTicketsArgs<ExtArgs> = {}>(args?: Subset<T, User$vendorTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    assignedTickets<T extends User$assignedTicketsArgs<ExtArgs> = {}>(args?: Subset<T, User$assignedTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ticketResponses<T extends User$ticketResponsesArgs<ExtArgs> = {}>(args?: Subset<T, User$ticketResponsesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    serviceRequests<T extends User$serviceRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$serviceRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdServiceRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reviewedServiceRequests<T extends User$reviewedServiceRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewedServiceRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdServiceRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5997,6 +6436,150 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SecurityEventScalarFieldEnum | SecurityEventScalarFieldEnum[]
+  }
+
+  /**
+   * User.createdTickets
+   */
+  export type User$createdTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+    where?: SupportTicketWhereInput
+    orderBy?: SupportTicketOrderByWithRelationInput | SupportTicketOrderByWithRelationInput[]
+    cursor?: SupportTicketWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SupportTicketScalarFieldEnum | SupportTicketScalarFieldEnum[]
+  }
+
+  /**
+   * User.vendorTickets
+   */
+  export type User$vendorTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+    where?: SupportTicketWhereInput
+    orderBy?: SupportTicketOrderByWithRelationInput | SupportTicketOrderByWithRelationInput[]
+    cursor?: SupportTicketWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SupportTicketScalarFieldEnum | SupportTicketScalarFieldEnum[]
+  }
+
+  /**
+   * User.assignedTickets
+   */
+  export type User$assignedTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+    where?: SupportTicketWhereInput
+    orderBy?: SupportTicketOrderByWithRelationInput | SupportTicketOrderByWithRelationInput[]
+    cursor?: SupportTicketWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SupportTicketScalarFieldEnum | SupportTicketScalarFieldEnum[]
+  }
+
+  /**
+   * User.ticketResponses
+   */
+  export type User$ticketResponsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseInclude<ExtArgs> | null
+    where?: TicketResponseWhereInput
+    orderBy?: TicketResponseOrderByWithRelationInput | TicketResponseOrderByWithRelationInput[]
+    cursor?: TicketResponseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TicketResponseScalarFieldEnum | TicketResponseScalarFieldEnum[]
+  }
+
+  /**
+   * User.serviceRequests
+   */
+  export type User$serviceRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestInclude<ExtArgs> | null
+    where?: AdServiceRequestWhereInput
+    orderBy?: AdServiceRequestOrderByWithRelationInput | AdServiceRequestOrderByWithRelationInput[]
+    cursor?: AdServiceRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AdServiceRequestScalarFieldEnum | AdServiceRequestScalarFieldEnum[]
+  }
+
+  /**
+   * User.reviewedServiceRequests
+   */
+  export type User$reviewedServiceRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestInclude<ExtArgs> | null
+    where?: AdServiceRequestWhereInput
+    orderBy?: AdServiceRequestOrderByWithRelationInput | AdServiceRequestOrderByWithRelationInput[]
+    cursor?: AdServiceRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AdServiceRequestScalarFieldEnum | AdServiceRequestScalarFieldEnum[]
   }
 
   /**
@@ -41380,6 +41963,3619 @@ export namespace Prisma {
 
 
   /**
+   * Model SupportTicket
+   */
+
+  export type AggregateSupportTicket = {
+    _count: SupportTicketCountAggregateOutputType | null
+    _min: SupportTicketMinAggregateOutputType | null
+    _max: SupportTicketMaxAggregateOutputType | null
+  }
+
+  export type SupportTicketMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    vendorId: string | null
+    subject: string | null
+    description: string | null
+    status: $Enums.TicketStatus | null
+    priority: $Enums.TicketPriority | null
+    category: string | null
+    assignedTo: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SupportTicketMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    vendorId: string | null
+    subject: string | null
+    description: string | null
+    status: $Enums.TicketStatus | null
+    priority: $Enums.TicketPriority | null
+    category: string | null
+    assignedTo: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SupportTicketCountAggregateOutputType = {
+    id: number
+    userId: number
+    vendorId: number
+    subject: number
+    description: number
+    status: number
+    priority: number
+    category: number
+    assignedTo: number
+    attachments: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SupportTicketMinAggregateInputType = {
+    id?: true
+    userId?: true
+    vendorId?: true
+    subject?: true
+    description?: true
+    status?: true
+    priority?: true
+    category?: true
+    assignedTo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SupportTicketMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    vendorId?: true
+    subject?: true
+    description?: true
+    status?: true
+    priority?: true
+    category?: true
+    assignedTo?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SupportTicketCountAggregateInputType = {
+    id?: true
+    userId?: true
+    vendorId?: true
+    subject?: true
+    description?: true
+    status?: true
+    priority?: true
+    category?: true
+    assignedTo?: true
+    attachments?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SupportTicketAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SupportTicket to aggregate.
+     */
+    where?: SupportTicketWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportTickets to fetch.
+     */
+    orderBy?: SupportTicketOrderByWithRelationInput | SupportTicketOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SupportTicketWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportTickets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportTickets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SupportTickets
+    **/
+    _count?: true | SupportTicketCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SupportTicketMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SupportTicketMaxAggregateInputType
+  }
+
+  export type GetSupportTicketAggregateType<T extends SupportTicketAggregateArgs> = {
+        [P in keyof T & keyof AggregateSupportTicket]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSupportTicket[P]>
+      : GetScalarType<T[P], AggregateSupportTicket[P]>
+  }
+
+
+
+
+  export type SupportTicketGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SupportTicketWhereInput
+    orderBy?: SupportTicketOrderByWithAggregationInput | SupportTicketOrderByWithAggregationInput[]
+    by: SupportTicketScalarFieldEnum[] | SupportTicketScalarFieldEnum
+    having?: SupportTicketScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SupportTicketCountAggregateInputType | true
+    _min?: SupportTicketMinAggregateInputType
+    _max?: SupportTicketMaxAggregateInputType
+  }
+
+  export type SupportTicketGroupByOutputType = {
+    id: string
+    userId: string
+    vendorId: string | null
+    subject: string
+    description: string
+    status: $Enums.TicketStatus
+    priority: $Enums.TicketPriority
+    category: string | null
+    assignedTo: string | null
+    attachments: JsonValue | null
+    createdAt: Date
+    updatedAt: Date
+    _count: SupportTicketCountAggregateOutputType | null
+    _min: SupportTicketMinAggregateOutputType | null
+    _max: SupportTicketMaxAggregateOutputType | null
+  }
+
+  type GetSupportTicketGroupByPayload<T extends SupportTicketGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SupportTicketGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SupportTicketGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SupportTicketGroupByOutputType[P]>
+            : GetScalarType<T[P], SupportTicketGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SupportTicketSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    vendorId?: boolean
+    subject?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    category?: boolean
+    assignedTo?: boolean
+    attachments?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    vendor?: boolean | SupportTicket$vendorArgs<ExtArgs>
+    assignedAdmin?: boolean | SupportTicket$assignedAdminArgs<ExtArgs>
+    responses?: boolean | SupportTicket$responsesArgs<ExtArgs>
+    _count?: boolean | SupportTicketCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["supportTicket"]>
+
+  export type SupportTicketSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    vendorId?: boolean
+    subject?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    category?: boolean
+    assignedTo?: boolean
+    attachments?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    vendor?: boolean | SupportTicket$vendorArgs<ExtArgs>
+    assignedAdmin?: boolean | SupportTicket$assignedAdminArgs<ExtArgs>
+  }, ExtArgs["result"]["supportTicket"]>
+
+  export type SupportTicketSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    vendorId?: boolean
+    subject?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    category?: boolean
+    assignedTo?: boolean
+    attachments?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    vendor?: boolean | SupportTicket$vendorArgs<ExtArgs>
+    assignedAdmin?: boolean | SupportTicket$assignedAdminArgs<ExtArgs>
+  }, ExtArgs["result"]["supportTicket"]>
+
+  export type SupportTicketSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    vendorId?: boolean
+    subject?: boolean
+    description?: boolean
+    status?: boolean
+    priority?: boolean
+    category?: boolean
+    assignedTo?: boolean
+    attachments?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SupportTicketOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "vendorId" | "subject" | "description" | "status" | "priority" | "category" | "assignedTo" | "attachments" | "createdAt" | "updatedAt", ExtArgs["result"]["supportTicket"]>
+  export type SupportTicketInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    vendor?: boolean | SupportTicket$vendorArgs<ExtArgs>
+    assignedAdmin?: boolean | SupportTicket$assignedAdminArgs<ExtArgs>
+    responses?: boolean | SupportTicket$responsesArgs<ExtArgs>
+    _count?: boolean | SupportTicketCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SupportTicketIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    vendor?: boolean | SupportTicket$vendorArgs<ExtArgs>
+    assignedAdmin?: boolean | SupportTicket$assignedAdminArgs<ExtArgs>
+  }
+  export type SupportTicketIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    vendor?: boolean | SupportTicket$vendorArgs<ExtArgs>
+    assignedAdmin?: boolean | SupportTicket$assignedAdminArgs<ExtArgs>
+  }
+
+  export type $SupportTicketPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SupportTicket"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      vendor: Prisma.$UserPayload<ExtArgs> | null
+      assignedAdmin: Prisma.$UserPayload<ExtArgs> | null
+      responses: Prisma.$TicketResponsePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      vendorId: string | null
+      subject: string
+      description: string
+      status: $Enums.TicketStatus
+      priority: $Enums.TicketPriority
+      category: string | null
+      assignedTo: string | null
+      attachments: Prisma.JsonValue | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["supportTicket"]>
+    composites: {}
+  }
+
+  type SupportTicketGetPayload<S extends boolean | null | undefined | SupportTicketDefaultArgs> = $Result.GetResult<Prisma.$SupportTicketPayload, S>
+
+  type SupportTicketCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SupportTicketFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SupportTicketCountAggregateInputType | true
+    }
+
+  export interface SupportTicketDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SupportTicket'], meta: { name: 'SupportTicket' } }
+    /**
+     * Find zero or one SupportTicket that matches the filter.
+     * @param {SupportTicketFindUniqueArgs} args - Arguments to find a SupportTicket
+     * @example
+     * // Get one SupportTicket
+     * const supportTicket = await prisma.supportTicket.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SupportTicketFindUniqueArgs>(args: SelectSubset<T, SupportTicketFindUniqueArgs<ExtArgs>>): Prisma__SupportTicketClient<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SupportTicket that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SupportTicketFindUniqueOrThrowArgs} args - Arguments to find a SupportTicket
+     * @example
+     * // Get one SupportTicket
+     * const supportTicket = await prisma.supportTicket.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SupportTicketFindUniqueOrThrowArgs>(args: SelectSubset<T, SupportTicketFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SupportTicketClient<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SupportTicket that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportTicketFindFirstArgs} args - Arguments to find a SupportTicket
+     * @example
+     * // Get one SupportTicket
+     * const supportTicket = await prisma.supportTicket.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SupportTicketFindFirstArgs>(args?: SelectSubset<T, SupportTicketFindFirstArgs<ExtArgs>>): Prisma__SupportTicketClient<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SupportTicket that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportTicketFindFirstOrThrowArgs} args - Arguments to find a SupportTicket
+     * @example
+     * // Get one SupportTicket
+     * const supportTicket = await prisma.supportTicket.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SupportTicketFindFirstOrThrowArgs>(args?: SelectSubset<T, SupportTicketFindFirstOrThrowArgs<ExtArgs>>): Prisma__SupportTicketClient<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SupportTickets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportTicketFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SupportTickets
+     * const supportTickets = await prisma.supportTicket.findMany()
+     * 
+     * // Get first 10 SupportTickets
+     * const supportTickets = await prisma.supportTicket.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const supportTicketWithIdOnly = await prisma.supportTicket.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SupportTicketFindManyArgs>(args?: SelectSubset<T, SupportTicketFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SupportTicket.
+     * @param {SupportTicketCreateArgs} args - Arguments to create a SupportTicket.
+     * @example
+     * // Create one SupportTicket
+     * const SupportTicket = await prisma.supportTicket.create({
+     *   data: {
+     *     // ... data to create a SupportTicket
+     *   }
+     * })
+     * 
+     */
+    create<T extends SupportTicketCreateArgs>(args: SelectSubset<T, SupportTicketCreateArgs<ExtArgs>>): Prisma__SupportTicketClient<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SupportTickets.
+     * @param {SupportTicketCreateManyArgs} args - Arguments to create many SupportTickets.
+     * @example
+     * // Create many SupportTickets
+     * const supportTicket = await prisma.supportTicket.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SupportTicketCreateManyArgs>(args?: SelectSubset<T, SupportTicketCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SupportTickets and returns the data saved in the database.
+     * @param {SupportTicketCreateManyAndReturnArgs} args - Arguments to create many SupportTickets.
+     * @example
+     * // Create many SupportTickets
+     * const supportTicket = await prisma.supportTicket.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SupportTickets and only return the `id`
+     * const supportTicketWithIdOnly = await prisma.supportTicket.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SupportTicketCreateManyAndReturnArgs>(args?: SelectSubset<T, SupportTicketCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SupportTicket.
+     * @param {SupportTicketDeleteArgs} args - Arguments to delete one SupportTicket.
+     * @example
+     * // Delete one SupportTicket
+     * const SupportTicket = await prisma.supportTicket.delete({
+     *   where: {
+     *     // ... filter to delete one SupportTicket
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SupportTicketDeleteArgs>(args: SelectSubset<T, SupportTicketDeleteArgs<ExtArgs>>): Prisma__SupportTicketClient<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SupportTicket.
+     * @param {SupportTicketUpdateArgs} args - Arguments to update one SupportTicket.
+     * @example
+     * // Update one SupportTicket
+     * const supportTicket = await prisma.supportTicket.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SupportTicketUpdateArgs>(args: SelectSubset<T, SupportTicketUpdateArgs<ExtArgs>>): Prisma__SupportTicketClient<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SupportTickets.
+     * @param {SupportTicketDeleteManyArgs} args - Arguments to filter SupportTickets to delete.
+     * @example
+     * // Delete a few SupportTickets
+     * const { count } = await prisma.supportTicket.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SupportTicketDeleteManyArgs>(args?: SelectSubset<T, SupportTicketDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SupportTickets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportTicketUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SupportTickets
+     * const supportTicket = await prisma.supportTicket.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SupportTicketUpdateManyArgs>(args: SelectSubset<T, SupportTicketUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SupportTickets and returns the data updated in the database.
+     * @param {SupportTicketUpdateManyAndReturnArgs} args - Arguments to update many SupportTickets.
+     * @example
+     * // Update many SupportTickets
+     * const supportTicket = await prisma.supportTicket.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SupportTickets and only return the `id`
+     * const supportTicketWithIdOnly = await prisma.supportTicket.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SupportTicketUpdateManyAndReturnArgs>(args: SelectSubset<T, SupportTicketUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SupportTicket.
+     * @param {SupportTicketUpsertArgs} args - Arguments to update or create a SupportTicket.
+     * @example
+     * // Update or create a SupportTicket
+     * const supportTicket = await prisma.supportTicket.upsert({
+     *   create: {
+     *     // ... data to create a SupportTicket
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SupportTicket we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SupportTicketUpsertArgs>(args: SelectSubset<T, SupportTicketUpsertArgs<ExtArgs>>): Prisma__SupportTicketClient<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SupportTickets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportTicketCountArgs} args - Arguments to filter SupportTickets to count.
+     * @example
+     * // Count the number of SupportTickets
+     * const count = await prisma.supportTicket.count({
+     *   where: {
+     *     // ... the filter for the SupportTickets we want to count
+     *   }
+     * })
+    **/
+    count<T extends SupportTicketCountArgs>(
+      args?: Subset<T, SupportTicketCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SupportTicketCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SupportTicket.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportTicketAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SupportTicketAggregateArgs>(args: Subset<T, SupportTicketAggregateArgs>): Prisma.PrismaPromise<GetSupportTicketAggregateType<T>>
+
+    /**
+     * Group by SupportTicket.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SupportTicketGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SupportTicketGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SupportTicketGroupByArgs['orderBy'] }
+        : { orderBy?: SupportTicketGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SupportTicketGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSupportTicketGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SupportTicket model
+   */
+  readonly fields: SupportTicketFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SupportTicket.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SupportTicketClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    vendor<T extends SupportTicket$vendorArgs<ExtArgs> = {}>(args?: Subset<T, SupportTicket$vendorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    assignedAdmin<T extends SupportTicket$assignedAdminArgs<ExtArgs> = {}>(args?: Subset<T, SupportTicket$assignedAdminArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    responses<T extends SupportTicket$responsesArgs<ExtArgs> = {}>(args?: Subset<T, SupportTicket$responsesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SupportTicket model
+   */
+  interface SupportTicketFieldRefs {
+    readonly id: FieldRef<"SupportTicket", 'String'>
+    readonly userId: FieldRef<"SupportTicket", 'String'>
+    readonly vendorId: FieldRef<"SupportTicket", 'String'>
+    readonly subject: FieldRef<"SupportTicket", 'String'>
+    readonly description: FieldRef<"SupportTicket", 'String'>
+    readonly status: FieldRef<"SupportTicket", 'TicketStatus'>
+    readonly priority: FieldRef<"SupportTicket", 'TicketPriority'>
+    readonly category: FieldRef<"SupportTicket", 'String'>
+    readonly assignedTo: FieldRef<"SupportTicket", 'String'>
+    readonly attachments: FieldRef<"SupportTicket", 'Json'>
+    readonly createdAt: FieldRef<"SupportTicket", 'DateTime'>
+    readonly updatedAt: FieldRef<"SupportTicket", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SupportTicket findUnique
+   */
+  export type SupportTicketFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportTicket to fetch.
+     */
+    where: SupportTicketWhereUniqueInput
+  }
+
+  /**
+   * SupportTicket findUniqueOrThrow
+   */
+  export type SupportTicketFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportTicket to fetch.
+     */
+    where: SupportTicketWhereUniqueInput
+  }
+
+  /**
+   * SupportTicket findFirst
+   */
+  export type SupportTicketFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportTicket to fetch.
+     */
+    where?: SupportTicketWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportTickets to fetch.
+     */
+    orderBy?: SupportTicketOrderByWithRelationInput | SupportTicketOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SupportTickets.
+     */
+    cursor?: SupportTicketWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportTickets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportTickets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SupportTickets.
+     */
+    distinct?: SupportTicketScalarFieldEnum | SupportTicketScalarFieldEnum[]
+  }
+
+  /**
+   * SupportTicket findFirstOrThrow
+   */
+  export type SupportTicketFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportTicket to fetch.
+     */
+    where?: SupportTicketWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportTickets to fetch.
+     */
+    orderBy?: SupportTicketOrderByWithRelationInput | SupportTicketOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SupportTickets.
+     */
+    cursor?: SupportTicketWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportTickets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportTickets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SupportTickets.
+     */
+    distinct?: SupportTicketScalarFieldEnum | SupportTicketScalarFieldEnum[]
+  }
+
+  /**
+   * SupportTicket findMany
+   */
+  export type SupportTicketFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+    /**
+     * Filter, which SupportTickets to fetch.
+     */
+    where?: SupportTicketWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SupportTickets to fetch.
+     */
+    orderBy?: SupportTicketOrderByWithRelationInput | SupportTicketOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SupportTickets.
+     */
+    cursor?: SupportTicketWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SupportTickets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SupportTickets.
+     */
+    skip?: number
+    distinct?: SupportTicketScalarFieldEnum | SupportTicketScalarFieldEnum[]
+  }
+
+  /**
+   * SupportTicket create
+   */
+  export type SupportTicketCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SupportTicket.
+     */
+    data: XOR<SupportTicketCreateInput, SupportTicketUncheckedCreateInput>
+  }
+
+  /**
+   * SupportTicket createMany
+   */
+  export type SupportTicketCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SupportTickets.
+     */
+    data: SupportTicketCreateManyInput | SupportTicketCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SupportTicket createManyAndReturn
+   */
+  export type SupportTicketCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * The data used to create many SupportTickets.
+     */
+    data: SupportTicketCreateManyInput | SupportTicketCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SupportTicket update
+   */
+  export type SupportTicketUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SupportTicket.
+     */
+    data: XOR<SupportTicketUpdateInput, SupportTicketUncheckedUpdateInput>
+    /**
+     * Choose, which SupportTicket to update.
+     */
+    where: SupportTicketWhereUniqueInput
+  }
+
+  /**
+   * SupportTicket updateMany
+   */
+  export type SupportTicketUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SupportTickets.
+     */
+    data: XOR<SupportTicketUpdateManyMutationInput, SupportTicketUncheckedUpdateManyInput>
+    /**
+     * Filter which SupportTickets to update
+     */
+    where?: SupportTicketWhereInput
+    /**
+     * Limit how many SupportTickets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SupportTicket updateManyAndReturn
+   */
+  export type SupportTicketUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * The data used to update SupportTickets.
+     */
+    data: XOR<SupportTicketUpdateManyMutationInput, SupportTicketUncheckedUpdateManyInput>
+    /**
+     * Filter which SupportTickets to update
+     */
+    where?: SupportTicketWhereInput
+    /**
+     * Limit how many SupportTickets to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SupportTicket upsert
+   */
+  export type SupportTicketUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SupportTicket to update in case it exists.
+     */
+    where: SupportTicketWhereUniqueInput
+    /**
+     * In case the SupportTicket found by the `where` argument doesn't exist, create a new SupportTicket with this data.
+     */
+    create: XOR<SupportTicketCreateInput, SupportTicketUncheckedCreateInput>
+    /**
+     * In case the SupportTicket was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SupportTicketUpdateInput, SupportTicketUncheckedUpdateInput>
+  }
+
+  /**
+   * SupportTicket delete
+   */
+  export type SupportTicketDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+    /**
+     * Filter which SupportTicket to delete.
+     */
+    where: SupportTicketWhereUniqueInput
+  }
+
+  /**
+   * SupportTicket deleteMany
+   */
+  export type SupportTicketDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SupportTickets to delete
+     */
+    where?: SupportTicketWhereInput
+    /**
+     * Limit how many SupportTickets to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SupportTicket.vendor
+   */
+  export type SupportTicket$vendorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * SupportTicket.assignedAdmin
+   */
+  export type SupportTicket$assignedAdminArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * SupportTicket.responses
+   */
+  export type SupportTicket$responsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseInclude<ExtArgs> | null
+    where?: TicketResponseWhereInput
+    orderBy?: TicketResponseOrderByWithRelationInput | TicketResponseOrderByWithRelationInput[]
+    cursor?: TicketResponseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TicketResponseScalarFieldEnum | TicketResponseScalarFieldEnum[]
+  }
+
+  /**
+   * SupportTicket without action
+   */
+  export type SupportTicketDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SupportTicket
+     */
+    select?: SupportTicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SupportTicket
+     */
+    omit?: SupportTicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SupportTicketInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TicketResponse
+   */
+
+  export type AggregateTicketResponse = {
+    _count: TicketResponseCountAggregateOutputType | null
+    _min: TicketResponseMinAggregateOutputType | null
+    _max: TicketResponseMaxAggregateOutputType | null
+  }
+
+  export type TicketResponseMinAggregateOutputType = {
+    id: string | null
+    ticketId: string | null
+    userId: string | null
+    message: string | null
+    isInternal: boolean | null
+    createdAt: Date | null
+  }
+
+  export type TicketResponseMaxAggregateOutputType = {
+    id: string | null
+    ticketId: string | null
+    userId: string | null
+    message: string | null
+    isInternal: boolean | null
+    createdAt: Date | null
+  }
+
+  export type TicketResponseCountAggregateOutputType = {
+    id: number
+    ticketId: number
+    userId: number
+    message: number
+    isInternal: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type TicketResponseMinAggregateInputType = {
+    id?: true
+    ticketId?: true
+    userId?: true
+    message?: true
+    isInternal?: true
+    createdAt?: true
+  }
+
+  export type TicketResponseMaxAggregateInputType = {
+    id?: true
+    ticketId?: true
+    userId?: true
+    message?: true
+    isInternal?: true
+    createdAt?: true
+  }
+
+  export type TicketResponseCountAggregateInputType = {
+    id?: true
+    ticketId?: true
+    userId?: true
+    message?: true
+    isInternal?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type TicketResponseAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TicketResponse to aggregate.
+     */
+    where?: TicketResponseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TicketResponses to fetch.
+     */
+    orderBy?: TicketResponseOrderByWithRelationInput | TicketResponseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TicketResponseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TicketResponses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TicketResponses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TicketResponses
+    **/
+    _count?: true | TicketResponseCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TicketResponseMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TicketResponseMaxAggregateInputType
+  }
+
+  export type GetTicketResponseAggregateType<T extends TicketResponseAggregateArgs> = {
+        [P in keyof T & keyof AggregateTicketResponse]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTicketResponse[P]>
+      : GetScalarType<T[P], AggregateTicketResponse[P]>
+  }
+
+
+
+
+  export type TicketResponseGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TicketResponseWhereInput
+    orderBy?: TicketResponseOrderByWithAggregationInput | TicketResponseOrderByWithAggregationInput[]
+    by: TicketResponseScalarFieldEnum[] | TicketResponseScalarFieldEnum
+    having?: TicketResponseScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TicketResponseCountAggregateInputType | true
+    _min?: TicketResponseMinAggregateInputType
+    _max?: TicketResponseMaxAggregateInputType
+  }
+
+  export type TicketResponseGroupByOutputType = {
+    id: string
+    ticketId: string
+    userId: string
+    message: string
+    isInternal: boolean
+    createdAt: Date
+    _count: TicketResponseCountAggregateOutputType | null
+    _min: TicketResponseMinAggregateOutputType | null
+    _max: TicketResponseMaxAggregateOutputType | null
+  }
+
+  type GetTicketResponseGroupByPayload<T extends TicketResponseGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TicketResponseGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TicketResponseGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TicketResponseGroupByOutputType[P]>
+            : GetScalarType<T[P], TicketResponseGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TicketResponseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ticketId?: boolean
+    userId?: boolean
+    message?: boolean
+    isInternal?: boolean
+    createdAt?: boolean
+    ticket?: boolean | SupportTicketDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ticketResponse"]>
+
+  export type TicketResponseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ticketId?: boolean
+    userId?: boolean
+    message?: boolean
+    isInternal?: boolean
+    createdAt?: boolean
+    ticket?: boolean | SupportTicketDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ticketResponse"]>
+
+  export type TicketResponseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ticketId?: boolean
+    userId?: boolean
+    message?: boolean
+    isInternal?: boolean
+    createdAt?: boolean
+    ticket?: boolean | SupportTicketDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ticketResponse"]>
+
+  export type TicketResponseSelectScalar = {
+    id?: boolean
+    ticketId?: boolean
+    userId?: boolean
+    message?: boolean
+    isInternal?: boolean
+    createdAt?: boolean
+  }
+
+  export type TicketResponseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ticketId" | "userId" | "message" | "isInternal" | "createdAt", ExtArgs["result"]["ticketResponse"]>
+  export type TicketResponseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ticket?: boolean | SupportTicketDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type TicketResponseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ticket?: boolean | SupportTicketDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type TicketResponseIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ticket?: boolean | SupportTicketDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $TicketResponsePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TicketResponse"
+    objects: {
+      ticket: Prisma.$SupportTicketPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      ticketId: string
+      userId: string
+      message: string
+      isInternal: boolean
+      createdAt: Date
+    }, ExtArgs["result"]["ticketResponse"]>
+    composites: {}
+  }
+
+  type TicketResponseGetPayload<S extends boolean | null | undefined | TicketResponseDefaultArgs> = $Result.GetResult<Prisma.$TicketResponsePayload, S>
+
+  type TicketResponseCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TicketResponseFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TicketResponseCountAggregateInputType | true
+    }
+
+  export interface TicketResponseDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TicketResponse'], meta: { name: 'TicketResponse' } }
+    /**
+     * Find zero or one TicketResponse that matches the filter.
+     * @param {TicketResponseFindUniqueArgs} args - Arguments to find a TicketResponse
+     * @example
+     * // Get one TicketResponse
+     * const ticketResponse = await prisma.ticketResponse.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TicketResponseFindUniqueArgs>(args: SelectSubset<T, TicketResponseFindUniqueArgs<ExtArgs>>): Prisma__TicketResponseClient<$Result.GetResult<Prisma.$TicketResponsePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TicketResponse that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TicketResponseFindUniqueOrThrowArgs} args - Arguments to find a TicketResponse
+     * @example
+     * // Get one TicketResponse
+     * const ticketResponse = await prisma.ticketResponse.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TicketResponseFindUniqueOrThrowArgs>(args: SelectSubset<T, TicketResponseFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TicketResponseClient<$Result.GetResult<Prisma.$TicketResponsePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TicketResponse that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketResponseFindFirstArgs} args - Arguments to find a TicketResponse
+     * @example
+     * // Get one TicketResponse
+     * const ticketResponse = await prisma.ticketResponse.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TicketResponseFindFirstArgs>(args?: SelectSubset<T, TicketResponseFindFirstArgs<ExtArgs>>): Prisma__TicketResponseClient<$Result.GetResult<Prisma.$TicketResponsePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TicketResponse that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketResponseFindFirstOrThrowArgs} args - Arguments to find a TicketResponse
+     * @example
+     * // Get one TicketResponse
+     * const ticketResponse = await prisma.ticketResponse.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TicketResponseFindFirstOrThrowArgs>(args?: SelectSubset<T, TicketResponseFindFirstOrThrowArgs<ExtArgs>>): Prisma__TicketResponseClient<$Result.GetResult<Prisma.$TicketResponsePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TicketResponses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketResponseFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TicketResponses
+     * const ticketResponses = await prisma.ticketResponse.findMany()
+     * 
+     * // Get first 10 TicketResponses
+     * const ticketResponses = await prisma.ticketResponse.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const ticketResponseWithIdOnly = await prisma.ticketResponse.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TicketResponseFindManyArgs>(args?: SelectSubset<T, TicketResponseFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TicketResponse.
+     * @param {TicketResponseCreateArgs} args - Arguments to create a TicketResponse.
+     * @example
+     * // Create one TicketResponse
+     * const TicketResponse = await prisma.ticketResponse.create({
+     *   data: {
+     *     // ... data to create a TicketResponse
+     *   }
+     * })
+     * 
+     */
+    create<T extends TicketResponseCreateArgs>(args: SelectSubset<T, TicketResponseCreateArgs<ExtArgs>>): Prisma__TicketResponseClient<$Result.GetResult<Prisma.$TicketResponsePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TicketResponses.
+     * @param {TicketResponseCreateManyArgs} args - Arguments to create many TicketResponses.
+     * @example
+     * // Create many TicketResponses
+     * const ticketResponse = await prisma.ticketResponse.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TicketResponseCreateManyArgs>(args?: SelectSubset<T, TicketResponseCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TicketResponses and returns the data saved in the database.
+     * @param {TicketResponseCreateManyAndReturnArgs} args - Arguments to create many TicketResponses.
+     * @example
+     * // Create many TicketResponses
+     * const ticketResponse = await prisma.ticketResponse.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TicketResponses and only return the `id`
+     * const ticketResponseWithIdOnly = await prisma.ticketResponse.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TicketResponseCreateManyAndReturnArgs>(args?: SelectSubset<T, TicketResponseCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketResponsePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TicketResponse.
+     * @param {TicketResponseDeleteArgs} args - Arguments to delete one TicketResponse.
+     * @example
+     * // Delete one TicketResponse
+     * const TicketResponse = await prisma.ticketResponse.delete({
+     *   where: {
+     *     // ... filter to delete one TicketResponse
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TicketResponseDeleteArgs>(args: SelectSubset<T, TicketResponseDeleteArgs<ExtArgs>>): Prisma__TicketResponseClient<$Result.GetResult<Prisma.$TicketResponsePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TicketResponse.
+     * @param {TicketResponseUpdateArgs} args - Arguments to update one TicketResponse.
+     * @example
+     * // Update one TicketResponse
+     * const ticketResponse = await prisma.ticketResponse.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TicketResponseUpdateArgs>(args: SelectSubset<T, TicketResponseUpdateArgs<ExtArgs>>): Prisma__TicketResponseClient<$Result.GetResult<Prisma.$TicketResponsePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TicketResponses.
+     * @param {TicketResponseDeleteManyArgs} args - Arguments to filter TicketResponses to delete.
+     * @example
+     * // Delete a few TicketResponses
+     * const { count } = await prisma.ticketResponse.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TicketResponseDeleteManyArgs>(args?: SelectSubset<T, TicketResponseDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TicketResponses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketResponseUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TicketResponses
+     * const ticketResponse = await prisma.ticketResponse.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TicketResponseUpdateManyArgs>(args: SelectSubset<T, TicketResponseUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TicketResponses and returns the data updated in the database.
+     * @param {TicketResponseUpdateManyAndReturnArgs} args - Arguments to update many TicketResponses.
+     * @example
+     * // Update many TicketResponses
+     * const ticketResponse = await prisma.ticketResponse.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TicketResponses and only return the `id`
+     * const ticketResponseWithIdOnly = await prisma.ticketResponse.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TicketResponseUpdateManyAndReturnArgs>(args: SelectSubset<T, TicketResponseUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketResponsePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TicketResponse.
+     * @param {TicketResponseUpsertArgs} args - Arguments to update or create a TicketResponse.
+     * @example
+     * // Update or create a TicketResponse
+     * const ticketResponse = await prisma.ticketResponse.upsert({
+     *   create: {
+     *     // ... data to create a TicketResponse
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TicketResponse we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TicketResponseUpsertArgs>(args: SelectSubset<T, TicketResponseUpsertArgs<ExtArgs>>): Prisma__TicketResponseClient<$Result.GetResult<Prisma.$TicketResponsePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TicketResponses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketResponseCountArgs} args - Arguments to filter TicketResponses to count.
+     * @example
+     * // Count the number of TicketResponses
+     * const count = await prisma.ticketResponse.count({
+     *   where: {
+     *     // ... the filter for the TicketResponses we want to count
+     *   }
+     * })
+    **/
+    count<T extends TicketResponseCountArgs>(
+      args?: Subset<T, TicketResponseCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TicketResponseCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TicketResponse.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketResponseAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TicketResponseAggregateArgs>(args: Subset<T, TicketResponseAggregateArgs>): Prisma.PrismaPromise<GetTicketResponseAggregateType<T>>
+
+    /**
+     * Group by TicketResponse.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TicketResponseGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TicketResponseGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TicketResponseGroupByArgs['orderBy'] }
+        : { orderBy?: TicketResponseGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TicketResponseGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTicketResponseGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TicketResponse model
+   */
+  readonly fields: TicketResponseFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TicketResponse.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TicketResponseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    ticket<T extends SupportTicketDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SupportTicketDefaultArgs<ExtArgs>>): Prisma__SupportTicketClient<$Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TicketResponse model
+   */
+  interface TicketResponseFieldRefs {
+    readonly id: FieldRef<"TicketResponse", 'String'>
+    readonly ticketId: FieldRef<"TicketResponse", 'String'>
+    readonly userId: FieldRef<"TicketResponse", 'String'>
+    readonly message: FieldRef<"TicketResponse", 'String'>
+    readonly isInternal: FieldRef<"TicketResponse", 'Boolean'>
+    readonly createdAt: FieldRef<"TicketResponse", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TicketResponse findUnique
+   */
+  export type TicketResponseFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseInclude<ExtArgs> | null
+    /**
+     * Filter, which TicketResponse to fetch.
+     */
+    where: TicketResponseWhereUniqueInput
+  }
+
+  /**
+   * TicketResponse findUniqueOrThrow
+   */
+  export type TicketResponseFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseInclude<ExtArgs> | null
+    /**
+     * Filter, which TicketResponse to fetch.
+     */
+    where: TicketResponseWhereUniqueInput
+  }
+
+  /**
+   * TicketResponse findFirst
+   */
+  export type TicketResponseFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseInclude<ExtArgs> | null
+    /**
+     * Filter, which TicketResponse to fetch.
+     */
+    where?: TicketResponseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TicketResponses to fetch.
+     */
+    orderBy?: TicketResponseOrderByWithRelationInput | TicketResponseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TicketResponses.
+     */
+    cursor?: TicketResponseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TicketResponses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TicketResponses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TicketResponses.
+     */
+    distinct?: TicketResponseScalarFieldEnum | TicketResponseScalarFieldEnum[]
+  }
+
+  /**
+   * TicketResponse findFirstOrThrow
+   */
+  export type TicketResponseFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseInclude<ExtArgs> | null
+    /**
+     * Filter, which TicketResponse to fetch.
+     */
+    where?: TicketResponseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TicketResponses to fetch.
+     */
+    orderBy?: TicketResponseOrderByWithRelationInput | TicketResponseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TicketResponses.
+     */
+    cursor?: TicketResponseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TicketResponses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TicketResponses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TicketResponses.
+     */
+    distinct?: TicketResponseScalarFieldEnum | TicketResponseScalarFieldEnum[]
+  }
+
+  /**
+   * TicketResponse findMany
+   */
+  export type TicketResponseFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseInclude<ExtArgs> | null
+    /**
+     * Filter, which TicketResponses to fetch.
+     */
+    where?: TicketResponseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TicketResponses to fetch.
+     */
+    orderBy?: TicketResponseOrderByWithRelationInput | TicketResponseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TicketResponses.
+     */
+    cursor?: TicketResponseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TicketResponses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TicketResponses.
+     */
+    skip?: number
+    distinct?: TicketResponseScalarFieldEnum | TicketResponseScalarFieldEnum[]
+  }
+
+  /**
+   * TicketResponse create
+   */
+  export type TicketResponseCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TicketResponse.
+     */
+    data: XOR<TicketResponseCreateInput, TicketResponseUncheckedCreateInput>
+  }
+
+  /**
+   * TicketResponse createMany
+   */
+  export type TicketResponseCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TicketResponses.
+     */
+    data: TicketResponseCreateManyInput | TicketResponseCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TicketResponse createManyAndReturn
+   */
+  export type TicketResponseCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * The data used to create many TicketResponses.
+     */
+    data: TicketResponseCreateManyInput | TicketResponseCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TicketResponse update
+   */
+  export type TicketResponseUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TicketResponse.
+     */
+    data: XOR<TicketResponseUpdateInput, TicketResponseUncheckedUpdateInput>
+    /**
+     * Choose, which TicketResponse to update.
+     */
+    where: TicketResponseWhereUniqueInput
+  }
+
+  /**
+   * TicketResponse updateMany
+   */
+  export type TicketResponseUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TicketResponses.
+     */
+    data: XOR<TicketResponseUpdateManyMutationInput, TicketResponseUncheckedUpdateManyInput>
+    /**
+     * Filter which TicketResponses to update
+     */
+    where?: TicketResponseWhereInput
+    /**
+     * Limit how many TicketResponses to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TicketResponse updateManyAndReturn
+   */
+  export type TicketResponseUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * The data used to update TicketResponses.
+     */
+    data: XOR<TicketResponseUpdateManyMutationInput, TicketResponseUncheckedUpdateManyInput>
+    /**
+     * Filter which TicketResponses to update
+     */
+    where?: TicketResponseWhereInput
+    /**
+     * Limit how many TicketResponses to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TicketResponse upsert
+   */
+  export type TicketResponseUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TicketResponse to update in case it exists.
+     */
+    where: TicketResponseWhereUniqueInput
+    /**
+     * In case the TicketResponse found by the `where` argument doesn't exist, create a new TicketResponse with this data.
+     */
+    create: XOR<TicketResponseCreateInput, TicketResponseUncheckedCreateInput>
+    /**
+     * In case the TicketResponse was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TicketResponseUpdateInput, TicketResponseUncheckedUpdateInput>
+  }
+
+  /**
+   * TicketResponse delete
+   */
+  export type TicketResponseDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseInclude<ExtArgs> | null
+    /**
+     * Filter which TicketResponse to delete.
+     */
+    where: TicketResponseWhereUniqueInput
+  }
+
+  /**
+   * TicketResponse deleteMany
+   */
+  export type TicketResponseDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TicketResponses to delete
+     */
+    where?: TicketResponseWhereInput
+    /**
+     * Limit how many TicketResponses to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TicketResponse without action
+   */
+  export type TicketResponseDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketResponse
+     */
+    select?: TicketResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketResponse
+     */
+    omit?: TicketResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketResponseInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AdServiceRequest
+   */
+
+  export type AggregateAdServiceRequest = {
+    _count: AdServiceRequestCountAggregateOutputType | null
+    _avg: AdServiceRequestAvgAggregateOutputType | null
+    _sum: AdServiceRequestSumAggregateOutputType | null
+    _min: AdServiceRequestMinAggregateOutputType | null
+    _max: AdServiceRequestMaxAggregateOutputType | null
+  }
+
+  export type AdServiceRequestAvgAggregateOutputType = {
+    duration: number | null
+    amount: Decimal | null
+  }
+
+  export type AdServiceRequestSumAggregateOutputType = {
+    duration: number | null
+    amount: Decimal | null
+  }
+
+  export type AdServiceRequestMinAggregateOutputType = {
+    id: string | null
+    vendorId: string | null
+    serviceType: $Enums.ServiceRequestType | null
+    description: string | null
+    duration: number | null
+    startDate: Date | null
+    endDate: Date | null
+    amount: Decimal | null
+    currency: string | null
+    status: $Enums.ServiceRequestStatus | null
+    paymentStatus: string | null
+    razorpayOrderId: string | null
+    razorpayPaymentId: string | null
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    rejectionReason: string | null
+    adminNotes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdServiceRequestMaxAggregateOutputType = {
+    id: string | null
+    vendorId: string | null
+    serviceType: $Enums.ServiceRequestType | null
+    description: string | null
+    duration: number | null
+    startDate: Date | null
+    endDate: Date | null
+    amount: Decimal | null
+    currency: string | null
+    status: $Enums.ServiceRequestStatus | null
+    paymentStatus: string | null
+    razorpayOrderId: string | null
+    razorpayPaymentId: string | null
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    rejectionReason: string | null
+    adminNotes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AdServiceRequestCountAggregateOutputType = {
+    id: number
+    vendorId: number
+    serviceType: number
+    description: number
+    duration: number
+    startDate: number
+    endDate: number
+    amount: number
+    currency: number
+    status: number
+    paymentStatus: number
+    razorpayOrderId: number
+    razorpayPaymentId: number
+    reviewedBy: number
+    reviewedAt: number
+    rejectionReason: number
+    adminNotes: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AdServiceRequestAvgAggregateInputType = {
+    duration?: true
+    amount?: true
+  }
+
+  export type AdServiceRequestSumAggregateInputType = {
+    duration?: true
+    amount?: true
+  }
+
+  export type AdServiceRequestMinAggregateInputType = {
+    id?: true
+    vendorId?: true
+    serviceType?: true
+    description?: true
+    duration?: true
+    startDate?: true
+    endDate?: true
+    amount?: true
+    currency?: true
+    status?: true
+    paymentStatus?: true
+    razorpayOrderId?: true
+    razorpayPaymentId?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    rejectionReason?: true
+    adminNotes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdServiceRequestMaxAggregateInputType = {
+    id?: true
+    vendorId?: true
+    serviceType?: true
+    description?: true
+    duration?: true
+    startDate?: true
+    endDate?: true
+    amount?: true
+    currency?: true
+    status?: true
+    paymentStatus?: true
+    razorpayOrderId?: true
+    razorpayPaymentId?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    rejectionReason?: true
+    adminNotes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AdServiceRequestCountAggregateInputType = {
+    id?: true
+    vendorId?: true
+    serviceType?: true
+    description?: true
+    duration?: true
+    startDate?: true
+    endDate?: true
+    amount?: true
+    currency?: true
+    status?: true
+    paymentStatus?: true
+    razorpayOrderId?: true
+    razorpayPaymentId?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    rejectionReason?: true
+    adminNotes?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AdServiceRequestAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdServiceRequest to aggregate.
+     */
+    where?: AdServiceRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdServiceRequests to fetch.
+     */
+    orderBy?: AdServiceRequestOrderByWithRelationInput | AdServiceRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AdServiceRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdServiceRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdServiceRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AdServiceRequests
+    **/
+    _count?: true | AdServiceRequestCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AdServiceRequestAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AdServiceRequestSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AdServiceRequestMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AdServiceRequestMaxAggregateInputType
+  }
+
+  export type GetAdServiceRequestAggregateType<T extends AdServiceRequestAggregateArgs> = {
+        [P in keyof T & keyof AggregateAdServiceRequest]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAdServiceRequest[P]>
+      : GetScalarType<T[P], AggregateAdServiceRequest[P]>
+  }
+
+
+
+
+  export type AdServiceRequestGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AdServiceRequestWhereInput
+    orderBy?: AdServiceRequestOrderByWithAggregationInput | AdServiceRequestOrderByWithAggregationInput[]
+    by: AdServiceRequestScalarFieldEnum[] | AdServiceRequestScalarFieldEnum
+    having?: AdServiceRequestScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AdServiceRequestCountAggregateInputType | true
+    _avg?: AdServiceRequestAvgAggregateInputType
+    _sum?: AdServiceRequestSumAggregateInputType
+    _min?: AdServiceRequestMinAggregateInputType
+    _max?: AdServiceRequestMaxAggregateInputType
+  }
+
+  export type AdServiceRequestGroupByOutputType = {
+    id: string
+    vendorId: string
+    serviceType: $Enums.ServiceRequestType
+    description: string | null
+    duration: number
+    startDate: Date | null
+    endDate: Date | null
+    amount: Decimal
+    currency: string
+    status: $Enums.ServiceRequestStatus
+    paymentStatus: string
+    razorpayOrderId: string | null
+    razorpayPaymentId: string | null
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    rejectionReason: string | null
+    adminNotes: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: AdServiceRequestCountAggregateOutputType | null
+    _avg: AdServiceRequestAvgAggregateOutputType | null
+    _sum: AdServiceRequestSumAggregateOutputType | null
+    _min: AdServiceRequestMinAggregateOutputType | null
+    _max: AdServiceRequestMaxAggregateOutputType | null
+  }
+
+  type GetAdServiceRequestGroupByPayload<T extends AdServiceRequestGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AdServiceRequestGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AdServiceRequestGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AdServiceRequestGroupByOutputType[P]>
+            : GetScalarType<T[P], AdServiceRequestGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AdServiceRequestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    vendorId?: boolean
+    serviceType?: boolean
+    description?: boolean
+    duration?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    amount?: boolean
+    currency?: boolean
+    status?: boolean
+    paymentStatus?: boolean
+    razorpayOrderId?: boolean
+    razorpayPaymentId?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    rejectionReason?: boolean
+    adminNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    vendor?: boolean | UserDefaultArgs<ExtArgs>
+    reviewedByAdmin?: boolean | AdServiceRequest$reviewedByAdminArgs<ExtArgs>
+  }, ExtArgs["result"]["adServiceRequest"]>
+
+  export type AdServiceRequestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    vendorId?: boolean
+    serviceType?: boolean
+    description?: boolean
+    duration?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    amount?: boolean
+    currency?: boolean
+    status?: boolean
+    paymentStatus?: boolean
+    razorpayOrderId?: boolean
+    razorpayPaymentId?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    rejectionReason?: boolean
+    adminNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    vendor?: boolean | UserDefaultArgs<ExtArgs>
+    reviewedByAdmin?: boolean | AdServiceRequest$reviewedByAdminArgs<ExtArgs>
+  }, ExtArgs["result"]["adServiceRequest"]>
+
+  export type AdServiceRequestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    vendorId?: boolean
+    serviceType?: boolean
+    description?: boolean
+    duration?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    amount?: boolean
+    currency?: boolean
+    status?: boolean
+    paymentStatus?: boolean
+    razorpayOrderId?: boolean
+    razorpayPaymentId?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    rejectionReason?: boolean
+    adminNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    vendor?: boolean | UserDefaultArgs<ExtArgs>
+    reviewedByAdmin?: boolean | AdServiceRequest$reviewedByAdminArgs<ExtArgs>
+  }, ExtArgs["result"]["adServiceRequest"]>
+
+  export type AdServiceRequestSelectScalar = {
+    id?: boolean
+    vendorId?: boolean
+    serviceType?: boolean
+    description?: boolean
+    duration?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    amount?: boolean
+    currency?: boolean
+    status?: boolean
+    paymentStatus?: boolean
+    razorpayOrderId?: boolean
+    razorpayPaymentId?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    rejectionReason?: boolean
+    adminNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AdServiceRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "vendorId" | "serviceType" | "description" | "duration" | "startDate" | "endDate" | "amount" | "currency" | "status" | "paymentStatus" | "razorpayOrderId" | "razorpayPaymentId" | "reviewedBy" | "reviewedAt" | "rejectionReason" | "adminNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["adServiceRequest"]>
+  export type AdServiceRequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vendor?: boolean | UserDefaultArgs<ExtArgs>
+    reviewedByAdmin?: boolean | AdServiceRequest$reviewedByAdminArgs<ExtArgs>
+  }
+  export type AdServiceRequestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vendor?: boolean | UserDefaultArgs<ExtArgs>
+    reviewedByAdmin?: boolean | AdServiceRequest$reviewedByAdminArgs<ExtArgs>
+  }
+  export type AdServiceRequestIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vendor?: boolean | UserDefaultArgs<ExtArgs>
+    reviewedByAdmin?: boolean | AdServiceRequest$reviewedByAdminArgs<ExtArgs>
+  }
+
+  export type $AdServiceRequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AdServiceRequest"
+    objects: {
+      vendor: Prisma.$UserPayload<ExtArgs>
+      reviewedByAdmin: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      vendorId: string
+      serviceType: $Enums.ServiceRequestType
+      description: string | null
+      duration: number
+      startDate: Date | null
+      endDate: Date | null
+      amount: Prisma.Decimal
+      currency: string
+      status: $Enums.ServiceRequestStatus
+      paymentStatus: string
+      razorpayOrderId: string | null
+      razorpayPaymentId: string | null
+      reviewedBy: string | null
+      reviewedAt: Date | null
+      rejectionReason: string | null
+      adminNotes: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["adServiceRequest"]>
+    composites: {}
+  }
+
+  type AdServiceRequestGetPayload<S extends boolean | null | undefined | AdServiceRequestDefaultArgs> = $Result.GetResult<Prisma.$AdServiceRequestPayload, S>
+
+  type AdServiceRequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AdServiceRequestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AdServiceRequestCountAggregateInputType | true
+    }
+
+  export interface AdServiceRequestDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AdServiceRequest'], meta: { name: 'AdServiceRequest' } }
+    /**
+     * Find zero or one AdServiceRequest that matches the filter.
+     * @param {AdServiceRequestFindUniqueArgs} args - Arguments to find a AdServiceRequest
+     * @example
+     * // Get one AdServiceRequest
+     * const adServiceRequest = await prisma.adServiceRequest.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AdServiceRequestFindUniqueArgs>(args: SelectSubset<T, AdServiceRequestFindUniqueArgs<ExtArgs>>): Prisma__AdServiceRequestClient<$Result.GetResult<Prisma.$AdServiceRequestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AdServiceRequest that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AdServiceRequestFindUniqueOrThrowArgs} args - Arguments to find a AdServiceRequest
+     * @example
+     * // Get one AdServiceRequest
+     * const adServiceRequest = await prisma.adServiceRequest.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AdServiceRequestFindUniqueOrThrowArgs>(args: SelectSubset<T, AdServiceRequestFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AdServiceRequestClient<$Result.GetResult<Prisma.$AdServiceRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AdServiceRequest that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdServiceRequestFindFirstArgs} args - Arguments to find a AdServiceRequest
+     * @example
+     * // Get one AdServiceRequest
+     * const adServiceRequest = await prisma.adServiceRequest.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AdServiceRequestFindFirstArgs>(args?: SelectSubset<T, AdServiceRequestFindFirstArgs<ExtArgs>>): Prisma__AdServiceRequestClient<$Result.GetResult<Prisma.$AdServiceRequestPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AdServiceRequest that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdServiceRequestFindFirstOrThrowArgs} args - Arguments to find a AdServiceRequest
+     * @example
+     * // Get one AdServiceRequest
+     * const adServiceRequest = await prisma.adServiceRequest.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AdServiceRequestFindFirstOrThrowArgs>(args?: SelectSubset<T, AdServiceRequestFindFirstOrThrowArgs<ExtArgs>>): Prisma__AdServiceRequestClient<$Result.GetResult<Prisma.$AdServiceRequestPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AdServiceRequests that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdServiceRequestFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AdServiceRequests
+     * const adServiceRequests = await prisma.adServiceRequest.findMany()
+     * 
+     * // Get first 10 AdServiceRequests
+     * const adServiceRequests = await prisma.adServiceRequest.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const adServiceRequestWithIdOnly = await prisma.adServiceRequest.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AdServiceRequestFindManyArgs>(args?: SelectSubset<T, AdServiceRequestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdServiceRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AdServiceRequest.
+     * @param {AdServiceRequestCreateArgs} args - Arguments to create a AdServiceRequest.
+     * @example
+     * // Create one AdServiceRequest
+     * const AdServiceRequest = await prisma.adServiceRequest.create({
+     *   data: {
+     *     // ... data to create a AdServiceRequest
+     *   }
+     * })
+     * 
+     */
+    create<T extends AdServiceRequestCreateArgs>(args: SelectSubset<T, AdServiceRequestCreateArgs<ExtArgs>>): Prisma__AdServiceRequestClient<$Result.GetResult<Prisma.$AdServiceRequestPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AdServiceRequests.
+     * @param {AdServiceRequestCreateManyArgs} args - Arguments to create many AdServiceRequests.
+     * @example
+     * // Create many AdServiceRequests
+     * const adServiceRequest = await prisma.adServiceRequest.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AdServiceRequestCreateManyArgs>(args?: SelectSubset<T, AdServiceRequestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AdServiceRequests and returns the data saved in the database.
+     * @param {AdServiceRequestCreateManyAndReturnArgs} args - Arguments to create many AdServiceRequests.
+     * @example
+     * // Create many AdServiceRequests
+     * const adServiceRequest = await prisma.adServiceRequest.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AdServiceRequests and only return the `id`
+     * const adServiceRequestWithIdOnly = await prisma.adServiceRequest.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AdServiceRequestCreateManyAndReturnArgs>(args?: SelectSubset<T, AdServiceRequestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdServiceRequestPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AdServiceRequest.
+     * @param {AdServiceRequestDeleteArgs} args - Arguments to delete one AdServiceRequest.
+     * @example
+     * // Delete one AdServiceRequest
+     * const AdServiceRequest = await prisma.adServiceRequest.delete({
+     *   where: {
+     *     // ... filter to delete one AdServiceRequest
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AdServiceRequestDeleteArgs>(args: SelectSubset<T, AdServiceRequestDeleteArgs<ExtArgs>>): Prisma__AdServiceRequestClient<$Result.GetResult<Prisma.$AdServiceRequestPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AdServiceRequest.
+     * @param {AdServiceRequestUpdateArgs} args - Arguments to update one AdServiceRequest.
+     * @example
+     * // Update one AdServiceRequest
+     * const adServiceRequest = await prisma.adServiceRequest.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AdServiceRequestUpdateArgs>(args: SelectSubset<T, AdServiceRequestUpdateArgs<ExtArgs>>): Prisma__AdServiceRequestClient<$Result.GetResult<Prisma.$AdServiceRequestPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AdServiceRequests.
+     * @param {AdServiceRequestDeleteManyArgs} args - Arguments to filter AdServiceRequests to delete.
+     * @example
+     * // Delete a few AdServiceRequests
+     * const { count } = await prisma.adServiceRequest.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AdServiceRequestDeleteManyArgs>(args?: SelectSubset<T, AdServiceRequestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AdServiceRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdServiceRequestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AdServiceRequests
+     * const adServiceRequest = await prisma.adServiceRequest.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AdServiceRequestUpdateManyArgs>(args: SelectSubset<T, AdServiceRequestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AdServiceRequests and returns the data updated in the database.
+     * @param {AdServiceRequestUpdateManyAndReturnArgs} args - Arguments to update many AdServiceRequests.
+     * @example
+     * // Update many AdServiceRequests
+     * const adServiceRequest = await prisma.adServiceRequest.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AdServiceRequests and only return the `id`
+     * const adServiceRequestWithIdOnly = await prisma.adServiceRequest.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AdServiceRequestUpdateManyAndReturnArgs>(args: SelectSubset<T, AdServiceRequestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdServiceRequestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AdServiceRequest.
+     * @param {AdServiceRequestUpsertArgs} args - Arguments to update or create a AdServiceRequest.
+     * @example
+     * // Update or create a AdServiceRequest
+     * const adServiceRequest = await prisma.adServiceRequest.upsert({
+     *   create: {
+     *     // ... data to create a AdServiceRequest
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AdServiceRequest we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AdServiceRequestUpsertArgs>(args: SelectSubset<T, AdServiceRequestUpsertArgs<ExtArgs>>): Prisma__AdServiceRequestClient<$Result.GetResult<Prisma.$AdServiceRequestPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AdServiceRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdServiceRequestCountArgs} args - Arguments to filter AdServiceRequests to count.
+     * @example
+     * // Count the number of AdServiceRequests
+     * const count = await prisma.adServiceRequest.count({
+     *   where: {
+     *     // ... the filter for the AdServiceRequests we want to count
+     *   }
+     * })
+    **/
+    count<T extends AdServiceRequestCountArgs>(
+      args?: Subset<T, AdServiceRequestCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AdServiceRequestCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AdServiceRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdServiceRequestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AdServiceRequestAggregateArgs>(args: Subset<T, AdServiceRequestAggregateArgs>): Prisma.PrismaPromise<GetAdServiceRequestAggregateType<T>>
+
+    /**
+     * Group by AdServiceRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AdServiceRequestGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AdServiceRequestGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AdServiceRequestGroupByArgs['orderBy'] }
+        : { orderBy?: AdServiceRequestGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AdServiceRequestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAdServiceRequestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AdServiceRequest model
+   */
+  readonly fields: AdServiceRequestFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AdServiceRequest.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AdServiceRequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    vendor<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    reviewedByAdmin<T extends AdServiceRequest$reviewedByAdminArgs<ExtArgs> = {}>(args?: Subset<T, AdServiceRequest$reviewedByAdminArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AdServiceRequest model
+   */
+  interface AdServiceRequestFieldRefs {
+    readonly id: FieldRef<"AdServiceRequest", 'String'>
+    readonly vendorId: FieldRef<"AdServiceRequest", 'String'>
+    readonly serviceType: FieldRef<"AdServiceRequest", 'ServiceRequestType'>
+    readonly description: FieldRef<"AdServiceRequest", 'String'>
+    readonly duration: FieldRef<"AdServiceRequest", 'Int'>
+    readonly startDate: FieldRef<"AdServiceRequest", 'DateTime'>
+    readonly endDate: FieldRef<"AdServiceRequest", 'DateTime'>
+    readonly amount: FieldRef<"AdServiceRequest", 'Decimal'>
+    readonly currency: FieldRef<"AdServiceRequest", 'String'>
+    readonly status: FieldRef<"AdServiceRequest", 'ServiceRequestStatus'>
+    readonly paymentStatus: FieldRef<"AdServiceRequest", 'String'>
+    readonly razorpayOrderId: FieldRef<"AdServiceRequest", 'String'>
+    readonly razorpayPaymentId: FieldRef<"AdServiceRequest", 'String'>
+    readonly reviewedBy: FieldRef<"AdServiceRequest", 'String'>
+    readonly reviewedAt: FieldRef<"AdServiceRequest", 'DateTime'>
+    readonly rejectionReason: FieldRef<"AdServiceRequest", 'String'>
+    readonly adminNotes: FieldRef<"AdServiceRequest", 'String'>
+    readonly createdAt: FieldRef<"AdServiceRequest", 'DateTime'>
+    readonly updatedAt: FieldRef<"AdServiceRequest", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AdServiceRequest findUnique
+   */
+  export type AdServiceRequestFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which AdServiceRequest to fetch.
+     */
+    where: AdServiceRequestWhereUniqueInput
+  }
+
+  /**
+   * AdServiceRequest findUniqueOrThrow
+   */
+  export type AdServiceRequestFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which AdServiceRequest to fetch.
+     */
+    where: AdServiceRequestWhereUniqueInput
+  }
+
+  /**
+   * AdServiceRequest findFirst
+   */
+  export type AdServiceRequestFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which AdServiceRequest to fetch.
+     */
+    where?: AdServiceRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdServiceRequests to fetch.
+     */
+    orderBy?: AdServiceRequestOrderByWithRelationInput | AdServiceRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdServiceRequests.
+     */
+    cursor?: AdServiceRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdServiceRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdServiceRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdServiceRequests.
+     */
+    distinct?: AdServiceRequestScalarFieldEnum | AdServiceRequestScalarFieldEnum[]
+  }
+
+  /**
+   * AdServiceRequest findFirstOrThrow
+   */
+  export type AdServiceRequestFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which AdServiceRequest to fetch.
+     */
+    where?: AdServiceRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdServiceRequests to fetch.
+     */
+    orderBy?: AdServiceRequestOrderByWithRelationInput | AdServiceRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AdServiceRequests.
+     */
+    cursor?: AdServiceRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdServiceRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdServiceRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AdServiceRequests.
+     */
+    distinct?: AdServiceRequestScalarFieldEnum | AdServiceRequestScalarFieldEnum[]
+  }
+
+  /**
+   * AdServiceRequest findMany
+   */
+  export type AdServiceRequestFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which AdServiceRequests to fetch.
+     */
+    where?: AdServiceRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AdServiceRequests to fetch.
+     */
+    orderBy?: AdServiceRequestOrderByWithRelationInput | AdServiceRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AdServiceRequests.
+     */
+    cursor?: AdServiceRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AdServiceRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AdServiceRequests.
+     */
+    skip?: number
+    distinct?: AdServiceRequestScalarFieldEnum | AdServiceRequestScalarFieldEnum[]
+  }
+
+  /**
+   * AdServiceRequest create
+   */
+  export type AdServiceRequestCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AdServiceRequest.
+     */
+    data: XOR<AdServiceRequestCreateInput, AdServiceRequestUncheckedCreateInput>
+  }
+
+  /**
+   * AdServiceRequest createMany
+   */
+  export type AdServiceRequestCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AdServiceRequests.
+     */
+    data: AdServiceRequestCreateManyInput | AdServiceRequestCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AdServiceRequest createManyAndReturn
+   */
+  export type AdServiceRequestCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * The data used to create many AdServiceRequests.
+     */
+    data: AdServiceRequestCreateManyInput | AdServiceRequestCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AdServiceRequest update
+   */
+  export type AdServiceRequestUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AdServiceRequest.
+     */
+    data: XOR<AdServiceRequestUpdateInput, AdServiceRequestUncheckedUpdateInput>
+    /**
+     * Choose, which AdServiceRequest to update.
+     */
+    where: AdServiceRequestWhereUniqueInput
+  }
+
+  /**
+   * AdServiceRequest updateMany
+   */
+  export type AdServiceRequestUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AdServiceRequests.
+     */
+    data: XOR<AdServiceRequestUpdateManyMutationInput, AdServiceRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which AdServiceRequests to update
+     */
+    where?: AdServiceRequestWhereInput
+    /**
+     * Limit how many AdServiceRequests to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AdServiceRequest updateManyAndReturn
+   */
+  export type AdServiceRequestUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * The data used to update AdServiceRequests.
+     */
+    data: XOR<AdServiceRequestUpdateManyMutationInput, AdServiceRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which AdServiceRequests to update
+     */
+    where?: AdServiceRequestWhereInput
+    /**
+     * Limit how many AdServiceRequests to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AdServiceRequest upsert
+   */
+  export type AdServiceRequestUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AdServiceRequest to update in case it exists.
+     */
+    where: AdServiceRequestWhereUniqueInput
+    /**
+     * In case the AdServiceRequest found by the `where` argument doesn't exist, create a new AdServiceRequest with this data.
+     */
+    create: XOR<AdServiceRequestCreateInput, AdServiceRequestUncheckedCreateInput>
+    /**
+     * In case the AdServiceRequest was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AdServiceRequestUpdateInput, AdServiceRequestUncheckedUpdateInput>
+  }
+
+  /**
+   * AdServiceRequest delete
+   */
+  export type AdServiceRequestDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestInclude<ExtArgs> | null
+    /**
+     * Filter which AdServiceRequest to delete.
+     */
+    where: AdServiceRequestWhereUniqueInput
+  }
+
+  /**
+   * AdServiceRequest deleteMany
+   */
+  export type AdServiceRequestDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AdServiceRequests to delete
+     */
+    where?: AdServiceRequestWhereInput
+    /**
+     * Limit how many AdServiceRequests to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AdServiceRequest.reviewedByAdmin
+   */
+  export type AdServiceRequest$reviewedByAdminArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * AdServiceRequest without action
+   */
+  export type AdServiceRequestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdServiceRequest
+     */
+    select?: AdServiceRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AdServiceRequest
+     */
+    omit?: AdServiceRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdServiceRequestInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -41932,6 +46128,61 @@ export namespace Prisma {
   export type SecurityEventScalarFieldEnum = (typeof SecurityEventScalarFieldEnum)[keyof typeof SecurityEventScalarFieldEnum]
 
 
+  export const SupportTicketScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    vendorId: 'vendorId',
+    subject: 'subject',
+    description: 'description',
+    status: 'status',
+    priority: 'priority',
+    category: 'category',
+    assignedTo: 'assignedTo',
+    attachments: 'attachments',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SupportTicketScalarFieldEnum = (typeof SupportTicketScalarFieldEnum)[keyof typeof SupportTicketScalarFieldEnum]
+
+
+  export const TicketResponseScalarFieldEnum: {
+    id: 'id',
+    ticketId: 'ticketId',
+    userId: 'userId',
+    message: 'message',
+    isInternal: 'isInternal',
+    createdAt: 'createdAt'
+  };
+
+  export type TicketResponseScalarFieldEnum = (typeof TicketResponseScalarFieldEnum)[keyof typeof TicketResponseScalarFieldEnum]
+
+
+  export const AdServiceRequestScalarFieldEnum: {
+    id: 'id',
+    vendorId: 'vendorId',
+    serviceType: 'serviceType',
+    description: 'description',
+    duration: 'duration',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    amount: 'amount',
+    currency: 'currency',
+    status: 'status',
+    paymentStatus: 'paymentStatus',
+    razorpayOrderId: 'razorpayOrderId',
+    razorpayPaymentId: 'razorpayPaymentId',
+    reviewedBy: 'reviewedBy',
+    reviewedAt: 'reviewedAt',
+    rejectionReason: 'rejectionReason',
+    adminNotes: 'adminNotes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AdServiceRequestScalarFieldEnum = (typeof AdServiceRequestScalarFieldEnum)[keyof typeof AdServiceRequestScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -42109,6 +46360,62 @@ export namespace Prisma {
    */
   export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>
     
+
+
+  /**
+   * Reference to a field of type 'TicketStatus'
+   */
+  export type EnumTicketStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TicketStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'TicketStatus[]'
+   */
+  export type ListEnumTicketStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TicketStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'TicketPriority'
+   */
+  export type EnumTicketPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TicketPriority'>
+    
+
+
+  /**
+   * Reference to a field of type 'TicketPriority[]'
+   */
+  export type ListEnumTicketPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TicketPriority[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ServiceRequestType'
+   */
+  export type EnumServiceRequestTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceRequestType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ServiceRequestType[]'
+   */
+  export type ListEnumServiceRequestTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceRequestType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ServiceRequestStatus'
+   */
+  export type EnumServiceRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceRequestStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ServiceRequestStatus[]'
+   */
+  export type ListEnumServiceRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceRequestStatus[]'>
+    
   /**
    * Deep Input Types
    */
@@ -42159,6 +46466,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryListRelationFilter
     vendorAnalytics?: VendorAnalyticsListRelationFilter
     securityEvents?: SecurityEventListRelationFilter
+    createdTickets?: SupportTicketListRelationFilter
+    vendorTickets?: SupportTicketListRelationFilter
+    assignedTickets?: SupportTicketListRelationFilter
+    ticketResponses?: TicketResponseListRelationFilter
+    serviceRequests?: AdServiceRequestListRelationFilter
+    reviewedServiceRequests?: AdServiceRequestListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -42203,6 +46516,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryOrderByRelationAggregateInput
     vendorAnalytics?: VendorAnalyticsOrderByRelationAggregateInput
     securityEvents?: SecurityEventOrderByRelationAggregateInput
+    createdTickets?: SupportTicketOrderByRelationAggregateInput
+    vendorTickets?: SupportTicketOrderByRelationAggregateInput
+    assignedTickets?: SupportTicketOrderByRelationAggregateInput
+    ticketResponses?: TicketResponseOrderByRelationAggregateInput
+    serviceRequests?: AdServiceRequestOrderByRelationAggregateInput
+    reviewedServiceRequests?: AdServiceRequestOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -42250,6 +46569,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryListRelationFilter
     vendorAnalytics?: VendorAnalyticsListRelationFilter
     securityEvents?: SecurityEventListRelationFilter
+    createdTickets?: SupportTicketListRelationFilter
+    vendorTickets?: SupportTicketListRelationFilter
+    assignedTickets?: SupportTicketListRelationFilter
+    ticketResponses?: TicketResponseListRelationFilter
+    serviceRequests?: AdServiceRequestListRelationFilter
+    reviewedServiceRequests?: AdServiceRequestListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -44999,6 +49324,298 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"SecurityEvent"> | Date | string
   }
 
+  export type SupportTicketWhereInput = {
+    AND?: SupportTicketWhereInput | SupportTicketWhereInput[]
+    OR?: SupportTicketWhereInput[]
+    NOT?: SupportTicketWhereInput | SupportTicketWhereInput[]
+    id?: StringFilter<"SupportTicket"> | string
+    userId?: StringFilter<"SupportTicket"> | string
+    vendorId?: StringNullableFilter<"SupportTicket"> | string | null
+    subject?: StringFilter<"SupportTicket"> | string
+    description?: StringFilter<"SupportTicket"> | string
+    status?: EnumTicketStatusFilter<"SupportTicket"> | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFilter<"SupportTicket"> | $Enums.TicketPriority
+    category?: StringNullableFilter<"SupportTicket"> | string | null
+    assignedTo?: StringNullableFilter<"SupportTicket"> | string | null
+    attachments?: JsonNullableFilter<"SupportTicket">
+    createdAt?: DateTimeFilter<"SupportTicket"> | Date | string
+    updatedAt?: DateTimeFilter<"SupportTicket"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    vendor?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    assignedAdmin?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    responses?: TicketResponseListRelationFilter
+  }
+
+  export type SupportTicketOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    vendorId?: SortOrderInput | SortOrder
+    subject?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    category?: SortOrderInput | SortOrder
+    assignedTo?: SortOrderInput | SortOrder
+    attachments?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    vendor?: UserOrderByWithRelationInput
+    assignedAdmin?: UserOrderByWithRelationInput
+    responses?: TicketResponseOrderByRelationAggregateInput
+  }
+
+  export type SupportTicketWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SupportTicketWhereInput | SupportTicketWhereInput[]
+    OR?: SupportTicketWhereInput[]
+    NOT?: SupportTicketWhereInput | SupportTicketWhereInput[]
+    userId?: StringFilter<"SupportTicket"> | string
+    vendorId?: StringNullableFilter<"SupportTicket"> | string | null
+    subject?: StringFilter<"SupportTicket"> | string
+    description?: StringFilter<"SupportTicket"> | string
+    status?: EnumTicketStatusFilter<"SupportTicket"> | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFilter<"SupportTicket"> | $Enums.TicketPriority
+    category?: StringNullableFilter<"SupportTicket"> | string | null
+    assignedTo?: StringNullableFilter<"SupportTicket"> | string | null
+    attachments?: JsonNullableFilter<"SupportTicket">
+    createdAt?: DateTimeFilter<"SupportTicket"> | Date | string
+    updatedAt?: DateTimeFilter<"SupportTicket"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    vendor?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    assignedAdmin?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    responses?: TicketResponseListRelationFilter
+  }, "id">
+
+  export type SupportTicketOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    vendorId?: SortOrderInput | SortOrder
+    subject?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    category?: SortOrderInput | SortOrder
+    assignedTo?: SortOrderInput | SortOrder
+    attachments?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SupportTicketCountOrderByAggregateInput
+    _max?: SupportTicketMaxOrderByAggregateInput
+    _min?: SupportTicketMinOrderByAggregateInput
+  }
+
+  export type SupportTicketScalarWhereWithAggregatesInput = {
+    AND?: SupportTicketScalarWhereWithAggregatesInput | SupportTicketScalarWhereWithAggregatesInput[]
+    OR?: SupportTicketScalarWhereWithAggregatesInput[]
+    NOT?: SupportTicketScalarWhereWithAggregatesInput | SupportTicketScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SupportTicket"> | string
+    userId?: StringWithAggregatesFilter<"SupportTicket"> | string
+    vendorId?: StringNullableWithAggregatesFilter<"SupportTicket"> | string | null
+    subject?: StringWithAggregatesFilter<"SupportTicket"> | string
+    description?: StringWithAggregatesFilter<"SupportTicket"> | string
+    status?: EnumTicketStatusWithAggregatesFilter<"SupportTicket"> | $Enums.TicketStatus
+    priority?: EnumTicketPriorityWithAggregatesFilter<"SupportTicket"> | $Enums.TicketPriority
+    category?: StringNullableWithAggregatesFilter<"SupportTicket"> | string | null
+    assignedTo?: StringNullableWithAggregatesFilter<"SupportTicket"> | string | null
+    attachments?: JsonNullableWithAggregatesFilter<"SupportTicket">
+    createdAt?: DateTimeWithAggregatesFilter<"SupportTicket"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SupportTicket"> | Date | string
+  }
+
+  export type TicketResponseWhereInput = {
+    AND?: TicketResponseWhereInput | TicketResponseWhereInput[]
+    OR?: TicketResponseWhereInput[]
+    NOT?: TicketResponseWhereInput | TicketResponseWhereInput[]
+    id?: StringFilter<"TicketResponse"> | string
+    ticketId?: StringFilter<"TicketResponse"> | string
+    userId?: StringFilter<"TicketResponse"> | string
+    message?: StringFilter<"TicketResponse"> | string
+    isInternal?: BoolFilter<"TicketResponse"> | boolean
+    createdAt?: DateTimeFilter<"TicketResponse"> | Date | string
+    ticket?: XOR<SupportTicketScalarRelationFilter, SupportTicketWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type TicketResponseOrderByWithRelationInput = {
+    id?: SortOrder
+    ticketId?: SortOrder
+    userId?: SortOrder
+    message?: SortOrder
+    isInternal?: SortOrder
+    createdAt?: SortOrder
+    ticket?: SupportTicketOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type TicketResponseWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TicketResponseWhereInput | TicketResponseWhereInput[]
+    OR?: TicketResponseWhereInput[]
+    NOT?: TicketResponseWhereInput | TicketResponseWhereInput[]
+    ticketId?: StringFilter<"TicketResponse"> | string
+    userId?: StringFilter<"TicketResponse"> | string
+    message?: StringFilter<"TicketResponse"> | string
+    isInternal?: BoolFilter<"TicketResponse"> | boolean
+    createdAt?: DateTimeFilter<"TicketResponse"> | Date | string
+    ticket?: XOR<SupportTicketScalarRelationFilter, SupportTicketWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type TicketResponseOrderByWithAggregationInput = {
+    id?: SortOrder
+    ticketId?: SortOrder
+    userId?: SortOrder
+    message?: SortOrder
+    isInternal?: SortOrder
+    createdAt?: SortOrder
+    _count?: TicketResponseCountOrderByAggregateInput
+    _max?: TicketResponseMaxOrderByAggregateInput
+    _min?: TicketResponseMinOrderByAggregateInput
+  }
+
+  export type TicketResponseScalarWhereWithAggregatesInput = {
+    AND?: TicketResponseScalarWhereWithAggregatesInput | TicketResponseScalarWhereWithAggregatesInput[]
+    OR?: TicketResponseScalarWhereWithAggregatesInput[]
+    NOT?: TicketResponseScalarWhereWithAggregatesInput | TicketResponseScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TicketResponse"> | string
+    ticketId?: StringWithAggregatesFilter<"TicketResponse"> | string
+    userId?: StringWithAggregatesFilter<"TicketResponse"> | string
+    message?: StringWithAggregatesFilter<"TicketResponse"> | string
+    isInternal?: BoolWithAggregatesFilter<"TicketResponse"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"TicketResponse"> | Date | string
+  }
+
+  export type AdServiceRequestWhereInput = {
+    AND?: AdServiceRequestWhereInput | AdServiceRequestWhereInput[]
+    OR?: AdServiceRequestWhereInput[]
+    NOT?: AdServiceRequestWhereInput | AdServiceRequestWhereInput[]
+    id?: StringFilter<"AdServiceRequest"> | string
+    vendorId?: StringFilter<"AdServiceRequest"> | string
+    serviceType?: EnumServiceRequestTypeFilter<"AdServiceRequest"> | $Enums.ServiceRequestType
+    description?: StringNullableFilter<"AdServiceRequest"> | string | null
+    duration?: IntFilter<"AdServiceRequest"> | number
+    startDate?: DateTimeNullableFilter<"AdServiceRequest"> | Date | string | null
+    endDate?: DateTimeNullableFilter<"AdServiceRequest"> | Date | string | null
+    amount?: DecimalFilter<"AdServiceRequest"> | Decimal | DecimalJsLike | number | string
+    currency?: StringFilter<"AdServiceRequest"> | string
+    status?: EnumServiceRequestStatusFilter<"AdServiceRequest"> | $Enums.ServiceRequestStatus
+    paymentStatus?: StringFilter<"AdServiceRequest"> | string
+    razorpayOrderId?: StringNullableFilter<"AdServiceRequest"> | string | null
+    razorpayPaymentId?: StringNullableFilter<"AdServiceRequest"> | string | null
+    reviewedBy?: StringNullableFilter<"AdServiceRequest"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"AdServiceRequest"> | Date | string | null
+    rejectionReason?: StringNullableFilter<"AdServiceRequest"> | string | null
+    adminNotes?: StringNullableFilter<"AdServiceRequest"> | string | null
+    createdAt?: DateTimeFilter<"AdServiceRequest"> | Date | string
+    updatedAt?: DateTimeFilter<"AdServiceRequest"> | Date | string
+    vendor?: XOR<UserScalarRelationFilter, UserWhereInput>
+    reviewedByAdmin?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type AdServiceRequestOrderByWithRelationInput = {
+    id?: SortOrder
+    vendorId?: SortOrder
+    serviceType?: SortOrder
+    description?: SortOrderInput | SortOrder
+    duration?: SortOrder
+    startDate?: SortOrderInput | SortOrder
+    endDate?: SortOrderInput | SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    paymentStatus?: SortOrder
+    razorpayOrderId?: SortOrderInput | SortOrder
+    razorpayPaymentId?: SortOrderInput | SortOrder
+    reviewedBy?: SortOrderInput | SortOrder
+    reviewedAt?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
+    adminNotes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    vendor?: UserOrderByWithRelationInput
+    reviewedByAdmin?: UserOrderByWithRelationInput
+  }
+
+  export type AdServiceRequestWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AdServiceRequestWhereInput | AdServiceRequestWhereInput[]
+    OR?: AdServiceRequestWhereInput[]
+    NOT?: AdServiceRequestWhereInput | AdServiceRequestWhereInput[]
+    vendorId?: StringFilter<"AdServiceRequest"> | string
+    serviceType?: EnumServiceRequestTypeFilter<"AdServiceRequest"> | $Enums.ServiceRequestType
+    description?: StringNullableFilter<"AdServiceRequest"> | string | null
+    duration?: IntFilter<"AdServiceRequest"> | number
+    startDate?: DateTimeNullableFilter<"AdServiceRequest"> | Date | string | null
+    endDate?: DateTimeNullableFilter<"AdServiceRequest"> | Date | string | null
+    amount?: DecimalFilter<"AdServiceRequest"> | Decimal | DecimalJsLike | number | string
+    currency?: StringFilter<"AdServiceRequest"> | string
+    status?: EnumServiceRequestStatusFilter<"AdServiceRequest"> | $Enums.ServiceRequestStatus
+    paymentStatus?: StringFilter<"AdServiceRequest"> | string
+    razorpayOrderId?: StringNullableFilter<"AdServiceRequest"> | string | null
+    razorpayPaymentId?: StringNullableFilter<"AdServiceRequest"> | string | null
+    reviewedBy?: StringNullableFilter<"AdServiceRequest"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"AdServiceRequest"> | Date | string | null
+    rejectionReason?: StringNullableFilter<"AdServiceRequest"> | string | null
+    adminNotes?: StringNullableFilter<"AdServiceRequest"> | string | null
+    createdAt?: DateTimeFilter<"AdServiceRequest"> | Date | string
+    updatedAt?: DateTimeFilter<"AdServiceRequest"> | Date | string
+    vendor?: XOR<UserScalarRelationFilter, UserWhereInput>
+    reviewedByAdmin?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type AdServiceRequestOrderByWithAggregationInput = {
+    id?: SortOrder
+    vendorId?: SortOrder
+    serviceType?: SortOrder
+    description?: SortOrderInput | SortOrder
+    duration?: SortOrder
+    startDate?: SortOrderInput | SortOrder
+    endDate?: SortOrderInput | SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    paymentStatus?: SortOrder
+    razorpayOrderId?: SortOrderInput | SortOrder
+    razorpayPaymentId?: SortOrderInput | SortOrder
+    reviewedBy?: SortOrderInput | SortOrder
+    reviewedAt?: SortOrderInput | SortOrder
+    rejectionReason?: SortOrderInput | SortOrder
+    adminNotes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AdServiceRequestCountOrderByAggregateInput
+    _avg?: AdServiceRequestAvgOrderByAggregateInput
+    _max?: AdServiceRequestMaxOrderByAggregateInput
+    _min?: AdServiceRequestMinOrderByAggregateInput
+    _sum?: AdServiceRequestSumOrderByAggregateInput
+  }
+
+  export type AdServiceRequestScalarWhereWithAggregatesInput = {
+    AND?: AdServiceRequestScalarWhereWithAggregatesInput | AdServiceRequestScalarWhereWithAggregatesInput[]
+    OR?: AdServiceRequestScalarWhereWithAggregatesInput[]
+    NOT?: AdServiceRequestScalarWhereWithAggregatesInput | AdServiceRequestScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AdServiceRequest"> | string
+    vendorId?: StringWithAggregatesFilter<"AdServiceRequest"> | string
+    serviceType?: EnumServiceRequestTypeWithAggregatesFilter<"AdServiceRequest"> | $Enums.ServiceRequestType
+    description?: StringNullableWithAggregatesFilter<"AdServiceRequest"> | string | null
+    duration?: IntWithAggregatesFilter<"AdServiceRequest"> | number
+    startDate?: DateTimeNullableWithAggregatesFilter<"AdServiceRequest"> | Date | string | null
+    endDate?: DateTimeNullableWithAggregatesFilter<"AdServiceRequest"> | Date | string | null
+    amount?: DecimalWithAggregatesFilter<"AdServiceRequest"> | Decimal | DecimalJsLike | number | string
+    currency?: StringWithAggregatesFilter<"AdServiceRequest"> | string
+    status?: EnumServiceRequestStatusWithAggregatesFilter<"AdServiceRequest"> | $Enums.ServiceRequestStatus
+    paymentStatus?: StringWithAggregatesFilter<"AdServiceRequest"> | string
+    razorpayOrderId?: StringNullableWithAggregatesFilter<"AdServiceRequest"> | string | null
+    razorpayPaymentId?: StringNullableWithAggregatesFilter<"AdServiceRequest"> | string | null
+    reviewedBy?: StringNullableWithAggregatesFilter<"AdServiceRequest"> | string | null
+    reviewedAt?: DateTimeNullableWithAggregatesFilter<"AdServiceRequest"> | Date | string | null
+    rejectionReason?: StringNullableWithAggregatesFilter<"AdServiceRequest"> | string | null
+    adminNotes?: StringNullableWithAggregatesFilter<"AdServiceRequest"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"AdServiceRequest"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AdServiceRequest"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -45041,6 +49658,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -45085,6 +49708,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUpdateInput = {
@@ -45129,6 +49758,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -45173,6 +49808,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -48238,6 +52879,325 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SupportTicketCreateInput = {
+    id?: string
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCreatedTicketsInput
+    vendor?: UserCreateNestedOneWithoutVendorTicketsInput
+    assignedAdmin?: UserCreateNestedOneWithoutAssignedTicketsInput
+    responses?: TicketResponseCreateNestedManyWithoutTicketInput
+  }
+
+  export type SupportTicketUncheckedCreateInput = {
+    id?: string
+    userId: string
+    vendorId?: string | null
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    assignedTo?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    responses?: TicketResponseUncheckedCreateNestedManyWithoutTicketInput
+  }
+
+  export type SupportTicketUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCreatedTicketsNestedInput
+    vendor?: UserUpdateOneWithoutVendorTicketsNestedInput
+    assignedAdmin?: UserUpdateOneWithoutAssignedTicketsNestedInput
+    responses?: TicketResponseUpdateManyWithoutTicketNestedInput
+  }
+
+  export type SupportTicketUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    responses?: TicketResponseUncheckedUpdateManyWithoutTicketNestedInput
+  }
+
+  export type SupportTicketCreateManyInput = {
+    id?: string
+    userId: string
+    vendorId?: string | null
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    assignedTo?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportTicketUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportTicketUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TicketResponseCreateInput = {
+    id?: string
+    message: string
+    isInternal?: boolean
+    createdAt?: Date | string
+    ticket: SupportTicketCreateNestedOneWithoutResponsesInput
+    user: UserCreateNestedOneWithoutTicketResponsesInput
+  }
+
+  export type TicketResponseUncheckedCreateInput = {
+    id?: string
+    ticketId: string
+    userId: string
+    message: string
+    isInternal?: boolean
+    createdAt?: Date | string
+  }
+
+  export type TicketResponseUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ticket?: SupportTicketUpdateOneRequiredWithoutResponsesNestedInput
+    user?: UserUpdateOneRequiredWithoutTicketResponsesNestedInput
+  }
+
+  export type TicketResponseUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ticketId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TicketResponseCreateManyInput = {
+    id?: string
+    ticketId: string
+    userId: string
+    message: string
+    isInternal?: boolean
+    createdAt?: Date | string
+  }
+
+  export type TicketResponseUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TicketResponseUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ticketId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdServiceRequestCreateInput = {
+    id?: string
+    serviceType: $Enums.ServiceRequestType
+    description?: string | null
+    duration: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    amount: Decimal | DecimalJsLike | number | string
+    currency?: string
+    status?: $Enums.ServiceRequestStatus
+    paymentStatus?: string
+    razorpayOrderId?: string | null
+    razorpayPaymentId?: string | null
+    reviewedAt?: Date | string | null
+    rejectionReason?: string | null
+    adminNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vendor: UserCreateNestedOneWithoutServiceRequestsInput
+    reviewedByAdmin?: UserCreateNestedOneWithoutReviewedServiceRequestsInput
+  }
+
+  export type AdServiceRequestUncheckedCreateInput = {
+    id?: string
+    vendorId: string
+    serviceType: $Enums.ServiceRequestType
+    description?: string | null
+    duration: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    amount: Decimal | DecimalJsLike | number | string
+    currency?: string
+    status?: $Enums.ServiceRequestStatus
+    paymentStatus?: string
+    razorpayOrderId?: string | null
+    razorpayPaymentId?: string | null
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    rejectionReason?: string | null
+    adminNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdServiceRequestUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    serviceType?: EnumServiceRequestTypeFieldUpdateOperationsInput | $Enums.ServiceRequestType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumServiceRequestStatusFieldUpdateOperationsInput | $Enums.ServiceRequestStatus
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vendor?: UserUpdateOneRequiredWithoutServiceRequestsNestedInput
+    reviewedByAdmin?: UserUpdateOneWithoutReviewedServiceRequestsNestedInput
+  }
+
+  export type AdServiceRequestUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vendorId?: StringFieldUpdateOperationsInput | string
+    serviceType?: EnumServiceRequestTypeFieldUpdateOperationsInput | $Enums.ServiceRequestType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumServiceRequestStatusFieldUpdateOperationsInput | $Enums.ServiceRequestStatus
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdServiceRequestCreateManyInput = {
+    id?: string
+    vendorId: string
+    serviceType: $Enums.ServiceRequestType
+    description?: string | null
+    duration: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    amount: Decimal | DecimalJsLike | number | string
+    currency?: string
+    status?: $Enums.ServiceRequestStatus
+    paymentStatus?: string
+    razorpayOrderId?: string | null
+    razorpayPaymentId?: string | null
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    rejectionReason?: string | null
+    adminNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdServiceRequestUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    serviceType?: EnumServiceRequestTypeFieldUpdateOperationsInput | $Enums.ServiceRequestType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumServiceRequestStatusFieldUpdateOperationsInput | $Enums.ServiceRequestStatus
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdServiceRequestUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vendorId?: StringFieldUpdateOperationsInput | string
+    serviceType?: EnumServiceRequestTypeFieldUpdateOperationsInput | $Enums.ServiceRequestType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumServiceRequestStatusFieldUpdateOperationsInput | $Enums.ServiceRequestStatus
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -48431,6 +53391,24 @@ export namespace Prisma {
     none?: SecurityEventWhereInput
   }
 
+  export type SupportTicketListRelationFilter = {
+    every?: SupportTicketWhereInput
+    some?: SupportTicketWhereInput
+    none?: SupportTicketWhereInput
+  }
+
+  export type TicketResponseListRelationFilter = {
+    every?: TicketResponseWhereInput
+    some?: TicketResponseWhereInput
+    none?: TicketResponseWhereInput
+  }
+
+  export type AdServiceRequestListRelationFilter = {
+    every?: AdServiceRequestWhereInput
+    some?: AdServiceRequestWhereInput
+    none?: AdServiceRequestWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -48505,6 +53483,18 @@ export namespace Prisma {
   }
 
   export type SecurityEventOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SupportTicketOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TicketResponseOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AdServiceRequestOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -50557,6 +55547,225 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type EnumTicketStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TicketStatus | EnumTicketStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TicketStatus[] | ListEnumTicketStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TicketStatus[] | ListEnumTicketStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTicketStatusFilter<$PrismaModel> | $Enums.TicketStatus
+  }
+
+  export type EnumTicketPriorityFilter<$PrismaModel = never> = {
+    equals?: $Enums.TicketPriority | EnumTicketPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.TicketPriority[] | ListEnumTicketPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TicketPriority[] | ListEnumTicketPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumTicketPriorityFilter<$PrismaModel> | $Enums.TicketPriority
+  }
+
+  export type SupportTicketCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    vendorId?: SortOrder
+    subject?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    category?: SortOrder
+    assignedTo?: SortOrder
+    attachments?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SupportTicketMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    vendorId?: SortOrder
+    subject?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    category?: SortOrder
+    assignedTo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SupportTicketMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    vendorId?: SortOrder
+    subject?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    category?: SortOrder
+    assignedTo?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumTicketStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TicketStatus | EnumTicketStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TicketStatus[] | ListEnumTicketStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TicketStatus[] | ListEnumTicketStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTicketStatusWithAggregatesFilter<$PrismaModel> | $Enums.TicketStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTicketStatusFilter<$PrismaModel>
+    _max?: NestedEnumTicketStatusFilter<$PrismaModel>
+  }
+
+  export type EnumTicketPriorityWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TicketPriority | EnumTicketPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.TicketPriority[] | ListEnumTicketPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TicketPriority[] | ListEnumTicketPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumTicketPriorityWithAggregatesFilter<$PrismaModel> | $Enums.TicketPriority
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTicketPriorityFilter<$PrismaModel>
+    _max?: NestedEnumTicketPriorityFilter<$PrismaModel>
+  }
+
+  export type SupportTicketScalarRelationFilter = {
+    is?: SupportTicketWhereInput
+    isNot?: SupportTicketWhereInput
+  }
+
+  export type TicketResponseCountOrderByAggregateInput = {
+    id?: SortOrder
+    ticketId?: SortOrder
+    userId?: SortOrder
+    message?: SortOrder
+    isInternal?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TicketResponseMaxOrderByAggregateInput = {
+    id?: SortOrder
+    ticketId?: SortOrder
+    userId?: SortOrder
+    message?: SortOrder
+    isInternal?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TicketResponseMinOrderByAggregateInput = {
+    id?: SortOrder
+    ticketId?: SortOrder
+    userId?: SortOrder
+    message?: SortOrder
+    isInternal?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type EnumServiceRequestTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ServiceRequestType | EnumServiceRequestTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ServiceRequestType[] | ListEnumServiceRequestTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ServiceRequestType[] | ListEnumServiceRequestTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumServiceRequestTypeFilter<$PrismaModel> | $Enums.ServiceRequestType
+  }
+
+  export type EnumServiceRequestStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ServiceRequestStatus | EnumServiceRequestStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ServiceRequestStatus[] | ListEnumServiceRequestStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ServiceRequestStatus[] | ListEnumServiceRequestStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumServiceRequestStatusFilter<$PrismaModel> | $Enums.ServiceRequestStatus
+  }
+
+  export type AdServiceRequestCountOrderByAggregateInput = {
+    id?: SortOrder
+    vendorId?: SortOrder
+    serviceType?: SortOrder
+    description?: SortOrder
+    duration?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    paymentStatus?: SortOrder
+    razorpayOrderId?: SortOrder
+    razorpayPaymentId?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    rejectionReason?: SortOrder
+    adminNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdServiceRequestAvgOrderByAggregateInput = {
+    duration?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type AdServiceRequestMaxOrderByAggregateInput = {
+    id?: SortOrder
+    vendorId?: SortOrder
+    serviceType?: SortOrder
+    description?: SortOrder
+    duration?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    paymentStatus?: SortOrder
+    razorpayOrderId?: SortOrder
+    razorpayPaymentId?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    rejectionReason?: SortOrder
+    adminNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdServiceRequestMinOrderByAggregateInput = {
+    id?: SortOrder
+    vendorId?: SortOrder
+    serviceType?: SortOrder
+    description?: SortOrder
+    duration?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    amount?: SortOrder
+    currency?: SortOrder
+    status?: SortOrder
+    paymentStatus?: SortOrder
+    razorpayOrderId?: SortOrder
+    razorpayPaymentId?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    rejectionReason?: SortOrder
+    adminNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AdServiceRequestSumOrderByAggregateInput = {
+    duration?: SortOrder
+    amount?: SortOrder
+  }
+
+  export type EnumServiceRequestTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ServiceRequestType | EnumServiceRequestTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ServiceRequestType[] | ListEnumServiceRequestTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ServiceRequestType[] | ListEnumServiceRequestTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumServiceRequestTypeWithAggregatesFilter<$PrismaModel> | $Enums.ServiceRequestType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumServiceRequestTypeFilter<$PrismaModel>
+    _max?: NestedEnumServiceRequestTypeFilter<$PrismaModel>
+  }
+
+  export type EnumServiceRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ServiceRequestStatus | EnumServiceRequestStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ServiceRequestStatus[] | ListEnumServiceRequestStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ServiceRequestStatus[] | ListEnumServiceRequestStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumServiceRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.ServiceRequestStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumServiceRequestStatusFilter<$PrismaModel>
+    _max?: NestedEnumServiceRequestStatusFilter<$PrismaModel>
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -50702,6 +55911,48 @@ export namespace Prisma {
     connect?: SecurityEventWhereUniqueInput | SecurityEventWhereUniqueInput[]
   }
 
+  export type SupportTicketCreateNestedManyWithoutUserInput = {
+    create?: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput> | SupportTicketCreateWithoutUserInput[] | SupportTicketUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutUserInput | SupportTicketCreateOrConnectWithoutUserInput[]
+    createMany?: SupportTicketCreateManyUserInputEnvelope
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+  }
+
+  export type SupportTicketCreateNestedManyWithoutVendorInput = {
+    create?: XOR<SupportTicketCreateWithoutVendorInput, SupportTicketUncheckedCreateWithoutVendorInput> | SupportTicketCreateWithoutVendorInput[] | SupportTicketUncheckedCreateWithoutVendorInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutVendorInput | SupportTicketCreateOrConnectWithoutVendorInput[]
+    createMany?: SupportTicketCreateManyVendorInputEnvelope
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+  }
+
+  export type SupportTicketCreateNestedManyWithoutAssignedAdminInput = {
+    create?: XOR<SupportTicketCreateWithoutAssignedAdminInput, SupportTicketUncheckedCreateWithoutAssignedAdminInput> | SupportTicketCreateWithoutAssignedAdminInput[] | SupportTicketUncheckedCreateWithoutAssignedAdminInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutAssignedAdminInput | SupportTicketCreateOrConnectWithoutAssignedAdminInput[]
+    createMany?: SupportTicketCreateManyAssignedAdminInputEnvelope
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+  }
+
+  export type TicketResponseCreateNestedManyWithoutUserInput = {
+    create?: XOR<TicketResponseCreateWithoutUserInput, TicketResponseUncheckedCreateWithoutUserInput> | TicketResponseCreateWithoutUserInput[] | TicketResponseUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TicketResponseCreateOrConnectWithoutUserInput | TicketResponseCreateOrConnectWithoutUserInput[]
+    createMany?: TicketResponseCreateManyUserInputEnvelope
+    connect?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+  }
+
+  export type AdServiceRequestCreateNestedManyWithoutVendorInput = {
+    create?: XOR<AdServiceRequestCreateWithoutVendorInput, AdServiceRequestUncheckedCreateWithoutVendorInput> | AdServiceRequestCreateWithoutVendorInput[] | AdServiceRequestUncheckedCreateWithoutVendorInput[]
+    connectOrCreate?: AdServiceRequestCreateOrConnectWithoutVendorInput | AdServiceRequestCreateOrConnectWithoutVendorInput[]
+    createMany?: AdServiceRequestCreateManyVendorInputEnvelope
+    connect?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+  }
+
+  export type AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput = {
+    create?: XOR<AdServiceRequestCreateWithoutReviewedByAdminInput, AdServiceRequestUncheckedCreateWithoutReviewedByAdminInput> | AdServiceRequestCreateWithoutReviewedByAdminInput[] | AdServiceRequestUncheckedCreateWithoutReviewedByAdminInput[]
+    connectOrCreate?: AdServiceRequestCreateOrConnectWithoutReviewedByAdminInput | AdServiceRequestCreateOrConnectWithoutReviewedByAdminInput[]
+    createMany?: AdServiceRequestCreateManyReviewedByAdminInputEnvelope
+    connect?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -50845,6 +56096,48 @@ export namespace Prisma {
     connectOrCreate?: SecurityEventCreateOrConnectWithoutUserInput | SecurityEventCreateOrConnectWithoutUserInput[]
     createMany?: SecurityEventCreateManyUserInputEnvelope
     connect?: SecurityEventWhereUniqueInput | SecurityEventWhereUniqueInput[]
+  }
+
+  export type SupportTicketUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput> | SupportTicketCreateWithoutUserInput[] | SupportTicketUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutUserInput | SupportTicketCreateOrConnectWithoutUserInput[]
+    createMany?: SupportTicketCreateManyUserInputEnvelope
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+  }
+
+  export type SupportTicketUncheckedCreateNestedManyWithoutVendorInput = {
+    create?: XOR<SupportTicketCreateWithoutVendorInput, SupportTicketUncheckedCreateWithoutVendorInput> | SupportTicketCreateWithoutVendorInput[] | SupportTicketUncheckedCreateWithoutVendorInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutVendorInput | SupportTicketCreateOrConnectWithoutVendorInput[]
+    createMany?: SupportTicketCreateManyVendorInputEnvelope
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+  }
+
+  export type SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput = {
+    create?: XOR<SupportTicketCreateWithoutAssignedAdminInput, SupportTicketUncheckedCreateWithoutAssignedAdminInput> | SupportTicketCreateWithoutAssignedAdminInput[] | SupportTicketUncheckedCreateWithoutAssignedAdminInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutAssignedAdminInput | SupportTicketCreateOrConnectWithoutAssignedAdminInput[]
+    createMany?: SupportTicketCreateManyAssignedAdminInputEnvelope
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+  }
+
+  export type TicketResponseUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<TicketResponseCreateWithoutUserInput, TicketResponseUncheckedCreateWithoutUserInput> | TicketResponseCreateWithoutUserInput[] | TicketResponseUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TicketResponseCreateOrConnectWithoutUserInput | TicketResponseCreateOrConnectWithoutUserInput[]
+    createMany?: TicketResponseCreateManyUserInputEnvelope
+    connect?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+  }
+
+  export type AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput = {
+    create?: XOR<AdServiceRequestCreateWithoutVendorInput, AdServiceRequestUncheckedCreateWithoutVendorInput> | AdServiceRequestCreateWithoutVendorInput[] | AdServiceRequestUncheckedCreateWithoutVendorInput[]
+    connectOrCreate?: AdServiceRequestCreateOrConnectWithoutVendorInput | AdServiceRequestCreateOrConnectWithoutVendorInput[]
+    createMany?: AdServiceRequestCreateManyVendorInputEnvelope
+    connect?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+  }
+
+  export type AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput = {
+    create?: XOR<AdServiceRequestCreateWithoutReviewedByAdminInput, AdServiceRequestUncheckedCreateWithoutReviewedByAdminInput> | AdServiceRequestCreateWithoutReviewedByAdminInput[] | AdServiceRequestUncheckedCreateWithoutReviewedByAdminInput[]
+    connectOrCreate?: AdServiceRequestCreateOrConnectWithoutReviewedByAdminInput | AdServiceRequestCreateOrConnectWithoutReviewedByAdminInput[]
+    createMany?: AdServiceRequestCreateManyReviewedByAdminInputEnvelope
+    connect?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -51165,6 +56458,90 @@ export namespace Prisma {
     deleteMany?: SecurityEventScalarWhereInput | SecurityEventScalarWhereInput[]
   }
 
+  export type SupportTicketUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput> | SupportTicketCreateWithoutUserInput[] | SupportTicketUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutUserInput | SupportTicketCreateOrConnectWithoutUserInput[]
+    upsert?: SupportTicketUpsertWithWhereUniqueWithoutUserInput | SupportTicketUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SupportTicketCreateManyUserInputEnvelope
+    set?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    disconnect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    delete?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    update?: SupportTicketUpdateWithWhereUniqueWithoutUserInput | SupportTicketUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SupportTicketUpdateManyWithWhereWithoutUserInput | SupportTicketUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+  }
+
+  export type SupportTicketUpdateManyWithoutVendorNestedInput = {
+    create?: XOR<SupportTicketCreateWithoutVendorInput, SupportTicketUncheckedCreateWithoutVendorInput> | SupportTicketCreateWithoutVendorInput[] | SupportTicketUncheckedCreateWithoutVendorInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutVendorInput | SupportTicketCreateOrConnectWithoutVendorInput[]
+    upsert?: SupportTicketUpsertWithWhereUniqueWithoutVendorInput | SupportTicketUpsertWithWhereUniqueWithoutVendorInput[]
+    createMany?: SupportTicketCreateManyVendorInputEnvelope
+    set?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    disconnect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    delete?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    update?: SupportTicketUpdateWithWhereUniqueWithoutVendorInput | SupportTicketUpdateWithWhereUniqueWithoutVendorInput[]
+    updateMany?: SupportTicketUpdateManyWithWhereWithoutVendorInput | SupportTicketUpdateManyWithWhereWithoutVendorInput[]
+    deleteMany?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+  }
+
+  export type SupportTicketUpdateManyWithoutAssignedAdminNestedInput = {
+    create?: XOR<SupportTicketCreateWithoutAssignedAdminInput, SupportTicketUncheckedCreateWithoutAssignedAdminInput> | SupportTicketCreateWithoutAssignedAdminInput[] | SupportTicketUncheckedCreateWithoutAssignedAdminInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutAssignedAdminInput | SupportTicketCreateOrConnectWithoutAssignedAdminInput[]
+    upsert?: SupportTicketUpsertWithWhereUniqueWithoutAssignedAdminInput | SupportTicketUpsertWithWhereUniqueWithoutAssignedAdminInput[]
+    createMany?: SupportTicketCreateManyAssignedAdminInputEnvelope
+    set?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    disconnect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    delete?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    update?: SupportTicketUpdateWithWhereUniqueWithoutAssignedAdminInput | SupportTicketUpdateWithWhereUniqueWithoutAssignedAdminInput[]
+    updateMany?: SupportTicketUpdateManyWithWhereWithoutAssignedAdminInput | SupportTicketUpdateManyWithWhereWithoutAssignedAdminInput[]
+    deleteMany?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+  }
+
+  export type TicketResponseUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TicketResponseCreateWithoutUserInput, TicketResponseUncheckedCreateWithoutUserInput> | TicketResponseCreateWithoutUserInput[] | TicketResponseUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TicketResponseCreateOrConnectWithoutUserInput | TicketResponseCreateOrConnectWithoutUserInput[]
+    upsert?: TicketResponseUpsertWithWhereUniqueWithoutUserInput | TicketResponseUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TicketResponseCreateManyUserInputEnvelope
+    set?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    disconnect?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    delete?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    connect?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    update?: TicketResponseUpdateWithWhereUniqueWithoutUserInput | TicketResponseUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TicketResponseUpdateManyWithWhereWithoutUserInput | TicketResponseUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TicketResponseScalarWhereInput | TicketResponseScalarWhereInput[]
+  }
+
+  export type AdServiceRequestUpdateManyWithoutVendorNestedInput = {
+    create?: XOR<AdServiceRequestCreateWithoutVendorInput, AdServiceRequestUncheckedCreateWithoutVendorInput> | AdServiceRequestCreateWithoutVendorInput[] | AdServiceRequestUncheckedCreateWithoutVendorInput[]
+    connectOrCreate?: AdServiceRequestCreateOrConnectWithoutVendorInput | AdServiceRequestCreateOrConnectWithoutVendorInput[]
+    upsert?: AdServiceRequestUpsertWithWhereUniqueWithoutVendorInput | AdServiceRequestUpsertWithWhereUniqueWithoutVendorInput[]
+    createMany?: AdServiceRequestCreateManyVendorInputEnvelope
+    set?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    disconnect?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    delete?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    connect?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    update?: AdServiceRequestUpdateWithWhereUniqueWithoutVendorInput | AdServiceRequestUpdateWithWhereUniqueWithoutVendorInput[]
+    updateMany?: AdServiceRequestUpdateManyWithWhereWithoutVendorInput | AdServiceRequestUpdateManyWithWhereWithoutVendorInput[]
+    deleteMany?: AdServiceRequestScalarWhereInput | AdServiceRequestScalarWhereInput[]
+  }
+
+  export type AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput = {
+    create?: XOR<AdServiceRequestCreateWithoutReviewedByAdminInput, AdServiceRequestUncheckedCreateWithoutReviewedByAdminInput> | AdServiceRequestCreateWithoutReviewedByAdminInput[] | AdServiceRequestUncheckedCreateWithoutReviewedByAdminInput[]
+    connectOrCreate?: AdServiceRequestCreateOrConnectWithoutReviewedByAdminInput | AdServiceRequestCreateOrConnectWithoutReviewedByAdminInput[]
+    upsert?: AdServiceRequestUpsertWithWhereUniqueWithoutReviewedByAdminInput | AdServiceRequestUpsertWithWhereUniqueWithoutReviewedByAdminInput[]
+    createMany?: AdServiceRequestCreateManyReviewedByAdminInputEnvelope
+    set?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    disconnect?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    delete?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    connect?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    update?: AdServiceRequestUpdateWithWhereUniqueWithoutReviewedByAdminInput | AdServiceRequestUpdateWithWhereUniqueWithoutReviewedByAdminInput[]
+    updateMany?: AdServiceRequestUpdateManyWithWhereWithoutReviewedByAdminInput | AdServiceRequestUpdateManyWithWhereWithoutReviewedByAdminInput[]
+    deleteMany?: AdServiceRequestScalarWhereInput | AdServiceRequestScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -51449,6 +56826,90 @@ export namespace Prisma {
     update?: SecurityEventUpdateWithWhereUniqueWithoutUserInput | SecurityEventUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: SecurityEventUpdateManyWithWhereWithoutUserInput | SecurityEventUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: SecurityEventScalarWhereInput | SecurityEventScalarWhereInput[]
+  }
+
+  export type SupportTicketUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput> | SupportTicketCreateWithoutUserInput[] | SupportTicketUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutUserInput | SupportTicketCreateOrConnectWithoutUserInput[]
+    upsert?: SupportTicketUpsertWithWhereUniqueWithoutUserInput | SupportTicketUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SupportTicketCreateManyUserInputEnvelope
+    set?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    disconnect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    delete?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    update?: SupportTicketUpdateWithWhereUniqueWithoutUserInput | SupportTicketUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SupportTicketUpdateManyWithWhereWithoutUserInput | SupportTicketUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+  }
+
+  export type SupportTicketUncheckedUpdateManyWithoutVendorNestedInput = {
+    create?: XOR<SupportTicketCreateWithoutVendorInput, SupportTicketUncheckedCreateWithoutVendorInput> | SupportTicketCreateWithoutVendorInput[] | SupportTicketUncheckedCreateWithoutVendorInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutVendorInput | SupportTicketCreateOrConnectWithoutVendorInput[]
+    upsert?: SupportTicketUpsertWithWhereUniqueWithoutVendorInput | SupportTicketUpsertWithWhereUniqueWithoutVendorInput[]
+    createMany?: SupportTicketCreateManyVendorInputEnvelope
+    set?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    disconnect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    delete?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    update?: SupportTicketUpdateWithWhereUniqueWithoutVendorInput | SupportTicketUpdateWithWhereUniqueWithoutVendorInput[]
+    updateMany?: SupportTicketUpdateManyWithWhereWithoutVendorInput | SupportTicketUpdateManyWithWhereWithoutVendorInput[]
+    deleteMany?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+  }
+
+  export type SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput = {
+    create?: XOR<SupportTicketCreateWithoutAssignedAdminInput, SupportTicketUncheckedCreateWithoutAssignedAdminInput> | SupportTicketCreateWithoutAssignedAdminInput[] | SupportTicketUncheckedCreateWithoutAssignedAdminInput[]
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutAssignedAdminInput | SupportTicketCreateOrConnectWithoutAssignedAdminInput[]
+    upsert?: SupportTicketUpsertWithWhereUniqueWithoutAssignedAdminInput | SupportTicketUpsertWithWhereUniqueWithoutAssignedAdminInput[]
+    createMany?: SupportTicketCreateManyAssignedAdminInputEnvelope
+    set?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    disconnect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    delete?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    connect?: SupportTicketWhereUniqueInput | SupportTicketWhereUniqueInput[]
+    update?: SupportTicketUpdateWithWhereUniqueWithoutAssignedAdminInput | SupportTicketUpdateWithWhereUniqueWithoutAssignedAdminInput[]
+    updateMany?: SupportTicketUpdateManyWithWhereWithoutAssignedAdminInput | SupportTicketUpdateManyWithWhereWithoutAssignedAdminInput[]
+    deleteMany?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+  }
+
+  export type TicketResponseUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TicketResponseCreateWithoutUserInput, TicketResponseUncheckedCreateWithoutUserInput> | TicketResponseCreateWithoutUserInput[] | TicketResponseUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TicketResponseCreateOrConnectWithoutUserInput | TicketResponseCreateOrConnectWithoutUserInput[]
+    upsert?: TicketResponseUpsertWithWhereUniqueWithoutUserInput | TicketResponseUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TicketResponseCreateManyUserInputEnvelope
+    set?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    disconnect?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    delete?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    connect?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    update?: TicketResponseUpdateWithWhereUniqueWithoutUserInput | TicketResponseUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TicketResponseUpdateManyWithWhereWithoutUserInput | TicketResponseUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TicketResponseScalarWhereInput | TicketResponseScalarWhereInput[]
+  }
+
+  export type AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput = {
+    create?: XOR<AdServiceRequestCreateWithoutVendorInput, AdServiceRequestUncheckedCreateWithoutVendorInput> | AdServiceRequestCreateWithoutVendorInput[] | AdServiceRequestUncheckedCreateWithoutVendorInput[]
+    connectOrCreate?: AdServiceRequestCreateOrConnectWithoutVendorInput | AdServiceRequestCreateOrConnectWithoutVendorInput[]
+    upsert?: AdServiceRequestUpsertWithWhereUniqueWithoutVendorInput | AdServiceRequestUpsertWithWhereUniqueWithoutVendorInput[]
+    createMany?: AdServiceRequestCreateManyVendorInputEnvelope
+    set?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    disconnect?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    delete?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    connect?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    update?: AdServiceRequestUpdateWithWhereUniqueWithoutVendorInput | AdServiceRequestUpdateWithWhereUniqueWithoutVendorInput[]
+    updateMany?: AdServiceRequestUpdateManyWithWhereWithoutVendorInput | AdServiceRequestUpdateManyWithWhereWithoutVendorInput[]
+    deleteMany?: AdServiceRequestScalarWhereInput | AdServiceRequestScalarWhereInput[]
+  }
+
+  export type AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput = {
+    create?: XOR<AdServiceRequestCreateWithoutReviewedByAdminInput, AdServiceRequestUncheckedCreateWithoutReviewedByAdminInput> | AdServiceRequestCreateWithoutReviewedByAdminInput[] | AdServiceRequestUncheckedCreateWithoutReviewedByAdminInput[]
+    connectOrCreate?: AdServiceRequestCreateOrConnectWithoutReviewedByAdminInput | AdServiceRequestCreateOrConnectWithoutReviewedByAdminInput[]
+    upsert?: AdServiceRequestUpsertWithWhereUniqueWithoutReviewedByAdminInput | AdServiceRequestUpsertWithWhereUniqueWithoutReviewedByAdminInput[]
+    createMany?: AdServiceRequestCreateManyReviewedByAdminInputEnvelope
+    set?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    disconnect?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    delete?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    connect?: AdServiceRequestWhereUniqueInput | AdServiceRequestWhereUniqueInput[]
+    update?: AdServiceRequestUpdateWithWhereUniqueWithoutReviewedByAdminInput | AdServiceRequestUpdateWithWhereUniqueWithoutReviewedByAdminInput[]
+    updateMany?: AdServiceRequestUpdateManyWithWhereWithoutReviewedByAdminInput | AdServiceRequestUpdateManyWithWhereWithoutReviewedByAdminInput[]
+    deleteMany?: AdServiceRequestScalarWhereInput | AdServiceRequestScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -52825,6 +58286,168 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSecurityEventsInput, UserUpdateWithoutSecurityEventsInput>, UserUncheckedUpdateWithoutSecurityEventsInput>
   }
 
+  export type UserCreateNestedOneWithoutCreatedTicketsInput = {
+    create?: XOR<UserCreateWithoutCreatedTicketsInput, UserUncheckedCreateWithoutCreatedTicketsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedTicketsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutVendorTicketsInput = {
+    create?: XOR<UserCreateWithoutVendorTicketsInput, UserUncheckedCreateWithoutVendorTicketsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVendorTicketsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutAssignedTicketsInput = {
+    create?: XOR<UserCreateWithoutAssignedTicketsInput, UserUncheckedCreateWithoutAssignedTicketsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssignedTicketsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TicketResponseCreateNestedManyWithoutTicketInput = {
+    create?: XOR<TicketResponseCreateWithoutTicketInput, TicketResponseUncheckedCreateWithoutTicketInput> | TicketResponseCreateWithoutTicketInput[] | TicketResponseUncheckedCreateWithoutTicketInput[]
+    connectOrCreate?: TicketResponseCreateOrConnectWithoutTicketInput | TicketResponseCreateOrConnectWithoutTicketInput[]
+    createMany?: TicketResponseCreateManyTicketInputEnvelope
+    connect?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+  }
+
+  export type TicketResponseUncheckedCreateNestedManyWithoutTicketInput = {
+    create?: XOR<TicketResponseCreateWithoutTicketInput, TicketResponseUncheckedCreateWithoutTicketInput> | TicketResponseCreateWithoutTicketInput[] | TicketResponseUncheckedCreateWithoutTicketInput[]
+    connectOrCreate?: TicketResponseCreateOrConnectWithoutTicketInput | TicketResponseCreateOrConnectWithoutTicketInput[]
+    createMany?: TicketResponseCreateManyTicketInputEnvelope
+    connect?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+  }
+
+  export type EnumTicketStatusFieldUpdateOperationsInput = {
+    set?: $Enums.TicketStatus
+  }
+
+  export type EnumTicketPriorityFieldUpdateOperationsInput = {
+    set?: $Enums.TicketPriority
+  }
+
+  export type UserUpdateOneRequiredWithoutCreatedTicketsNestedInput = {
+    create?: XOR<UserCreateWithoutCreatedTicketsInput, UserUncheckedCreateWithoutCreatedTicketsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedTicketsInput
+    upsert?: UserUpsertWithoutCreatedTicketsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreatedTicketsInput, UserUpdateWithoutCreatedTicketsInput>, UserUncheckedUpdateWithoutCreatedTicketsInput>
+  }
+
+  export type UserUpdateOneWithoutVendorTicketsNestedInput = {
+    create?: XOR<UserCreateWithoutVendorTicketsInput, UserUncheckedCreateWithoutVendorTicketsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVendorTicketsInput
+    upsert?: UserUpsertWithoutVendorTicketsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutVendorTicketsInput, UserUpdateWithoutVendorTicketsInput>, UserUncheckedUpdateWithoutVendorTicketsInput>
+  }
+
+  export type UserUpdateOneWithoutAssignedTicketsNestedInput = {
+    create?: XOR<UserCreateWithoutAssignedTicketsInput, UserUncheckedCreateWithoutAssignedTicketsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssignedTicketsInput
+    upsert?: UserUpsertWithoutAssignedTicketsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssignedTicketsInput, UserUpdateWithoutAssignedTicketsInput>, UserUncheckedUpdateWithoutAssignedTicketsInput>
+  }
+
+  export type TicketResponseUpdateManyWithoutTicketNestedInput = {
+    create?: XOR<TicketResponseCreateWithoutTicketInput, TicketResponseUncheckedCreateWithoutTicketInput> | TicketResponseCreateWithoutTicketInput[] | TicketResponseUncheckedCreateWithoutTicketInput[]
+    connectOrCreate?: TicketResponseCreateOrConnectWithoutTicketInput | TicketResponseCreateOrConnectWithoutTicketInput[]
+    upsert?: TicketResponseUpsertWithWhereUniqueWithoutTicketInput | TicketResponseUpsertWithWhereUniqueWithoutTicketInput[]
+    createMany?: TicketResponseCreateManyTicketInputEnvelope
+    set?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    disconnect?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    delete?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    connect?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    update?: TicketResponseUpdateWithWhereUniqueWithoutTicketInput | TicketResponseUpdateWithWhereUniqueWithoutTicketInput[]
+    updateMany?: TicketResponseUpdateManyWithWhereWithoutTicketInput | TicketResponseUpdateManyWithWhereWithoutTicketInput[]
+    deleteMany?: TicketResponseScalarWhereInput | TicketResponseScalarWhereInput[]
+  }
+
+  export type TicketResponseUncheckedUpdateManyWithoutTicketNestedInput = {
+    create?: XOR<TicketResponseCreateWithoutTicketInput, TicketResponseUncheckedCreateWithoutTicketInput> | TicketResponseCreateWithoutTicketInput[] | TicketResponseUncheckedCreateWithoutTicketInput[]
+    connectOrCreate?: TicketResponseCreateOrConnectWithoutTicketInput | TicketResponseCreateOrConnectWithoutTicketInput[]
+    upsert?: TicketResponseUpsertWithWhereUniqueWithoutTicketInput | TicketResponseUpsertWithWhereUniqueWithoutTicketInput[]
+    createMany?: TicketResponseCreateManyTicketInputEnvelope
+    set?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    disconnect?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    delete?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    connect?: TicketResponseWhereUniqueInput | TicketResponseWhereUniqueInput[]
+    update?: TicketResponseUpdateWithWhereUniqueWithoutTicketInput | TicketResponseUpdateWithWhereUniqueWithoutTicketInput[]
+    updateMany?: TicketResponseUpdateManyWithWhereWithoutTicketInput | TicketResponseUpdateManyWithWhereWithoutTicketInput[]
+    deleteMany?: TicketResponseScalarWhereInput | TicketResponseScalarWhereInput[]
+  }
+
+  export type SupportTicketCreateNestedOneWithoutResponsesInput = {
+    create?: XOR<SupportTicketCreateWithoutResponsesInput, SupportTicketUncheckedCreateWithoutResponsesInput>
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutResponsesInput
+    connect?: SupportTicketWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutTicketResponsesInput = {
+    create?: XOR<UserCreateWithoutTicketResponsesInput, UserUncheckedCreateWithoutTicketResponsesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTicketResponsesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SupportTicketUpdateOneRequiredWithoutResponsesNestedInput = {
+    create?: XOR<SupportTicketCreateWithoutResponsesInput, SupportTicketUncheckedCreateWithoutResponsesInput>
+    connectOrCreate?: SupportTicketCreateOrConnectWithoutResponsesInput
+    upsert?: SupportTicketUpsertWithoutResponsesInput
+    connect?: SupportTicketWhereUniqueInput
+    update?: XOR<XOR<SupportTicketUpdateToOneWithWhereWithoutResponsesInput, SupportTicketUpdateWithoutResponsesInput>, SupportTicketUncheckedUpdateWithoutResponsesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutTicketResponsesNestedInput = {
+    create?: XOR<UserCreateWithoutTicketResponsesInput, UserUncheckedCreateWithoutTicketResponsesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTicketResponsesInput
+    upsert?: UserUpsertWithoutTicketResponsesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTicketResponsesInput, UserUpdateWithoutTicketResponsesInput>, UserUncheckedUpdateWithoutTicketResponsesInput>
+  }
+
+  export type UserCreateNestedOneWithoutServiceRequestsInput = {
+    create?: XOR<UserCreateWithoutServiceRequestsInput, UserUncheckedCreateWithoutServiceRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutServiceRequestsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutReviewedServiceRequestsInput = {
+    create?: XOR<UserCreateWithoutReviewedServiceRequestsInput, UserUncheckedCreateWithoutReviewedServiceRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewedServiceRequestsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumServiceRequestTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ServiceRequestType
+  }
+
+  export type EnumServiceRequestStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ServiceRequestStatus
+  }
+
+  export type UserUpdateOneRequiredWithoutServiceRequestsNestedInput = {
+    create?: XOR<UserCreateWithoutServiceRequestsInput, UserUncheckedCreateWithoutServiceRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutServiceRequestsInput
+    upsert?: UserUpsertWithoutServiceRequestsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutServiceRequestsInput, UserUpdateWithoutServiceRequestsInput>, UserUncheckedUpdateWithoutServiceRequestsInput>
+  }
+
+  export type UserUpdateOneWithoutReviewedServiceRequestsNestedInput = {
+    create?: XOR<UserCreateWithoutReviewedServiceRequestsInput, UserUncheckedCreateWithoutReviewedServiceRequestsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReviewedServiceRequestsInput
+    upsert?: UserUpsertWithoutReviewedServiceRequestsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReviewedServiceRequestsInput, UserUpdateWithoutReviewedServiceRequestsInput>, UserUncheckedUpdateWithoutReviewedServiceRequestsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -53184,6 +58807,74 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTicketStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TicketStatus | EnumTicketStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TicketStatus[] | ListEnumTicketStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TicketStatus[] | ListEnumTicketStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTicketStatusFilter<$PrismaModel> | $Enums.TicketStatus
+  }
+
+  export type NestedEnumTicketPriorityFilter<$PrismaModel = never> = {
+    equals?: $Enums.TicketPriority | EnumTicketPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.TicketPriority[] | ListEnumTicketPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TicketPriority[] | ListEnumTicketPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumTicketPriorityFilter<$PrismaModel> | $Enums.TicketPriority
+  }
+
+  export type NestedEnumTicketStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TicketStatus | EnumTicketStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TicketStatus[] | ListEnumTicketStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TicketStatus[] | ListEnumTicketStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTicketStatusWithAggregatesFilter<$PrismaModel> | $Enums.TicketStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTicketStatusFilter<$PrismaModel>
+    _max?: NestedEnumTicketStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTicketPriorityWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TicketPriority | EnumTicketPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.TicketPriority[] | ListEnumTicketPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TicketPriority[] | ListEnumTicketPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumTicketPriorityWithAggregatesFilter<$PrismaModel> | $Enums.TicketPriority
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTicketPriorityFilter<$PrismaModel>
+    _max?: NestedEnumTicketPriorityFilter<$PrismaModel>
+  }
+
+  export type NestedEnumServiceRequestTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ServiceRequestType | EnumServiceRequestTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ServiceRequestType[] | ListEnumServiceRequestTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ServiceRequestType[] | ListEnumServiceRequestTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumServiceRequestTypeFilter<$PrismaModel> | $Enums.ServiceRequestType
+  }
+
+  export type NestedEnumServiceRequestStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ServiceRequestStatus | EnumServiceRequestStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ServiceRequestStatus[] | ListEnumServiceRequestStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ServiceRequestStatus[] | ListEnumServiceRequestStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumServiceRequestStatusFilter<$PrismaModel> | $Enums.ServiceRequestStatus
+  }
+
+  export type NestedEnumServiceRequestTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ServiceRequestType | EnumServiceRequestTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ServiceRequestType[] | ListEnumServiceRequestTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ServiceRequestType[] | ListEnumServiceRequestTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumServiceRequestTypeWithAggregatesFilter<$PrismaModel> | $Enums.ServiceRequestType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumServiceRequestTypeFilter<$PrismaModel>
+    _max?: NestedEnumServiceRequestTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumServiceRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ServiceRequestStatus | EnumServiceRequestStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ServiceRequestStatus[] | ListEnumServiceRequestStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ServiceRequestStatus[] | ListEnumServiceRequestStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumServiceRequestStatusWithAggregatesFilter<$PrismaModel> | $Enums.ServiceRequestStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumServiceRequestStatusFilter<$PrismaModel>
+    _max?: NestedEnumServiceRequestStatusFilter<$PrismaModel>
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -53956,6 +59647,256 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SupportTicketCreateWithoutUserInput = {
+    id?: string
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vendor?: UserCreateNestedOneWithoutVendorTicketsInput
+    assignedAdmin?: UserCreateNestedOneWithoutAssignedTicketsInput
+    responses?: TicketResponseCreateNestedManyWithoutTicketInput
+  }
+
+  export type SupportTicketUncheckedCreateWithoutUserInput = {
+    id?: string
+    vendorId?: string | null
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    assignedTo?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    responses?: TicketResponseUncheckedCreateNestedManyWithoutTicketInput
+  }
+
+  export type SupportTicketCreateOrConnectWithoutUserInput = {
+    where: SupportTicketWhereUniqueInput
+    create: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput>
+  }
+
+  export type SupportTicketCreateManyUserInputEnvelope = {
+    data: SupportTicketCreateManyUserInput | SupportTicketCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SupportTicketCreateWithoutVendorInput = {
+    id?: string
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCreatedTicketsInput
+    assignedAdmin?: UserCreateNestedOneWithoutAssignedTicketsInput
+    responses?: TicketResponseCreateNestedManyWithoutTicketInput
+  }
+
+  export type SupportTicketUncheckedCreateWithoutVendorInput = {
+    id?: string
+    userId: string
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    assignedTo?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    responses?: TicketResponseUncheckedCreateNestedManyWithoutTicketInput
+  }
+
+  export type SupportTicketCreateOrConnectWithoutVendorInput = {
+    where: SupportTicketWhereUniqueInput
+    create: XOR<SupportTicketCreateWithoutVendorInput, SupportTicketUncheckedCreateWithoutVendorInput>
+  }
+
+  export type SupportTicketCreateManyVendorInputEnvelope = {
+    data: SupportTicketCreateManyVendorInput | SupportTicketCreateManyVendorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SupportTicketCreateWithoutAssignedAdminInput = {
+    id?: string
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCreatedTicketsInput
+    vendor?: UserCreateNestedOneWithoutVendorTicketsInput
+    responses?: TicketResponseCreateNestedManyWithoutTicketInput
+  }
+
+  export type SupportTicketUncheckedCreateWithoutAssignedAdminInput = {
+    id?: string
+    userId: string
+    vendorId?: string | null
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    responses?: TicketResponseUncheckedCreateNestedManyWithoutTicketInput
+  }
+
+  export type SupportTicketCreateOrConnectWithoutAssignedAdminInput = {
+    where: SupportTicketWhereUniqueInput
+    create: XOR<SupportTicketCreateWithoutAssignedAdminInput, SupportTicketUncheckedCreateWithoutAssignedAdminInput>
+  }
+
+  export type SupportTicketCreateManyAssignedAdminInputEnvelope = {
+    data: SupportTicketCreateManyAssignedAdminInput | SupportTicketCreateManyAssignedAdminInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TicketResponseCreateWithoutUserInput = {
+    id?: string
+    message: string
+    isInternal?: boolean
+    createdAt?: Date | string
+    ticket: SupportTicketCreateNestedOneWithoutResponsesInput
+  }
+
+  export type TicketResponseUncheckedCreateWithoutUserInput = {
+    id?: string
+    ticketId: string
+    message: string
+    isInternal?: boolean
+    createdAt?: Date | string
+  }
+
+  export type TicketResponseCreateOrConnectWithoutUserInput = {
+    where: TicketResponseWhereUniqueInput
+    create: XOR<TicketResponseCreateWithoutUserInput, TicketResponseUncheckedCreateWithoutUserInput>
+  }
+
+  export type TicketResponseCreateManyUserInputEnvelope = {
+    data: TicketResponseCreateManyUserInput | TicketResponseCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AdServiceRequestCreateWithoutVendorInput = {
+    id?: string
+    serviceType: $Enums.ServiceRequestType
+    description?: string | null
+    duration: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    amount: Decimal | DecimalJsLike | number | string
+    currency?: string
+    status?: $Enums.ServiceRequestStatus
+    paymentStatus?: string
+    razorpayOrderId?: string | null
+    razorpayPaymentId?: string | null
+    reviewedAt?: Date | string | null
+    rejectionReason?: string | null
+    adminNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    reviewedByAdmin?: UserCreateNestedOneWithoutReviewedServiceRequestsInput
+  }
+
+  export type AdServiceRequestUncheckedCreateWithoutVendorInput = {
+    id?: string
+    serviceType: $Enums.ServiceRequestType
+    description?: string | null
+    duration: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    amount: Decimal | DecimalJsLike | number | string
+    currency?: string
+    status?: $Enums.ServiceRequestStatus
+    paymentStatus?: string
+    razorpayOrderId?: string | null
+    razorpayPaymentId?: string | null
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    rejectionReason?: string | null
+    adminNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdServiceRequestCreateOrConnectWithoutVendorInput = {
+    where: AdServiceRequestWhereUniqueInput
+    create: XOR<AdServiceRequestCreateWithoutVendorInput, AdServiceRequestUncheckedCreateWithoutVendorInput>
+  }
+
+  export type AdServiceRequestCreateManyVendorInputEnvelope = {
+    data: AdServiceRequestCreateManyVendorInput | AdServiceRequestCreateManyVendorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AdServiceRequestCreateWithoutReviewedByAdminInput = {
+    id?: string
+    serviceType: $Enums.ServiceRequestType
+    description?: string | null
+    duration: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    amount: Decimal | DecimalJsLike | number | string
+    currency?: string
+    status?: $Enums.ServiceRequestStatus
+    paymentStatus?: string
+    razorpayOrderId?: string | null
+    razorpayPaymentId?: string | null
+    reviewedAt?: Date | string | null
+    rejectionReason?: string | null
+    adminNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vendor: UserCreateNestedOneWithoutServiceRequestsInput
+  }
+
+  export type AdServiceRequestUncheckedCreateWithoutReviewedByAdminInput = {
+    id?: string
+    vendorId: string
+    serviceType: $Enums.ServiceRequestType
+    description?: string | null
+    duration: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    amount: Decimal | DecimalJsLike | number | string
+    currency?: string
+    status?: $Enums.ServiceRequestStatus
+    paymentStatus?: string
+    razorpayOrderId?: string | null
+    razorpayPaymentId?: string | null
+    reviewedAt?: Date | string | null
+    rejectionReason?: string | null
+    adminNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdServiceRequestCreateOrConnectWithoutReviewedByAdminInput = {
+    where: AdServiceRequestWhereUniqueInput
+    create: XOR<AdServiceRequestCreateWithoutReviewedByAdminInput, AdServiceRequestUncheckedCreateWithoutReviewedByAdminInput>
+  }
+
+  export type AdServiceRequestCreateManyReviewedByAdminInputEnvelope = {
+    data: AdServiceRequestCreateManyReviewedByAdminInput | AdServiceRequestCreateManyReviewedByAdminInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -54659,6 +60600,157 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"SecurityEvent"> | Date | string
   }
 
+  export type SupportTicketUpsertWithWhereUniqueWithoutUserInput = {
+    where: SupportTicketWhereUniqueInput
+    update: XOR<SupportTicketUpdateWithoutUserInput, SupportTicketUncheckedUpdateWithoutUserInput>
+    create: XOR<SupportTicketCreateWithoutUserInput, SupportTicketUncheckedCreateWithoutUserInput>
+  }
+
+  export type SupportTicketUpdateWithWhereUniqueWithoutUserInput = {
+    where: SupportTicketWhereUniqueInput
+    data: XOR<SupportTicketUpdateWithoutUserInput, SupportTicketUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SupportTicketUpdateManyWithWhereWithoutUserInput = {
+    where: SupportTicketScalarWhereInput
+    data: XOR<SupportTicketUpdateManyMutationInput, SupportTicketUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SupportTicketScalarWhereInput = {
+    AND?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+    OR?: SupportTicketScalarWhereInput[]
+    NOT?: SupportTicketScalarWhereInput | SupportTicketScalarWhereInput[]
+    id?: StringFilter<"SupportTicket"> | string
+    userId?: StringFilter<"SupportTicket"> | string
+    vendorId?: StringNullableFilter<"SupportTicket"> | string | null
+    subject?: StringFilter<"SupportTicket"> | string
+    description?: StringFilter<"SupportTicket"> | string
+    status?: EnumTicketStatusFilter<"SupportTicket"> | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFilter<"SupportTicket"> | $Enums.TicketPriority
+    category?: StringNullableFilter<"SupportTicket"> | string | null
+    assignedTo?: StringNullableFilter<"SupportTicket"> | string | null
+    attachments?: JsonNullableFilter<"SupportTicket">
+    createdAt?: DateTimeFilter<"SupportTicket"> | Date | string
+    updatedAt?: DateTimeFilter<"SupportTicket"> | Date | string
+  }
+
+  export type SupportTicketUpsertWithWhereUniqueWithoutVendorInput = {
+    where: SupportTicketWhereUniqueInput
+    update: XOR<SupportTicketUpdateWithoutVendorInput, SupportTicketUncheckedUpdateWithoutVendorInput>
+    create: XOR<SupportTicketCreateWithoutVendorInput, SupportTicketUncheckedCreateWithoutVendorInput>
+  }
+
+  export type SupportTicketUpdateWithWhereUniqueWithoutVendorInput = {
+    where: SupportTicketWhereUniqueInput
+    data: XOR<SupportTicketUpdateWithoutVendorInput, SupportTicketUncheckedUpdateWithoutVendorInput>
+  }
+
+  export type SupportTicketUpdateManyWithWhereWithoutVendorInput = {
+    where: SupportTicketScalarWhereInput
+    data: XOR<SupportTicketUpdateManyMutationInput, SupportTicketUncheckedUpdateManyWithoutVendorInput>
+  }
+
+  export type SupportTicketUpsertWithWhereUniqueWithoutAssignedAdminInput = {
+    where: SupportTicketWhereUniqueInput
+    update: XOR<SupportTicketUpdateWithoutAssignedAdminInput, SupportTicketUncheckedUpdateWithoutAssignedAdminInput>
+    create: XOR<SupportTicketCreateWithoutAssignedAdminInput, SupportTicketUncheckedCreateWithoutAssignedAdminInput>
+  }
+
+  export type SupportTicketUpdateWithWhereUniqueWithoutAssignedAdminInput = {
+    where: SupportTicketWhereUniqueInput
+    data: XOR<SupportTicketUpdateWithoutAssignedAdminInput, SupportTicketUncheckedUpdateWithoutAssignedAdminInput>
+  }
+
+  export type SupportTicketUpdateManyWithWhereWithoutAssignedAdminInput = {
+    where: SupportTicketScalarWhereInput
+    data: XOR<SupportTicketUpdateManyMutationInput, SupportTicketUncheckedUpdateManyWithoutAssignedAdminInput>
+  }
+
+  export type TicketResponseUpsertWithWhereUniqueWithoutUserInput = {
+    where: TicketResponseWhereUniqueInput
+    update: XOR<TicketResponseUpdateWithoutUserInput, TicketResponseUncheckedUpdateWithoutUserInput>
+    create: XOR<TicketResponseCreateWithoutUserInput, TicketResponseUncheckedCreateWithoutUserInput>
+  }
+
+  export type TicketResponseUpdateWithWhereUniqueWithoutUserInput = {
+    where: TicketResponseWhereUniqueInput
+    data: XOR<TicketResponseUpdateWithoutUserInput, TicketResponseUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TicketResponseUpdateManyWithWhereWithoutUserInput = {
+    where: TicketResponseScalarWhereInput
+    data: XOR<TicketResponseUpdateManyMutationInput, TicketResponseUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type TicketResponseScalarWhereInput = {
+    AND?: TicketResponseScalarWhereInput | TicketResponseScalarWhereInput[]
+    OR?: TicketResponseScalarWhereInput[]
+    NOT?: TicketResponseScalarWhereInput | TicketResponseScalarWhereInput[]
+    id?: StringFilter<"TicketResponse"> | string
+    ticketId?: StringFilter<"TicketResponse"> | string
+    userId?: StringFilter<"TicketResponse"> | string
+    message?: StringFilter<"TicketResponse"> | string
+    isInternal?: BoolFilter<"TicketResponse"> | boolean
+    createdAt?: DateTimeFilter<"TicketResponse"> | Date | string
+  }
+
+  export type AdServiceRequestUpsertWithWhereUniqueWithoutVendorInput = {
+    where: AdServiceRequestWhereUniqueInput
+    update: XOR<AdServiceRequestUpdateWithoutVendorInput, AdServiceRequestUncheckedUpdateWithoutVendorInput>
+    create: XOR<AdServiceRequestCreateWithoutVendorInput, AdServiceRequestUncheckedCreateWithoutVendorInput>
+  }
+
+  export type AdServiceRequestUpdateWithWhereUniqueWithoutVendorInput = {
+    where: AdServiceRequestWhereUniqueInput
+    data: XOR<AdServiceRequestUpdateWithoutVendorInput, AdServiceRequestUncheckedUpdateWithoutVendorInput>
+  }
+
+  export type AdServiceRequestUpdateManyWithWhereWithoutVendorInput = {
+    where: AdServiceRequestScalarWhereInput
+    data: XOR<AdServiceRequestUpdateManyMutationInput, AdServiceRequestUncheckedUpdateManyWithoutVendorInput>
+  }
+
+  export type AdServiceRequestScalarWhereInput = {
+    AND?: AdServiceRequestScalarWhereInput | AdServiceRequestScalarWhereInput[]
+    OR?: AdServiceRequestScalarWhereInput[]
+    NOT?: AdServiceRequestScalarWhereInput | AdServiceRequestScalarWhereInput[]
+    id?: StringFilter<"AdServiceRequest"> | string
+    vendorId?: StringFilter<"AdServiceRequest"> | string
+    serviceType?: EnumServiceRequestTypeFilter<"AdServiceRequest"> | $Enums.ServiceRequestType
+    description?: StringNullableFilter<"AdServiceRequest"> | string | null
+    duration?: IntFilter<"AdServiceRequest"> | number
+    startDate?: DateTimeNullableFilter<"AdServiceRequest"> | Date | string | null
+    endDate?: DateTimeNullableFilter<"AdServiceRequest"> | Date | string | null
+    amount?: DecimalFilter<"AdServiceRequest"> | Decimal | DecimalJsLike | number | string
+    currency?: StringFilter<"AdServiceRequest"> | string
+    status?: EnumServiceRequestStatusFilter<"AdServiceRequest"> | $Enums.ServiceRequestStatus
+    paymentStatus?: StringFilter<"AdServiceRequest"> | string
+    razorpayOrderId?: StringNullableFilter<"AdServiceRequest"> | string | null
+    razorpayPaymentId?: StringNullableFilter<"AdServiceRequest"> | string | null
+    reviewedBy?: StringNullableFilter<"AdServiceRequest"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"AdServiceRequest"> | Date | string | null
+    rejectionReason?: StringNullableFilter<"AdServiceRequest"> | string | null
+    adminNotes?: StringNullableFilter<"AdServiceRequest"> | string | null
+    createdAt?: DateTimeFilter<"AdServiceRequest"> | Date | string
+    updatedAt?: DateTimeFilter<"AdServiceRequest"> | Date | string
+  }
+
+  export type AdServiceRequestUpsertWithWhereUniqueWithoutReviewedByAdminInput = {
+    where: AdServiceRequestWhereUniqueInput
+    update: XOR<AdServiceRequestUpdateWithoutReviewedByAdminInput, AdServiceRequestUncheckedUpdateWithoutReviewedByAdminInput>
+    create: XOR<AdServiceRequestCreateWithoutReviewedByAdminInput, AdServiceRequestUncheckedCreateWithoutReviewedByAdminInput>
+  }
+
+  export type AdServiceRequestUpdateWithWhereUniqueWithoutReviewedByAdminInput = {
+    where: AdServiceRequestWhereUniqueInput
+    data: XOR<AdServiceRequestUpdateWithoutReviewedByAdminInput, AdServiceRequestUncheckedUpdateWithoutReviewedByAdminInput>
+  }
+
+  export type AdServiceRequestUpdateManyWithWhereWithoutReviewedByAdminInput = {
+    where: AdServiceRequestScalarWhereInput
+    data: XOR<AdServiceRequestUpdateManyMutationInput, AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminInput>
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     email: string
@@ -54700,6 +60792,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -54743,6 +60841,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -54802,6 +60906,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -54845,6 +60955,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -54888,6 +61004,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -54931,6 +61053,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -54990,6 +61118,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -55033,6 +61167,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserCreateWithoutVendorProfileInput = {
@@ -55076,6 +61216,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutVendorProfileInput = {
@@ -55119,6 +61265,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutVendorProfileInput = {
@@ -55178,6 +61330,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVendorProfileInput = {
@@ -55221,6 +61379,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type CategoryCreateWithoutChildrenInput = {
@@ -55502,6 +61666,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutProductsInput = {
@@ -55545,6 +61715,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutProductsInput = {
@@ -55813,6 +61989,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProductsInput = {
@@ -55856,6 +62038,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type CategoryUpsertWithoutProductsInput = {
@@ -56387,6 +62575,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutAddressesInput = {
@@ -56430,6 +62624,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutAddressesInput = {
@@ -56593,6 +62793,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAddressesInput = {
@@ -56636,6 +62842,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type OrderUpsertWithWhereUniqueWithoutShippingAddressInput = {
@@ -56711,6 +62923,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutCartItemsInput = {
@@ -56754,6 +62972,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutCartItemsInput = {
@@ -56888,6 +63112,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCartItemsInput = {
@@ -56931,6 +63161,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type ProductUpsertWithoutCartItemsInput = {
@@ -57055,6 +63291,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutFavoritesInput = {
@@ -57098,6 +63340,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutFavoritesInput = {
@@ -57232,6 +63480,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFavoritesInput = {
@@ -57275,6 +63529,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type ProductUpsertWithoutFavoritesInput = {
@@ -57399,6 +63659,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutOrdersInput = {
@@ -57442,6 +63708,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutOrdersInput = {
@@ -57673,6 +63945,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -57716,6 +63994,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type AddressUpsertWithoutOrdersShippingInput = {
@@ -58278,6 +64562,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -58321,6 +64611,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -58503,6 +64799,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -58546,6 +64848,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type ProductUpsertWithoutReviewsInput = {
@@ -58818,6 +65126,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutReviewVotesInput = {
@@ -58861,6 +65175,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutReviewVotesInput = {
@@ -58959,6 +65279,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewVotesInput = {
@@ -59002,6 +65328,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserCreateWithoutSearchHistoryInput = {
@@ -59045,6 +65377,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutSearchHistoryInput = {
@@ -59088,6 +65426,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutSearchHistoryInput = {
@@ -59147,6 +65491,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSearchHistoryInput = {
@@ -59190,6 +65540,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserCreateWithoutCreatedChatsInput = {
@@ -59233,6 +65589,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutCreatedChatsInput = {
@@ -59276,6 +65638,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutCreatedChatsInput = {
@@ -59393,6 +65761,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedChatsInput = {
@@ -59436,6 +65810,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type ChatParticipantUpsertWithWhereUniqueWithoutChatInput = {
@@ -59536,6 +65916,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutChatParticipantsInput = {
@@ -59579,6 +65965,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutChatParticipantsInput = {
@@ -59669,6 +66061,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatParticipantsInput = {
@@ -59712,6 +66110,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type ChatCreateWithoutMessagesInput = {
@@ -59780,6 +66184,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -59823,6 +66233,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -59871,6 +66287,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutReceivedMessagesInput = {
@@ -59914,6 +66336,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutReceivedMessagesInput = {
@@ -60004,6 +66432,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -60047,6 +66481,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUpsertWithoutReceivedMessagesInput = {
@@ -60101,6 +66541,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
@@ -60144,6 +66590,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -60187,6 +66639,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -60230,6 +66688,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -60289,6 +66753,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -60332,6 +66802,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserCreateWithoutVendorSubscriptionInput = {
@@ -60375,6 +66851,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutVendorSubscriptionInput = {
@@ -60418,6 +66900,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutVendorSubscriptionInput = {
@@ -60513,6 +67001,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVendorSubscriptionInput = {
@@ -60556,6 +67050,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type SubscriptionPaymentUpsertWithWhereUniqueWithoutSubscriptionInput = {
@@ -60744,6 +67244,12 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutVendorStoriesInput = {
@@ -60787,6 +67293,12 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutVendorStoriesInput = {
@@ -60868,6 +67380,12 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVendorStoriesInput = {
@@ -60911,6 +67429,12 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type StoryViewUpsertWithWhereUniqueWithoutStoryInput = {
@@ -61001,6 +67525,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutStoryViewsInput = {
@@ -61044,6 +67574,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutStoryViewsInput = {
@@ -61140,6 +67676,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStoryViewsInput = {
@@ -61183,6 +67725,12 @@ export namespace Prisma {
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserCreateWithoutVendorAnalyticsInput = {
@@ -61226,6 +67774,12 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutVendorAnalyticsInput = {
@@ -61269,6 +67823,12 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutVendorAnalyticsInput = {
@@ -61328,6 +67888,12 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVendorAnalyticsInput = {
@@ -61371,6 +67937,12 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserCreateWithoutSecurityEventsInput = {
@@ -61414,6 +67986,12 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserUncheckedCreateWithoutSecurityEventsInput = {
@@ -61457,6 +68035,12 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
     vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
     vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
   }
 
   export type UserCreateOrConnectWithoutSecurityEventsInput = {
@@ -61516,6 +68100,12 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSecurityEventsInput = {
@@ -61559,6 +68149,1402 @@ export namespace Prisma {
     vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
     vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
     vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  }
+
+  export type UserCreateWithoutCreatedTicketsInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
+    orders?: OrderCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    cartItems?: CartItemCreateNestedManyWithoutUserInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewCreateNestedManyWithoutUserInput
+    createdChats?: ChatCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileCreateNestedOneWithoutUserInput
+    products?: ProductCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
+  }
+
+  export type UserUncheckedCreateWithoutCreatedTicketsInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    cartItems?: CartItemUncheckedCreateNestedManyWithoutUserInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryUncheckedCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewUncheckedCreateNestedManyWithoutUserInput
+    createdChats?: ChatUncheckedCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileUncheckedCreateNestedOneWithoutUserInput
+    products?: ProductUncheckedCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  }
+
+  export type UserCreateOrConnectWithoutCreatedTicketsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCreatedTicketsInput, UserUncheckedCreateWithoutCreatedTicketsInput>
+  }
+
+  export type UserCreateWithoutVendorTicketsInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
+    orders?: OrderCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    cartItems?: CartItemCreateNestedManyWithoutUserInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewCreateNestedManyWithoutUserInput
+    createdChats?: ChatCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileCreateNestedOneWithoutUserInput
+    products?: ProductCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
+  }
+
+  export type UserUncheckedCreateWithoutVendorTicketsInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    cartItems?: CartItemUncheckedCreateNestedManyWithoutUserInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryUncheckedCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewUncheckedCreateNestedManyWithoutUserInput
+    createdChats?: ChatUncheckedCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileUncheckedCreateNestedOneWithoutUserInput
+    products?: ProductUncheckedCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  }
+
+  export type UserCreateOrConnectWithoutVendorTicketsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutVendorTicketsInput, UserUncheckedCreateWithoutVendorTicketsInput>
+  }
+
+  export type UserCreateWithoutAssignedTicketsInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
+    orders?: OrderCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    cartItems?: CartItemCreateNestedManyWithoutUserInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewCreateNestedManyWithoutUserInput
+    createdChats?: ChatCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileCreateNestedOneWithoutUserInput
+    products?: ProductCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
+  }
+
+  export type UserUncheckedCreateWithoutAssignedTicketsInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    cartItems?: CartItemUncheckedCreateNestedManyWithoutUserInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryUncheckedCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewUncheckedCreateNestedManyWithoutUserInput
+    createdChats?: ChatUncheckedCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileUncheckedCreateNestedOneWithoutUserInput
+    products?: ProductUncheckedCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  }
+
+  export type UserCreateOrConnectWithoutAssignedTicketsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAssignedTicketsInput, UserUncheckedCreateWithoutAssignedTicketsInput>
+  }
+
+  export type TicketResponseCreateWithoutTicketInput = {
+    id?: string
+    message: string
+    isInternal?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutTicketResponsesInput
+  }
+
+  export type TicketResponseUncheckedCreateWithoutTicketInput = {
+    id?: string
+    userId: string
+    message: string
+    isInternal?: boolean
+    createdAt?: Date | string
+  }
+
+  export type TicketResponseCreateOrConnectWithoutTicketInput = {
+    where: TicketResponseWhereUniqueInput
+    create: XOR<TicketResponseCreateWithoutTicketInput, TicketResponseUncheckedCreateWithoutTicketInput>
+  }
+
+  export type TicketResponseCreateManyTicketInputEnvelope = {
+    data: TicketResponseCreateManyTicketInput | TicketResponseCreateManyTicketInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutCreatedTicketsInput = {
+    update: XOR<UserUpdateWithoutCreatedTicketsInput, UserUncheckedUpdateWithoutCreatedTicketsInput>
+    create: XOR<UserCreateWithoutCreatedTicketsInput, UserUncheckedCreateWithoutCreatedTicketsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCreatedTicketsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCreatedTicketsInput, UserUncheckedUpdateWithoutCreatedTicketsInput>
+  }
+
+  export type UserUpdateWithoutCreatedTicketsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
+    orders?: OrderUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUpdateOneWithoutUserNestedInput
+    products?: ProductUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCreatedTicketsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUncheckedUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUncheckedUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUncheckedUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUncheckedUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUncheckedUpdateOneWithoutUserNestedInput
+    products?: ProductUncheckedUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  }
+
+  export type UserUpsertWithoutVendorTicketsInput = {
+    update: XOR<UserUpdateWithoutVendorTicketsInput, UserUncheckedUpdateWithoutVendorTicketsInput>
+    create: XOR<UserCreateWithoutVendorTicketsInput, UserUncheckedCreateWithoutVendorTicketsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutVendorTicketsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutVendorTicketsInput, UserUncheckedUpdateWithoutVendorTicketsInput>
+  }
+
+  export type UserUpdateWithoutVendorTicketsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
+    orders?: OrderUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUpdateOneWithoutUserNestedInput
+    products?: ProductUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutVendorTicketsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUncheckedUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUncheckedUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUncheckedUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUncheckedUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUncheckedUpdateOneWithoutUserNestedInput
+    products?: ProductUncheckedUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  }
+
+  export type UserUpsertWithoutAssignedTicketsInput = {
+    update: XOR<UserUpdateWithoutAssignedTicketsInput, UserUncheckedUpdateWithoutAssignedTicketsInput>
+    create: XOR<UserCreateWithoutAssignedTicketsInput, UserUncheckedCreateWithoutAssignedTicketsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAssignedTicketsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAssignedTicketsInput, UserUncheckedUpdateWithoutAssignedTicketsInput>
+  }
+
+  export type UserUpdateWithoutAssignedTicketsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
+    orders?: OrderUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUpdateOneWithoutUserNestedInput
+    products?: ProductUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAssignedTicketsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUncheckedUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUncheckedUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUncheckedUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUncheckedUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUncheckedUpdateOneWithoutUserNestedInput
+    products?: ProductUncheckedUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  }
+
+  export type TicketResponseUpsertWithWhereUniqueWithoutTicketInput = {
+    where: TicketResponseWhereUniqueInput
+    update: XOR<TicketResponseUpdateWithoutTicketInput, TicketResponseUncheckedUpdateWithoutTicketInput>
+    create: XOR<TicketResponseCreateWithoutTicketInput, TicketResponseUncheckedCreateWithoutTicketInput>
+  }
+
+  export type TicketResponseUpdateWithWhereUniqueWithoutTicketInput = {
+    where: TicketResponseWhereUniqueInput
+    data: XOR<TicketResponseUpdateWithoutTicketInput, TicketResponseUncheckedUpdateWithoutTicketInput>
+  }
+
+  export type TicketResponseUpdateManyWithWhereWithoutTicketInput = {
+    where: TicketResponseScalarWhereInput
+    data: XOR<TicketResponseUpdateManyMutationInput, TicketResponseUncheckedUpdateManyWithoutTicketInput>
+  }
+
+  export type SupportTicketCreateWithoutResponsesInput = {
+    id?: string
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCreatedTicketsInput
+    vendor?: UserCreateNestedOneWithoutVendorTicketsInput
+    assignedAdmin?: UserCreateNestedOneWithoutAssignedTicketsInput
+  }
+
+  export type SupportTicketUncheckedCreateWithoutResponsesInput = {
+    id?: string
+    userId: string
+    vendorId?: string | null
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    assignedTo?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportTicketCreateOrConnectWithoutResponsesInput = {
+    where: SupportTicketWhereUniqueInput
+    create: XOR<SupportTicketCreateWithoutResponsesInput, SupportTicketUncheckedCreateWithoutResponsesInput>
+  }
+
+  export type UserCreateWithoutTicketResponsesInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
+    orders?: OrderCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    cartItems?: CartItemCreateNestedManyWithoutUserInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewCreateNestedManyWithoutUserInput
+    createdChats?: ChatCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileCreateNestedOneWithoutUserInput
+    products?: ProductCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
+  }
+
+  export type UserUncheckedCreateWithoutTicketResponsesInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    cartItems?: CartItemUncheckedCreateNestedManyWithoutUserInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryUncheckedCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewUncheckedCreateNestedManyWithoutUserInput
+    createdChats?: ChatUncheckedCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileUncheckedCreateNestedOneWithoutUserInput
+    products?: ProductUncheckedCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  }
+
+  export type UserCreateOrConnectWithoutTicketResponsesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTicketResponsesInput, UserUncheckedCreateWithoutTicketResponsesInput>
+  }
+
+  export type SupportTicketUpsertWithoutResponsesInput = {
+    update: XOR<SupportTicketUpdateWithoutResponsesInput, SupportTicketUncheckedUpdateWithoutResponsesInput>
+    create: XOR<SupportTicketCreateWithoutResponsesInput, SupportTicketUncheckedCreateWithoutResponsesInput>
+    where?: SupportTicketWhereInput
+  }
+
+  export type SupportTicketUpdateToOneWithWhereWithoutResponsesInput = {
+    where?: SupportTicketWhereInput
+    data: XOR<SupportTicketUpdateWithoutResponsesInput, SupportTicketUncheckedUpdateWithoutResponsesInput>
+  }
+
+  export type SupportTicketUpdateWithoutResponsesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCreatedTicketsNestedInput
+    vendor?: UserUpdateOneWithoutVendorTicketsNestedInput
+    assignedAdmin?: UserUpdateOneWithoutAssignedTicketsNestedInput
+  }
+
+  export type SupportTicketUncheckedUpdateWithoutResponsesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpsertWithoutTicketResponsesInput = {
+    update: XOR<UserUpdateWithoutTicketResponsesInput, UserUncheckedUpdateWithoutTicketResponsesInput>
+    create: XOR<UserCreateWithoutTicketResponsesInput, UserUncheckedCreateWithoutTicketResponsesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTicketResponsesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTicketResponsesInput, UserUncheckedUpdateWithoutTicketResponsesInput>
+  }
+
+  export type UserUpdateWithoutTicketResponsesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
+    orders?: OrderUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUpdateOneWithoutUserNestedInput
+    products?: ProductUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTicketResponsesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUncheckedUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUncheckedUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUncheckedUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUncheckedUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUncheckedUpdateOneWithoutUserNestedInput
+    products?: ProductUncheckedUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  }
+
+  export type UserCreateWithoutServiceRequestsInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
+    orders?: OrderCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    cartItems?: CartItemCreateNestedManyWithoutUserInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewCreateNestedManyWithoutUserInput
+    createdChats?: ChatCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileCreateNestedOneWithoutUserInput
+    products?: ProductCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    reviewedServiceRequests?: AdServiceRequestCreateNestedManyWithoutReviewedByAdminInput
+  }
+
+  export type UserUncheckedCreateWithoutServiceRequestsInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    cartItems?: CartItemUncheckedCreateNestedManyWithoutUserInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryUncheckedCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewUncheckedCreateNestedManyWithoutUserInput
+    createdChats?: ChatUncheckedCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileUncheckedCreateNestedOneWithoutUserInput
+    products?: ProductUncheckedCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutReviewedByAdminInput
+  }
+
+  export type UserCreateOrConnectWithoutServiceRequestsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutServiceRequestsInput, UserUncheckedCreateWithoutServiceRequestsInput>
+  }
+
+  export type UserCreateWithoutReviewedServiceRequestsInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
+    orders?: OrderCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+    cartItems?: CartItemCreateNestedManyWithoutUserInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewCreateNestedManyWithoutUserInput
+    createdChats?: ChatCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileCreateNestedOneWithoutUserInput
+    products?: ProductCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestCreateNestedManyWithoutVendorInput
+  }
+
+  export type UserUncheckedCreateWithoutReviewedServiceRequestsInput = {
+    id?: string
+    email: string
+    emailVerified?: Date | string | null
+    name?: string | null
+    image?: string | null
+    password?: string | null
+    phone?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    accountLocked?: boolean
+    accountLockedUntil?: Date | string | null
+    failedAttempts?: number
+    lastFailedAttempt?: Date | string | null
+    passwordChangedAt?: Date | string | null
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    phoneVerified?: boolean
+    phoneVerifiedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
+    orders?: OrderUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    cartItems?: CartItemUncheckedCreateNestedManyWithoutUserInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+    searchHistory?: SearchHistoryUncheckedCreateNestedManyWithoutUserInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    storyViews?: StoryViewUncheckedCreateNestedManyWithoutUserInput
+    createdChats?: ChatUncheckedCreateNestedManyWithoutCreatorInput
+    chatParticipants?: ChatParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: ChatMessageUncheckedCreateNestedManyWithoutReceiverInput
+    vendorProfile?: VendorProfileUncheckedCreateNestedOneWithoutUserInput
+    products?: ProductUncheckedCreateNestedManyWithoutVendorInput
+    vendorSubscription?: VendorSubscriptionUncheckedCreateNestedOneWithoutVendorInput
+    vendorStories?: VendorStoryUncheckedCreateNestedManyWithoutVendorInput
+    vendorAnalytics?: VendorAnalyticsUncheckedCreateNestedManyWithoutVendorInput
+    securityEvents?: SecurityEventUncheckedCreateNestedManyWithoutUserInput
+    createdTickets?: SupportTicketUncheckedCreateNestedManyWithoutUserInput
+    vendorTickets?: SupportTicketUncheckedCreateNestedManyWithoutVendorInput
+    assignedTickets?: SupportTicketUncheckedCreateNestedManyWithoutAssignedAdminInput
+    ticketResponses?: TicketResponseUncheckedCreateNestedManyWithoutUserInput
+    serviceRequests?: AdServiceRequestUncheckedCreateNestedManyWithoutVendorInput
+  }
+
+  export type UserCreateOrConnectWithoutReviewedServiceRequestsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReviewedServiceRequestsInput, UserUncheckedCreateWithoutReviewedServiceRequestsInput>
+  }
+
+  export type UserUpsertWithoutServiceRequestsInput = {
+    update: XOR<UserUpdateWithoutServiceRequestsInput, UserUncheckedUpdateWithoutServiceRequestsInput>
+    create: XOR<UserCreateWithoutServiceRequestsInput, UserUncheckedCreateWithoutServiceRequestsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutServiceRequestsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutServiceRequestsInput, UserUncheckedUpdateWithoutServiceRequestsInput>
+  }
+
+  export type UserUpdateWithoutServiceRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
+    orders?: OrderUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUpdateOneWithoutUserNestedInput
+    products?: ProductUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    reviewedServiceRequests?: AdServiceRequestUpdateManyWithoutReviewedByAdminNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutServiceRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUncheckedUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUncheckedUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUncheckedUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUncheckedUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUncheckedUpdateOneWithoutUserNestedInput
+    products?: ProductUncheckedUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    reviewedServiceRequests?: AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminNestedInput
+  }
+
+  export type UserUpsertWithoutReviewedServiceRequestsInput = {
+    update: XOR<UserUpdateWithoutReviewedServiceRequestsInput, UserUncheckedUpdateWithoutReviewedServiceRequestsInput>
+    create: XOR<UserCreateWithoutReviewedServiceRequestsInput, UserUncheckedCreateWithoutReviewedServiceRequestsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReviewedServiceRequestsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReviewedServiceRequestsInput, UserUncheckedUpdateWithoutReviewedServiceRequestsInput>
+  }
+
+  export type UserUpdateWithoutReviewedServiceRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
+    orders?: OrderUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUpdateOneWithoutUserNestedInput
+    products?: ProductUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUpdateManyWithoutVendorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReviewedServiceRequestsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    accountLocked?: BoolFieldUpdateOperationsInput | boolean
+    accountLockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAttempts?: IntFieldUpdateOperationsInput | number
+    lastFailedAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    passwordChangedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    phoneVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    cartItems?: CartItemUncheckedUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+    searchHistory?: SearchHistoryUncheckedUpdateManyWithoutUserNestedInput
+    reviewVotes?: ReviewHelpfulVoteUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    storyViews?: StoryViewUncheckedUpdateManyWithoutUserNestedInput
+    createdChats?: ChatUncheckedUpdateManyWithoutCreatorNestedInput
+    chatParticipants?: ChatParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: ChatMessageUncheckedUpdateManyWithoutReceiverNestedInput
+    vendorProfile?: VendorProfileUncheckedUpdateOneWithoutUserNestedInput
+    products?: ProductUncheckedUpdateManyWithoutVendorNestedInput
+    vendorSubscription?: VendorSubscriptionUncheckedUpdateOneWithoutVendorNestedInput
+    vendorStories?: VendorStoryUncheckedUpdateManyWithoutVendorNestedInput
+    vendorAnalytics?: VendorAnalyticsUncheckedUpdateManyWithoutVendorNestedInput
+    securityEvents?: SecurityEventUncheckedUpdateManyWithoutUserNestedInput
+    createdTickets?: SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+    vendorTickets?: SupportTicketUncheckedUpdateManyWithoutVendorNestedInput
+    assignedTickets?: SupportTicketUncheckedUpdateManyWithoutAssignedAdminNestedInput
+    ticketResponses?: TicketResponseUncheckedUpdateManyWithoutUserNestedInput
+    serviceRequests?: AdServiceRequestUncheckedUpdateManyWithoutVendorNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -61782,6 +69768,98 @@ export namespace Prisma {
     ipAddress?: string | null
     userAgent?: string | null
     createdAt?: Date | string
+  }
+
+  export type SupportTicketCreateManyUserInput = {
+    id?: string
+    vendorId?: string | null
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    assignedTo?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportTicketCreateManyVendorInput = {
+    id?: string
+    userId: string
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    assignedTo?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SupportTicketCreateManyAssignedAdminInput = {
+    id?: string
+    userId: string
+    vendorId?: string | null
+    subject: string
+    description: string
+    status?: $Enums.TicketStatus
+    priority?: $Enums.TicketPriority
+    category?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TicketResponseCreateManyUserInput = {
+    id?: string
+    ticketId: string
+    message: string
+    isInternal?: boolean
+    createdAt?: Date | string
+  }
+
+  export type AdServiceRequestCreateManyVendorInput = {
+    id?: string
+    serviceType: $Enums.ServiceRequestType
+    description?: string | null
+    duration: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    amount: Decimal | DecimalJsLike | number | string
+    currency?: string
+    status?: $Enums.ServiceRequestStatus
+    paymentStatus?: string
+    razorpayOrderId?: string | null
+    razorpayPaymentId?: string | null
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    rejectionReason?: string | null
+    adminNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AdServiceRequestCreateManyReviewedByAdminInput = {
+    id?: string
+    vendorId: string
+    serviceType: $Enums.ServiceRequestType
+    description?: string | null
+    duration: number
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    amount: Decimal | DecimalJsLike | number | string
+    currency?: string
+    status?: $Enums.ServiceRequestStatus
+    paymentStatus?: string
+    razorpayOrderId?: string | null
+    razorpayPaymentId?: string | null
+    reviewedAt?: Date | string | null
+    rejectionReason?: string | null
+    adminNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -62481,6 +70559,288 @@ export namespace Prisma {
     ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
     userAgent?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportTicketUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vendor?: UserUpdateOneWithoutVendorTicketsNestedInput
+    assignedAdmin?: UserUpdateOneWithoutAssignedTicketsNestedInput
+    responses?: TicketResponseUpdateManyWithoutTicketNestedInput
+  }
+
+  export type SupportTicketUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    responses?: TicketResponseUncheckedUpdateManyWithoutTicketNestedInput
+  }
+
+  export type SupportTicketUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportTicketUpdateWithoutVendorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCreatedTicketsNestedInput
+    assignedAdmin?: UserUpdateOneWithoutAssignedTicketsNestedInput
+    responses?: TicketResponseUpdateManyWithoutTicketNestedInput
+  }
+
+  export type SupportTicketUncheckedUpdateWithoutVendorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    responses?: TicketResponseUncheckedUpdateManyWithoutTicketNestedInput
+  }
+
+  export type SupportTicketUncheckedUpdateManyWithoutVendorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SupportTicketUpdateWithoutAssignedAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCreatedTicketsNestedInput
+    vendor?: UserUpdateOneWithoutVendorTicketsNestedInput
+    responses?: TicketResponseUpdateManyWithoutTicketNestedInput
+  }
+
+  export type SupportTicketUncheckedUpdateWithoutAssignedAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    responses?: TicketResponseUncheckedUpdateManyWithoutTicketNestedInput
+  }
+
+  export type SupportTicketUncheckedUpdateManyWithoutAssignedAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
+    subject?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+    priority?: EnumTicketPriorityFieldUpdateOperationsInput | $Enums.TicketPriority
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TicketResponseUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ticket?: SupportTicketUpdateOneRequiredWithoutResponsesNestedInput
+  }
+
+  export type TicketResponseUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ticketId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TicketResponseUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ticketId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdServiceRequestUpdateWithoutVendorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    serviceType?: EnumServiceRequestTypeFieldUpdateOperationsInput | $Enums.ServiceRequestType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumServiceRequestStatusFieldUpdateOperationsInput | $Enums.ServiceRequestStatus
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reviewedByAdmin?: UserUpdateOneWithoutReviewedServiceRequestsNestedInput
+  }
+
+  export type AdServiceRequestUncheckedUpdateWithoutVendorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    serviceType?: EnumServiceRequestTypeFieldUpdateOperationsInput | $Enums.ServiceRequestType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumServiceRequestStatusFieldUpdateOperationsInput | $Enums.ServiceRequestStatus
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdServiceRequestUncheckedUpdateManyWithoutVendorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    serviceType?: EnumServiceRequestTypeFieldUpdateOperationsInput | $Enums.ServiceRequestType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumServiceRequestStatusFieldUpdateOperationsInput | $Enums.ServiceRequestStatus
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdServiceRequestUpdateWithoutReviewedByAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    serviceType?: EnumServiceRequestTypeFieldUpdateOperationsInput | $Enums.ServiceRequestType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumServiceRequestStatusFieldUpdateOperationsInput | $Enums.ServiceRequestStatus
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vendor?: UserUpdateOneRequiredWithoutServiceRequestsNestedInput
+  }
+
+  export type AdServiceRequestUncheckedUpdateWithoutReviewedByAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vendorId?: StringFieldUpdateOperationsInput | string
+    serviceType?: EnumServiceRequestTypeFieldUpdateOperationsInput | $Enums.ServiceRequestType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumServiceRequestStatusFieldUpdateOperationsInput | $Enums.ServiceRequestStatus
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AdServiceRequestUncheckedUpdateManyWithoutReviewedByAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    vendorId?: StringFieldUpdateOperationsInput | string
+    serviceType?: EnumServiceRequestTypeFieldUpdateOperationsInput | $Enums.ServiceRequestType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: IntFieldUpdateOperationsInput | number
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    currency?: StringFieldUpdateOperationsInput | string
+    status?: EnumServiceRequestStatusFieldUpdateOperationsInput | $Enums.ServiceRequestStatus
+    paymentStatus?: StringFieldUpdateOperationsInput | string
+    razorpayOrderId?: NullableStringFieldUpdateOperationsInput | string | null
+    razorpayPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
+    adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CategoryCreateManyParentInput = {
@@ -63365,6 +71725,38 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     viewedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TicketResponseCreateManyTicketInput = {
+    id?: string
+    userId: string
+    message: string
+    isInternal?: boolean
+    createdAt?: Date | string
+  }
+
+  export type TicketResponseUpdateWithoutTicketInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTicketResponsesNestedInput
+  }
+
+  export type TicketResponseUncheckedUpdateWithoutTicketInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TicketResponseUncheckedUpdateManyWithoutTicketInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    isInternal?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

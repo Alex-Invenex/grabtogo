@@ -566,6 +566,52 @@ exports.Prisma.SecurityEventScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.SupportTicketScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  vendorId: 'vendorId',
+  subject: 'subject',
+  description: 'description',
+  status: 'status',
+  priority: 'priority',
+  category: 'category',
+  assignedTo: 'assignedTo',
+  attachments: 'attachments',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TicketResponseScalarFieldEnum = {
+  id: 'id',
+  ticketId: 'ticketId',
+  userId: 'userId',
+  message: 'message',
+  isInternal: 'isInternal',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AdServiceRequestScalarFieldEnum = {
+  id: 'id',
+  vendorId: 'vendorId',
+  serviceType: 'serviceType',
+  description: 'description',
+  duration: 'duration',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  paymentStatus: 'paymentStatus',
+  razorpayOrderId: 'razorpayOrderId',
+  razorpayPaymentId: 'razorpayPaymentId',
+  reviewedBy: 'reviewedBy',
+  reviewedAt: 'reviewedAt',
+  rejectionReason: 'rejectionReason',
+  adminNotes: 'adminNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -614,6 +660,35 @@ exports.PaymentStatus = exports.$Enums.PaymentStatus = {
   REFUNDED: 'REFUNDED'
 };
 
+exports.TicketStatus = exports.$Enums.TicketStatus = {
+  OPEN: 'OPEN',
+  IN_PROGRESS: 'IN_PROGRESS',
+  RESOLVED: 'RESOLVED',
+  CLOSED: 'CLOSED'
+};
+
+exports.TicketPriority = exports.$Enums.TicketPriority = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
+};
+
+exports.ServiceRequestType = exports.$Enums.ServiceRequestType = {
+  BANNER: 'BANNER',
+  FEATURED: 'FEATURED',
+  PROMOTION: 'PROMOTION',
+  PREMIUM_LISTING: 'PREMIUM_LISTING'
+};
+
+exports.ServiceRequestStatus = exports.$Enums.ServiceRequestStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  REJECTED: 'REJECTED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Account: 'Account',
@@ -645,7 +720,10 @@ exports.Prisma.ModelName = {
   VendorStory: 'VendorStory',
   StoryView: 'StoryView',
   VendorAnalytics: 'VendorAnalytics',
-  SecurityEvent: 'SecurityEvent'
+  SecurityEvent: 'SecurityEvent',
+  SupportTicket: 'SupportTicket',
+  TicketResponse: 'TicketResponse',
+  AdServiceRequest: 'AdServiceRequest'
 };
 
 /**
