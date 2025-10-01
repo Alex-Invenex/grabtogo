@@ -20,6 +20,9 @@ import {
   CheckCircle,
   XCircle,
   AlertTriangle,
+  CreditCard,
+  Megaphone,
+  Headphones,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -43,30 +46,26 @@ const menuItems: MenuItem[] = [
     title: 'Vendors',
     href: '/admin/vendors',
     icon: Store,
-    badge: 5, // Pending approvals
-    children: [
-      {
-        title: 'All Vendors',
-        href: '/admin/vendors',
-        icon: Store,
-      },
-      {
-        title: 'Pending Approval',
-        href: '/admin/vendors/pending',
-        icon: Clock,
-        badge: 5,
-      },
-      {
-        title: 'Approved',
-        href: '/admin/vendors/approved',
-        icon: CheckCircle,
-      },
-      {
-        title: 'Rejected',
-        href: '/admin/vendors/rejected',
-        icon: XCircle,
-      },
-    ],
+  },
+  {
+    title: 'Registrations',
+    href: '/admin/registrations',
+    icon: Clock,
+  },
+  {
+    title: 'Subscriptions',
+    href: '/admin/subscriptions',
+    icon: CreditCard,
+  },
+  {
+    title: 'Ad Services',
+    href: '/admin/services',
+    icon: Megaphone,
+  },
+  {
+    title: 'Support Tickets',
+    href: '/admin/tickets',
+    icon: Headphones,
   },
   {
     title: 'Users',
@@ -92,7 +91,6 @@ const menuItems: MenuItem[] = [
     title: 'Security',
     href: '/admin/security',
     icon: Shield,
-    badge: '!',
   },
   {
     title: 'Settings',

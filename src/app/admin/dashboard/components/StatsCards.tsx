@@ -31,89 +31,98 @@ export default function StatsCards() {
   const [stats, setStats] = useState<StatCard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Simulated API call - replace with real data
+  // Fetch real data from API
   useEffect(() => {
     const fetchStats = async () => {
-      // Simulate loading
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      try {
+        const response = await fetch('/api/admin/stats');
+        if (!response.ok) {
+          throw new Error('Failed to fetch stats');
+        }
 
-      const mockStats: StatCard[] = [
-        {
-          title: 'Total Users',
-          value: '15,847',
-          change: 12.5,
-          changeType: 'increase',
-          icon: Users,
-          description: 'Active customers',
-          color: 'blue',
-        },
-        {
-          title: 'Vendors',
-          value: '2,341',
-          change: 8.2,
-          changeType: 'increase',
-          icon: Store,
-          description: 'Registered vendors',
-          color: 'green',
-        },
-        {
-          title: 'Orders Today',
-          value: '1,283',
-          change: -2.4,
-          changeType: 'decrease',
-          icon: ShoppingCart,
-          description: 'Orders processed',
-          color: 'orange',
-        },
-        {
-          title: 'Revenue',
-          value: '₹2,84,759',
-          change: 15.3,
-          changeType: 'increase',
-          icon: DollarSign,
-          description: 'This month',
-          color: 'purple',
-        },
-        {
-          title: 'Pending Approvals',
-          value: '23',
-          change: 0,
-          changeType: 'neutral',
-          icon: Clock,
-          description: 'Vendor applications',
-          color: 'yellow',
-        },
-        {
-          title: 'Active Subscriptions',
-          value: '1,876',
-          change: 5.8,
-          changeType: 'increase',
-          icon: CheckCircle,
-          description: 'Premium vendors',
-          color: 'teal',
-        },
-        {
-          title: 'System Alerts',
-          value: '3',
-          change: -33.3,
-          changeType: 'decrease',
-          icon: AlertTriangle,
-          description: 'Requiring attention',
-          color: 'red',
-        },
-        {
-          title: 'Uptime',
-          value: '99.8%',
-          change: 0.1,
-          changeType: 'increase',
-          icon: Activity,
-          description: 'Last 30 days',
-          color: 'emerald',
-        },
-      ];
+        const data = await response.json();
 
-      setStats(mockStats);
-      setIsLoading(false);
+        const statsData: StatCard[] = [
+          {
+            title: 'Total Users',
+            value: data.users.total.toLocaleString(),
+            change: data.users.change,
+            changeType: data.users.change > 0 ? 'increase' : data.users.change < 0 ? 'decrease' : 'neutral',
+            icon: Users,
+            description: `${data.users.customers} customers`,
+            color: 'blue',
+          },
+          {
+            title: 'Vendors',
+            value: data.vendors.total.toLocaleString(),
+            change: 0,
+            changeType: 'neutral',
+            icon: Store,
+            description: `${data.vendors.active} active`,
+            color: 'green',
+          },
+          {
+            title: 'Orders Today',
+            value: data.orders.today.toLocaleString(),
+            change: data.orders.todayChange,
+            changeType: data.orders.todayChange > 0 ? 'increase' : data.orders.todayChange < 0 ? 'decrease' : 'neutral',
+            icon: ShoppingCart,
+            description: `${data.orders.thisMonth} this month`,
+            color: 'orange',
+          },
+          {
+            title: 'Revenue',
+            value: `₹${Number(data.revenue.thisMonth).toLocaleString()}`,
+            change: 0,
+            changeType: 'neutral',
+            icon: DollarSign,
+            description: 'This month',
+            color: 'purple',
+          },
+          {
+            title: 'Pending Approvals',
+            value: data.vendors.pending.toString(),
+            change: 0,
+            changeType: 'neutral',
+            icon: Clock,
+            description: 'Vendor applications',
+            color: 'yellow',
+          },
+          {
+            title: 'Active Subscriptions',
+            value: data.subscriptions.active.toLocaleString(),
+            change: 0,
+            changeType: 'neutral',
+            icon: CheckCircle,
+            description: 'Premium vendors',
+            color: 'teal',
+          },
+          {
+            title: 'Support Tickets',
+            value: data.support.openTickets.toString(),
+            change: 0,
+            changeType: 'neutral',
+            icon: AlertTriangle,
+            description: 'Open tickets',
+            color: 'red',
+          },
+          {
+            title: 'Products',
+            value: data.products.total.toLocaleString(),
+            change: 0,
+            changeType: 'neutral',
+            icon: Activity,
+            description: 'Active listings',
+            color: 'emerald',
+          },
+        ];
+
+        setStats(statsData);
+      } catch (error) {
+        console.error('Error fetching stats:', error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchStats();

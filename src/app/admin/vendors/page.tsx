@@ -25,12 +25,34 @@ export default function VendorsPage() {
   const [selectedTab, setSelectedTab] = useState('all');
   const [showFilters, setShowFilters] = useState(false);
   const [vendorStats, setVendorStats] = useState({
-    total: 2341,
-    active: 2198,
-    pending: 23,
-    suspended: 45,
-    inactive: 75,
+    total: 0,
+    active: 0,
+    pending: 0,
+    suspended: 0,
+    inactive: 0,
   });
+
+  // Fetch real vendor stats
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await fetch('/api/admin/stats');
+        if (response.ok) {
+          const data = await response.json();
+          setVendorStats({
+            total: data.vendors.total,
+            active: data.vendors.active,
+            pending: data.vendors.pending,
+            suspended: data.vendors.suspended,
+            inactive: data.vendors.inactive,
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching vendor stats:', error);
+      }
+    };
+    fetchStats();
+  }, []);
 
   const handleExport = () => {
     console.log('Exporting vendor data...');

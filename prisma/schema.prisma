@@ -100,6 +100,16 @@ model User {
   vendorAnalytics   VendorAnalytics[] @relation("VendorAnalytics")
   securityEvents    SecurityEvent[]
 
+  // Support ticket relations
+  createdTickets    SupportTicket[]   @relation("UserTickets")
+  vendorTickets     SupportTicket[]   @relation("VendorTickets")
+  assignedTickets   SupportTicket[]   @relation("AssignedTickets")
+  ticketResponses   TicketResponse[]  @relation("TicketResponses")
+
+  // Ad service relations
+  serviceRequests   AdServiceRequest[] @relation("VendorServiceRequests")
+  reviewedServiceRequests AdServiceRequest[] @relation("ReviewedServiceRequests")
+
   @@map("users")
 }
 
@@ -738,4 +748,101 @@ model SecurityEvent {
   user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("security_events")
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum ServiceRequestStatus {
+  PENDING
+  APPROVED
+  ACTIVE
+  COMPLETED
+  REJECTED
+}
+
+enum ServiceRequestType {
+  BANNER
+  FEATURED
+  PROMOTION
+  PREMIUM_LISTING
+}
+
+model SupportTicket {
+  id          String         @id @default(cuid())
+  userId      String
+  vendorId    String?
+  subject     String
+  description String
+  status      TicketStatus   @default(OPEN)
+  priority    TicketPriority @default(MEDIUM)
+  category    String?        // technical, billing, vendor, product, general
+  assignedTo  String?
+  attachments Json?          // Array of file URLs
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  user         User  @relation("UserTickets", fields: [userId], references: [id], onDelete: Cascade)
+  vendor       User? @relation("VendorTickets", fields: [vendorId], references: [id], onDelete: Cascade)
+  assignedAdmin User? @relation("AssignedTickets", fields: [assignedTo], references: [id], onDelete: SetNull)
+  responses    TicketResponse[]
+
+  @@map("support_tickets")
+}
+
+model TicketResponse {
+  id        String   @id @default(cuid())
+  ticketId  String
+  userId    String
+  message   String
+  isInternal Boolean @default(false) // Internal admin notes
+  createdAt DateTime @default(now())
+
+  ticket SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user   User          @relation("TicketResponses", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("ticket_responses")
+}
+
+model AdServiceRequest {
+  id             String               @id @default(cuid())
+  vendorId       String
+  serviceType    ServiceRequestType
+  description    String?
+  duration       Int                  // in days
+  startDate      DateTime?
+  endDate        DateTime?
+  amount         Decimal              @db.Decimal(10, 2)
+  currency       String               @default("INR")
+  status         ServiceRequestStatus @default(PENDING)
+  paymentStatus  String               @default("pending") // pending, completed, failed
+
+  // Payment tracking
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+
+  // Admin review
+  reviewedBy     String?
+  reviewedAt     DateTime?
+  rejectionReason String?
+  adminNotes     String?
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  vendor       User  @relation("VendorServiceRequests", fields: [vendorId], references: [id], onDelete: Cascade)
+  reviewedByAdmin User? @relation("ReviewedServiceRequests", fields: [reviewedBy], references: [id], onDelete: SetNull)
+
+  @@map("ad_service_requests")
 }
