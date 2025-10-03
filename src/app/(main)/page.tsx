@@ -1,7 +1,8 @@
+'use client';
+
 import { HeroSection } from '@/components/home/hero-section';
-import { SearchSection } from '@/components/home/search-section';
 import { VendorStories } from '@/components/home/vendor-stories';
-import { OffersCarousel } from '@/components/home/offers-carousel';
+import { VendorProducts } from '@/components/home/vendor-products';
 import { FlashDeals } from '@/components/home/flash-deals';
 import { CategoriesSection } from '@/components/home/categories-section';
 import { WhyChooseUs } from '@/components/home/why-choose-us';
@@ -10,17 +11,14 @@ import { SocialProof } from '@/components/home/social-proof';
 export default function HomePage() {
   return (
     <main className="min-h-screen">
-      {/* Hero Section with Enhanced CTAs */}
-      <HeroSection />
-
-      {/* Search Bar for Quick Discovery */}
-      <SearchSection />
-
-      {/* Vendor Stories (Instagram-style) - Moved to Top */}
+      {/* Vendor Stories */}
       <VendorStories />
 
-      {/* Promotional Offers Carousel */}
-      <OffersCarousel />
+      {/* Hero Section */}
+      <HeroSection />
+
+      {/* Latest Vendor Products */}
+      <VendorProducts />
 
       {/* Flash Deals with Countdown Timer */}
       <FlashDeals />

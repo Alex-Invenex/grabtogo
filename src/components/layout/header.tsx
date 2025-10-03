@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useRouter, usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import {
@@ -32,7 +33,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SearchBar } from '@/components/ui/search-bar';
 import { useAuth } from '@/components/auth/protected-route';
-import { NotificationBell } from '@/components/notifications/notification-center';
+
+// Dynamically import NotificationBell to avoid SSR issues
+const NotificationBell = dynamic(
+  () => import('@/components/notifications/notification-center').then(mod => ({ default: mod.NotificationBell })),
+  { ssr: false }
+);
 
 export function Header() {
   const router = useRouter();
@@ -77,7 +83,7 @@ export function Header() {
               </span>
             </Link>
 
-            {/* Desktop Navigation - Simplified */}
+            {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-6" aria-label="Main navigation">
               <Link
                 href="/"
@@ -86,16 +92,16 @@ export function Header() {
                 Home
               </Link>
               <Link
-                href="/profile"
-                className="font-medium text-sm text-gray-700 hover:text-primary transition-colors duration-200"
-              >
-                My Profile
-              </Link>
-              <Link
                 href="/listings"
                 className="font-medium text-sm text-gray-700 hover:text-primary transition-colors duration-200"
               >
                 Listings
+              </Link>
+              <Link
+                href="/offers/new"
+                className="font-medium text-sm text-gray-700 hover:text-primary transition-colors duration-200"
+              >
+                New Offers
               </Link>
               <Link
                 href="/shop"
@@ -106,37 +112,39 @@ export function Header() {
             </nav>
           </div>
 
-          {/* Spacer - Remove search from header */}
-          <div className="flex-1"></div>
+          {/* Search Bar - Desktop */}
+          <div className="hidden lg:flex flex-1 max-w-xl mx-8">
+            <SearchBar
+              placeholder="Search for deals, vendors, or products..."
+              onSearch={handleSearch}
+              className="w-full"
+            />
+          </div>
 
           {/* Right Section - Simplified */}
           <div className="flex items-center space-x-4">
             {isAuthenticated ? (
               <>
                 {/* Wishlist */}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="hidden md:flex text-gray-700 hover:bg-gray-50"
-                  asChild
-                  aria-label="View wishlist"
-                >
-                  <Link href="/wishlist">
-                    <Heart className="h-5 w-5" />
-                    <span className="sr-only">Wishlist</span>
-                  </Link>
-                </Button>
-
-                {/* Cart */}
-                {role === 'CUSTOMER' && (
+                <Link href="/wishlist" aria-label="View wishlist">
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="relative text-gray-700 hover:bg-gray-50"
-                    asChild
-                    aria-label="View cart"
+                    className="hidden md:flex text-gray-700 hover:bg-gray-50"
                   >
-                    <Link href="/cart">
+                    <Heart className="h-5 w-5" />
+                    <span className="sr-only">Wishlist</span>
+                  </Button>
+                </Link>
+
+                {/* Cart - Hidden on mobile */}
+                {role === 'CUSTOMER' && (
+                  <Link href="/cart" aria-label="View cart" className="hidden md:block">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="relative text-gray-700 hover:bg-gray-50"
+                    >
                       <ShoppingBag className="h-5 w-5" />
                       <Badge
                         className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-[10px] bg-primary text-white border-0"
@@ -145,8 +153,8 @@ export function Header() {
                         0
                       </Badge>
                       <span className="sr-only">Shopping cart with 0 items</span>
-                    </Link>
-                  </Button>
+                    </Button>
+                  </Link>
                 )}
 
                 {/* Notifications */}
@@ -189,26 +197,23 @@ export function Header() {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
 
-                    <DropdownMenuItem asChild>
-                      <Link href="/profile">
-                        <User className="mr-2 h-4 w-4" />
-                        My Profile
-                      </Link>
-                    </DropdownMenuItem>
+                    {role !== 'ADMIN' && (
+                      <>
+                        <DropdownMenuItem asChild>
+                          <Link href="/profile">
+                            <User className="mr-2 h-4 w-4" />
+                            My Profile
+                          </Link>
+                        </DropdownMenuItem>
 
-                    <DropdownMenuItem asChild>
-                      <Link href="/orders">
-                        <Package className="mr-2 h-4 w-4" />
-                        My Orders
-                      </Link>
-                    </DropdownMenuItem>
-
-                    <DropdownMenuItem asChild>
-                      <Link href="/wishlist">
-                        <Heart className="mr-2 h-4 w-4" />
-                        Wishlist
-                      </Link>
-                    </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/wishlist">
+                            <Heart className="mr-2 h-4 w-4" />
+                            Wishlist
+                          </Link>
+                        </DropdownMenuItem>
+                      </>
+                    )}
 
                     {(role === 'VENDOR' || role === 'ADMIN') && (
                       <>
@@ -222,14 +227,19 @@ export function Header() {
                       </>
                     )}
 
-                    <DropdownMenuSeparator />
+                    {role !== 'ADMIN' && (
+                      <>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem asChild>
+                          <Link href="/settings">
+                            <Settings className="mr-2 h-4 w-4" />
+                            Settings
+                          </Link>
+                        </DropdownMenuItem>
+                      </>
+                    )}
 
-                    <DropdownMenuItem asChild>
-                      <Link href="/settings">
-                        <Settings className="mr-2 h-4 w-4" />
-                        Settings
-                      </Link>
-                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
 
                     <DropdownMenuItem onClick={handleSignOut} className="text-red-600">
                       <LogOut className="mr-2 h-4 w-4" />
@@ -240,17 +250,34 @@ export function Header() {
               </>
             ) : (
               <>
-                <Button
-                  variant="outline"
-                  size="default"
-                  className="hidden md:flex border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-all duration-200"
-                  asChild
-                >
-                  <Link href="/auth/register/vendor">
+                {/* Customer Sign In / Sign Up */}
+                <Link href="/auth/login" className="hidden md:block">
+                  <Button
+                    variant="ghost"
+                    size="default"
+                    className="text-gray-700 hover:text-primary hover:bg-gray-50 font-medium text-sm px-4"
+                  >
+                    Sign In
+                  </Button>
+                </Link>
+                <Link href="/auth/register" className="hidden md:block">
+                  <Button
+                    size="default"
+                    className="bg-primary text-white hover:bg-primary/90 font-semibold text-sm px-5 py-2.5 rounded-lg shadow-sm transition-all duration-200"
+                  >
+                    Sign Up
+                  </Button>
+                </Link>
+                <Link href="/auth/register/vendor" className="hidden md:block">
+                  <Button
+                    variant="outline"
+                    size="default"
+                    className="border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-all duration-200"
+                  >
                     <Store className="w-4 h-4 mr-2" />
                     Become a Vendor
-                  </Link>
-                </Button>
+                  </Button>
+                </Link>
               </>
             )}
 
@@ -294,20 +321,20 @@ export function Header() {
                 Home
               </Link>
               <Link
-                href="/profile"
-                className="flex items-center gap-2 px-2 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <User className="w-4 h-4" />
-                My Profile
-              </Link>
-              <Link
                 href="/listings"
                 className="flex items-center gap-2 px-2 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <Grid3x3 className="w-4 h-4" />
                 Listings
+              </Link>
+              <Link
+                href="/offers/new"
+                className="flex items-center gap-2 px-2 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <Package className="w-4 h-4" />
+                New Offers
               </Link>
               <Link
                 href="/shop"

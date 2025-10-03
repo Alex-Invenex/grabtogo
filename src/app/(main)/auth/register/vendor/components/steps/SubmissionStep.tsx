@@ -22,6 +22,11 @@ export default function SubmissionStep() {
     setSubmissionError('');
 
     try {
+      console.log('[Vendor Registration] Submitting registration...', {
+        email: formData.email,
+        companyName: formData.companyName,
+      });
+
       const response = await fetch('/api/vendor-registration/submit', {
         method: 'POST',
         headers: {
@@ -31,13 +36,22 @@ export default function SubmissionStep() {
       });
 
       const data = await response.json();
+      console.log('[Vendor Registration] Response received:', {
+        status: response.status,
+        ok: response.ok,
+        data,
+      });
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to submit registration');
+        const errorMsg = data.details || data.error || 'Failed to submit registration';
+        console.error('[Vendor Registration] Submission failed:', errorMsg);
+        throw new Error(errorMsg);
       }
 
+      console.log('[Vendor Registration] ✅ Submission successful!');
       setSubmissionStatus('success');
     } catch (error) {
+      console.error('[Vendor Registration] ❌ Error during submission:', error);
       setSubmissionStatus('error');
       setSubmissionError(error instanceof Error ? error.message : 'Submission failed');
       setIsSubmitting(false);

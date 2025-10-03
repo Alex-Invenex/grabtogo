@@ -4,6 +4,7 @@ import { hash } from 'bcryptjs';
 import { db } from '@/lib/db';
 import { sendEmail } from '@/lib/email';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {

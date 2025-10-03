@@ -5,6 +5,7 @@ import { verifyEmailToken } from '@/lib/security';
 import { sendWelcomeEmail } from '@/lib/email';
 import { logSecurityEvent } from '@/lib/security';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const verifyEmailSchema = z.object({

@@ -65,71 +65,40 @@ export default function VendorDashboardPage() {
   const [recentOrders, setRecentOrders] = React.useState<RecentOrder[]>([]);
   const [subscription, setSubscription] = React.useState<SubscriptionInfo | null>(null);
 
-  // Mock data for demonstration
-  const mockStats: DashboardStats = {
-    totalProducts: 24,
-    totalOrders: 156,
-    totalRevenue: 48750,
-    totalCustomers: 89,
-    averageRating: 4.7,
-    totalReviews: 142,
-    storyViews: 2340,
-    newMessages: 7,
-  };
-
-  const mockOrders: RecentOrder[] = [
-    {
-      id: 'ORD-001',
-      customerName: 'Priya Sharma',
-      items: ['Fresh Mangoes (2kg)', 'Organic Apples (1kg)'],
-      total: 450,
-      status: 'pending',
-      createdAt: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
-    },
-    {
-      id: 'ORD-002',
-      customerName: 'Rajesh Kumar',
-      items: ['Mixed Fruit Box'],
-      total: 299,
-      status: 'confirmed',
-      createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: 'ORD-003',
-      customerName: 'Amit Patel',
-      items: ['Seasonal Fruits (5kg)', 'Coconut Water (6 bottles)'],
-      total: 850,
-      status: 'shipped',
-      createdAt: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: 'ORD-004',
-      customerName: 'Sunita Devi',
-      items: ['Dragon Fruit (500g)'],
-      total: 180,
-      status: 'delivered',
-      createdAt: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
-    },
-  ];
-
-  const mockSubscription: SubscriptionInfo = {
-    planType: 'premium',
-    status: 'active',
-    currentPeriodEnd: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000).toISOString(),
-    maxProducts: 50,
-    maxOrders: 500,
-    usedProducts: 24,
-    usedOrders: 156,
-  };
-
   React.useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setStats(mockStats);
-      setRecentOrders(mockOrders);
-      setSubscription(mockSubscription);
-      setLoading(false);
-    }, 1000);
+    const fetchData = async () => {
+      try {
+        // Fetch stats and subscription info
+        const statsResponse = await fetch('/api/vendor/stats');
+        if (!statsResponse.ok) throw new Error('Failed to fetch stats');
+        const statsData = await statsResponse.json();
+
+        setStats(statsData.stats);
+        setSubscription(statsData.subscription);
+
+        // Fetch recent orders
+        const ordersResponse = await fetch('/api/vendor/orders?limit=5');
+        if (!ordersResponse.ok) throw new Error('Failed to fetch orders');
+        const ordersData = await ordersResponse.json();
+
+        const formattedOrders: RecentOrder[] = ordersData.orders.map((order: any) => ({
+          id: order.id,
+          customerName: order.user.name || order.user.email,
+          items: order.items.map((item: any) => item.product.name),
+          total: Number(order.total),
+          status: order.status.toLowerCase(),
+          createdAt: order.createdAt,
+        }));
+
+        setRecentOrders(formattedOrders);
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const getStatusBadge = (status: string) => {

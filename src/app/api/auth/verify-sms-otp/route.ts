@@ -4,6 +4,7 @@ import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { z } from 'zod';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const schema = z.object({

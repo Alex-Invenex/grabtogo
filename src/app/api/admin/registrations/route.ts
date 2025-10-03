@@ -6,6 +6,7 @@ import { UserRole } from '@/lib/prisma';
 import { hashPassword } from '@/lib/password';
 import { z } from 'zod';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const approveRegistrationSchema = z.object({

@@ -118,7 +118,7 @@ export default function RegistrationWizard() {
   const [isNavigating, setIsNavigating] = useState(false);
 
   const methods = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: zodResolver(vendorRegistrationSchema),
     defaultValues: {
       // Personal Info

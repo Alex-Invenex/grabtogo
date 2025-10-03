@@ -9,12 +9,12 @@ async function createAdmin() {
   try {
     // Check if admin user already exists
     const existingAdmin = await db.user.findUnique({
-      where: { email: 'admin@admin.com' },
+      where: { email: 'info@grabtogo.in' },
     });
 
     if (existingAdmin) {
       console.log('👤 Admin user already exists');
-      console.log(`📧 Login: admin@admin.com`);
+      console.log(`📧 Login: info@grabtogo.in`);
       console.log(`🔑 Password: admin`);
       console.log(`🎯 Access: ${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/admin`);
       return;
@@ -26,7 +26,7 @@ async function createAdmin() {
     const adminUser = await db.user.create({
       data: {
         name: 'Admin User',
-        email: 'admin@admin.com',
+        email: 'info@grabtogo.in',
         password: hashedPassword,
         role: 'ADMIN',
         emailVerified: new Date(),
@@ -35,7 +35,7 @@ async function createAdmin() {
     });
 
     console.log(`✅ Created admin user: ${adminUser.email}`);
-    console.log(`📧 Login: admin@admin.com`);
+    console.log(`📧 Login: info@grabtogo.in`);
     console.log(`🔑 Password: admin`);
     console.log(`🎯 Access: ${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/admin`);
   } catch (error) {

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
@@ -32,22 +32,44 @@ interface QuickAction {
   disabled?: boolean;
 }
 
-const quickActions: QuickAction[] = [
-  {
-    title: 'Add New Vendor',
-    description: 'Manually create a vendor account',
-    icon: Store,
-    href: '/admin/vendors/new',
-    color: 'blue',
-  },
-  {
-    title: 'Pending Approvals',
-    description: 'Review vendor registrations',
-    icon: FileText,
-    href: '/admin/vendors/pending',
-    color: 'orange',
-    badge: 5,
-  },
+export default function QuickActions() {
+  const [pendingCount, setPendingCount] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchPendingCount = async () => {
+      try {
+        const response = await fetch('/api/admin/stats');
+        if (response.ok) {
+          const data = await response.json();
+          setPendingCount(data.vendors?.pending || 0);
+        }
+      } catch (error) {
+        console.error('Error fetching pending count:', error);
+      }
+    };
+
+    fetchPendingCount();
+    // Refresh every minute
+    const interval = setInterval(fetchPendingCount, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const quickActions: QuickAction[] = [
+    {
+      title: 'Add New Vendor',
+      description: 'Manually create a vendor account',
+      icon: Store,
+      href: '/admin/vendors/new',
+      color: 'blue',
+    },
+    {
+      title: 'Pending Approvals',
+      description: 'Review vendor registrations',
+      icon: FileText,
+      href: '/admin/vendors/pending',
+      color: 'orange',
+      badge: pendingCount > 0 ? pendingCount : undefined,
+    },
   {
     title: 'Create User',
     description: 'Add a new customer account',
@@ -121,7 +143,6 @@ const quickActions: QuickAction[] = [
   },
 ];
 
-export default function QuickActions() {
   const getColorClasses = (color: string) => {
     const colorMap = {
       blue: 'bg-blue-500 hover:bg-blue-600',

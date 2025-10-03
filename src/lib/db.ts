@@ -1,4 +1,5 @@
-import { PrismaClient } from './prisma';
+// Explicitly import from Node.js runtime to avoid edge/WASM runtime
+import { PrismaClient } from './prisma/index.js';
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;

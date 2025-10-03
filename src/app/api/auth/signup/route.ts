@@ -5,6 +5,7 @@ import { hashPassword, signUpSchema, normalizeEmail } from '@/lib/password';
 import { checkRateLimit, logSecurityEvent, generateEmailVerificationToken } from '@/lib/security';
 import { sendVerificationEmail } from '@/lib/email';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {

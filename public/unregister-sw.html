@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Unregister Service Worker</title>
+</head>
+<body>
+    <h1>Unregistering Service Workers...</h1>
+    <p id="status">Working...</p>
+    <script>
+        async function unregisterAll() {
+            const status = document.getElementById('status');
+
+            if ('serviceWorker' in navigator) {
+                try {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+
+                    if (registrations.length === 0) {
+                        status.innerHTML = 'No service workers found. <a href="/">Go to home page</a>';
+                        return;
+                    }
+
+                    status.innerHTML = `Found ${registrations.length} service worker(s). Unregistering...`;
+
+                    for (const registration of registrations) {
+                        await registration.unregister();
+                        console.log('Unregistered service worker:', registration);
+                    }
+
+                    // Clear all caches
+                    const cacheNames = await caches.keys();
+                    for (const cacheName of cacheNames) {
+                        await caches.delete(cacheName);
+                        console.log('Deleted cache:', cacheName);
+                    }
+
+                    status.innerHTML = `Successfully unregistered ${registrations.length} service worker(s) and cleared all caches!<br><br>Redirecting to home page in 2 seconds...`;
+
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+
+                } catch (error) {
+                    status.innerHTML = `Error: ${error.message}. <a href="/">Go to home page</a>`;
+                    console.error('Error unregistering service workers:', error);
+                }
+            } else {
+                status.innerHTML = 'Service workers not supported. <a href="/">Go to home page</a>';
+            }
+        }
+
+        unregisterAll();
+    </script>
+</body>
+</html>

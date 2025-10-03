@@ -8,7 +8,7 @@ async function main() {
 
   // Check if admin user already exists
   const existingAdmin = await prisma.user.findUnique({
-    where: { email: 'admin@admin.com' },
+    where: { email: 'info@grabtogo.in' },
   });
 
   if (existingAdmin) {
@@ -22,7 +22,7 @@ async function main() {
   const adminUser = await prisma.user.create({
     data: {
       name: 'Admin User',
-      email: 'admin@admin.com',
+      email: 'info@grabtogo.in',
       password: hashedPassword,
       role: 'ADMIN',
       emailVerified: new Date(),
@@ -31,7 +31,7 @@ async function main() {
   });
 
   console.log(`✅ Created admin user: ${adminUser.email}`);
-  console.log(`📧 Login: admin@admin.com`);
+  console.log(`📧 Login: info@grabtogo.in`);
   console.log(`🔑 Password: admin`);
   console.log(`🎯 Access: /admin dashboard`);
 }

@@ -2,57 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { cache } from '@/lib/redis';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-
-// Mock data for development when database is unavailable
-const getMockProducts = (limit: number) => {
-  const mockProducts = Array.from({ length: Math.min(limit, 6) }, (_, i) => ({
-    id: `mock-product-${i + 1}`,
-    name: `Sample Product ${i + 1}`,
-    slug: `sample-product-${i + 1}`,
-    price: 999 + i * 100,
-    comparePrice: 1499 + i * 150,
-    shortDesc: `This is a sample product description for product ${i + 1}`,
-    images: [
-      {
-        id: `img-${i + 1}`,
-        url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&q=80',
-        altText: `Sample Product ${i + 1}`,
-        sortOrder: 0,
-      },
-    ],
-    vendor: {
-      id: `vendor-${i + 1}`,
-      name: 'Sample Vendor',
-      vendorProfile: {
-        storeName: 'Sample Store',
-        storeSlug: 'sample-store',
-      },
-    },
-    category: {
-      id: 'cat-1',
-      name: 'Sample Category',
-      slug: 'sample-category',
-    },
-    viewCount: 100 + i * 10,
-    _count: {
-      reviews: 5 + i,
-    },
-    createdAt: new Date(),
-  }));
-
-  return {
-    data: mockProducts,
-    pagination: {
-      page: 1,
-      limit,
-      total: mockProducts.length,
-      totalPages: 1,
-      hasNext: false,
-      hasPrev: false,
-    },
-  };
-};
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -193,10 +144,20 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(result);
   } catch (error) {
     console.error('Products API error:', error);
-
-    // Return mock data when database is unavailable
-    console.log('Database unavailable, returning mock data');
-    const mockData = getMockProducts(limit);
-    return NextResponse.json(mockData);
+    return NextResponse.json(
+      {
+        error: 'Failed to fetch products',
+        data: [],
+        pagination: {
+          page,
+          limit,
+          total: 0,
+          totalPages: 0,
+          hasNext: false,
+          hasPrev: false,
+        }
+      },
+      { status: 500 }
+    );
   }
 }

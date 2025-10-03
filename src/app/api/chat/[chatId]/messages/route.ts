@@ -4,6 +4,7 @@ import { db } from '@/lib/db';
 import { cache } from '@/lib/redis';
 import { z } from 'zod';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const getMessagesSchema = z.object({

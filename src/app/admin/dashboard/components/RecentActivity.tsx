@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { formatDistanceToNow } from 'date-fns';
 import {
   Store,
   User,
@@ -25,102 +26,55 @@ interface ActivityItem {
   title: string;
   description: string;
   timestamp: string;
-  icon: React.ComponentType<{ className?: string }>;
   color: string;
   priority?: 'low' | 'medium' | 'high';
   avatar?: string;
   username?: string;
 }
 
-const recentActivities: ActivityItem[] = [
-  {
-    id: '1',
-    type: 'vendor',
-    title: 'New Vendor Registration',
-    description: 'Fresh Foods Market submitted application for approval',
-    timestamp: '2 minutes ago',
-    icon: Store,
-    color: 'blue',
-    priority: 'high',
-    username: 'Fresh Foods Market',
-  },
-  {
-    id: '2',
-    type: 'order',
-    title: 'Large Order Processed',
-    description: 'Order #12847 worth ₹15,480 completed successfully',
-    timestamp: '5 minutes ago',
-    icon: ShoppingCart,
-    color: 'green',
-    priority: 'medium',
-  },
-  {
-    id: '3',
-    type: 'payment',
-    title: 'Subscription Renewed',
-    description: 'Spice Paradise renewed Premium plan (₹299)',
-    timestamp: '12 minutes ago',
-    icon: DollarSign,
-    color: 'purple',
-    priority: 'low',
-    username: 'Spice Paradise',
-  },
-  {
-    id: '4',
-    type: 'system',
-    title: 'System Alert Resolved',
-    description: 'High memory usage on server-2 has been resolved',
-    timestamp: '18 minutes ago',
-    icon: CheckCircle,
-    color: 'green',
-    priority: 'medium',
-  },
-  {
-    id: '5',
-    type: 'user',
-    title: 'New Customer Registration',
-    description: 'Priya Sharma joined the platform',
-    timestamp: '25 minutes ago',
-    icon: User,
-    color: 'teal',
-    priority: 'low',
-    username: 'Priya Sharma',
-    avatar: '/avatars/priya.jpg',
-  },
-  {
-    id: '6',
-    type: 'vendor',
-    title: 'Vendor Approved',
-    description: 'Urban Kitchen has been approved and activated',
-    timestamp: '32 minutes ago',
-    icon: CheckCircle,
-    color: 'green',
-    priority: 'medium',
-    username: 'Urban Kitchen',
-  },
-  {
-    id: '7',
-    type: 'security',
-    title: 'Failed Login Attempts',
-    description: 'Multiple failed login attempts detected from IP 192.168.1.100',
-    timestamp: '45 minutes ago',
-    icon: AlertTriangle,
-    color: 'red',
-    priority: 'high',
-  },
-  {
-    id: '8',
-    type: 'system',
-    title: 'Backup Completed',
-    description: 'Daily system backup completed successfully',
-    timestamp: '1 hour ago',
-    icon: Settings,
-    color: 'gray',
-    priority: 'low',
-  },
-];
-
 export default function RecentActivity() {
+  const [recentActivities, setRecentActivities] = useState<ActivityItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        const response = await fetch('/api/admin/recent-activities?limit=8');
+        if (!response.ok) throw new Error('Failed to fetch activities');
+        const data = await response.json();
+        setRecentActivities(data.activities || []);
+      } catch (error) {
+        console.error('Error fetching activities:', error);
+        setRecentActivities([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchActivities();
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchActivities, 30000);
+    return () => clearInterval(interval);
+  }, []);
+  const getActivityIcon = (type: string) => {
+    switch (type) {
+      case 'vendor':
+        return Store;
+      case 'user':
+        return User;
+      case 'order':
+        return ShoppingCart;
+      case 'payment':
+        return DollarSign;
+      case 'security':
+        return AlertTriangle;
+      case 'system':
+        return Settings;
+      default:
+        return Bell;
+    }
+  };
+
   const getColorClasses = (color: string, priority?: string) => {
     const baseColors = {
       blue: 'bg-blue-100 text-blue-600',
@@ -177,55 +131,77 @@ export default function RecentActivity() {
       </CardHeader>
       <CardContent className="p-0">
         <ScrollArea className="h-96">
-          <div className="space-y-1 px-6 pb-6">
-            {recentActivities.map((activity, index) => {
-              const colorClasses = getColorClasses(activity.color, activity.priority);
-
-              return (
-                <motion.div
-                  key={activity.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className={`flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors border-l-4 ${colorClasses.border}`}
-                >
-                  {/* Icon or Avatar */}
-                  <div className="flex-shrink-0">
-                    {activity.avatar ? (
-                      <Avatar className="w-8 h-8">
-                        <AvatarImage src={activity.avatar} alt={activity.username} />
-                        <AvatarFallback>{activity.username?.charAt(0) || 'U'}</AvatarFallback>
-                      </Avatar>
-                    ) : (
-                      <div className={`p-2 rounded-full ${colorClasses.icon}`}>
-                        <activity.icon className="w-4 h-4" />
-                      </div>
-                    )}
+          {loading ? (
+            <div className="space-y-1 px-6 pb-6">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-start gap-3 p-3 animate-pulse">
+                  <div className="w-8 h-8 bg-gray-200 rounded-full flex-shrink-0"></div>
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                    <div className="h-3 bg-gray-200 rounded w-full"></div>
+                    <div className="h-3 bg-gray-200 rounded w-1/4"></div>
                   </div>
+                </div>
+              ))}
+            </div>
+          ) : recentActivities.length === 0 ? (
+            <div className="text-center py-8 px-6 text-gray-500">
+              <Bell className="w-12 h-12 mx-auto mb-4 opacity-50" />
+              <p>No recent activities</p>
+              <p className="text-sm mt-1">Activities will appear here as they occur</p>
+            </div>
+          ) : (
+            <div className="space-y-1 px-6 pb-6">
+              {recentActivities.map((activity, index) => {
+                const colorClasses = getColorClasses(activity.color, activity.priority);
+                const ActivityIcon = getActivityIcon(activity.type);
 
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2 mb-1">
-                      <h4 className="text-sm font-medium text-gray-900 truncate">
-                        {activity.title}
-                      </h4>
-                      {getPriorityBadge(activity.priority)}
-                    </div>
-                    <p className="text-sm text-gray-600 mb-1">{activity.description}</p>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-400 flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {activity.timestamp}
-                      </span>
-                      {activity.username && (
-                        <span className="text-xs text-gray-500">by {activity.username}</span>
+                return (
+                  <motion.div
+                    key={activity.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    className={`flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors border-l-4 ${colorClasses.border}`}
+                  >
+                    {/* Icon or Avatar */}
+                    <div className="flex-shrink-0">
+                      {activity.avatar ? (
+                        <Avatar className="w-8 h-8">
+                          <AvatarImage src={activity.avatar} alt={activity.username} />
+                          <AvatarFallback>{activity.username?.charAt(0) || 'U'}</AvatarFallback>
+                        </Avatar>
+                      ) : (
+                        <div className={`p-2 rounded-full ${colorClasses.icon}`}>
+                          <ActivityIcon className="w-4 h-4" />
+                        </div>
                       )}
                     </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <h4 className="text-sm font-medium text-gray-900 truncate">
+                          {activity.title}
+                        </h4>
+                        {getPriorityBadge(activity.priority)}
+                      </div>
+                      <p className="text-sm text-gray-600 mb-1">{activity.description}</p>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-gray-400 flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {formatDistanceToNow(new Date(activity.timestamp), { addSuffix: true })}
+                        </span>
+                        {activity.username && (
+                          <span className="text-xs text-gray-500">by {activity.username}</span>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
         </ScrollArea>
 
         {/* View All Button */}

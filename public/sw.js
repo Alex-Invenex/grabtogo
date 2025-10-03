@@ -1,6 +1,8 @@
-const CACHE_NAME = 'grabtogo-v1.0.0'
-const STATIC_CACHE_NAME = 'grabtogo-static-v1.0.0'
-const DYNAMIC_CACHE_NAME = 'grabtogo-dynamic-v1.0.0'
+// Dynamic versioning - will be replaced during build
+const BUILD_VERSION = '5977388-1759399057539'
+const CACHE_NAME = `grabtogo-${BUILD_VERSION}`
+const STATIC_CACHE_NAME = `grabtogo-static-${BUILD_VERSION}`
+const DYNAMIC_CACHE_NAME = `grabtogo-dynamic-${BUILD_VERSION}`
 
 // Files to cache immediately
 const STATIC_ASSETS = [
@@ -12,7 +14,7 @@ const STATIC_ASSETS = [
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
-  console.log('Service Worker installing...')
+  console.log('Service Worker installing...', 'Version:', BUILD_VERSION)
 
   event.waitUntil(
     caches.open(STATIC_CACHE_NAME)
@@ -21,6 +23,7 @@ self.addEventListener('install', (event) => {
         return cache.addAll(STATIC_ASSETS)
       })
       .then(() => {
+        // Force immediate activation of new service worker
         return self.skipWaiting()
       })
   )
@@ -28,14 +31,16 @@ self.addEventListener('install', (event) => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker activating...')
+  console.log('Service Worker activating...', 'Version:', BUILD_VERSION)
 
   event.waitUntil(
     caches.keys()
       .then((cacheNames) => {
+        // Delete ALL old caches that don't match current version
         return Promise.all(
           cacheNames.map((cacheName) => {
-            if (cacheName !== STATIC_CACHE_NAME &&
+            if (cacheName.startsWith('grabtogo-') &&
+                cacheName !== STATIC_CACHE_NAME &&
                 cacheName !== DYNAMIC_CACHE_NAME &&
                 cacheName !== CACHE_NAME) {
               console.log('Deleting old cache:', cacheName)
@@ -45,6 +50,8 @@ self.addEventListener('activate', (event) => {
         )
       })
       .then(() => {
+        // Take control of all pages immediately
+        console.log('Service Worker claiming all clients')
         return self.clients.claim()
       })
   )
@@ -71,9 +78,12 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
-  // Handle static assets
+  // Handle static assets (excluding SVG and other non-cacheable files)
   if (url.pathname.startsWith('/_next/static/') ||
-      url.pathname.includes('.') && !url.pathname.startsWith('/api/')) {
+      (url.pathname.includes('.') &&
+       !url.pathname.startsWith('/api/') &&
+       !url.pathname.endsWith('.svg') &&
+       !url.pathname.endsWith('.xml'))) {
     event.respondWith(handleStaticAsset(request))
     return
   }
@@ -152,28 +162,48 @@ async function handleStaticAsset(request) {
 
     // Fetch from network and cache
     const response = await fetch(request)
+    if (response.ok && response.status === 200) {
+      // Only cache JavaScript, CSS, and image files
+      const contentType = response.headers.get('content-type') || ''
+      const cacheableTypes = ['javascript', 'css', 'image/', 'font']
+      const shouldCache = cacheableTypes.some(type => contentType.includes(type))
+
+      if (shouldCache) {
+        const cache = await caches.open(STATIC_CACHE_NAME)
+        cache.put(request, response.clone())
+      }
+    }
+
+    return response
+  } catch (error) {
+    console.log('Static asset request failed:', request.url, error)
+    return new Response('Asset not available offline', { status: 404 })
+  }
+}
+
+// Handle navigation requests - ALWAYS use network first for fresh content
+async function handleNavigation(request) {
+  try {
+    // Try network first for navigation to always get fresh HTML
+    const response = await fetch(request)
+
+    // Cache successful navigation responses for offline fallback
     if (response.ok) {
-      const cache = await caches.open(STATIC_CACHE_NAME)
+      const cache = await caches.open(DYNAMIC_CACHE_NAME)
       cache.put(request, response.clone())
     }
 
     return response
   } catch (error) {
-    console.log('Static asset request failed:', request.url)
-    return new Response('Asset not available offline', { status: 404 })
-  }
-}
+    console.log('Navigation request failed, trying cache then offline page')
 
-// Handle navigation requests
-async function handleNavigation(request) {
-  try {
-    // Try network first for navigation
-    const response = await fetch(request)
-    return response
-  } catch (error) {
-    console.log('Navigation request failed, serving offline page')
+    // Try cache first
+    const cachedResponse = await caches.match(request)
+    if (cachedResponse) {
+      return cachedResponse
+    }
 
-    // Serve offline page
+    // Serve offline page as last resort
     const offlinePage = await caches.match('/offline.html')
     return offlinePage || new Response('Offline', { status: 503 })
   }
@@ -268,8 +298,18 @@ self.addEventListener('notificationclick', (event) => {
   )
 })
 
-// Share target handling (if implemented)
+// Message handling for update checks and manual actions
 self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    // Force the waiting service worker to become active
+    self.skipWaiting()
+  }
+
+  if (event.data && event.data.type === 'GET_VERSION') {
+    // Send current version to client
+    event.ports[0].postMessage({ version: BUILD_VERSION })
+  }
+
   if (event.data && event.data.type === 'SHARE_TARGET') {
     console.log('Share target received:', event.data)
     // Handle shared content

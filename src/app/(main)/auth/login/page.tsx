@@ -154,10 +154,12 @@ function LoginForm() {
     <div className="container flex min-h-screen w-screen flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-white py-12">
       <div className="mx-auto flex w-full flex-col justify-center space-y-8 sm:w-[400px]">
         <div className="flex flex-col space-y-3 text-center">
-          <div className="mx-auto h-12 w-12 rounded-xl bg-gradient-to-br from-primary to-orange-600 flex items-center justify-center mb-2">
-            <div className="h-6 w-6 bg-white rounded-full flex items-center justify-center">
-              <div className="h-3 w-3 bg-gradient-to-br from-primary to-orange-600 rounded-full"></div>
-            </div>
+          <div className="mx-auto h-20 w-20 mb-2 flex items-center justify-center">
+            <img
+              src="/logo.svg"
+              alt="GrabtoGo Logo"
+              className="h-full w-full object-contain"
+            />
           </div>
           <h1 className="font-display text-3xl font-bold text-gray-900">Welcome back</h1>
           <p className="text-sm text-gray-600">

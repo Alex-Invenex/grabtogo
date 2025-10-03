@@ -5,6 +5,7 @@ import { generatePasswordResetToken, checkRateLimit, logSecurityEvent } from '@/
 import { sendPasswordResetEmail } from '@/lib/email';
 import { emailSchema } from '@/lib/password';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {

@@ -5,6 +5,7 @@ import { cache } from '@/lib/redis';
 import { RazorpayService } from '@/lib/razorpay';
 import { z } from 'zod';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const createSubscriptionSchema = z.object({

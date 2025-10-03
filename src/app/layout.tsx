@@ -4,6 +4,7 @@ import { ErrorBoundary } from '@/components/ui/error-boundary';
 import { AuthProvider } from '@/components/providers/session-provider';
 import { SocketProvider } from '@/components/providers/socket-provider';
 import './globals.css';
+import './modern-animations.css';
 
 // Note: Google Fonts temporarily disabled due to network connectivity issues during build
 // Using system fonts as fallback. To re-enable, uncomment the imports below and update the html className
@@ -48,6 +49,8 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/logo.svg', type: 'image/svg+xml' },
       { url: '/icons/icon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/icons/icon-32x32.png', sizes: '32x32', type: 'image/png' },
       { url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },

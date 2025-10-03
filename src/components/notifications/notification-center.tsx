@@ -43,71 +43,16 @@ interface NotificationCenterProps {
 }
 
 export function NotificationCenter({ className }: NotificationCenterProps) {
-  const { unreadCount, markAsRead, markAllAsRead, isConnected } = useNotifications();
+  const { notifications = [], unreadCount = 0, markAsRead, markAllAsRead, isConnected = false } = useNotifications() || {};
   const [filter, setFilter] = React.useState<'all' | 'unread'>('all');
   const [loading, setLoading] = React.useState(true);
 
-  // Mock notifications for demonstration
-  const mockNotifications: Notification[] = [
-    {
-      id: '1',
-      title: 'Order Confirmed',
-      message: 'Your order #12345 for Fresh Mangoes has been confirmed',
-      type: 'order',
-      data: { orderId: '12345', vendorName: 'Fresh Fruits Co' },
-      isRead: false,
-      createdAt: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
-    },
-    {
-      id: '2',
-      title: 'New Message',
-      message: 'Rajesh Kumar sent you a message about your order',
-      type: 'message',
-      data: { chatId: 'chat1', senderId: 'vendor1' },
-      isRead: false,
-      createdAt: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
-    },
-    {
-      id: '3',
-      title: 'Order Delivered',
-      message: 'Your order #12344 has been delivered successfully',
-      type: 'order',
-      data: { orderId: '12344', status: 'delivered' },
-      isRead: true,
-      createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: '4',
-      title: 'New Review',
-      message: 'You received a 5-star review for Wireless Earbuds',
-      type: 'review',
-      data: { productId: 'prod1', rating: 5 },
-      isRead: false,
-      createdAt: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: '5',
-      title: 'Subscription Expiring',
-      message: 'Your premium subscription expires in 3 days',
-      type: 'vendor',
-      data: { subscriptionType: 'premium', daysLeft: 3 },
-      isRead: true,
-      createdAt: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: '6',
-      title: 'System Maintenance',
-      message: 'Scheduled maintenance on Sunday 2 AM - 4 AM',
-      type: 'system',
-      data: { maintenanceDate: '2024-01-15T02:00:00Z' },
-      isRead: true,
-      createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-    },
-  ];
+  // Use only real notifications from database
+  const realNotifications = notifications || [];
 
   React.useEffect(() => {
-    // Simulate loading
-    setTimeout(() => setLoading(false), 800);
+    // Real loading is handled by parent component
+    setLoading(false);
   }, []);
 
   const getNotificationIcon = (type: string) => {
@@ -128,7 +73,7 @@ export function NotificationCenter({ className }: NotificationCenterProps) {
   };
 
   const filteredNotifications =
-    filter === 'unread' ? mockNotifications.filter((n) => !n.isRead) : mockNotifications;
+    filter === 'unread' ? realNotifications.filter((n) => !n.isRead) : realNotifications;
 
   const handleMarkAsRead = (notificationId: string) => {
     if (markAsRead) {
@@ -201,9 +146,9 @@ export function NotificationCenter({ className }: NotificationCenterProps) {
           <CardTitle className="flex items-center gap-2">
             <Bell className="h-5 w-5" />
             Notifications
-            {(unreadCount > 0 || mockNotifications.filter((n) => !n.isRead).length > 0) && (
+            {(unreadCount > 0 || realNotifications.filter((n) => !n.isRead).length > 0) && (
               <Badge variant="destructive" className="ml-2">
-                {unreadCount || mockNotifications.filter((n) => !n.isRead).length}
+                {unreadCount || realNotifications.filter((n) => !n.isRead).length}
               </Badge>
             )}
           </CardTitle>
@@ -220,7 +165,7 @@ export function NotificationCenter({ className }: NotificationCenterProps) {
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="all">All</TabsTrigger>
             <TabsTrigger value="unread">
-              Unread ({mockNotifications.filter((n) => !n.isRead).length})
+              Unread ({realNotifications.filter((n) => !n.isRead).length})
             </TabsTrigger>
           </TabsList>
         </Tabs>
@@ -259,23 +204,20 @@ export function NotificationCenter({ className }: NotificationCenterProps) {
 
 // Notification bell component for header
 export function NotificationBell() {
-  const { unreadCount } = useNotifications();
+  const { unreadCount = 0 } = useNotifications() || {};
   const [showCenter, setShowCenter] = React.useState(false);
-
-  // Mock unread count
-  const mockUnreadCount = 3;
 
   return (
     <DropdownMenu open={showCenter} onOpenChange={setShowCenter}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
-          {(unreadCount > 0 || mockUnreadCount > 0) && (
+          {unreadCount > 0 && (
             <Badge
               variant="destructive"
               className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs flex items-center justify-center"
             >
-              {unreadCount || mockUnreadCount}
+              {unreadCount}
             </Badge>
           )}
           <span className="sr-only">Notifications</span>

@@ -143,7 +143,7 @@ function ListingsContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-20">
       {/* Header Section */}
       <div className="bg-white border-b">
         <div className="container-custom py-8">

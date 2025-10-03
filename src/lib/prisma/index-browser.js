@@ -472,8 +472,10 @@ exports.Prisma.VendorRegistrationRequestScalarFieldEnum = {
   termsAccepted: 'termsAccepted',
   privacyAccepted: 'privacyAccepted',
   status: 'status',
-  reviewedBy: 'reviewedBy',
-  reviewedAt: 'reviewedAt',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
+  rejectedBy: 'rejectedBy',
+  rejectedAt: 'rejectedAt',
   rejectionReason: 'rejectionReason',
   adminNotes: 'adminNotes',
   createdAt: 'createdAt',
@@ -658,6 +660,12 @@ exports.PaymentStatus = exports.$Enums.PaymentStatus = {
   COMPLETED: 'COMPLETED',
   FAILED: 'FAILED',
   REFUNDED: 'REFUNDED'
+};
+
+exports.RegistrationStatus = exports.$Enums.RegistrationStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
 };
 
 exports.TicketStatus = exports.$Enums.TicketStatus = {

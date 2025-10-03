@@ -156,15 +156,26 @@ export const gstDocumentSchema = z.object({
       registrationDate: z.string(),
     })
     .nullable(),
-  gstCertificate: z.any().refine((file) => file && file.size <= 5 * 1024 * 1024, {
-    message: 'GST Certificate must be less than 5MB',
-  }),
+  gstCertificate: z.string().refine(
+    (str) => str.startsWith('data:') || str.startsWith('https://'),
+    { message: 'GST Certificate is required' }
+  ),
 });
 
 // Step 6: Logo & Branding
 export const logoBrandingSchema = z.object({
-  logo: z.any().refine((file) => file !== null, 'Business logo is required'),
-  banner: z.any().optional(),
+  logo: z.string().refine(
+    (str) => str.startsWith('data:') || str.startsWith('https://'),
+    'Business logo is required'
+  ),
+  banner: z
+    .string()
+    .refine(
+      (str) => !str || str.startsWith('data:') || str.startsWith('https://'),
+      'Invalid banner URL'
+    )
+    .optional()
+    .nullable(),
   tagline: z.string().max(60, 'Tagline must be less than 60 characters').optional(),
 });
 

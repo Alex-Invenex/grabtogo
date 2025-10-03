@@ -4,6 +4,7 @@ import { db } from '@/lib/db';
 import { cache } from '@/lib/redis';
 import { UserRole } from '@/lib/prisma';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {

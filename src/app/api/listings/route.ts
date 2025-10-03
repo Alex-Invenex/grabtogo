@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
+export const runtime = 'nodejs';
 // Mark route as dynamic since it uses searchParams
 export const dynamic = 'force-dynamic';
 
@@ -129,10 +130,9 @@ export async function GET(request: NextRequest) {
         priceRange: `₹${Number(product.price).toLocaleString('en-IN')}`,
         description: product.shortDesc || product.description || '',
         isFeatured: product.isFeatured,
-        // Mock values - would need actual data
-        rating: 4.5,
-        distance: 5.0,
-        isOpen: true,
+        rating: null, // Will be calculated from reviews
+        distance: null, // Will be calculated from user location
+        isOpen: null, // Will be determined from vendor hours
         latitude: product.vendor.vendorProfile?.latitude,
         longitude: product.vendor.vendorProfile?.longitude,
       };

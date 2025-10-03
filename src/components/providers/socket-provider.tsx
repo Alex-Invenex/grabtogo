@@ -38,19 +38,27 @@ export function SocketProvider({ children }: SocketProviderProps) {
   const connect = React.useCallback(() => {
     if (socket?.connected || !session?.user) return;
 
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL;
+
+    // Don't attempt connection if Socket URL is not configured
+    if (!socketUrl || socketUrl.trim() === '' || socketUrl === 'undefined') {
+      // Silently disable real-time features - no warnings needed
+      setConnectionError(null);
+      setIsConnected(false);
+      return;
+    }
+
     try {
-      const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL || '', {
+      const newSocket = io(socketUrl, {
         auth: {
           token: session.user?.id,
           userId: session.user?.id,
           role: (session.user as any)?.role,
         },
         transports: ['websocket', 'polling'],
-        timeout: 10000,
-        reconnection: true,
-        reconnectionAttempts: maxReconnectAttempts,
-        reconnectionDelay: 1000,
-        reconnectionDelayMax: 5000,
+        timeout: 5000, // Reduced timeout
+        reconnection: false, // Disable automatic reconnection to prevent spam
+        reconnectionAttempts: 0,
       });
 
       // Connection event handlers
@@ -65,10 +73,11 @@ export function SocketProvider({ children }: SocketProviderProps) {
           newSocket.emit('join-user-room', session.user.id);
         }
 
-        toast({
-          title: 'Connected',
-          description: 'Real-time features are now available',
-        });
+        // Optionally show toast notification (disabled by default to avoid noise)
+        // toast({
+        //   title: 'Connected',
+        //   description: 'Real-time features are now available',
+        // });
       });
 
       newSocket.on('disconnect', (reason) => {
@@ -82,24 +91,13 @@ export function SocketProvider({ children }: SocketProviderProps) {
       });
 
       newSocket.on('connect_error', (error) => {
-        console.error('Socket connection error:', error);
+        // Silently handle connection errors - real-time features are optional
         setConnectionError(error.message);
         setIsConnected(false);
 
-        // Exponential backoff for reconnection
-        if (reconnectAttemptsRef.current < maxReconnectAttempts) {
-          const delay = Math.pow(2, reconnectAttemptsRef.current) * 1000;
-          reconnectTimeoutRef.current = setTimeout(() => {
-            reconnectAttemptsRef.current++;
-            newSocket.connect();
-          }, delay);
-        } else {
-          toast({
-            title: 'Connection Failed',
-            description: 'Unable to connect to real-time services. Some features may be limited.',
-            variant: 'destructive',
-          });
-        }
+        // Disconnect completely to stop retry attempts
+        newSocket.disconnect();
+        setSocket(null);
       });
 
       // Real-time event handlers
@@ -280,7 +278,20 @@ export function useChat(chatId?: string) {
 
 // Hook for notifications
 export function useNotifications() {
-  const { socket, isConnected } = useSocket();
+  const context = React.useContext(SocketContext);
+
+  // Return safe defaults if context is not available (SSR or outside provider)
+  if (!context) {
+    return {
+      notifications: [],
+      unreadCount: 0,
+      markAsRead: () => {},
+      markAllAsRead: () => {},
+      isConnected: false,
+    };
+  }
+
+  const { socket, isConnected } = context;
   const [notifications, setNotifications] = React.useState<any[]>([]);
   const [unreadCount, setUnreadCount] = React.useState(0);
 

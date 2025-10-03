@@ -1,6 +1,15 @@
 # GrabtoGo - Multi-Vendor Marketplace
 
-A production-grade multi-vendor marketplace built with Next.js 14, PostgreSQL, Redis, and Razorpay integration.
+A production-grade multi-vendor marketplace built with Next.js 14, Supabase (PostgreSQL + Storage), Redis, and Razorpay integration.
+
+## ✅ **Current Status: OPERATIONAL (Verified 2025-10-02)**
+
+- ✅ **Vendor Registration Flow** - Fully functional
+- ✅ **Admin Dashboard** - Operational with real-time data
+- ✅ **Supabase Database** - Connected and stable
+- ✅ **Supabase Storage** - File uploads working
+- ✅ **Payment Integration** - Razorpay operational
+- ✅ **Production Ready** - All core features verified
 
 ## 🚀 Features
 
@@ -32,9 +41,10 @@ A production-grade multi-vendor marketplace built with Next.js 14, PostgreSQL, R
 - **Lucide React** icons
 - **React Hook Form** with Zod validation
 
-### Database
+### Database & Storage
 
-- **PostgreSQL** with PostGIS extension
+- **Supabase PostgreSQL** with PostGIS extension
+- **Supabase Storage** for file uploads and documents
 - **Redis** for caching and sessions
 
 ## 🏗️ Project Structure
@@ -62,8 +72,8 @@ src/
 ### Prerequisites
 
 - Node.js 18+
-- PostgreSQL database
-- Redis server
+- Supabase account (for database and storage)
+- Redis server (optional for caching)
 - Razorpay account (for payments)
 
 ### Installation
@@ -89,25 +99,42 @@ src/
 
    Fill in your environment variables in `.env`
 
-4. **Set up the database**
+4. **Set up Supabase**
+
+   - Create a project at [supabase.com](https://supabase.com)
+   - Enable PostGIS extension in SQL Editor: `CREATE EXTENSION IF NOT EXISTS postgis;`
+   - Create storage buckets: `vendor-documents`, `vendor-logos`, `vendor-photos`, `product-images`
+   - Update `.env` with Supabase credentials
+
+5. **Set up the database**
 
    ```bash
    # Generate Prisma client
    npx prisma generate
 
-   # Run migrations
+   # Run migrations via Supabase SQL Editor or:
    npx prisma migrate dev --name init
 
-   # Seed the database (optional)
-   npx prisma db seed
+   # Create admin user
+   npm run create-admin
    ```
 
-5. **Start the development server**
+6. **Start the development server**
    ```bash
    npm run dev
    ```
 
 Visit [http://localhost:3000](http://localhost:3000) to see the application.
+
+### Admin Access
+
+After setup, access the admin dashboard:
+
+- URL: [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
+- Email: `info@grabtogo.in`
+- Password: `admin`
+
+The admin dashboard provides complete control over vendor management, approvals, and platform operations.
 
 ## 📊 Database Schema
 
@@ -177,16 +204,38 @@ npx prisma migrate deploy
 
 ## 🚀 Deployment
 
-### Railway Deployment
+### Vercel + Supabase Deployment (Recommended)
 
-1. **Connect your repository to Railway**
-2. **Set environment variables**
-3. **Deploy database and Redis**
-4. **Deploy the application**
+1. **Supabase Setup**
+   - Database already hosted on Supabase
+   - Storage buckets configured
+   - PostGIS extension enabled
+
+2. **Deploy to Vercel**
+   - Connect GitHub repository to Vercel
+   - Set environment variables (see `.env.example`)
+   - Deploy automatically on push
 
 ### Environment Variables for Production
 
-Make sure to set all required environment variables from `.env.example` in your production environment.
+Required environment variables:
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+DATABASE_URL=your_supabase_connection_string
+
+# NextAuth
+NEXTAUTH_SECRET=your_secret
+NEXTAUTH_URL=your_production_url
+
+# Razorpay
+RAZORPAY_KEY_ID=your_key_id
+RAZORPAY_KEY_SECRET=your_key_secret
+```
+
+See `.env.example` for complete list.
 
 ## 📱 Mobile App
 
@@ -210,14 +259,29 @@ For support, please create an issue in the GitHub repository or contact the deve
 
 ## 🔮 Roadmap
 
-- [ ] Advanced search with Elasticsearch
+### Completed ✅
+- [x] Vendor registration flow with payment gateway
+- [x] Admin dashboard with vendor management
+- [x] Supabase database and storage integration
+- [x] File upload system with progress tracking
+- [x] Document viewer with signed URLs
+- [x] Real-time vendor approval workflow
+
+### In Progress 🚧
 - [ ] Real-time notifications with WebSockets
 - [ ] Advanced analytics dashboard
+- [ ] Product catalog management
+
+### Planned 📅
+- [ ] Advanced search with full-text indexing
 - [ ] Multi-language support
 - [ ] Advanced vendor commission system
 - [ ] Integration with shipping providers
 - [ ] Mobile app development
+- [ ] PWA enhancements
 
 ---
 
-Built with ❤️ using Next.js 14, PostgreSQL, and modern web technologies.
+**Project Repository**: [github.com/Alex-Invenex/grabtogo](https://github.com/Alex-Invenex/grabtogo)
+**Status**: ✅ Operational (Verified 2025-10-02)
+**Built with**: Next.js 14, Supabase, TypeScript, and modern web technologies

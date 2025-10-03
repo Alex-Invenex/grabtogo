@@ -3,11 +3,21 @@ import { hash } from 'bcryptjs';
 import { db } from '@/lib/db';
 import { sendEmail } from '@/lib/email';
 
+// Force Node.js runtime to prevent Prisma edge/WASM runtime issues
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('[Vendor Registration] Submission request received');
     const formData = await request.json();
+    console.log('[Vendor Registration] Form data received:', {
+      email: formData.email,
+      companyName: formData.companyName,
+      hasGstCertificate: !!formData.gstCertificate,
+      hasLogo: !!formData.logo,
+      hasBanner: !!formData.banner,
+    });
 
     // Validate required fields
     if (
@@ -45,6 +55,7 @@ export async function POST(request: NextRequest) {
     const hashedPassword = await hash(formData.password, 12);
 
     // Create vendor registration request
+    console.log('[Vendor Registration] Creating registration request in database...');
     const registrationRequest = await db.vendorRegistrationRequest.create({
       data: {
         // Personal Information
@@ -98,6 +109,12 @@ export async function POST(request: NextRequest) {
         termsAccepted: formData.termsAccepted || false,
         privacyAccepted: formData.privacyAccepted || false,
       },
+    });
+
+    console.log('[Vendor Registration] ✅ Registration request created successfully:', {
+      id: registrationRequest.id,
+      email: registrationRequest.email,
+      companyName: registrationRequest.companyName,
     });
 
     // Send confirmation email to vendor
@@ -255,7 +272,21 @@ export async function POST(request: NextRequest) {
       requestId: registrationRequest.id,
     });
   } catch (error) {
-    console.error('Error submitting vendor registration:', error);
-    return NextResponse.json({ error: 'Failed to submit registration' }, { status: 500 });
+    console.error('[Vendor Registration] ❌ Error submitting vendor registration:', error);
+
+    // Log detailed error information
+    if (error instanceof Error) {
+      console.error('[Vendor Registration] Error name:', error.name);
+      console.error('[Vendor Registration] Error message:', error.message);
+      console.error('[Vendor Registration] Error stack:', error.stack);
+    }
+
+    // Return user-friendly error message with technical details for debugging
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+
+    return NextResponse.json({
+      error: 'Failed to submit registration',
+      details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+    }, { status: 500 });
   }
 }

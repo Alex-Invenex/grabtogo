@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormContext } from 'react-hook-form';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import {
   Eye,
   Shield,
@@ -22,14 +22,28 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/comp
 import { verifyGST, getStateFromGST } from '../../lib/gstVerification';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
+import { nanoid } from 'nanoid';
+
+interface UploadState {
+  progress: number;
+  uploading: boolean;
+  error: string | null;
+  uploadedBytes: number;
+  totalBytes: number;
+}
 
 export default function GSTDocumentStep() {
   const { control, setValue, watch } = useFormContext();
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationError, setVerificationError] = useState('');
-  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadState, setUploadState] = useState<UploadState>({
+    progress: 0,
+    uploading: false,
+    error: null,
+    uploadedBytes: 0,
+    totalBytes: 0,
+  });
   const [preview, setPreview] = useState<string | null>(null);
-  const [uploadError, setUploadError] = useState('');
 
   const gstNumber = watch('gstNumber');
   const gstVerified = watch('gstVerified');
@@ -66,44 +80,102 @@ export default function GSTDocumentStep() {
     return value.replace(/[^A-Z0-9]/gi, '').toUpperCase();
   };
 
-  const handleFileSelect = (file: File | null) => {
-    if (!file) {
-      setValue('gstCertificate', null);
-      setPreview(null);
-      setUploadProgress(0);
-      return;
-    }
+  const handleFileSelect = useCallback(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0] || null;
 
-    const maxSize = 5 * 1024 * 1024; // 5MB
-    const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+      if (!file) {
+        setValue('gstCertificate', null);
+        setPreview(null);
+        setUploadState({ progress: 0, uploading: false, error: null, uploadedBytes: 0, totalBytes: 0 });
+        return;
+      }
 
-    // Validate file size
-    if (file.size > maxSize) {
-      setUploadError(
-        `File size must be less than 5MB. Current size: ${(file.size / (1024 * 1024)).toFixed(2)}MB`
-      );
-      return;
-    }
+      const maxSize = 5 * 1024 * 1024; // 5MB
+      const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
 
-    // Validate file type
-    if (!allowedTypes.includes(file.type)) {
-      setUploadError('Please upload a PDF, JPG, or PNG file only.');
-      return;
-    }
+      // Validate file size
+      if (file.size > maxSize) {
+        setUploadState({
+          progress: 0,
+          uploading: false,
+          error: `File size must be less than 5MB. Current size: ${(file.size / (1024 * 1024)).toFixed(2)}MB`,
+          uploadedBytes: 0,
+          totalBytes: file.size,
+        });
+        event.target.value = '';
+        return;
+      }
 
-    setUploadError('');
+      // Validate file type
+      if (!allowedTypes.includes(file.type)) {
+        setUploadState({
+          progress: 0,
+          uploading: false,
+          error: 'Please upload a PDF, JPG, or PNG file only.',
+          uploadedBytes: 0,
+          totalBytes: file.size,
+        });
+        event.target.value = '';
+        return;
+      }
 
-    // Simulate realistic upload progress
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += Math.random() * 15 + 5; // Random progress between 5-20% each time
-      setUploadProgress(Math.min(progress, 100));
+      // Generate temporary vendor ID
+      const tempVendorId = nanoid();
 
-      if (progress >= 100) {
-        clearInterval(interval);
-        setValue('gstCertificate', file);
+      // Set uploading state
+      setUploadState({
+        progress: 0,
+        uploading: true,
+        error: null,
+        uploadedBytes: 0,
+        totalBytes: file.size,
+      });
 
-        // Create preview for images
+      try {
+        // Create FormData
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('fileType', 'document');
+        formData.append('vendorId', tempVendorId);
+        formData.append('documentType', 'gst');
+
+        // Simulate realistic upload progress
+        const progressInterval = setInterval(() => {
+          setUploadState((prev) => {
+            if (prev.progress < 90) {
+              const increment = Math.random() * 15 + 5;
+              const newProgress = Math.min(prev.progress + increment, 90);
+              const newUploadedBytes = Math.floor((newProgress / 100) * file.size);
+              return {
+                ...prev,
+                progress: newProgress,
+                uploadedBytes: newUploadedBytes,
+              };
+            }
+            return prev;
+          });
+        }, 200);
+
+        // Upload to API
+        const response = await fetch('/api/vendor/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        clearInterval(progressInterval);
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Upload failed');
+        }
+
+        const result = await response.json();
+
+        // Store Supabase URL
+        setValue('gstCertificate', result.url);
+
+        // Show preview for images
         if (file.type.startsWith('image/')) {
           const reader = new FileReader();
           reader.onloadend = () => {
@@ -111,39 +183,76 @@ export default function GSTDocumentStep() {
           };
           reader.readAsDataURL(file);
         } else {
-          setPreview(null); // PDF files don&apos;t show preview
+          setPreview(null); // PDF files don't show preview
         }
-      }
-    }, 200);
-  };
 
-  const removeFile = () => {
+        // Complete upload
+        setUploadState({
+          progress: 100,
+          uploading: false,
+          error: null,
+          uploadedBytes: file.size,
+          totalBytes: file.size,
+        });
+      } catch (error) {
+        console.error('GST certificate upload error:', error);
+        setUploadState({
+          progress: 0,
+          uploading: false,
+          error: error instanceof Error ? error.message : 'Upload failed',
+          uploadedBytes: 0,
+          totalBytes: file.size,
+        });
+        setValue('gstCertificate', null);
+        setPreview(null);
+      }
+
+      // Reset input
+      event.target.value = '';
+    },
+    [setValue]
+  );
+
+  const removeFile = useCallback(() => {
     setValue('gstCertificate', null);
     setPreview(null);
-    setUploadProgress(0);
-    setUploadError('');
-  };
+    setUploadState({ progress: 0, uploading: false, error: null, uploadedBytes: 0, totalBytes: 0 });
+  }, [setValue]);
 
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-  };
+  }, []);
 
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      handleFileSelect(files[0]);
-    }
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        const fakeEvent = {
+          target: { files, value: '' },
+        } as unknown as React.ChangeEvent<HTMLInputElement>;
+        handleFileSelect(fakeEvent);
+      }
+    },
+    [handleFileSelect]
+  );
+
+  const formatBytes = (bytes: number) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
   };
 
   return (
     <div className="space-y-8">
       <div className="text-center">
         <h2 className="text-2xl font-semibold text-gray-900">GST Verification & Document</h2>
-        <p className="text-gray-600 mt-1">Verify your GST details and upload certificate</p>
+        <p className="text-gray-600 mt-1">Verify your GST details and upload to Supabase Storage</p>
       </div>
 
       {/* GST Verification Section */}
@@ -289,7 +398,7 @@ export default function GSTDocumentStep() {
         <div className="space-y-6">
           <div className="flex items-center gap-2 text-lg font-medium text-primary">
             <FileText className="w-5 h-5" />
-            <span>Step 2: Upload GST Certificate</span>
+            <span>Step 2: Upload GST Certificate to Supabase</span>
           </div>
 
           <FormField
@@ -320,13 +429,14 @@ export default function GSTDocumentStep() {
                           type="file"
                           className="hidden"
                           accept=".pdf,.jpg,.jpeg,.png"
-                          onChange={(e) => handleFileSelect(e.target.files?.[0] || null)}
+                          onChange={handleFileSelect}
+                          disabled={uploadState.uploading}
                         />
                       </label>
                     ) : (
                       <div className="relative p-4 border-2 border-green-300 rounded-xl bg-green-50">
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-4 flex-1">
                             {preview ? (
                               <img
                                 src={preview}
@@ -338,25 +448,36 @@ export default function GSTDocumentStep() {
                                 <FileText className="w-8 h-8 text-gray-500" />
                               </div>
                             )}
-                            <div>
-                              <p className="font-medium text-gray-900">
-                                {(gstCertificate as File).name}
-                              </p>
-                              <p className="text-sm text-gray-500">
-                                {((gstCertificate as File).size / (1024 * 1024)).toFixed(2)} MB
-                              </p>
-                              {uploadProgress > 0 && uploadProgress < 100 && (
-                                <Progress value={uploadProgress} className="w-40 h-2 mt-2" />
+                            <div className="flex-1">
+                              <p className="font-medium text-gray-900">GST Certificate</p>
+                              {uploadState.totalBytes > 0 && (
+                                <div className="space-y-1 mt-1">
+                                  <p className="text-sm text-gray-500">
+                                    {formatBytes(uploadState.uploadedBytes)} /{' '}
+                                    {formatBytes(uploadState.totalBytes)}
+                                  </p>
+                                  {uploadState.uploading && (
+                                    <>
+                                      <Progress value={uploadState.progress} className="h-2" />
+                                      <div className="flex items-center gap-2 text-blue-600">
+                                        <Loader2 className="w-3 h-3 animate-spin" />
+                                        <span className="text-xs">
+                                          Uploading to Supabase... {uploadState.progress.toFixed(0)}%
+                                        </span>
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
                               )}
                             </div>
                           </div>
                           <div className="flex gap-2">
-                            {preview && (
+                            {gstCertificate && !uploadState.uploading && (
                               <Button
                                 type="button"
                                 variant="ghost"
                                 size="sm"
-                                onClick={() => window.open(preview, '_blank')}
+                                onClick={() => window.open(gstCertificate, '_blank')}
                               >
                                 <Eye className="w-4 h-4" />
                               </Button>
@@ -367,24 +488,25 @@ export default function GSTDocumentStep() {
                               size="sm"
                               onClick={removeFile}
                               className="text-red-600 hover:text-red-700"
+                              disabled={uploadState.uploading}
                             >
                               <X className="w-4 h-4" />
                             </Button>
                           </div>
                         </div>
-                        {uploadProgress === 100 && (
+                        {uploadState.progress === 100 && !uploadState.uploading && (
                           <div className="flex items-center gap-2 mt-3 text-green-600">
                             <Check className="w-4 h-4" />
-                            <span className="text-sm font-medium">Upload complete</span>
+                            <span className="text-sm font-medium">Uploaded to Supabase Storage</span>
                           </div>
                         )}
                       </div>
                     )}
 
-                    {uploadError && (
+                    {uploadState.error && (
                       <Alert className="border-red-200 bg-red-50">
                         <XCircle className="h-4 w-4 text-red-600" />
-                        <AlertDescription className="text-red-800">{uploadError}</AlertDescription>
+                        <AlertDescription className="text-red-800">{uploadState.error}</AlertDescription>
                       </Alert>
                     )}
                   </div>
@@ -397,7 +519,7 @@ export default function GSTDocumentStep() {
           <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
             <p className="text-sm text-primary/80">
               <strong>Note:</strong> Upload a clear copy of your GST certificate. This document will
-              be verified by our team to ensure authenticity.
+              be stored securely in Supabase and verified by our team to ensure authenticity.
             </p>
           </div>
         </div>

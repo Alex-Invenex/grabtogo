@@ -5,6 +5,7 @@ import { cache } from '@/lib/redis';
 import { UserRole } from '@/lib/prisma';
 import { z } from 'zod';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const updateVendorSchema = z.object({

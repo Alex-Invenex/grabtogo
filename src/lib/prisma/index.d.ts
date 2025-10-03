@@ -220,6 +220,15 @@ export const PaymentStatus: {
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
 
 
+export const RegistrationStatus: {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+};
+
+export type RegistrationStatus = (typeof RegistrationStatus)[keyof typeof RegistrationStatus]
+
+
 export const TicketStatus: {
   OPEN: 'OPEN',
   IN_PROGRESS: 'IN_PROGRESS',
@@ -273,6 +282,10 @@ export const OrderStatus: typeof $Enums.OrderStatus
 export type PaymentStatus = $Enums.PaymentStatus
 
 export const PaymentStatus: typeof $Enums.PaymentStatus
+
+export type RegistrationStatus = $Enums.RegistrationStatus
+
+export const RegistrationStatus: typeof $Enums.RegistrationStatus
 
 export type TicketStatus = $Enums.TicketStatus
 
@@ -33387,9 +33400,11 @@ export namespace Prisma {
     billingCycle: string | null
     termsAccepted: boolean | null
     privacyAccepted: boolean | null
-    status: string | null
-    reviewedBy: string | null
-    reviewedAt: Date | null
+    status: $Enums.RegistrationStatus | null
+    approvedBy: string | null
+    approvedAt: Date | null
+    rejectedBy: string | null
+    rejectedAt: Date | null
     rejectionReason: string | null
     adminNotes: string | null
     createdAt: Date | null
@@ -33431,9 +33446,11 @@ export namespace Prisma {
     billingCycle: string | null
     termsAccepted: boolean | null
     privacyAccepted: boolean | null
-    status: string | null
-    reviewedBy: string | null
-    reviewedAt: Date | null
+    status: $Enums.RegistrationStatus | null
+    approvedBy: string | null
+    approvedAt: Date | null
+    rejectedBy: string | null
+    rejectedAt: Date | null
     rejectionReason: string | null
     adminNotes: string | null
     createdAt: Date | null
@@ -33478,8 +33495,10 @@ export namespace Prisma {
     termsAccepted: number
     privacyAccepted: number
     status: number
-    reviewedBy: number
-    reviewedAt: number
+    approvedBy: number
+    approvedAt: number
+    rejectedBy: number
+    rejectedAt: number
     rejectionReason: number
     adminNotes: number
     createdAt: number
@@ -33538,8 +33557,10 @@ export namespace Prisma {
     termsAccepted?: true
     privacyAccepted?: true
     status?: true
-    reviewedBy?: true
-    reviewedAt?: true
+    approvedBy?: true
+    approvedAt?: true
+    rejectedBy?: true
+    rejectedAt?: true
     rejectionReason?: true
     adminNotes?: true
     createdAt?: true
@@ -33582,8 +33603,10 @@ export namespace Prisma {
     termsAccepted?: true
     privacyAccepted?: true
     status?: true
-    reviewedBy?: true
-    reviewedAt?: true
+    approvedBy?: true
+    approvedAt?: true
+    rejectedBy?: true
+    rejectedAt?: true
     rejectionReason?: true
     adminNotes?: true
     createdAt?: true
@@ -33628,8 +33651,10 @@ export namespace Prisma {
     termsAccepted?: true
     privacyAccepted?: true
     status?: true
-    reviewedBy?: true
-    reviewedAt?: true
+    approvedBy?: true
+    approvedAt?: true
+    rejectedBy?: true
+    rejectedAt?: true
     rejectionReason?: true
     adminNotes?: true
     createdAt?: true
@@ -33760,9 +33785,11 @@ export namespace Prisma {
     addOns: JsonValue | null
     termsAccepted: boolean
     privacyAccepted: boolean
-    status: string
-    reviewedBy: string | null
-    reviewedAt: Date | null
+    status: $Enums.RegistrationStatus
+    approvedBy: string | null
+    approvedAt: Date | null
+    rejectedBy: string | null
+    rejectedAt: Date | null
     rejectionReason: string | null
     adminNotes: string | null
     createdAt: Date
@@ -33826,8 +33853,10 @@ export namespace Prisma {
     termsAccepted?: boolean
     privacyAccepted?: boolean
     status?: boolean
-    reviewedBy?: boolean
-    reviewedAt?: boolean
+    approvedBy?: boolean
+    approvedAt?: boolean
+    rejectedBy?: boolean
+    rejectedAt?: boolean
     rejectionReason?: boolean
     adminNotes?: boolean
     createdAt?: boolean
@@ -33872,8 +33901,10 @@ export namespace Prisma {
     termsAccepted?: boolean
     privacyAccepted?: boolean
     status?: boolean
-    reviewedBy?: boolean
-    reviewedAt?: boolean
+    approvedBy?: boolean
+    approvedAt?: boolean
+    rejectedBy?: boolean
+    rejectedAt?: boolean
     rejectionReason?: boolean
     adminNotes?: boolean
     createdAt?: boolean
@@ -33918,8 +33949,10 @@ export namespace Prisma {
     termsAccepted?: boolean
     privacyAccepted?: boolean
     status?: boolean
-    reviewedBy?: boolean
-    reviewedAt?: boolean
+    approvedBy?: boolean
+    approvedAt?: boolean
+    rejectedBy?: boolean
+    rejectedAt?: boolean
     rejectionReason?: boolean
     adminNotes?: boolean
     createdAt?: boolean
@@ -33964,15 +33997,17 @@ export namespace Prisma {
     termsAccepted?: boolean
     privacyAccepted?: boolean
     status?: boolean
-    reviewedBy?: boolean
-    reviewedAt?: boolean
+    approvedBy?: boolean
+    approvedAt?: boolean
+    rejectedBy?: boolean
+    rejectedAt?: boolean
     rejectionReason?: boolean
     adminNotes?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type VendorRegistrationRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "email" | "phone" | "password" | "companyName" | "businessType" | "yearsInBusiness" | "numberOfEmployees" | "businessCategory" | "addressLine1" | "addressLine2" | "city" | "state" | "pinCode" | "landmark" | "latitude" | "longitude" | "deliveryRadius" | "agentCode" | "agentName" | "agentPhone" | "agentVisitDate" | "referenceNotes" | "gstNumber" | "gstVerified" | "gstDetails" | "gstCertificate" | "logo" | "banner" | "tagline" | "selectedPackage" | "billingCycle" | "addOns" | "termsAccepted" | "privacyAccepted" | "status" | "reviewedBy" | "reviewedAt" | "rejectionReason" | "adminNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["vendorRegistrationRequest"]>
+  export type VendorRegistrationRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "email" | "phone" | "password" | "companyName" | "businessType" | "yearsInBusiness" | "numberOfEmployees" | "businessCategory" | "addressLine1" | "addressLine2" | "city" | "state" | "pinCode" | "landmark" | "latitude" | "longitude" | "deliveryRadius" | "agentCode" | "agentName" | "agentPhone" | "agentVisitDate" | "referenceNotes" | "gstNumber" | "gstVerified" | "gstDetails" | "gstCertificate" | "logo" | "banner" | "tagline" | "selectedPackage" | "billingCycle" | "addOns" | "termsAccepted" | "privacyAccepted" | "status" | "approvedBy" | "approvedAt" | "rejectedBy" | "rejectedAt" | "rejectionReason" | "adminNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["vendorRegistrationRequest"]>
 
   export type $VendorRegistrationRequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "VendorRegistrationRequest"
@@ -34014,9 +34049,11 @@ export namespace Prisma {
       addOns: Prisma.JsonValue | null
       termsAccepted: boolean
       privacyAccepted: boolean
-      status: string
-      reviewedBy: string | null
-      reviewedAt: Date | null
+      status: $Enums.RegistrationStatus
+      approvedBy: string | null
+      approvedAt: Date | null
+      rejectedBy: string | null
+      rejectedAt: Date | null
       rejectionReason: string | null
       adminNotes: string | null
       createdAt: Date
@@ -34480,9 +34517,11 @@ export namespace Prisma {
     readonly addOns: FieldRef<"VendorRegistrationRequest", 'Json'>
     readonly termsAccepted: FieldRef<"VendorRegistrationRequest", 'Boolean'>
     readonly privacyAccepted: FieldRef<"VendorRegistrationRequest", 'Boolean'>
-    readonly status: FieldRef<"VendorRegistrationRequest", 'String'>
-    readonly reviewedBy: FieldRef<"VendorRegistrationRequest", 'String'>
-    readonly reviewedAt: FieldRef<"VendorRegistrationRequest", 'DateTime'>
+    readonly status: FieldRef<"VendorRegistrationRequest", 'RegistrationStatus'>
+    readonly approvedBy: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly approvedAt: FieldRef<"VendorRegistrationRequest", 'DateTime'>
+    readonly rejectedBy: FieldRef<"VendorRegistrationRequest", 'String'>
+    readonly rejectedAt: FieldRef<"VendorRegistrationRequest", 'DateTime'>
     readonly rejectionReason: FieldRef<"VendorRegistrationRequest", 'String'>
     readonly adminNotes: FieldRef<"VendorRegistrationRequest", 'String'>
     readonly createdAt: FieldRef<"VendorRegistrationRequest", 'DateTime'>
@@ -46013,8 +46052,10 @@ export namespace Prisma {
     termsAccepted: 'termsAccepted',
     privacyAccepted: 'privacyAccepted',
     status: 'status',
-    reviewedBy: 'reviewedBy',
-    reviewedAt: 'reviewedAt',
+    approvedBy: 'approvedBy',
+    approvedAt: 'approvedAt',
+    rejectedBy: 'rejectedBy',
+    rejectedAt: 'rejectedAt',
     rejectionReason: 'rejectionReason',
     adminNotes: 'adminNotes',
     createdAt: 'createdAt',
@@ -46359,6 +46400,20 @@ export namespace Prisma {
    * Reference to a field of type 'PaymentStatus[]'
    */
   export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'RegistrationStatus'
+   */
+  export type EnumRegistrationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RegistrationStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'RegistrationStatus[]'
+   */
+  export type ListEnumRegistrationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RegistrationStatus[]'>
     
 
 
@@ -48581,9 +48636,11 @@ export namespace Prisma {
     addOns?: JsonNullableFilter<"VendorRegistrationRequest">
     termsAccepted?: BoolFilter<"VendorRegistrationRequest"> | boolean
     privacyAccepted?: BoolFilter<"VendorRegistrationRequest"> | boolean
-    status?: StringFilter<"VendorRegistrationRequest"> | string
-    reviewedBy?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
-    reviewedAt?: DateTimeNullableFilter<"VendorRegistrationRequest"> | Date | string | null
+    status?: EnumRegistrationStatusFilter<"VendorRegistrationRequest"> | $Enums.RegistrationStatus
+    approvedBy?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    approvedAt?: DateTimeNullableFilter<"VendorRegistrationRequest"> | Date | string | null
+    rejectedBy?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    rejectedAt?: DateTimeNullableFilter<"VendorRegistrationRequest"> | Date | string | null
     rejectionReason?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
     adminNotes?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
     createdAt?: DateTimeFilter<"VendorRegistrationRequest"> | Date | string
@@ -48628,8 +48685,10 @@ export namespace Prisma {
     termsAccepted?: SortOrder
     privacyAccepted?: SortOrder
     status?: SortOrder
-    reviewedBy?: SortOrderInput | SortOrder
-    reviewedAt?: SortOrderInput | SortOrder
+    approvedBy?: SortOrderInput | SortOrder
+    approvedAt?: SortOrderInput | SortOrder
+    rejectedBy?: SortOrderInput | SortOrder
+    rejectedAt?: SortOrderInput | SortOrder
     rejectionReason?: SortOrderInput | SortOrder
     adminNotes?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -48676,9 +48735,11 @@ export namespace Prisma {
     addOns?: JsonNullableFilter<"VendorRegistrationRequest">
     termsAccepted?: BoolFilter<"VendorRegistrationRequest"> | boolean
     privacyAccepted?: BoolFilter<"VendorRegistrationRequest"> | boolean
-    status?: StringFilter<"VendorRegistrationRequest"> | string
-    reviewedBy?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
-    reviewedAt?: DateTimeNullableFilter<"VendorRegistrationRequest"> | Date | string | null
+    status?: EnumRegistrationStatusFilter<"VendorRegistrationRequest"> | $Enums.RegistrationStatus
+    approvedBy?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    approvedAt?: DateTimeNullableFilter<"VendorRegistrationRequest"> | Date | string | null
+    rejectedBy?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
+    rejectedAt?: DateTimeNullableFilter<"VendorRegistrationRequest"> | Date | string | null
     rejectionReason?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
     adminNotes?: StringNullableFilter<"VendorRegistrationRequest"> | string | null
     createdAt?: DateTimeFilter<"VendorRegistrationRequest"> | Date | string
@@ -48723,8 +48784,10 @@ export namespace Prisma {
     termsAccepted?: SortOrder
     privacyAccepted?: SortOrder
     status?: SortOrder
-    reviewedBy?: SortOrderInput | SortOrder
-    reviewedAt?: SortOrderInput | SortOrder
+    approvedBy?: SortOrderInput | SortOrder
+    approvedAt?: SortOrderInput | SortOrder
+    rejectedBy?: SortOrderInput | SortOrder
+    rejectedAt?: SortOrderInput | SortOrder
     rejectionReason?: SortOrderInput | SortOrder
     adminNotes?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -48776,9 +48839,11 @@ export namespace Prisma {
     addOns?: JsonNullableWithAggregatesFilter<"VendorRegistrationRequest">
     termsAccepted?: BoolWithAggregatesFilter<"VendorRegistrationRequest"> | boolean
     privacyAccepted?: BoolWithAggregatesFilter<"VendorRegistrationRequest"> | boolean
-    status?: StringWithAggregatesFilter<"VendorRegistrationRequest"> | string
-    reviewedBy?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
-    reviewedAt?: DateTimeNullableWithAggregatesFilter<"VendorRegistrationRequest"> | Date | string | null
+    status?: EnumRegistrationStatusWithAggregatesFilter<"VendorRegistrationRequest"> | $Enums.RegistrationStatus
+    approvedBy?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    approvedAt?: DateTimeNullableWithAggregatesFilter<"VendorRegistrationRequest"> | Date | string | null
+    rejectedBy?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
+    rejectedAt?: DateTimeNullableWithAggregatesFilter<"VendorRegistrationRequest"> | Date | string | null
     rejectionReason?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
     adminNotes?: StringNullableWithAggregatesFilter<"VendorRegistrationRequest"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"VendorRegistrationRequest"> | Date | string
@@ -51991,9 +52056,11 @@ export namespace Prisma {
     addOns?: NullableJsonNullValueInput | InputJsonValue
     termsAccepted?: boolean
     privacyAccepted?: boolean
-    status?: string
-    reviewedBy?: string | null
-    reviewedAt?: Date | string | null
+    status?: $Enums.RegistrationStatus
+    approvedBy?: string | null
+    approvedAt?: Date | string | null
+    rejectedBy?: string | null
+    rejectedAt?: Date | string | null
     rejectionReason?: string | null
     adminNotes?: string | null
     createdAt?: Date | string
@@ -52037,9 +52104,11 @@ export namespace Prisma {
     addOns?: NullableJsonNullValueInput | InputJsonValue
     termsAccepted?: boolean
     privacyAccepted?: boolean
-    status?: string
-    reviewedBy?: string | null
-    reviewedAt?: Date | string | null
+    status?: $Enums.RegistrationStatus
+    approvedBy?: string | null
+    approvedAt?: Date | string | null
+    rejectedBy?: string | null
+    rejectedAt?: Date | string | null
     rejectionReason?: string | null
     adminNotes?: string | null
     createdAt?: Date | string
@@ -52083,9 +52152,11 @@ export namespace Prisma {
     addOns?: NullableJsonNullValueInput | InputJsonValue
     termsAccepted?: BoolFieldUpdateOperationsInput | boolean
     privacyAccepted?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
-    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+    approvedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52129,9 +52200,11 @@ export namespace Prisma {
     addOns?: NullableJsonNullValueInput | InputJsonValue
     termsAccepted?: BoolFieldUpdateOperationsInput | boolean
     privacyAccepted?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
-    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+    approvedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52175,9 +52248,11 @@ export namespace Prisma {
     addOns?: NullableJsonNullValueInput | InputJsonValue
     termsAccepted?: boolean
     privacyAccepted?: boolean
-    status?: string
-    reviewedBy?: string | null
-    reviewedAt?: Date | string | null
+    status?: $Enums.RegistrationStatus
+    approvedBy?: string | null
+    approvedAt?: Date | string | null
+    rejectedBy?: string | null
+    rejectedAt?: Date | string | null
     rejectionReason?: string | null
     adminNotes?: string | null
     createdAt?: Date | string
@@ -52221,9 +52296,11 @@ export namespace Prisma {
     addOns?: NullableJsonNullValueInput | InputJsonValue
     termsAccepted?: BoolFieldUpdateOperationsInput | boolean
     privacyAccepted?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
-    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+    approvedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52267,9 +52344,11 @@ export namespace Prisma {
     addOns?: NullableJsonNullValueInput | InputJsonValue
     termsAccepted?: BoolFieldUpdateOperationsInput | boolean
     privacyAccepted?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
-    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+    approvedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rejectedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    rejectedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     rejectionReason?: NullableStringFieldUpdateOperationsInput | string | null
     adminNotes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55041,6 +55120,13 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type EnumRegistrationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.RegistrationStatus | EnumRegistrationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RegistrationStatus[] | ListEnumRegistrationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RegistrationStatus[] | ListEnumRegistrationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRegistrationStatusFilter<$PrismaModel> | $Enums.RegistrationStatus
+  }
+
   export type VendorRegistrationRequestCountOrderByAggregateInput = {
     id?: SortOrder
     fullName?: SortOrder
@@ -55079,8 +55165,10 @@ export namespace Prisma {
     termsAccepted?: SortOrder
     privacyAccepted?: SortOrder
     status?: SortOrder
-    reviewedBy?: SortOrder
-    reviewedAt?: SortOrder
+    approvedBy?: SortOrder
+    approvedAt?: SortOrder
+    rejectedBy?: SortOrder
+    rejectedAt?: SortOrder
     rejectionReason?: SortOrder
     adminNotes?: SortOrder
     createdAt?: SortOrder
@@ -55130,8 +55218,10 @@ export namespace Prisma {
     termsAccepted?: SortOrder
     privacyAccepted?: SortOrder
     status?: SortOrder
-    reviewedBy?: SortOrder
-    reviewedAt?: SortOrder
+    approvedBy?: SortOrder
+    approvedAt?: SortOrder
+    rejectedBy?: SortOrder
+    rejectedAt?: SortOrder
     rejectionReason?: SortOrder
     adminNotes?: SortOrder
     createdAt?: SortOrder
@@ -55174,8 +55264,10 @@ export namespace Prisma {
     termsAccepted?: SortOrder
     privacyAccepted?: SortOrder
     status?: SortOrder
-    reviewedBy?: SortOrder
-    reviewedAt?: SortOrder
+    approvedBy?: SortOrder
+    approvedAt?: SortOrder
+    rejectedBy?: SortOrder
+    rejectedAt?: SortOrder
     rejectionReason?: SortOrder
     adminNotes?: SortOrder
     createdAt?: SortOrder
@@ -55203,6 +55295,16 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type EnumRegistrationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RegistrationStatus | EnumRegistrationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RegistrationStatus[] | ListEnumRegistrationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RegistrationStatus[] | ListEnumRegistrationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRegistrationStatusWithAggregatesFilter<$PrismaModel> | $Enums.RegistrationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRegistrationStatusFilter<$PrismaModel>
+    _max?: NestedEnumRegistrationStatusFilter<$PrismaModel>
   }
 
   export type SubscriptionPaymentListRelationFilter = {
@@ -58093,6 +58195,10 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type EnumRegistrationStatusFieldUpdateOperationsInput = {
+    set?: $Enums.RegistrationStatus
+  }
+
   export type UserCreateNestedOneWithoutVendorSubscriptionInput = {
     create?: XOR<UserCreateWithoutVendorSubscriptionInput, UserUncheckedCreateWithoutVendorSubscriptionInput>
     connectOrCreate?: UserCreateOrConnectWithoutVendorSubscriptionInput
@@ -58793,6 +58899,13 @@ export namespace Prisma {
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumRegistrationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.RegistrationStatus | EnumRegistrationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RegistrationStatus[] | ListEnumRegistrationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RegistrationStatus[] | ListEnumRegistrationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRegistrationStatusFilter<$PrismaModel> | $Enums.RegistrationStatus
+  }
+
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -58807,6 +58920,16 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedEnumRegistrationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RegistrationStatus | EnumRegistrationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RegistrationStatus[] | ListEnumRegistrationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RegistrationStatus[] | ListEnumRegistrationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRegistrationStatusWithAggregatesFilter<$PrismaModel> | $Enums.RegistrationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRegistrationStatusFilter<$PrismaModel>
+    _max?: NestedEnumRegistrationStatusFilter<$PrismaModel>
   }
 
   export type NestedEnumTicketStatusFilter<$PrismaModel = never> = {

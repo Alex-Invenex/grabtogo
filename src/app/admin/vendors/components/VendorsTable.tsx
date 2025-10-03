@@ -61,62 +61,6 @@ interface VendorsTableProps {
   searchQuery: string;
 }
 
-// Mock data - replace with actual API call
-const mockVendors: Vendor[] = [
-  {
-    id: '1',
-    companyName: 'Fresh Foods Market',
-    ownerName: 'Rajesh Kumar',
-    email: 'rajesh@freshfoods.com',
-    phone: '+91 98765 43210',
-    city: 'Thiruvananthapuram',
-    businessType: 'Grocery Store',
-    status: 'ACTIVE',
-    subscriptionPlan: 'PREMIUM',
-    registrationDate: '2024-01-15',
-    lastActive: '2024-01-28T14:30:00Z',
-    totalOrders: 1247,
-    monthlyRevenue: 125000,
-    rating: 4.8,
-    logo: '/vendors/fresh-foods.jpg',
-    gstVerified: true,
-  },
-  {
-    id: '2',
-    companyName: 'Spice Paradise',
-    ownerName: 'Priya Sharma',
-    email: 'priya@spiceparadise.com',
-    phone: '+91 87654 32109',
-    city: 'Kochi',
-    businessType: 'Restaurant',
-    status: 'ACTIVE',
-    subscriptionPlan: 'BASIC',
-    registrationDate: '2024-01-20',
-    lastActive: '2024-01-28T12:15:00Z',
-    totalOrders: 892,
-    monthlyRevenue: 75000,
-    rating: 4.6,
-    gstVerified: true,
-  },
-  {
-    id: '3',
-    companyName: 'Urban Kitchen',
-    ownerName: 'Amit Singh',
-    email: 'amit@urbankitchen.com',
-    phone: '+91 76543 21098',
-    city: 'Kozhikode',
-    businessType: 'Cloud Kitchen',
-    status: 'PENDING',
-    subscriptionPlan: 'BASIC',
-    registrationDate: '2024-01-25',
-    lastActive: '2024-01-27T18:45:00Z',
-    totalOrders: 0,
-    monthlyRevenue: 0,
-    rating: 0,
-    gstVerified: false,
-  },
-];
-
 export default function VendorsTable({ status, searchQuery }: VendorsTableProps) {
   const [vendors, setVendors] = useState<Vendor[]>([]);
   const [loading, setLoading] = useState(true);
@@ -126,31 +70,99 @@ export default function VendorsTable({ status, searchQuery }: VendorsTableProps)
   useEffect(() => {
     const fetchVendors = async () => {
       setLoading(true);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      try {
+        let allVendors: Vendor[] = [];
 
-      let filteredVendors = mockVendors;
+        // Fetch pending vendor registration requests
+        if (status === 'all' || status === 'PENDING') {
+          const regResponse = await fetch('/api/admin/vendor-registrations');
+          if (regResponse.ok) {
+            const regData = await regResponse.json();
+            const pendingVendors = regData.requests
+              .filter((req: any) => req.status === 'pending')
+              .map((req: any) => ({
+                id: req.id,
+                companyName: req.companyName,
+                ownerName: req.fullName,
+                email: req.email,
+                phone: req.phone,
+                city: req.city,
+                businessType: req.businessType || req.businessCategory || 'Not specified',
+                status: 'PENDING' as const,
+                subscriptionPlan: req.selectedPackage?.toUpperCase() || 'BASIC' as const,
+                registrationDate: req.createdAt,
+                lastActive: req.createdAt,
+                totalOrders: 0,
+                monthlyRevenue: 0,
+                rating: 0,
+                logo: req.logo,
+                gstVerified: req.gstVerified || false,
+              }));
+            allVendors = [...allVendors, ...pendingVendors];
+          }
+        }
 
-      // Filter by status
-      if (status !== 'all') {
-        filteredVendors = filteredVendors.filter((vendor) => vendor.status === status);
+        // Fetch approved vendors (users with vendor role)
+        if (status === 'all' || status !== 'PENDING') {
+          const vendorResponse = await fetch(`/api/admin/vendors?status=${status}`);
+          if (vendorResponse.ok) {
+            const vendorData = await vendorResponse.json();
+            const approvedVendors = vendorData.vendors.map((vendor: any) => {
+              // Determine vendor status
+              let vendorStatus: 'ACTIVE' | 'PENDING' | 'SUSPENDED' | 'INACTIVE' = 'INACTIVE';
+              if (vendor.vendorProfile) {
+                if (vendor.vendorProfile.isVerified && vendor.vendorProfile.isActive) {
+                  vendorStatus = 'ACTIVE';
+                } else if (!vendor.vendorProfile.isActive) {
+                  vendorStatus = 'SUSPENDED';
+                } else if (!vendor.vendorProfile.isVerified) {
+                  vendorStatus = 'INACTIVE';
+                }
+              }
+
+              return {
+                id: vendor.id,
+                companyName: vendor.vendorProfile?.storeName || vendor.name || 'Unknown',
+                ownerName: vendor.name || 'Unknown',
+                email: vendor.email,
+                phone: vendor.phone || 'N/A',
+                city: vendor.vendorProfile?.city || 'N/A',
+                businessType: vendor.vendorProfile?.description || 'Not specified',
+                status: vendorStatus,
+                subscriptionPlan: vendor.vendorSubscription?.planType?.toUpperCase() || 'BASIC',
+                registrationDate: vendor.createdAt,
+                lastActive: vendor.updatedAt || vendor.createdAt,
+                totalOrders: vendor._count?.orders || 0,
+                monthlyRevenue: 0, // Would need analytics data
+                rating: 0, // Would need reviews data
+                logo: vendor.vendorProfile?.logoUrl || vendor.image,
+                gstVerified: vendor.vendorProfile?.isVerified || false,
+              };
+            });
+            allVendors = [...allVendors, ...approvedVendors];
+          }
+        }
+
+        // Apply search filter
+        if (searchQuery) {
+          allVendors = allVendors.filter(
+            (vendor) =>
+              vendor.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              vendor.ownerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              vendor.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              vendor.phone.includes(searchQuery) ||
+              vendor.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              vendor.businessType.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+        }
+
+        setVendors(allVendors);
+      } catch (error) {
+        console.error('Error fetching vendors:', error);
+        setVendors([]);
+      } finally {
+        setLoading(false);
       }
-
-      // Filter by search query
-      if (searchQuery) {
-        filteredVendors = filteredVendors.filter(
-          (vendor) =>
-            vendor.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            vendor.ownerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            vendor.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            vendor.phone.includes(searchQuery) ||
-            vendor.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            vendor.businessType.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-      }
-
-      setVendors(filteredVendors);
-      setLoading(false);
     };
 
     fetchVendors();

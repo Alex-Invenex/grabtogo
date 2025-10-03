@@ -29,6 +29,8 @@ export function PWAInstaller() {
   const [isStandalone, setIsStandalone] = React.useState(false);
   const [showIOSInstructions, setShowIOSInstructions] = React.useState(false);
   const [isRecentlyDismissed, setIsRecentlyDismissed] = React.useState(false);
+  const [showUpdatePrompt, setShowUpdatePrompt] = React.useState(false);
+  const [waitingWorker, setWaitingWorker] = React.useState<ServiceWorker | null>(null);
 
   React.useEffect(() => {
     // Check if it's iOS
@@ -89,18 +91,30 @@ export function PWAInstaller() {
             if (newWorker) {
               newWorker.addEventListener('statechange', () => {
                 if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                  // New update available
-                  console.log(
-                    'New content is available and will be used when all tabs for this page are closed.'
-                  );
+                  // New update available - show prompt to user
+                  console.log('New version available! Prompting user to update...');
+                  setWaitingWorker(newWorker);
+                  setShowUpdatePrompt(true);
                 }
               });
             }
           });
+
+          // Check for waiting service worker on page load
+          if (registration.waiting) {
+            setWaitingWorker(registration.waiting);
+            setShowUpdatePrompt(true);
+          }
         })
         .catch((error) => {
           console.log('Service Worker registration failed:', error);
         });
+
+      // Listen for controller change (when SW is activated)
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        console.log('New service worker activated, reloading page...');
+        window.location.reload();
+      });
     }
   }, []);
 
@@ -140,6 +154,76 @@ export function PWAInstaller() {
   const dismissIOSInstructions = () => {
     setShowIOSInstructions(false);
   };
+
+  const handleUpdate = () => {
+    if (waitingWorker) {
+      // Tell the waiting service worker to skip waiting and activate immediately
+      waitingWorker.postMessage({ type: 'SKIP_WAITING' });
+      setShowUpdatePrompt(false);
+    }
+  };
+
+  const dismissUpdatePrompt = () => {
+    setShowUpdatePrompt(false);
+    // Show again after 1 hour
+    setTimeout(() => {
+      if (waitingWorker) {
+        setShowUpdatePrompt(true);
+      }
+    }, 60 * 60 * 1000);
+  };
+
+  // Update prompt takes priority over install prompt
+  if (showUpdatePrompt) {
+    return (
+      <div className="fixed bottom-4 left-4 right-4 z-50 flex justify-center">
+        <Card className="w-full max-w-sm animate-in slide-in-from-bottom duration-300 border-primary shadow-lg">
+          <CardContent className="p-4">
+            <div className="flex items-start space-x-3">
+              <div className="flex-shrink-0">
+                <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center animate-pulse">
+                  <Download className="h-5 w-5 text-primary-foreground" />
+                </div>
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="font-semibold text-sm">Update Available</h3>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      A new version of GrabtoGo is ready to install
+                    </p>
+                  </div>
+                  <Button variant="ghost" size="sm" onClick={dismissUpdatePrompt}>
+                    <X className="h-3 w-3" />
+                  </Button>
+                </div>
+
+                <div className="flex items-center space-x-2 mt-3">
+                  <Badge variant="secondary" className="text-xs bg-green-100 text-green-700">
+                    New Features
+                  </Badge>
+                  <Badge variant="secondary" className="text-xs bg-blue-100 text-blue-700">
+                    Bug Fixes
+                  </Badge>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-2 mt-3">
+              <Button onClick={dismissUpdatePrompt} variant="outline" className="flex-1" size="sm">
+                Later
+              </Button>
+              <Button onClick={handleUpdate} className="flex-1" size="sm">
+                <Download className="h-4 w-4 mr-2" />
+                Update Now
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   // Don't show if already installed or dismissed recently
   if (isStandalone || isRecentlyDismissed) {

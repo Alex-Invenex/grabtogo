@@ -4,6 +4,7 @@ import { db } from '@/lib/db';
 import { RazorpayService } from '@/lib/razorpay';
 import { z } from 'zod';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const createOrderSchema = z.object({
